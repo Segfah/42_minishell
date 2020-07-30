@@ -1,4 +1,8 @@
 .DS_Store
 *.env
+*.a
 .vs/
+objs/
 .vscode/
+.*
+
