@@ -6,7 +6,11 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:00:46 by corozco           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2020/07/30 20:04:50 by corozco          ###   ########.fr       */
+=======
+/*   Updated: 2020/07/30 20:06:16 by lryst            ###   ########.fr       */
+>>>>>>> lryst
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +59,6 @@ int		main(int ac, char **av, char **envp)
 	(void)envp;
 	welcome();
 	write (1,"s",1);
+	write(1, "coucou\n", 7);
 	return (0);
 }
