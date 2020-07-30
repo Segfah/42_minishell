@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/07/30 18:02:02 by corozco          ###   ########.fr       */
+/*   Updated: 2020/07/30 20:43:52 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,10 @@
 
 # include <unistd.h>
 # include "libft.h"
+
+typedef struct	s_temp
+{
+	char		*env;
+}				t_temp;
 
 #endif

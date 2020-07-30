@@ -6,7 +6,7 @@
 #    By: corozco <corozco@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 05:41:03 by corozco           #+#    #+#              #
-#    Updated: 2020/07/30 18:10:38 by corozco          ###   ########.fr        #
+#    Updated: 2020/07/30 21:23:52 by corozco          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,7 +82,7 @@ fclean:
 
 re: fclean all
 
-cn:
+cn: $(OBJS)
 	@make -sC ./libft
 	@gcc $(CFLAGS) $(HEAD) $(OBJS) -o $(NAME) -L./libft -lft
 	@echo 'simple ' "$(WARN_COLOR)\t $(NAME)\t$(OK_COLOR)[CREATED]$(NO_COLOR)";

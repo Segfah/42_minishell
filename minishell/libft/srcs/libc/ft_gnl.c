@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 23:30:58 by corozco           #+#    #+#             */
-/*   Updated: 2020/07/31 00:00:31 by corozco          ###   ########.fr       */
+/*   Updated: 2020/07/31 00:17:10 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,15 @@ int				update_line(char **line, char *buf, int i)
 	tmp = *line;
 	len_initial = ft_strlen(tmp);
 	len = len_initial + i;
-	k = 0;
+	k = -1;
 	if (!(*line = malloc(sizeof(char) * len + 1)))
 		return (-1);
-	while (k < len)
+	while (++k < len)
 	{
 		if (k < len_initial)
 			line[0][k] = tmp[k];
 		else
 			line[0][k] = buf[k - len_initial];
-		k++;
 	}
 	line[0][k] = '\0';
 	free(tmp);
