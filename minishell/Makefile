@@ -6,7 +6,7 @@
 #    By: corozco <corozco@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 05:41:03 by corozco           #+#    #+#              #
-#    Updated: 2020/07/30 21:23:52 by corozco          ###   ########.fr        #
+#    Updated: 2020/07/31 02:29:42 by corozco          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,9 @@ CFLAGSF = -g3 -fsanitize=address -Wall -Wextra -Werror
 
 SRC := \
 	srcs/main.c \
+	srcs/drawings/welcome.c \
+	srcs/prompt/ft_prompt.c \
+	srcs/parcing/principal_parcing.c
 
 OBJS = $(addprefix objs/, $(SRC:.c=.o))
 
