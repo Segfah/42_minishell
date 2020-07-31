@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:00:46 by corozco           #+#    #+#             */
-/*   Updated: 2020/07/31 00:41:46 by corozco          ###   ########.fr       */
+/*   Updated: 2020/07/31 02:42:33 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,11 @@ int				launcher(t_temp tmp)
 		is_a_cmd(&tmp);
 		free(prompt);
 	}
+}
+
+void intento(void)
+{
+	return ;
 }
 
 /*
