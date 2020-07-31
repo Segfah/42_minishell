@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:00:46 by corozco           #+#    #+#             */
-/*   Updated: 2020/07/31 02:44:46 by corozco          ###   ########.fr       */
+/*   Updated: 2020/07/31 02:46:24 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,6 @@ static int		launcher(t_temp tmp)
 		ft_getline(&tmp);
 		free(prompt);
 	}
-}
-
-void intento(void)
-{
-	return ;
 }
 
 /*
