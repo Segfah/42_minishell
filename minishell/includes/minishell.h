@@ -19,6 +19,7 @@
 typedef struct	s_temp
 {
 	char		*env;
+	char		**tabcmd;
 }				t_temp;
 
 /*
