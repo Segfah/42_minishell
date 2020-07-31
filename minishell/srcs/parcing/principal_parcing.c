@@ -12,13 +12,37 @@
 
 #include "minishell.h"
 
+/*
+**suite de la fonction gestion_cd, cette fonction gere la commande cd en mettant le chemin relatif ou absolu...
+**mais aussi le ".." et "."
+*/
+void	gestion_cd(char *str)
+{
+	char *path;
+	int i;
+
+	i = 2;
+	if (ft_strncmp(str, "cd ", 3) == 0)
+	{
+		if (!(path = (char*)malloc(sizeof(char) * ft_strlen(str) - 2)))
+		{
+			ft_printf("gestion_cd2, error malloc\n");
+			exit (0);
+		}
+		while (str[i++] != '\0')
+			path[i - 3] = str[i];
+		if (chdir(path) != 0)
+			ft_printf("cd: no such file or directory: %s\n", path);
+	}
+	else
+		ft_printf("minishell: command not found: %s\n", str);
+}
 
 /*
 ** Cette fonction efface les espaces et les \t,
 **		Alerte!! La fonction n'est pas fini, elle ne les doit pas supprimer si...
 **		...il y a des "  " ou de '  '
 */
-
 static void		clean_str(char *str)
 {
 	int			i;
@@ -65,6 +89,8 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 		clean_str(tabcmd[i]);
 		if (ft_strcmp(tabcmd[i], "exit") == 0)
 			exit(0);
+		if (ft_strncmp(tabcmd[i], "cd", 2) == 0)
+			gestion_cd(tabcmd[i], tmp);
 		else if (ft_strncmp(tabcmd[i], "pwd", 3) == 0)
 			gestion_pwd(tabcmd[i], tmp);
 		else if (tabcmd[i][0] == '\0')
