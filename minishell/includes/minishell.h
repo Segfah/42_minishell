@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/07/31 02:32:21 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/01 04:46:21 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct	s_temp
 {
 	char		*env;
 	char		**tabcmd;
+	char		**sepcmd;
 }				t_temp;
 
 /*
@@ -40,5 +41,7 @@ char			*ft_prompt(char *str);
 */
 
 void			ft_getline(t_temp *tmp);
+
+int				gestion_pwd(char **tabcmd, t_temp *tmp, int i);
 
 #endif

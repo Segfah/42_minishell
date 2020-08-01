@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/01 01:25:42 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/01 04:44:50 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,6 @@ static void		clean_str(char *str)
 }
 
 /*
-** Printf le pwd 
-*/
-
-void			gestion_pwd(char *str, t_temp *tmp)
-{
-	tmp->env = getcwd(NULL, 0);
-	if (ft_strcmp(str, "pwd") == 0)
-		ft_printf("%s\n", tmp->env);
-	else if (ft_strcmp(str, "pwd ") == 0)
-		ft_printf("pwd: too many arguments\n");
-	else
-		ft_printf("minishell: command not found: %s\n", str);
-	free(tmp->env);
-}
-
-/*
 ** Elle cherche dans le tableau de commandes, si la commande existe.
 ** ensuite elle free la string du tableau free(tabcmd[i]) 
 *		Alerte, en testant je me suis rendu compte que dans bash, on peux appeler les ...
@@ -95,8 +79,8 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 			exit(0);
 		if (ft_strncmp(tabcmd[i], "cd", 2) == 0)
 			gestion_cd(tabcmd[i]);
-		else if (ft_strncmp(tabcmd[i], "pwd", 3) == 0)
-			gestion_pwd(tabcmd[i], tmp);
+		else if (gestion_pwd(tabcmd, tmp, i))
+			;
 		else if (tabcmd[i][0] == '\0')
 			;
 		else

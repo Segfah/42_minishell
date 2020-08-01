@@ -6,7 +6,7 @@
 #    By: corozco <corozco@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 05:41:03 by corozco           #+#    #+#              #
-#    Updated: 2020/07/31 02:51:50 by corozco          ###   ########.fr        #
+#    Updated: 2020/08/01 04:43:51 by corozco          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ SRC := \
 	srcs/main.c \
 	srcs/drawings/welcome.c \
 	srcs/prompt/ft_prompt.c \
-	srcs/parcing/principal_parcing.c
+	srcs/parcing/principal_parcing.c \
+	srcs/gestion/pwd.c
 
 OBJS = $(addprefix objs/, $(SRC:.c=.o))
 
