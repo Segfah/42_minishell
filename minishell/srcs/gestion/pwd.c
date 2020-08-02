@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/01 01:51:46 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/01 04:52:46 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/02 04:51:36 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** Printf le pwd fonction a changer!! elle est horrible.
 */
 
-static int		print_pwd(char *str, t_temp *tmp)
+static int	print_pwd(char *str, t_temp *tmp)
 {
 	tmp->env = getcwd(NULL, 0);
 	if (ft_strcmp(str, "pwd") == 0)
@@ -38,7 +38,7 @@ static int		print_pwd(char *str, t_temp *tmp)
 	return (0);
 }
 
-int		gestion_pwd(char **tabcmd, t_temp *tmp, int i)
+int			gestion_pwd(char **tabcmd, t_temp *tmp, int i)
 {
 	if (ft_strncmp(tabcmd[i], "pwd", 3) == 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/01 04:46:21 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/01 22:13:09 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct	s_temp
 {
 	char		*env;
 	char		**tabcmd;
-	char		**sepcmd;
+	char		**cmdstr;
 }				t_temp;
 
 /*
