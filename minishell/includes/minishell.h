@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/01 22:13:09 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/02 22:27:53 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,14 @@ char			*ft_prompt(char *str);
 
 void			ft_getline(t_temp *tmp);
 
+/*
+** gestion/pwd
+*/
 int				gestion_pwd(char **tabcmd, t_temp *tmp, int i);
+
+/*
+** gestion/cd
+*/
+void			gestion_cd(char *str)
 
 #endif

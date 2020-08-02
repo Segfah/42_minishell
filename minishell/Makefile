@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: corozco <corozco@student.42.fr>            +#+  +:+       +#+         #
+#    By: lryst <lryst@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 05:41:03 by corozco           #+#    #+#              #
-#    Updated: 2020/08/01 04:43:51 by corozco          ###   ########.fr        #
+#    Updated: 2020/08/02 22:26:13 by lryst            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ SRC := \
 	srcs/drawings/welcome.c \
 	srcs/prompt/ft_prompt.c \
 	srcs/parcing/principal_parcing.c \
-	srcs/gestion/pwd.c
+	srcs/gestion/pwd.c \
+	srcs/cd.c
 
 OBJS = $(addprefix objs/, $(SRC:.c=.o))
 
