@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:00:46 by corozco           #+#    #+#             */
-/*   Updated: 2020/07/31 02:46:24 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/02 23:19:22 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 ** ps (trouver une autre maniere de le faire sans fais autant d'appel à getcwd)
 */
 
-static int		launcher(t_temp tmp)
+static int		launcher(t_temp tmp, char **envp)
 {
 	char		*prompt;
 
@@ -29,7 +29,7 @@ static int		launcher(t_temp tmp)
 		prompt = ft_prompt(tmp.env);
 		ft_printf("\x1b[33m%s\x1b[0m🐰: ", prompt);
 		free(tmp.env);
-		ft_getline(&tmp);
+		ft_getline(&tmp, envp);
 		free(prompt);
 	}
 }
@@ -45,7 +45,7 @@ int				main(int ac, char **av, char **envp)
 
 	welcome();
 	tmp.env = getcwd(NULL, 0);
-	launcher(tmp);
+	launcher(tmp, envp);
 	(void)ac;
 	(void)av;
 	(void)envp;

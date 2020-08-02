@@ -1,0 +1,36 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/08/02 22:10:58 by lryst             #+#    #+#             */
+/*   Updated: 2020/08/02 23:18:15 by lryst            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+void			gestion_cd(char *str)
+{
+	char		*path;
+	int			i;
+
+	i = 2;
+	if (ft_strncmp(str, "cd ", 3) == 0)
+	{
+		if (!(path = (char*)malloc(sizeof(char) * ft_strlen(str) - 2)))
+		{
+			ft_printf("gestion_cd2, error malloc\n");
+			exit(0);
+		}
+		while (str[i++] != '\0')
+			path[i - 3] = str[i];
+		if (chdir(path) != 0)
+			ft_printf("cd: no such file or directory: %s\n", path);
+		free(path);
+	}
+	else
+		ft_printf("minishell: command not found: %s\n", str);
+}

@@ -6,11 +6,11 @@
 #    By: lryst <lryst@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 05:41:03 by corozco           #+#    #+#              #
-#    Updated: 2020/08/02 22:26:13 by lryst            ###   ########.fr        #
+#    Updated: 2020/08/02 23:24:29 by lryst            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
+NAME = the_big_minishell
 HEAD := -I./includes/ -I./libft/includes
 
 CFLAGS = -Wall -Wextra -Werror
@@ -23,7 +23,8 @@ SRC := \
 	srcs/prompt/ft_prompt.c \
 	srcs/parcing/principal_parcing.c \
 	srcs/gestion/pwd.c \
-	srcs/cd.c
+	srcs/gestion/cd.c \
+	srcs/gestion/env.c
 
 OBJS = $(addprefix objs/, $(SRC:.c=.o))
 

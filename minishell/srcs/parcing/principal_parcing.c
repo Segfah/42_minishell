@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/02 22:11:43 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/02 23:24:09 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void			clean_str(char *str)
 ** ensuite elle free la string du tableau free(tabcmd[i])
 */
 
-static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
+static void		gestion_line(char **tabcmd, t_temp *tmp, int i, char **envp)
 {
 	while (tabcmd[++i])
 	{
@@ -99,6 +99,8 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 			exit(0);
 		if (ft_strncmp(tabcmd[i], "cd", 2) == 0)
 			gestion_cd(tabcmd[i]);
+		if (ft_strcmp(tabcmd[i], "env") == 0)
+			gestion_env(envp);
 		else if (gestion_pwd(tabcmd, tmp, i))
 			;
 		else if (tabcmd[i][0] == '\0')
@@ -114,13 +116,13 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 ** ...et lance aussi le parcing
 */
 
-void			ft_getline(t_temp *tmp)
+void			ft_getline(t_temp *tmp, char **envp)
 {
 	char		*line;
 
 	if (ft_gnl(0, &line) == -1 || (tmp->tabcmd = ft_split(line, ';')) == NULL)
 		exit(1);
-	gestion_line(tmp->tabcmd, tmp, -1);
+	gestion_line(tmp->tabcmd, tmp, -1, envp);
 	free(tmp->tabcmd);
 	free(line);
 }

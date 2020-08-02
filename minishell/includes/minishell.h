@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/02 22:27:53 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/02 23:22:55 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char			*ft_prompt(char *str);
 ** Parsing
 */
 
-void			ft_getline(t_temp *tmp);
+void			ft_getline(t_temp *tmp, char **envp);
 
 /*
 ** gestion/pwd
@@ -50,6 +50,11 @@ int				gestion_pwd(char **tabcmd, t_temp *tmp, int i);
 /*
 ** gestion/cd
 */
-void			gestion_cd(char *str)
+void			gestion_cd(char *str);
+
+/*
+** gestion/env.c
+*/
+void    		gestion_env(char **envp);
 
 #endif
