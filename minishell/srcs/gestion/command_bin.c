@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 15:00:48 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/03 20:43:26 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/03 22:18:37 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,18 @@
 
 int     command_bin(char *str, char **av, char **envp)
 {
+    char **tab;
+    char *new_env[] = {NULL};
+    //printf("str = [%s]\n", str);
     char *command;
     int i;
     pid_t f;
 
     f = fork();
     i = 0;
+    (void)av;
+    (void)envp;
+    tab = ft_split(str, ' ');
     if (!(command = (char*)malloc(sizeof(char) * ft_strlen(str) + 6)))
         return(0);
     command[0] = '/';
@@ -32,29 +38,31 @@ int     command_bin(char *str, char **av, char **envp)
         command[i + 5] = str[i];
         i++;
     }
-    /* 
+    command[i + 5] = '\0';
+    //printf("command = [%s]\n", command);
     int a;
     a = 0;
-    while (av[a] != NULL)
+    while (tab[a] != NULL)
     {
-        printf("av[%d] = {%s}\n", a , av[a]);
+        printf("tab[%d] = {%s}\n", a , tab[a]);
         a++;
     }
     a = 0;
-    while (envp[a] != NULL)
+    /*while (envp[a] != NULL)
     {
         printf("envp[%d] = {%s}\n", a , envp[a]);
         a++;
     } */
     if (f == 0)
     {
-        if (execve(command, av, envp) == -1)
+        if (execve(command, tab, new_env) == -1)
         {
             free(command);
             return (0);
         }
         return(1);
     }
+    wait(&f);
     free(command);
-    return (1);
+    return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/03 15:45:31 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/03 21:21:32 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <stdio.h>
 # include <unistd.h>
+# include <sys/types.h>
+# include <signal.h>
 # include "libft.h"
 
 typedef struct	s_temp
