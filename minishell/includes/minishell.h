@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/03 21:21:32 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/04 00:03:10 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char			*ft_prompt(char *str);
 ** Parsing
 */
 
-void			ft_getline(t_temp *tmp, char **av, char **envp);
+void			ft_getline(t_temp *tmp);
 
 /*
 ** gestion/pwd
@@ -57,11 +57,11 @@ void			gestion_cd(char *str);
 /*
 ** gestion/env.c
 */
-void    		gestion_env(char **envp);
+void			gestion_env(char **envp);
 
 /*
 ** gestion/command_bin
 */
-int     command_bin(char *str, char **av, char **envp);
+int				command_bin(char *str);
 
 #endif

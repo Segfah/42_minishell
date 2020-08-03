@@ -6,13 +6,13 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 15:00:48 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/03 22:18:37 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/04 00:14:24 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int     command_bin(char *str, char **av, char **envp)
+int     command_bin(char *str)
 {
     char **tab;
     char *new_env[] = {NULL};
@@ -23,8 +23,6 @@ int     command_bin(char *str, char **av, char **envp)
 
     f = fork();
     i = 0;
-    (void)av;
-    (void)envp;
     tab = ft_split(str, ' ');
     if (!(command = (char*)malloc(sizeof(char) * ft_strlen(str) + 6)))
         return(0);
@@ -42,13 +40,13 @@ int     command_bin(char *str, char **av, char **envp)
     //printf("command = [%s]\n", command);
     int a;
     a = 0;
-    while (tab[a] != NULL)
+/*    while (tab[a] != NULL)
     {
         printf("tab[%d] = {%s}\n", a , tab[a]);
         a++;
     }
     a = 0;
-    /*while (envp[a] != NULL)
+    while (envp[a] != NULL)
     {
         printf("envp[%d] = {%s}\n", a , envp[a]);
         a++;
@@ -58,7 +56,7 @@ int     command_bin(char *str, char **av, char **envp)
         if (execve(command, tab, new_env) == -1)
         {
             free(command);
-            return (0);
+            return (1);
         }
         return(1);
     }

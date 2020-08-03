@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:00:46 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/03 21:48:35 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/04 00:00:09 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 ** ps (trouver une autre maniere de le faire sans fais autant d'appel à getcwd)
 */
 
-static int		launcher(t_temp tmp, char **av, char **envp)
+static int		launcher(t_temp tmp)
 {
 	char		*prompt;
 
@@ -29,7 +29,7 @@ static int		launcher(t_temp tmp, char **av, char **envp)
 		prompt = ft_prompt(tmp.env);
 		ft_printf("\x1b[33m%s\x1b[0m🐰: ", prompt);
 		free(tmp.env);
-		ft_getline(&tmp, av, envp);
+		ft_getline(&tmp);
 		free(prompt);
 	}
 }
@@ -45,7 +45,7 @@ int				main(int ac, char **av, char **envp)
 
 	welcome();
 	tmp.env = getcwd(NULL, 0);
-	launcher(tmp, av, envp);
+	launcher(tmp);
 	(void)ac;
 	(void)av;
 	(void)envp;
