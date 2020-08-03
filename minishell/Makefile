@@ -6,7 +6,7 @@
 #    By: lryst <lryst@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 05:41:03 by corozco           #+#    #+#              #
-#    Updated: 2020/08/02 23:24:29 by lryst            ###   ########.fr        #
+#    Updated: 2020/08/03 15:38:41 by lryst            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ SRC := \
 	srcs/parcing/principal_parcing.c \
 	srcs/gestion/pwd.c \
 	srcs/gestion/cd.c \
-	srcs/gestion/env.c
+	srcs/gestion/env.c \
+	srcs/gestion/command_bin.c
 
 OBJS = $(addprefix objs/, $(SRC:.c=.o))
 

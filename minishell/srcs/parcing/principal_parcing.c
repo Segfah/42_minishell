@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/02 23:24:09 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/03 20:41:02 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,11 @@ void			clean_str(char *str)
 ** ensuite elle free la string du tableau free(tabcmd[i])
 */
 
-static void		gestion_line(char **tabcmd, t_temp *tmp, int i, char **envp)
+static void		gestion_line(char **tabcmd, t_temp *tmp, char **av, char **envp)
 {
+	int i;
+
+	i = -1;
 	while (tabcmd[++i])
 	{
 		clean_str(tabcmd[i]);
@@ -101,8 +104,10 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i, char **envp)
 			gestion_cd(tabcmd[i]);
 		if (ft_strcmp(tabcmd[i], "env") == 0)
 			gestion_env(envp);
-		else if (gestion_pwd(tabcmd, tmp, i))
-			;
+		if (ft_strcmp(tabcmd[i], "pwd") == 0)
+			gestion_pwd(tabcmd, tmp, i);
+		else if (command_bin(tabcmd[i], av, envp) == 0)
+			ft_printf("minishell: command not found: %s\n", tabcmd[i]);
 		else if (tabcmd[i][0] == '\0')
 			;
 		else
@@ -116,13 +121,13 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i, char **envp)
 ** ...et lance aussi le parcing
 */
 
-void			ft_getline(t_temp *tmp, char **envp)
+void			ft_getline(t_temp *tmp, char **av, char **envp)
 {
 	char		*line;
 
 	if (ft_gnl(0, &line) == -1 || (tmp->tabcmd = ft_split(line, ';')) == NULL)
 		exit(1);
-	gestion_line(tmp->tabcmd, tmp, -1, envp);
+	gestion_line(tmp->tabcmd, tmp, av, envp);
 	free(tmp->tabcmd);
 	free(line);
 }

@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 22:10:58 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/02 23:18:15 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/03 20:39:11 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,4 @@ void			gestion_cd(char *str)
 			ft_printf("cd: no such file or directory: %s\n", path);
 		free(path);
 	}
-	else
-		ft_printf("minishell: command not found: %s\n", str);
 }
