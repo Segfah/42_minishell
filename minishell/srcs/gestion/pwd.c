@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/01 01:51:46 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/02 04:51:36 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/04 02:28:56 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@
 
 static int	print_pwd(char *str, t_temp *tmp)
 {
-	tmp->env = getcwd(NULL, 0);
 	if (ft_strcmp(str, "pwd") == 0)
 	{
+		tmp->env = getcwd(NULL, 0);
 		ft_printf("%s\n", tmp->env);
+		free(tmp->env);
 		return (1);
 	}
 	else if (ft_strncmp(str, "pwd ", 4) == 0)
@@ -30,12 +31,7 @@ static int	print_pwd(char *str, t_temp *tmp)
 		return (1);
 	}
 	else
-	{
-		free(tmp->env);
 		return (0);
-	}
-	free(tmp->env);
-	return (0);
 }
 
 int			gestion_pwd(char **tabcmd, t_temp *tmp, int i)

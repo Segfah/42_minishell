@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/04 01:02:37 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/04 02:52:13 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,17 @@ void			separator_string(char *str, t_temp *tmp)
 }
 
 
+void			free_tmps(char **tabcmd, int i, t_temp *tmp)
+{
+	int			a;
+
+	a = 0;
+	while (tmp->strcmd[a])
+		free(tmp->strcmd[a++]);
+	free(tmp->strcmd);
+	free(tabcmd[i]);
+}
+
 /*
 ** Elle cherche dans le tableau de commandes, si la commande existe
 ** ensuite elle free la string du tableau free(tabcmd[i])
@@ -117,8 +128,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 			;
 		else
 			ft_printf("minishell: command not found: %s\n", tabcmd[i]);
-		free(tmp->strcmd);
-		free(tabcmd[i]);
+		free_tmps(tabcmd, i, tmp);
 	}
 }
 

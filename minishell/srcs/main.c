@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:00:46 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/04 00:00:09 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/04 02:34:02 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int				main(int ac, char **av, char **envp)
 	t_temp		tmp;
 
 	welcome();
-	tmp.env = getcwd(NULL, 0);
+	tmp.env = getcwd(NULL, 0);// nani?
 	launcher(tmp);
 	(void)ac;
 	(void)av;
