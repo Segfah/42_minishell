@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 15:00:48 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/04 03:40:02 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/04 04:01:55 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int     command_bin(char **tab)
 	pid_t f;
 	pid_t w;
 	int	 status;
+
 	f = fork();
 	i = 0;
 	if (!(command = (char*)malloc(sizeof(char) * ft_strlen(tab[0]) + 6)))

@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/04 02:52:13 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/04 03:48:13 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,20 @@ void			clean_str(char *str)
 		str[i] = 0;
 }
 
+/*
+** fonction qui va creer le nouveau tableau a partir de tabcmd (strig)
+*/
+
 void			separator_string(char *str, t_temp *tmp)
 {
 	tmp->strcmd = ft_split(str, ' ');
 }
 
+/*
+**	free le nouveau tableau de string (ls -la)
+** [1] ls
+** [2] -la
+*/
 
 void			free_tmps(char **tabcmd, int i, t_temp *tmp)
 {
