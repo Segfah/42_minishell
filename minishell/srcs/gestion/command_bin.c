@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 15:00:48 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/04 02:22:15 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/04 03:40:02 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int     command_bin(char **tab)
 	char *command;
 	int i;
 	pid_t f;
-
+	pid_t w;
+	int	 status;
 	f = fork();
 	i = 0;
 	if (!(command = (char*)malloc(sizeof(char) * ft_strlen(tab[0]) + 6)))
@@ -35,23 +36,35 @@ int     command_bin(char **tab)
 	}
 	command[i + 5] = '\0';
 	//printf("command = [%s]\n", command);
-/*	int a;
-	a = 0;
-	while (tab[a] != NULL)
-	{
+	/*	int a;
+		a = 0;
+		while (tab[a] != NULL)
+		{
 		printf("tab[%d] = {%s}\n", a , tab[a]);
 		a++;
-	}
-	} */
+		}
+		} */
 	if (f == 0)
 	{
 		if (execve(command, tab, new_env) == -1)
-		{
-			free(command);
-			exit(0);
-		}
+			exit(1);
+		exit(0);
 	}
-	wait(&f);
+	else
+	{
+		/*
+		** Sorry pour changer un peu ta fonction, j'avais besoin de prendre...
+		** ...le return du fils pour pouvoir bien le fermer.
+		*/
+		if ((w = waitpid(f, &status, WUNTRACED | WCONTINUED)) == -1)
+			exit(1);
+		if (WIFEXITED(status))
+			if (WEXITSTATUS(status) == 1)
+			{
+				free(command);
+				return (-1);
+			}
+	}
 	free(command);
 	return (0);
 }
