@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/04 00:03:36 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/04 01:02:37 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,12 @@ void			clean_str(char *str)
 		str[i] = 0;
 }
 
+void			separator_string(char *str, t_temp *tmp)
+{
+	tmp->strcmd = ft_split(str, ' ');
+}
+
+
 /*
 ** Elle cherche dans le tableau de commandes, si la commande existe
 ** ensuite elle free la string du tableau free(tabcmd[i])
@@ -98,18 +104,20 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 	while (tabcmd[++i])
 	{
 		clean_str(tabcmd[i]);
+		separator_string(tabcmd[i], tmp);
 		if (ft_strcmp(tabcmd[i], "exit") == 0)
 			exit(0);
 		else if (ft_strncmp(tabcmd[i], "cd", 2) == 0)
 			gestion_cd(tabcmd[i]);//		else if (ft_strcmp(tabcmd[i], "env") == 0)//			gestion_env(envp);
 		else if (ft_strcmp(tabcmd[i], "pwd") == 0)
 			gestion_pwd(tabcmd, tmp, i);
-		else if (command_bin(tabcmd[i]) == 0)
+		else if (command_bin(tmp->strcmd) == 0)
 			;
 		else if (tabcmd[i][0] == '\0')
 			;
 		else
 			ft_printf("minishell: command not found: %s\n", tabcmd[i]);
+		free(tmp->strcmd);
 		free(tabcmd[i]);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/04 00:03:10 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/04 01:03:21 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct	s_temp
 {
 	char		*env;
 	char		**tabcmd;
-	char		**cmdstr;
+	char		**strcmd;
 }				t_temp;
 
 /*
@@ -62,6 +62,6 @@ void			gestion_env(char **envp);
 /*
 ** gestion/command_bin
 */
-int				command_bin(char *str);
+int				command_bin(char **tab);
 
 #endif

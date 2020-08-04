@@ -6,15 +6,15 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 15:00:48 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/04 00:14:24 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/04 01:04:00 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int     command_bin(char *str)
+int     command_bin(char **tab)
 {
-    char **tab;
+ //   char **tab;
     char *new_env[] = {NULL};
     //printf("str = [%s]\n", str);
     char *command;
@@ -23,24 +23,23 @@ int     command_bin(char *str)
 
     f = fork();
     i = 0;
-    tab = ft_split(str, ' ');
-    if (!(command = (char*)malloc(sizeof(char) * ft_strlen(str) + 6)))
+    if (!(command = (char*)malloc(sizeof(char) * ft_strlen(tab[0]) + 6)))
         return(0);
     command[0] = '/';
     command[1] = 'b';
     command[2] = 'i';
     command[3] = 'n';
     command[4] = '/';
-    while (str[i] != '\0')
+    while (tab[0][i] != '\0')
     {
-        command[i + 5] = str[i];
+        command[i + 5] = tab[0][i];
         i++;
     }
     command[i + 5] = '\0';
     //printf("command = [%s]\n", command);
-    int a;
+/*    int a;
     a = 0;
-/*    while (tab[a] != NULL)
+    while (tab[a] != NULL)
     {
         printf("tab[%d] = {%s}\n", a , tab[a]);
         a++;
