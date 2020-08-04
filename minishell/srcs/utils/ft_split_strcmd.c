@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 18:07:21 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/04 21:12:05 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/04 23:03:43 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,20 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-static	int					is_cote(char *str, int i)
+/* static	int					is_cote(char *str, int i)
 {
 	printf("%c\n", str[i]);
 	while (str[i] != '\0')
 	{
 		if (str[i] == '\'' || str[i] == '"')
 		{
+			//printf("%c\n", str[i]);
 			i++;
 			while (str[i] != '\0' && (str[i] != '\'' || str[i] != '"'))
+			{
+				//printf("%c\n", str[i]);
 				i++;
+			}
 			if (str[i] == '\'' || str[i] == '"')
 				return (i);
 		}
@@ -44,15 +48,20 @@ static int			ft_word(char *s, char c)
 	{
 		if (is_cote(s, i) != 0)
 		{
+			printf("			WESHHHH !\n");
 			printf("				i = %d", i);
 			i = is_cote(s, i) + i;
 			printf("				i = %d", i);
 			n++;
 		}
-		while (s[i] == c)
-			i++;
-		s[i] != '\0' ? n++ : 0;
-		i++;
+		else
+		{
+			while (s[i] == c)
+				i++;
+			s[i] != '\0' ? n++ : 0;
+			while (s[i] != c && s[i] != '\0')
+				i++;
+		}
 	}
 	return (n);
 }
@@ -130,11 +139,103 @@ char				**ft_split_strcmd(char *s, char c)
 	return (tab);
 }
 
+ */
+
+ static int			ft_word(char const *s, char c)
+{
+	int		n;
+	int		i;
+
+	i = 0;
+	n = 0;
+	while (s[i] != '\0')
+	{
+		printf("NBR WORD = %d\n", n);
+		if (s[i] == c  && (s[i + 1] == '"' || s[i + 1] == '\''))
+		{
+			i++;
+			printf("		s[i] = [%c]\n", s[i]);
+			i++;
+			while (s[i] != '\0' && s[i] != '"' && s[i] != '\'')
+			{
+				printf("boucle	s[i] = [%c]\n", s[i]);
+				i++;
+			}
+			printf("boucle	s[i] = [%c]\n", s[i]);
+			i++;
+			//printf("NBR WORD = %d\n", n);
+			n++;
+			//printf("NBR WORD = %d\n", n);
+		}
+		while (s[i] == c && (s[i + 1] != '"' || s[i + 1] != '\''))
+		{
+			printf("boucle skip space s[%d] = [%c]\n", i, s[i]);
+			i++;
+		}
+		if (s[i] != c && s[i] != '\0')
+		{
+			while (s[i] != c && s[i] != '\0')
+			{
+				printf("	boucle word s[%d] = [%c]\n", i, s[i]);
+				i++;
+			}
+			n++;
+		}
+	}
+	return (n);
+}
+
+static char			*ft_fill(char const *s, char c, int i, char *tab)
+{
+	int		k;
+	char	*mot;
+
+	k = i;
+	while (s[k] != c && s[k] != '\0')
+		k++;
+	mot = (char *)malloc(sizeof(char) * (k + 1));
+	if (!mot)
+		return (NULL);
+	k = 0;
+	while (s[i] != c && s[i] != '\0')
+		mot[k++] = s[i++];
+	mot[k] = '\0';
+	tab = mot;
+	return (tab);
+}
+
+char				**ft_split_strcmd(char const *s, char c)
+{
+	char	**tab;
+	int		i;
+	int		n;
+	int		j;
+
+	i = 0;
+	n = 0;
+	j = -1;
+	if (!s)
+		return (NULL);
+	n = ft_word(s, c);
+	printf("NBR WORD = %d\n", n);
+	if (!(tab = (char **)malloc(sizeof(tab) * (n + 1))))
+		return (NULL);
+	while (++j < n)
+	{
+		while (s[i] == c)
+			i++;
+		tab[j] = ft_fill(s, c, i, tab[j]);
+		while (s[i] != c && s[i] != '\0')
+			i++;
+	}
+	tab[j] = 0;
+	return (tab);
+}
 
 int main()
 {
-	char str1[] = "bonjour les cop1, il m'a dit \"  weshhhh !\" vous en pensez quoi?";
-	char str2[] = "bonjour les cop1, il m'a dit : wesh, vous en pesez quoi ?";
+	char str1[] = "bonjour les cop1, il m'a dit \""; /*12*/
+	char str2[] = "bonjour les cop1, il m'a dit : wesh, vous en pesez quoi ?"; /*13*/
 	char **tab1;
 	char **tab2;
 	int i;
