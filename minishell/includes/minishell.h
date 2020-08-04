@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/04 01:03:21 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/04 04:19:01 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char			*ft_prompt(char *str);
 */
 
 void			ft_getline(t_temp *tmp);
+void			clean_str(char *str);
 
 /*
 ** gestion/pwd
