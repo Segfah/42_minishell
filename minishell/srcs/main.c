@@ -6,51 +6,17 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:00:46 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/05 23:04:47 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/06 00:55:34 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-** + 1 pour effacer le =; si on a besoin du "=" enlever le +1, il va etre...
-** dans la data (2 content)
+** fonction qui garde le env dans une liste c
 */
 
-void			add_list_front(t_lists **head, char *str)
-{
-	t_lists		*new;
-	int			i;
-
-	if (!(new = malloc(sizeof(t_lists))))
-		exit(1);
-	if (!(new->data = ft_strdup(ft_strchr(str, '=') + 1)))
-		exit(1);
-	i = 0;
-	while (str[i] != '=')
-		i++;
-	str[i] = '\0';
-	if (!(new->name = ft_strdup(str)))
-		exit(1);
-	new->next = *head;
-	*head = new;
-}
-
-void			free_list(t_lists *test)
-{
-	t_lists		*tmp;
-
-	while (test != NULL)
-	{
-		tmp = test->next;
-		free(test->name);
-		free(test->data);
-		free(test);
-		test = tmp;
-	}
-}
-
-void			save_env(t_lists **head, char **envp)
+static void		save_env(t_lists **head, char **envp)
 {
 	int			i;
 
