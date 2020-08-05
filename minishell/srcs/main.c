@@ -6,14 +6,15 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:00:46 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/05 23:01:33 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/05 23:04:47 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-** + 1 pour effacer le =;
+** + 1 pour effacer le =; si on a besoin du "=" enlever le +1, il va etre...
+** dans la data (2 content)
 */
 
 void			add_list_front(t_lists **head, char *str)
