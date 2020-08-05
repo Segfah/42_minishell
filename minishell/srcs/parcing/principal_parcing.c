@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/04 04:19:20 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/04 20:45:10 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 			gestion_cd(tabcmd[i]);//		else if (ft_strcmp(tabcmd[i], "env") == 0)//			gestion_env(envp);
 		else if (ft_strcmp(tabcmd[i], "pwd") == 0)
 			gestion_pwd(tabcmd, tmp, i);
+		//else if (ft_strncmp(tabcmd[i], "echo", 4) == 0)
+			//gestion_echo(tabcmd[i]);
 		else if (command_bin(tmp->strcmd) == 0)
 			;
 		else if (tabcmd[i][0] == '\0')
