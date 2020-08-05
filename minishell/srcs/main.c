@@ -6,43 +6,22 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:00:46 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/04 02:34:02 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/06 00:55:34 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void			add_list_front(t_lists **head, char *str)
-{
-	t_lists		*new;
+/*
+** fonction qui garde le env dans une liste c
+*/
 
-	if (!(new = malloc(sizeof(t_lists))))
-		exit(1);
-	if (!(new->content = ft_strdup(str)))
-		exit(1);
-	new->next = *head;
-	*head = new;
-}
-
-void			free_list(t_lists *test)
-{
-	t_lists		*tmp;
-
-	while (test != NULL)
-	{
-		tmp = test->next;
-		free(test->content);
-		free(test);
-		test = tmp;
-	}
-}
-
-void			save_env(t_lists **head, char **envp)
+static void		save_env(t_lists **head, char **envp)
 {
 	int			i;
 
 	i = 0;
-	*head =NULL;
+	*head = NULL;
 	while (envp[i])
 		i++;
 	while (i--)

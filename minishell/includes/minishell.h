@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/06 00:35:49 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/06 01:08:15 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 
 typedef struct		s_lists
 {
-	char			*content;
+	char			*name;
+	char			*data;
 	struct s_lists	*next;
 }					t_lists;
 
@@ -65,7 +66,14 @@ void				gestion_cd(char *str);
 /*
 ** gestion/env.c
 */
-void				gestion_env(t_lists *test);
+void				gestion_env(t_lists *head);
+
+/*
+** gestion/tools/env_export
+*/
+
+void				add_list_front(t_lists **head, char *str);
+void				free_list(t_lists *test);
 
 /*
 ** gestion/command_bin
