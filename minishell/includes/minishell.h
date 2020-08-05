@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/04 20:49:15 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/06 00:35:49 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,11 @@ void				gestion_echo(char *str);
 ** utils/ft_split_strcmd
 */
 char				**ft_split_strcmd(char *s, char c);
+
+/*
+** utils//ft_split_echo
+*/
+char				**ft_split_echo(char *s, char c);
+
 
 #endif

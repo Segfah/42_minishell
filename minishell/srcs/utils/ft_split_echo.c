@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_strcmd.c                                  :+:      :+:    :+:   */
+/*   ft_split_echo.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 23:18:04 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/06 00:36:24 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/06 00:36:09 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <stdio.h> */
 
-static int	adeline(char *s, char cote, int n, int *i)
+static int          adeline(char *s, char cote, int n, int *i)
  {
 	int j;
 
@@ -80,6 +80,8 @@ static char			*ft_fill(char *s, char c, int *i, char *tab)
 				(*i)++;
 			if (s[*i] != '"' && s[*i] != '\'')
 			{
+				if (s[*i] == c)
+					(*i)++;
 				if (!(tab = (char*)malloc(sizeof(char) * (*i - save) + 1)))
 					return NULL;
 				while (*i > save)
@@ -104,7 +106,7 @@ static char			*ft_fill(char *s, char c, int *i, char *tab)
 	return NULL;
 }
 
-char				**ft_split_strcmd(char *s, char c)
+char				**ft_split_echo(char *s, char c)
 {
 	char	**tab;
 	int		i;

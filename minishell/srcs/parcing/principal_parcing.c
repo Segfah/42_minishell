@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/04 20:45:10 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/06 01:06:09 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 void			separator_string(char *str, t_temp *tmp)
 {
-	tmp->strcmd = ft_split(str, ' ');
+	tmp->strcmd = ft_split_strcmd(str, ' ');
 }
 
 /*
@@ -36,6 +36,18 @@ void			free_tmps(char **tabcmd, int i, t_temp *tmp)
 		free(tmp->strcmd[a++]);
 	free(tmp->strcmd);
 	free(tabcmd[i]);
+}
+
+void			gestion_nani(char **tab)
+{
+	int i;
+	
+	i = 0;
+	while (tab[i] != NULL)
+	{
+		ft_printf("tab = [%s]\n", tab[i]);
+		i++;
+	}
 }
 
 /*
@@ -60,8 +72,10 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 			gestion_env(tmp->varenv);
 		else if (ft_strcmp(tabcmd[i], "pwd") == 0)
 			gestion_pwd(tabcmd, tmp, i);
-		//else if (ft_strncmp(tabcmd[i], "echo", 4) == 0)
-			//gestion_echo(tabcmd[i]);
+		else if (ft_strncmp(tabcmd[i], "nani", 4) == 0)
+			gestion_nani(tmp->strcmd);
+		else if (ft_strcmp(tmp->strcmd[0], "echo") == 0)
+			gestion_echo(tabcmd[i]);
 		else if (command_bin(tmp->strcmd) == 0)
 			;
 		else if (tabcmd[i][0] == '\0')
