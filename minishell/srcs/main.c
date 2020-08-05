@@ -12,6 +12,43 @@
 
 #include "minishell.h"
 
+void			add_list_front(t_lists **head, char *str)
+{
+	t_lists		*new;
+
+	if (!(new = malloc(sizeof(t_lists))))
+		exit(1);
+	if (!(new->content = ft_strdup(str)))
+		exit(1);
+	new->next = *head;
+	*head = new;
+}
+
+void			free_list(t_lists *test)
+{
+	t_lists		*tmp;
+
+	while (test != NULL)
+	{
+		tmp = test->next;
+		free(test->content);
+		free(test);
+		test = tmp;
+	}
+}
+
+void			save_env(t_lists **head, char **envp)
+{
+	int			i;
+
+	i = 0;
+	*head =NULL;
+	while (envp[i])
+		i++;
+	while (i--)
+		add_list_front(head, envp[i]);
+}
+
 /*
 ** On recalcule le prompt à chaque fois car le path(pwd) va changer quand...
 ** ...on fait un cd (cd .., cd, cd ~, etc) de cette maniere on aura...
@@ -19,7 +56,7 @@
 ** ps (trouver une autre maniere de le faire sans fais autant d'appel à getcwd)
 */
 
-static int		launcher(t_temp tmp)
+int				launcher(t_temp tmp)
 {
 	char		*prompt;
 
@@ -44,10 +81,10 @@ int				main(int ac, char **av, char **envp)
 	t_temp		tmp;
 
 	welcome();
-	tmp.env = getcwd(NULL, 0);// nani?
+	save_env(&tmp.varenv, envp);
 	launcher(tmp);
+	free_list(tmp.varenv);
 	(void)ac;
 	(void)av;
-	(void)envp;
 	return (0);
 }

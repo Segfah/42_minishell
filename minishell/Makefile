@@ -27,8 +27,8 @@ SRC := \
 	srcs/gestion/cd.c \
 	srcs/gestion/env.c \
 	srcs/gestion/command_bin.c \
-	srcs/gestion/echo.c \
-	srcs/utils/ft_split_strcmd.c
+	srcs/gestion/echo.c 
+#	srcs/utils/ft_split_strcmd.c
 
 OBJS = $(addprefix objs/, $(SRC:.c=.o))
 

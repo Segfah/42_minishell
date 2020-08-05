@@ -19,60 +19,67 @@
 # include <signal.h>
 # include "libft.h"
 
-typedef struct	s_temp
+typedef struct		s_lists
 {
-	char		*env;
-	char		**tabcmd;
-	char		**strcmd;
-}				t_temp;
+	char			*content;
+	struct s_lists	*next;
+}					t_lists;
+
+typedef struct		s_temp
+{
+	char			*env;
+	char			**tabcmd;
+	char			**strcmd;
+	t_lists			*varenv;
+}					t_temp;
 
 /*
 ** drawings
 */
 
-void			welcome(void);
+void				welcome(void);
 
 /*
 ** prompt
 */
 
-char			*ft_prompt(char *str);
+char				*ft_prompt(char *str);
 
 /*
 ** Parsing
 */
 
-void			ft_getline(t_temp *tmp);
-void			clean_str(char *str);
+void				ft_getline(t_temp *tmp);
+void				clean_str(char *str);
 
 /*
 ** gestion/pwd
 */
-int				gestion_pwd(char **tabcmd, t_temp *tmp, int i);
+int					gestion_pwd(char **tabcmd, t_temp *tmp, int i);
 
 /*
 ** gestion/cd
 */
-void			gestion_cd(char *str);
+void				gestion_cd(char *str);
 
 /*
 ** gestion/env.c
 */
-void			gestion_env(char **envp);
+void				gestion_env(t_lists *test);
 
 /*
 ** gestion/command_bin
 */
-int				command_bin(char **tab);
+int					command_bin(char **tab);
 
 /*
 ** gestion/encho
 */
-void    		gestion_echo(char *str);
+void				gestion_echo(char *str);
 
 /*
 ** utils/ft_split_strcmd
 */
-char			**ft_split_strcmd(char *s, char c);
+char				**ft_split_strcmd(char *s, char c);
 
 #endif

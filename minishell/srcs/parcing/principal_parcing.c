@@ -55,7 +55,9 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 		if (ft_strcmp(tabcmd[i], "exit") == 0)
 			exit(0);
 		else if (ft_strncmp(tabcmd[i], "cd", 2) == 0)
-			gestion_cd(tabcmd[i]);//		else if (ft_strcmp(tabcmd[i], "env") == 0)//			gestion_env(envp);
+			gestion_cd(tabcmd[i]);
+		else if (ft_strcmp(tabcmd[i], "env") == 0)
+			gestion_env(tmp->varenv);
 		else if (ft_strcmp(tabcmd[i], "pwd") == 0)
 			gestion_pwd(tabcmd, tmp, i);
 		//else if (ft_strncmp(tabcmd[i], "echo", 4) == 0)

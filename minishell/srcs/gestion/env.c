@@ -1,15 +1,14 @@
 #include "minishell.h"
 
-void    gestion_env(char **envp)
+void				gestion_env(t_lists *test)
 {
-	char	**env;
-	int		i;
+	t_lists			*tmp;
 
-	env = envp;
-	i = 0;
-	while (env[i])
+	tmp = test;
+	while (tmp != NULL)
 	{
-		ft_printf("%s\n", env[i]);
-		i++;
+		ft_printf("%s\n", tmp->content);
+		tmp = tmp->next;
 	}
 }
+
