@@ -6,7 +6,7 @@
 #    By: lryst <lryst@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 05:41:03 by corozco           #+#    #+#              #
-#    Updated: 2020/08/06 01:09:41 by lryst            ###   ########.fr        #
+#    Updated: 2020/08/06 02:33:02 by corozco          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ SRC := \
 	srcs/gestion/echo.c \
 	srcs/utils/ft_split_strcmd.c \
 	srcs/utils/ft_split_echo.c \
-	srcs/gestion/tools/tools_env_export.c
+	srcs/gestion/tools/tools_env_export.c \
+	srcs/gestion/export.c
 
 
 OBJS = $(addprefix objs/, $(SRC:.c=.o))

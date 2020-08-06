@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:00:46 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/06 00:55:34 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/06 04:20:40 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void		save_env(t_lists **head, char **envp)
 	while (envp[i])
 		i++;
 	while (i--)
-		add_list_front(head, envp[i]);
+		add_list_front(head, envp[i], NULL);
 }
 
 /*

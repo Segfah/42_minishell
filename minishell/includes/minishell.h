@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/06 01:08:15 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/06 04:48:56 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct		s_temp
 	char			**tabcmd;
 	char			**strcmd;
 	t_lists			*varenv;
+	t_lists			*exportenv;
 }					t_temp;
 
 /*
@@ -53,6 +54,12 @@ char				*ft_prompt(char *str);
 void				ft_getline(t_temp *tmp);
 void				clean_str(char *str);
 
+
+/*
+** gestion/export
+*/
+void				gestion_export(t_temp *tmp);
+
 /*
 ** gestion/pwd
 */
@@ -72,7 +79,7 @@ void				gestion_env(t_lists *head);
 ** gestion/tools/env_export
 */
 
-void				add_list_front(t_lists **head, char *str);
+void				add_list_front(t_lists **head, char *str, char *str2);
 void				free_list(t_lists *test);
 
 /*
