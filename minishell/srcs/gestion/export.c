@@ -12,6 +12,11 @@
 
 #include "minishell.h"
 
+
+/*
+** Elle tri la liste export
+*/
+
 void			range_export(t_lists *la)
 {
 	t_lists *tmp;
@@ -24,17 +29,11 @@ void			range_export(t_lists *la)
 	while (tmp->next != NULL)
 	{
 		tmp3 = tmp;
-//		s1 = tmp->name;
-//		s2 = tmp->data;
 		tmp1 = tmp->next;
 		while (tmp1 != NULL)
 		{
-			if (ft_strcmp(tmp1->name, tmp3->name) > 0)
-			{
+			if (ft_strcmp(tmp1->name, tmp3->name) < 0)
 				tmp3 = tmp1;
-//				s1 = tmp3->name;
-//				s2 = tmp3->data;
-			}
 			tmp1 = tmp1->next;
 		}
 		s1 = tmp->name;
@@ -43,11 +42,13 @@ void			range_export(t_lists *la)
 		tmp->data = tmp3->data;
 		tmp3->name = s1;
 		tmp3->data = s2;
-//		tmp3->name = tmp->name;
-//		tmp3->data = tmp->data;
 		tmp = tmp->next;
 	}
 }
+
+/*
+**	Fait une copie d'une liste ch....
+*/
 
 void			cpy_env(t_lists **cpy, t_lists *list)
 {
@@ -71,10 +72,8 @@ void		gestion_export(t_temp *tmp)
 		i++;
 	if (i == 1)
 	{
-		cpy_env(&tmp->exportenv, tmp->varenv);
 		range_export(tmp->exportenv);
-		gestion_env(tmp->exportenv);
-		free_list(tmp->exportenv);
+		print_list(tmp->exportenv);
 	}
 	else
 		ft_printf("En creacion\n");

@@ -58,6 +58,7 @@ void				clean_str(char *str);
 /*
 ** gestion/export
 */
+void				cpy_env(t_lists **cpy, t_lists *list);
 void				gestion_export(t_temp *tmp);
 
 /*
@@ -73,12 +74,13 @@ void				gestion_cd(char *str);
 /*
 ** gestion/env.c
 */
-void				gestion_env(t_lists *head);
+void				gestion_env(t_temp *tmp);
 
 /*
 ** gestion/tools/env_export
 */
 
+void				print_list(t_lists *head);
 void				add_list_front(t_lists **head, char *str, char *str2);
 void				free_list(t_lists *test);
 

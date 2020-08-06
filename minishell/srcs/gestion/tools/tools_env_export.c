@@ -18,6 +18,21 @@
 ** arreglar los exit(1); y cambiarlos por return (-1)
 */
 
+
+void			print_list(t_lists *head)
+{
+	t_lists		*tmp;
+
+	tmp = head;
+	while (tmp != NULL)
+	{
+		ft_printf("%s=", tmp->name);
+		ft_printf("%s\n", tmp->data);
+		tmp = tmp->next;
+	}
+}
+
+
 void			add_list_front(t_lists **head, char *str, char *str2)
 {
 	t_lists		*new;

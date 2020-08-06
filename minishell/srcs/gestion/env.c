@@ -12,15 +12,7 @@
 
 #include "minishell.h"
 
-void				gestion_env(t_lists *head)
+void				gestion_env(t_temp *tmp)
 {
-	t_lists			*tmp;
-
-	tmp = head;
-	while (tmp != NULL)
-	{
-		ft_printf("%s=", tmp->name);
-		ft_printf("%s\n", tmp->data);
-		tmp = tmp->next;
-	}
+	print_list(tmp->varenv);
 }

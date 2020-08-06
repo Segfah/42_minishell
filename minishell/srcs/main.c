@@ -16,7 +16,7 @@
 ** fonction qui garde le env dans une liste c
 */
 
-static void		save_env(t_lists **head, char **envp)
+static void		save_env(t_lists **head, char **envp, t_temp *tmp)
 {
 	int			i;
 
@@ -26,6 +26,7 @@ static void		save_env(t_lists **head, char **envp)
 		i++;
 	while (i--)
 		add_list_front(head, envp[i], NULL);
+	cpy_env(&tmp->exportenv, *head);
 }
 
 /*
@@ -60,9 +61,11 @@ int				main(int ac, char **av, char **envp)
 	t_temp		tmp;
 
 	welcome();
-	save_env(&tmp.varenv, envp);
+	save_env(&tmp.varenv, envp, &tmp);
+//	cpy_env(&tmp.exportenv, tmp.varenv);
 	launcher(tmp);
 	free_list(tmp.varenv);
+	free_list(tmp.exportenv);
 	(void)ac;
 	(void)av;
 	return (0);

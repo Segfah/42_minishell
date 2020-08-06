@@ -69,7 +69,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 		else if (ft_strncmp(tabcmd[i], "cd", 2) == 0)
 			gestion_cd(tabcmd[i]);
 		else if (ft_strcmp(tabcmd[i], "env") == 0)
-			gestion_env(tmp->varenv);
+			gestion_env(tmp);
 		else if (ft_strcmp(tabcmd[i], "pwd") == 0)
 			gestion_pwd(tabcmd, tmp, i);
 		else if (ft_strncmp(tabcmd[i], "nani", 4) == 0)
