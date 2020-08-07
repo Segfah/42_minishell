@@ -63,11 +63,30 @@ void			cpy_env(t_lists **cpy, t_lists *list)
 	}
 }
 
-void		gestion_export(t_temp *tmp)
+static int	search_equal(char *str)
 {
 	int		i;
 
+	i = -1;
+	if (str[0] == '=')
+		return (-2);
+	while (str[++i])
+	{
+		if (str[i] == '=' && str[i + 1] == '=')
+			return (-1);
+		if (str[i] == '=' && str[i + 1] != '=')
+			return (1);
+	}
+	return (0);
+}
+
+void		gestion_export(t_temp *tmp)
+{
+	int		i;
+	int		ret;
+
 	i = 0;
+	ret = 0;
 	while (tmp->strcmd[i])
 		i++;
 	if (i == 1)
@@ -76,5 +95,19 @@ void		gestion_export(t_temp *tmp)
 		print_list(tmp->exportenv);
 	}
 	else
-		ft_printf("En creacion\n");
+	{
+		i = 0;
+		while (tmp->strcmd[++i])
+		{
+			if ((ret = search_equal(tmp->strcmd[i])) == 1)
+				ft_printf("export et env\n");
+			else if (ret == -1)
+				ft_printf("Error \"=\"\n");
+			else if (ret == -2)
+				ft_printf("minishell: export: `%s': not avalid identifier\n"
+				, tmp->strcmd[i]);
+			else
+				ft_printf("solo en export\n");
+		}
+	}
 }
