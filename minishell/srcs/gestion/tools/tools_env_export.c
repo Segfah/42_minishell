@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 00:50:50 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/06 04:21:17 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/09 03:57:02 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,22 @@ void			free_list(t_lists *test)
 		free(test->data);
 		free(test);
 		test = tmp;
+	}
+}
+
+/*
+**	Fait une copie d'une liste ch....
+*/
+
+void			cpy_env(t_lists **cpy, t_lists *list)
+{
+	t_lists *tmplist;
+
+	*cpy = NULL;
+	tmplist = list;
+	while (tmplist != NULL)
+	{
+		add_list_front(cpy, tmplist->name, tmplist->data);
+		tmplist = tmplist->next;
 	}
 }

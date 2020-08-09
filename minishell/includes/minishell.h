@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/06 04:48:56 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/09 03:57:26 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void				gestion_env(t_temp *tmp);
 void				print_list(t_lists *head);
 void				add_list_front(t_lists **head, char *str, char *str2);
 void				free_list(t_lists *test);
+void				cpy_env(t_lists **cpy, t_lists *list);
 
 /*
 ** gestion/command_bin

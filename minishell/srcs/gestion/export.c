@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 02:32:22 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/06 05:14:44 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/09 05:12:19 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,6 @@ void			range_export(t_lists *la)
 	}
 }
 
-/*
-**	Fait une copie d'une liste ch....
-*/
-
-void			cpy_env(t_lists **cpy, t_lists *list)
-{
-	t_lists *tmplist;
-
-	*cpy = NULL;
-	tmplist = list;
-	while (tmplist != NULL)
-	{
-		add_list_front(cpy, tmplist->name, tmplist->data);
-		tmplist = tmplist->next;
-	}
-}
-
 static int	search_equal(char *str)
 {
 	int		i;
@@ -72,9 +55,7 @@ static int	search_equal(char *str)
 		return (-2);
 	while (str[++i])
 	{
-		if (str[i] == '=' && str[i + 1] == '=')
-			return (-1);
-		if (str[i] == '=' && str[i + 1] != '=')
+		if (str[i] == '=')
 			return (1);
 	}
 	return (0);
@@ -97,17 +78,23 @@ void		gestion_export(t_temp *tmp)
 	else
 	{
 		i = 0;
+		//chercher si la env existe.
 		while (tmp->strcmd[++i])
 		{
 			if ((ret = search_equal(tmp->strcmd[i])) == 1)
-				ft_printf("export et env\n");
-			else if (ret == -1)
-				ft_printf("Error \"=\"\n");
+			{
+				ft_printf("tmp [%s]\n", tmp->strcmd[i]);
+				add_list_front(&tmp->varenv, tmp->strcmd[i], NULL);
+				ft_printf("tmp [%s]\n", tmp->strcmd[i]);
+				//add_list_front(&tmp->exportenv, tmp->strcmd[i], NULL);
+			}
 			else if (ret == -2)
 				ft_printf("minishell: export: `%s': not avalid identifier\n"
 				, tmp->strcmd[i]);
 			else
-				ft_printf("solo en export\n");
+			{
+				add_list_front(&tmp->exportenv, tmp->strcmd[i], "");
+			}
 		}
 	}
 }
