@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/06 04:48:56 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/07 16:33:29 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int					command_bin(char **tab);
 /*
 ** gestion/encho
 */
-void				gestion_echo(char *str);
+void    gestion_echo(char *str, char *option);
 
 /*
 ** utils/ft_split_strcmd

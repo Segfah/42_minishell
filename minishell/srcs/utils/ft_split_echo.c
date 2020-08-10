@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 23:18:04 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/06 00:36:09 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/07 16:58:04 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,29 @@ static int          adeline(char *s, char cote, int n, int *i)
 	return (n);
 }
 
+static	char		*remove_cote(char *s, int start, int *end, char cote)
+{
+	int i;
+	char *ret;
+
+	i = *end;
+	if (s[start] == cote)
+		start++;
+	while (start < *end && s[*end] != cote)
+		(*end)--;
+	if (*end == start)
+		*end = i;
+	if (!(ret = (char*)malloc(sizeof(char) * (*end - start) + 1)))
+		return NULL;
+	i = 0;
+	while (start < *end)
+	{
+		ret[i++] = s[start++];
+	}
+	ret[i]= '\0';
+	return (ret);
+}
+
 static char			*ft_fill(char *s, char c, int *i, char *tab)
 {
 	int		save;
@@ -63,12 +86,11 @@ static char			*ft_fill(char *s, char c, int *i, char *tab)
 			adeline(s, s[*i], 0, i);
 			if (save < *i)
 			{
+				if (s[*i] == c)
+					(*i)++;
 				k = 0;
-				if (!(tab = (char*)malloc(sizeof(char) * (*i - save) + 1)))
+				if (!(tab = remove_cote(s, save, i, s[save])))
 					return NULL;
-				while (*i > save)
-					tab[k++] = s[save++];
-				tab[k] = '\0';
 				return (tab);
 			}
 		}
@@ -115,15 +137,17 @@ char				**ft_split_echo(char *s, char c)
 
 	i = 0;
 	n = 0;
-	j = -1;
+	j = 0;
+	printf("string split = [%s]\n", s);
 	if (!s)
 		return (NULL);
 	n = ft_word(s, c);
 	if (!(tab = (char **)malloc(sizeof(tab) * (n + 1))))
 		return (NULL);
-	while (++j < n)
+	while (j++ < n)
 	{
 		tab[j] = ft_fill(s, c, &i, tab[j]);
+		printf("tab = [%s]\n", tab[j]);
 		// while (s[i] != c && s[i] != '\0')
 		// 	i++;
 	}
