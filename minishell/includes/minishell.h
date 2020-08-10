@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/09 03:57:26 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/10 01:23:10 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ char				*ft_prompt(char *str);
 
 void				ft_getline(t_temp *tmp);
 void				clean_str(char *str);
-
 
 /*
 ** gestion/export
@@ -104,6 +103,5 @@ char				**ft_split_strcmd(char *s, char c);
 ** utils//ft_split_echo
 */
 char				**ft_split_echo(char *s, char c);
-
 
 #endif

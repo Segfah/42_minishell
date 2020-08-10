@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 00:50:50 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/09 03:57:02 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/10 01:28:46 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 ** dans la data (2 content)
 ** arreglar los exit(1); y cambiarlos por return (-1)
 */
-
 
 void			print_list(t_lists *head)
 {
@@ -32,32 +31,27 @@ void			print_list(t_lists *head)
 	}
 }
 
-
 void			add_list_front(t_lists **head, char *str, char *str2)
 {
 	t_lists		*new;
-	int			i;
+	char		*ss;
 
 	if (!(new = malloc(sizeof(t_lists))))
 		exit(1);
 	if (str2 == NULL)
 	{
-		if (!(new->data = ft_strdup(ft_strchr(str, '=') + 1)))
+		ss = ft_strchr(str, '=');
+		if (!(new->data = ft_strdup((ss != NULL) ? ss + 1 : "")))
 			exit(1);
-		i = 0;
-		while (str[i] != '=')
-			i++;
-		str[i] = '\0';
+		str[ss - str] = 0;
 		if (!(new->name = ft_strdup(str)))
 			exit(1);
+		if (ss)
+			str[(int)ft_strlen(str)] = '=';
 	}
-	else
-	{
-		if (!(new->data = ft_strdup(str2)))
-			exit(1);
-		if (!(new->name = ft_strdup(str)))
-			exit(1);
-	}
+	else if (!(new->data = ft_strdup(str2))
+			|| !(new->name = ft_strdup(str)))
+		exit(1);
 	new->next = *head;
 	*head = new;
 }
@@ -82,7 +76,7 @@ void			free_list(t_lists *test)
 
 void			cpy_env(t_lists **cpy, t_lists *list)
 {
-	t_lists *tmplist;
+	t_lists		*tmplist;
 
 	*cpy = NULL;
 	tmplist = list;
