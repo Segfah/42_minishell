@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/07 16:33:29 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/10 18:02:09 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,10 @@ char				**ft_split_strcmd(char *s, char c);
 */
 char				**ft_split_echo(char *s, char c);
 
+/*
+** utils/free.c
+*/
+void    			ft_free(char *str);
+void    			ft_free_double_tab(char **tab);
 
 #endif
