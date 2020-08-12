@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/11 20:20:32 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/12 22:28:55 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,6 @@ void				free_list(t_lists *test);
 */
 int					command_bin(char **tab);
 
-/*
-** gestion/encho
-*/
-void    			gestion_echo(char *str, char *option, t_temp *temp);
 
 /*
 ** utils/ft_split_strcmd
@@ -100,13 +96,49 @@ void    			gestion_echo(char *str, char *option, t_temp *temp);
 char				**ft_split_strcmd(char *s, char c);
 
 /*
-** gestion/echo
+** gestion/echo/echo
 */
+char				*gestion_echo_option(char *str, char *arg);
+void				gestion_echo(char *str, char *arg, t_temp *temp);
+
+/*
+** gestion/echo/ft_split_echo
+*/
+char				*remove_cote(char *s, int *start, char cote);
 char				**ft_split_echo(char *s, t_temp *temp);
+
+/*
+** gestion/echo/dollar
+*/
+char				*put_dollar_variable(char *str, char *tab);
+char				*check_dollar(char *str, int *i, t_lists *var);
+void				count_dollar_varriable(char *str, int *j, t_lists *var);
+
+/*
+** gestion/echo/slash
+*/
 int					count_slash(char *str, int *j);
-char				*double_cote(char *str, int *i, char *tab, t_temp *temp);
-char				*single_cote(char *str, int *i, char *tab);
-char				*dollar_variable(char *str, int *i, char *tab);
+char				*remove_slash(char *str, int *i, char save);
+char				*slash_sort(char *str, int *i, char *tab, t_lists *var);
+char				*slash(char *str, int *i, char *tab, t_lists *var);
+
+/*
+** gestion/echo/single_cote
+*/
+char				*single_cote(char *str, char *tab);
+char				*put_in_tab_single(char *str, int *i, char *tab, int j, t_lists *var);
+char				*single_keep_cote(char *str, int *i, char *tab, t_lists *var);
+
+/*
+** gestion/echo/double_cote
+*/
+char				*put_in_tab(char *str, int *i, char *tab, int j, t_lists *var);
+char				*double_cote(char *str, char *tab, t_lists *var);
+
+/*
+** gestion/echo/word
+*/
+char				*word(char *str, int *i, char *tab);
 
 /*
 ** utils/free.c

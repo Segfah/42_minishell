@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 23:18:04 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/11 20:19:54 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/12 22:29:39 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,49 +51,63 @@ static int          adeline(char *s, char cote, int n, int *i)
 	return (n);
 }
 
-static	char		*remove_cote(char *s, int start, int *end, char cote)
+char				*remove_cote(char *s, int *start, char cote)
 {
 	int i;
 	char *ret;
+	int save;
 
-	i = *end;
-	if (s[start] == cote)
-		start++;
-	while (start < *end && s[*end] != cote)
-		(*end)--;
-	if (*end == start)
-		*end = i;
-	if (!(ret = (char*)malloc(sizeof(char) * (*end - start) + 1)))
+	if (s[*start] == cote)
+		(*start)++;
+	save = *start;
+	while (s[*start] && s[*start] != cote)
+		(*start)++;
+	if (!(ret = (char*)malloc(sizeof(char) * (*start - save) + 1)))
 		return NULL;
 	i = 0;
-	while (start < *end)
-	{
-		ret[i++] = s[start++];
-	}
+	while (save < *start)
+		ret[i++] = s[save++];
 	ret[i]= '\0';
+	if (s[*start])
+		(*start)++;
 	return (ret);
 }
 
 static char			*ft_fill(char *s, int *i, char *tab, t_temp *temp)
 {
-	int		save;
 	int		k;
 
 	k = 0;
 	while (s[*i] != '\0')
 	{
+		printf("start ======>\n");
+		printf("char[%d] = [%c]\n", *i, s[*i]);
 		if (s[*i] == '\'')
-			return (single_cote(s, i + 1, tab));
-		else if (s[*i] != '"')
-			return (double_cote(s, i + 1, tab, temp));
+		{
+			printf("single cote !\n");
+			return (single_cote(remove_cote(s, i, s[*i]), tab));
+		}
+		else if (s[*i] == '"')
+		{
+			printf("double cote !\n");
+			return (double_cote((remove_cote(s, i, s[*i])), tab, temp->varenv));
+		}
 		else if (s[*i] == '\\')
-			return (slash());
-		else if (s[*i] == ' ')
-			i++;
+		{
+			printf("slash !\n");
+			return (slash(s, i + 1, tab, temp->varenv));
+		}
 		else if (s[*i] == '$')
-			return (dollar_variable());
+		{
+			printf("dollar !\n");
+			count_dollar_varriable(s, i, temp->varenv);
+			return (put_dollar_variable(check_dollar(s, i, temp->varenv), tab));
+		}
 		else if (s[*i] != ' ' && s[*i] != '"' && s[*i] != '\'' && s[*i] != '\\' && s[*i] != '$')
-			return (word());
+		{
+			printf("word !\n");
+			return (word(s, i, tab));
+		}
 		/* else if (s[*i] != '\0' && s[*i] != c && s[*i] != '"' && s[*i] != '\'')
 		{
 			save = *i;
@@ -120,8 +134,8 @@ static char			*ft_fill(char *s, int *i, char *tab, t_temp *temp)
 				tab[k] = '\0';
 				return (tab);
 			}
-		}
-		(*i)++; */
+		}*/
+		(*i)++;
 	}
 	return NULL;
 }
@@ -139,11 +153,14 @@ char				**ft_split_echo(char *s, t_temp *temp)
 	if (!s)
 		return (NULL);
 	n = ft_count_word(s);
-	printf("NBR WORD %d\n", n);
+	//printf("NBR WORD %d\n", n);
 	if (!(tab = (char **)malloc(sizeof(tab) * (n + 1))))
 		return (NULL);
 	while (++j < n)
+	{
 		tab[j] = ft_fill(s, &i, tab[j], temp);
+		//printf("tab%d = [%s]\n", j, tab[i]);
+	}
 	tab[j] = NULL;
 	return (tab);
 }
