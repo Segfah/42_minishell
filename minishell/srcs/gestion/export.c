@@ -45,7 +45,7 @@ void		range_export(t_lists *la)
 	}
 }
 
-char			*search_key(char *str)
+char			*str_key(char *str)
 {
 	char		*ss;
 	char		*tmp;
@@ -55,21 +55,79 @@ char			*search_key(char *str)
 	{
 		str[tmp - str] = 0;
 		if (!(ss = ft_strdup(str)))
-			exit(1);
+			return (NULL);
 		str[(int)ft_strlen(str)] = '=';
 	}
 	else 
 		if (!(ss = ft_strdup(str)))
-			exit(1);
+			return (NULL);
 	return (ss);
 }
+
+int			search_list(t_lists *head, char *ss)
+{
+	t_lists		*tmp;
+
+	tmp = head;
+	while (tmp != NULL)
+	{
+		if (ft_strcmp(tmp->name, ss) == 0)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+int				done_list(t_lists *head, char *ss, char **data)
+{
+	t_lists		*tmp;
+
+	tmp = head;
+	while (tmp != NULL)
+	{
+		if (ft_strcmp(tmp->name, ss) == 0)
+			if ((*data = ft_strdup(tmp->data)) == NULL)
+				return (-1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
 /*
-int				search_env(char *str, t_temp *tmp)
+**	key (1) == la commande que j'utilise pour modifier mes env
+**	key != (1) pour chercher un node et returner une string malloquee
+**	example
+**		
+
+//			test
+			char *data;
+			data = NULL;
+			search_env("HOME", tmp, 0, &data);
+			ft_printf("data = [%s]\n", data);
+			free(data); //tu free apres l'utilisation de la data.
+**
+*/
+
+int				search_env(char *str, t_temp *tmp, int key, char **data)
 {
 	char		*ss;
+	int			ret;
+
+	ret = 0;
+	if ((ss = str_key(str)) == NULL)
+		return (-1);
+	if (key == 1)
+		ret = search_list(tmp->varenv, ss);
+	else
+		if ((ret = done_list(tmp->varenv, ss, data)) == -1)
+		{
+			free(ss);
+			return (-1);
+		}
+	free(ss);
 	return (ret);
 }
-*/
+
 static int	search_equal(char *str)
 {
 	int		i;
@@ -121,17 +179,20 @@ void		gestion_export(t_temp *tmp)
 		{
 			if (check_env(tmp->strcmd[i]) != 0)
 			{
-				ft_printf("minishell: export: `%s': not a valid identifier\n", tmp->strcmd[i]);
+				ft_printf("minishell: export: `%s': not a valid identifier\n",
+				tmp->strcmd[i]);
 				break ;
 			}
-			//chercher si la env existe.
-			if ((ret = search_equal(tmp->strcmd[i])) == 1)
+			if (search_env(tmp->strcmd[i], tmp, 1, NULL) == 0)
 			{
-				add_list_front(&tmp->varenv, tmp->strcmd[i], NULL);
-				add_list_front(&tmp->exportenv, tmp->strcmd[i], NULL);
+				if ((ret = search_equal(tmp->strcmd[i])) == 1)
+				{
+					add_list_front(&tmp->varenv, tmp->strcmd[i], NULL);
+					add_list_front(&tmp->exportenv, tmp->strcmd[i], NULL);
+				}
+				else
+					add_list_front(&tmp->exportenv, tmp->strcmd[i], "");
 			}
-			else
-				add_list_front(&tmp->exportenv, tmp->strcmd[i], "");
 		}
 	}
 }
