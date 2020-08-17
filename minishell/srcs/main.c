@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:00:46 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/06 04:20:40 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/17 06:01:39 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 ** fonction qui garde le env dans une liste c
 */
 
-static void		save_env(t_lists **head, char **envp, t_temp *tmp)
+//static void		save_env(t_lists **head, char **envp, t_temp *tmp)
+static void		save_env(t_lists **head, char **envp)
 {
 	int			i;
 
@@ -26,7 +27,7 @@ static void		save_env(t_lists **head, char **envp, t_temp *tmp)
 		i++;
 	while (i--)
 		add_list_front(head, envp[i], NULL);
-	cpy_env(&tmp->exportenv, *head);
+//	cpy_env(&tmp->exportenv, *head);
 }
 
 /*
@@ -61,8 +62,8 @@ int				main(int ac, char **av, char **envp)
 	t_temp		tmp;
 
 	welcome();
-	save_env(&tmp.varenv, envp, &tmp);
-//	cpy_env(&tmp.exportenv, tmp.varenv);
+	save_env(&tmp.varenv, envp);
+//	save_env(&tmp.varenv, envp, &tmp);
 	launcher(tmp);
 	free_list(tmp.varenv);
 	free_list(tmp.exportenv);

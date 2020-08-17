@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 02:32:22 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/10 05:12:58 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/17 06:04:05 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,11 @@ int				done_list(t_lists *head, char *ss, char **data)
 **		
 
 //			test
-			char *data;
-			data = NULL;
-			search_env("HOME", tmp, 0, &data);
-			ft_printf("data = [%s]\n", data);
-			free(data); //tu free apres l'utilisation de la data.
+char *data;
+data = NULL;
+search_env("HOME", tmp, 0, &data);
+ft_printf("data = [%s]\n", data);
+free(data); //tu free apres l'utilisation de la data.
 **
 */
 
@@ -120,14 +120,11 @@ int				search_env(char *str, t_temp *tmp, int key, char **data)
 		ret = search_list(tmp->varenv, ss);
 	else
 		if ((ret = done_list(tmp->varenv, ss, data)) == -1)
-		{
-			free(ss);
 			return (-1);
-		}
 	free(ss);
 	return (ret);
 }
-
+/*
 static int	search_equal(char *str)
 {
 	int		i;
@@ -140,20 +137,68 @@ static int	search_equal(char *str)
 	}
 	return (0);
 }
-
+*/
 int			check_env(char *str)
 {
 	int		i;
 
 	if ((ft_isalpha(str[0]) == 0) && str[0] != '_')
-			return (-1);
+		return (-1);
 	i = 1;
 	while (str[i] && str[i] != '=')
 	{
-		if (ft_isalpha(str[1]) || str[0] != '_')
+		if (ft_isalpha(str[i]) || str[i] != '_')
 			i++;
 		else
 			return (-1);
+	}
+	if (str[i] == '=')
+		return (1);
+	return (0);
+}
+		//transformarla en add_list_back
+/*
+void			add_list_front(t_lists **head, char *str, char *str2)
+{
+	t_lists		*new;
+
+	if (!(new = malloc(sizeof(t_lists))))
+		exit(1);
+	if (str2 == NULL)
+	{
+		if (!(new->name = ft_strdup(str)))
+			exit(1);
+		new->data = NULL;
+	}
+	else if (!(new->data = ft_strdup(str2))
+			|| !(new->name = ft_strdup(str)))
+		exit(1);
+	new->next = *head;
+	*head = new;
+}
+*/
+int				ft_cortar(char *tab[2], char *str)
+{
+	int			i;
+	char		*ss;
+
+	if ((i = check_env(str)) == -1)
+		return (-2);
+	else if (i == 0)
+	{
+		if (!(tab[0] = ft_strdup(str)))
+			return (-1);
+		tab[1] = NULL;
+	}
+	else
+	{
+		ss = ft_strchr(str, '=');
+		if (!(tab[1] = ft_strdup(ss)))
+			return(-1);
+		str[ss - str] = 0;
+		if (!(tab[0] = ft_strdup(str)))
+			return(-1);
+		str[(int)ft_strlen(str)] = '=';
 	}
 	return (0);
 }
@@ -162,6 +207,7 @@ void		gestion_export(t_temp *tmp)
 {
 	int		i;
 	int		ret;
+	char	*tab[2];
 
 	i = 0;
 	ret = 0;
@@ -169,30 +215,34 @@ void		gestion_export(t_temp *tmp)
 		i++;
 	if (i == 1)
 	{
+		cpy_env(&tmp->exportenv, tmp->varenv);
 		range_export(tmp->exportenv);
 		print_list(tmp->exportenv);
+		free_list(tmp->exportenv);
 	}
 	else
 	{
 		i = 0;
 		while (tmp->strcmd[++i])
 		{
-			if (check_env(tmp->strcmd[i]) != 0)
+			if ((ret = ft_cortar(tab, tmp->strcmd[i])) == -2)
 			{
 				ft_printf("minishell: export: `%s': not a valid identifier\n",
-				tmp->strcmd[i]);
+						tmp->strcmd[i]);
 				break ;
 			}
-			if (search_env(tmp->strcmd[i], tmp, 1, NULL) == 0)
+			else if (ret == -1)
 			{
-				if ((ret = search_equal(tmp->strcmd[i])) == 1)
-				{
-					add_list_front(&tmp->varenv, tmp->strcmd[i], NULL);
-					add_list_front(&tmp->exportenv, tmp->strcmd[i], NULL);
-				}
-				else
-					add_list_front(&tmp->exportenv, tmp->strcmd[i], "");
+				ft_printf("error malloc\n"); // a cambiar.la foncion a int gest.
+				exit(1);
 			}
+			else
+			{
+				add_list_front(&tmp->varenv, tab[0], tab[1]);
+			}
+			free(tab[0]);
+			if (tab[1] != NULL)
+				free (tab[1]);
 		}
 	}
 }
