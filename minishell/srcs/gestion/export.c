@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 02:32:22 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/17 06:04:05 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/18 05:03:01 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,20 @@ void		range_export(t_lists *la)
 			tmp1 = tmp1->next;
 		}
 		s1 = tmp->name;
-		s2 = tmp->data;
+		if (tmp->data == NULL)
+			s2 = NULL;
+		else
+			s2 = tmp->data;
 		tmp->name = tmp3->name;
-		tmp->data = tmp3->data;
+		if (tmp3->data == NULL)
+			tmp->data = NULL;
+		else
+			tmp->data = tmp3->data;
 		tmp3->name = s1;
-		tmp3->data = s2;
+		if (s2 == NULL)
+			tmp3->data = NULL;
+		else
+			tmp3->data = s2;
 		tmp = tmp->next;
 	}
 }
@@ -156,6 +165,84 @@ int			check_env(char *str)
 		return (1);
 	return (0);
 }
+
+
+void	lback(t_lists **alst, t_lists *new)
+{
+	t_lists	*tmp;
+
+	tmp = NULL;
+	if (new)
+	{
+		if (!alst || !(*alst))
+		{
+			*alst = new;
+			new->next = NULL;
+			return ;
+		}
+		tmp = *alst;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+		new->next = NULL;
+	}
+}
+
+t_lists		*lnew(char *str, char *str2)
+{
+	t_lists	*tmp;
+
+	if (!(tmp = ft_memalloc(sizeof(t_lists))))
+		return (NULL);
+	if (str)
+		tmp->name = ft_strdup(str);
+	else
+		tmp->name = NULL;
+	if (str2)
+		tmp->data = ft_strdup(str2);
+	else
+		tmp->data = NULL;
+	tmp->next = NULL;
+	return (tmp);
+}
+
+/*
+void				add_list_back(t_lists **head, char *str, char *str2)
+{
+	t_lists *new;
+	t_lists *tmp;
+
+	tmp = NULL;;
+	if (!(new = malloc(sizeof(t_list))))
+		exit(1);
+	if (str2 == NULL)
+	{
+		if (!(new->name = ft_strdup(str)))
+			exit(1);
+		new->data = NULL;
+	}
+	else
+	{
+		if (!(new->data = ft_strdup(str)))
+			exit(1);
+		if (!(new->name = ft_strdup(str)))
+			exit(1);
+		ft_printf("new -> [%s] new -> [%s]\n",new->name, new->data);
+		ft_printf("str -> [%s] str2 -> [%s]\n", str, str2);
+	}
+	//new->next = NULL;
+	if (!(*head))
+		*head = new;
+	else
+	{
+		tmp = *head;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+		new->next = NULL;
+	}
+}
+*/
 		//transformarla en add_list_back
 /*
 void			add_list_front(t_lists **head, char *str, char *str2)
@@ -193,7 +280,7 @@ int				ft_cortar(char *tab[2], char *str)
 	else
 	{
 		ss = ft_strchr(str, '=');
-		if (!(tab[1] = ft_strdup(ss)))
+		if (!(tab[1] = ft_strdup(ss + 1)))
 			return(-1);
 		str[ss - str] = 0;
 		if (!(tab[0] = ft_strdup(str)))
@@ -238,7 +325,13 @@ void		gestion_export(t_temp *tmp)
 			}
 			else
 			{
-				add_list_front(&tmp->varenv, tab[0], tab[1]);
+				t_lists *intento;
+				ft_printf("%s, %s \n", tab[0], tab[1]);
+				intento = lnew(tab[0], tab[1]);
+				ft_printf("%s, %s \n", intento->name, intento->data);
+				lback(&tmp->varenv,intento);
+			//	add_list_back(&tmp->varenv, tab[0], tab[1]);
+				
 			}
 			free(tab[0]);
 			if (tab[1] != NULL)

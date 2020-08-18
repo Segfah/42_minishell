@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 00:50:50 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/17 06:00:03 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/18 05:05:36 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,10 @@ void			free_list(t_lists *test)
 	while (test != NULL)
 	{
 		tmp = test->next;
-		free(test->name);
-		free(test->data);
+		if (test->name)
+			free(test->name);
+		if (test->data)
+			free(test->data);
 		free(test);
 		test = tmp;
 	}
