@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 00:50:50 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/18 05:05:36 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/18 05:13:07 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,25 @@ void			add_list_front(t_lists **head, char *str, char *str2)
 	*head = new;
 }
 
+void			addfront(t_lists **head, char *str, char *str2)
+{
+	t_lists		*new;
+
+	if (!(new = malloc(sizeof(t_lists))))
+		exit(1);
+	if (!(new->name = ft_strdup(str)))
+		exit(1);
+	if (str2)
+	{
+		if (!(new->data = ft_strdup(str2)))
+			exit(1);
+	}
+	else
+		new->data = NULL;
+	new->next = *head;
+	*head = new;
+}
+
 void			free_list(t_lists *test)
 {
 	t_lists		*tmp;
@@ -84,7 +103,7 @@ void			cpy_env(t_lists **cpy, t_lists *list)
 	tmplist = list;
 	while (tmplist != NULL)
 	{
-		add_list_front(cpy, tmplist->name, tmplist->data);
+		addfront(cpy, tmplist->name, tmplist->data);
 		tmplist = tmplist->next;
 	}
 }
