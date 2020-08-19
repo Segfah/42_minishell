@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 02:32:22 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/19 05:15:13 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/19 21:55:36 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,10 +249,13 @@ void			gestion_export(t_temp *tmp)
 			}
 			else
 			{
-
-				if (search_env(tab[0], tmp, 1, NULL) == 0)
+				if ((ret = search_env(tab[0], tmp, 1, NULL)) == 0)
+				{
 					if ((lback(&tmp->varenv, tab[0], tab[1])) == -1)
 						exit(1);
+				}
+				else if (ret == 1 && tab[1] != NULL)
+					ft_printf("usar el unset + el addback para hacer esto\n");
 			}
 			free(tab[0]);
 			if (tab[1] != NULL)
