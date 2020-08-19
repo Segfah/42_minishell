@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 00:50:50 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/18 05:13:07 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/19 03:05:18 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,31 +29,6 @@ void			print_list(t_lists *head)
 		ft_printf("%s\n", tmp->data);
 		tmp = tmp->next;
 	}
-}
-
-void			add_list_front(t_lists **head, char *str, char *str2)
-{
-	t_lists		*new;
-	char		*ss;
-
-	if (!(new = malloc(sizeof(t_lists))))
-		exit(1);
-	if (str2 == NULL)
-	{
-		ss = ft_strchr(str, '=');
-		if (!(new->data = ft_strdup((ss != NULL) ? ss + 1 : "")))
-			exit(1);
-		str[ss - str] = 0;
-		if (!(new->name = ft_strdup(str)))
-			exit(1);
-		if (ss)
-			str[(int)ft_strlen(str)] = '=';
-	}
-	else if (!(new->data = ft_strdup(str2))
-			|| !(new->name = ft_strdup(str)))
-		exit(1);
-	new->next = *head;
-	*head = new;
 }
 
 void			addfront(t_lists **head, char *str, char *str2)

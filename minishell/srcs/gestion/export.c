@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 02:32:22 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/18 05:03:01 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/19 03:15:46 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,11 @@ void		range_export(t_lists *la)
 			tmp1 = tmp1->next;
 		}
 		s1 = tmp->name;
-		if (tmp->data == NULL)
-			s2 = NULL;
-		else
-			s2 = tmp->data;
+		s2 = tmp->data;
 		tmp->name = tmp3->name;
-		if (tmp3->data == NULL)
-			tmp->data = NULL;
-		else
-			tmp->data = tmp3->data;
+		tmp->data = tmp3->data;
 		tmp3->name = s1;
-		if (s2 == NULL)
-			tmp3->data = NULL;
-		else
-			tmp3->data = s2;
+		tmp3->data = s2;
 		tmp = tmp->next;
 	}
 }
@@ -67,9 +58,11 @@ char			*str_key(char *str)
 			return (NULL);
 		str[(int)ft_strlen(str)] = '=';
 	}
-	else 
+	else
+	{
 		if (!(ss = ft_strdup(str)))
 			return (NULL);
+	}
 	return (ss);
 }
 
@@ -103,18 +96,15 @@ int				done_list(t_lists *head, char *ss, char **data)
 }
 
 /*
-**	key (1) == la commande que j'utilise pour modifier mes env
-**	key != (1) pour chercher un node et returner une string malloquee
-**	example
-**		
-
-//			test
-char *data;
-data = NULL;
-search_env("HOME", tmp, 0, &data);
-ft_printf("data = [%s]\n", data);
-free(data); //tu free apres l'utilisation de la data.
-**
+** key (1) == la commande que j'utilise pour modifier mes env
+** key != (1) pour chercher un node et returner une string malloquee
+** example
+**			test
+**			char *data;
+**			data = NULL;
+**			search_env("HOME", tmp, 0, &data);
+**			ft_printf("data = [%s]\n", data);
+**			free(data); //tu free apres l'utilisation de la data.
 */
 
 int				search_env(char *str, t_temp *tmp, int key, char **data)
@@ -128,11 +118,14 @@ int				search_env(char *str, t_temp *tmp, int key, char **data)
 	if (key == 1)
 		ret = search_list(tmp->varenv, ss);
 	else
+	{
 		if ((ret = done_list(tmp->varenv, ss, data)) == -1)
 			return (-1);
+	}
 	free(ss);
 	return (ret);
 }
+
 /*
 static int	search_equal(char *str)
 {
@@ -147,9 +140,10 @@ static int	search_equal(char *str)
 	return (0);
 }
 */
-int			check_env(char *str)
+
+int				check_env(char *str)
 {
-	int		i;
+	int			i;
 
 	if ((ft_isalpha(str[0]) == 0) && str[0] != '_')
 		return (-1);
@@ -166,104 +160,30 @@ int			check_env(char *str)
 	return (0);
 }
 
-
-void	lback(t_lists **alst, t_lists *new)
+void			lback(t_lists **alst, char *str, char *str2)
 {
-	t_lists	*tmp;
-
-	tmp = NULL;
-	if (new)
-	{
-		if (!alst || !(*alst))
-		{
-			*alst = new;
-			new->next = NULL;
-			return ;
-		}
-		tmp = *alst;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
-		new->next = NULL;
-	}
-}
-
-t_lists		*lnew(char *str, char *str2)
-{
-	t_lists	*tmp;
-
-	if (!(tmp = ft_memalloc(sizeof(t_lists))))
-		return (NULL);
-	if (str)
-		tmp->name = ft_strdup(str);
-	else
-		tmp->name = NULL;
-	if (str2)
-		tmp->data = ft_strdup(str2);
-	else
-		tmp->data = NULL;
-	tmp->next = NULL;
-	return (tmp);
-}
-
-/*
-void				add_list_back(t_lists **head, char *str, char *str2)
-{
-	t_lists *new;
-	t_lists *tmp;
-
-	tmp = NULL;;
-	if (!(new = malloc(sizeof(t_list))))
-		exit(1);
-	if (str2 == NULL)
-	{
-		if (!(new->name = ft_strdup(str)))
-			exit(1);
-		new->data = NULL;
-	}
-	else
-	{
-		if (!(new->data = ft_strdup(str)))
-			exit(1);
-		if (!(new->name = ft_strdup(str)))
-			exit(1);
-		ft_printf("new -> [%s] new -> [%s]\n",new->name, new->data);
-		ft_printf("str -> [%s] str2 -> [%s]\n", str, str2);
-	}
-	//new->next = NULL;
-	if (!(*head))
-		*head = new;
-	else
-	{
-		tmp = *head;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
-		new->next = NULL;
-	}
-}
-*/
-		//transformarla en add_list_back
-/*
-void			add_list_front(t_lists **head, char *str, char *str2)
-{
+	t_lists		*tmp;
 	t_lists		*new;
 
-	if (!(new = malloc(sizeof(t_lists))))
+	if (!(new = ft_memalloc(sizeof(t_lists))))
+		exit(-1);
+	if (!(new->name = ft_strdup(str)))
 		exit(1);
-	if (str2 == NULL)
+	if (str2)
 	{
-		if (!(new->name = ft_strdup(str)))
+		if (!(new->data = ft_strdup(str2)))
 			exit(1);
-		new->data = NULL;
 	}
-	else if (!(new->data = ft_strdup(str2))
-			|| !(new->name = ft_strdup(str)))
-		exit(1);
-	new->next = *head;
-	*head = new;
+	else
+		new->data = NULL;
+	new->next = NULL;
+	tmp = *alst;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new;
+	new->next = NULL;
 }
-*/
+
 int				ft_cortar(char *tab[2], char *str)
 {
 	int			i;
@@ -281,20 +201,20 @@ int				ft_cortar(char *tab[2], char *str)
 	{
 		ss = ft_strchr(str, '=');
 		if (!(tab[1] = ft_strdup(ss + 1)))
-			return(-1);
+			return (-1);
 		str[ss - str] = 0;
 		if (!(tab[0] = ft_strdup(str)))
-			return(-1);
+			return (-1);
 		str[(int)ft_strlen(str)] = '=';
 	}
 	return (0);
 }
 
-void		gestion_export(t_temp *tmp)
+void			gestion_export(t_temp *tmp)
 {
-	int		i;
-	int		ret;
-	char	*tab[2];
+	int			i;
+	int			ret;
+	char		*tab[2];
 
 	i = 0;
 	ret = 0;
@@ -325,17 +245,11 @@ void		gestion_export(t_temp *tmp)
 			}
 			else
 			{
-				t_lists *intento;
-				ft_printf("%s, %s \n", tab[0], tab[1]);
-				intento = lnew(tab[0], tab[1]);
-				ft_printf("%s, %s \n", intento->name, intento->data);
-				lback(&tmp->varenv,intento);
-			//	add_list_back(&tmp->varenv, tab[0], tab[1]);
-				
+				lback(&tmp->varenv, tab[0], tab[1]);
 			}
 			free(tab[0]);
 			if (tab[1] != NULL)
-				free (tab[1]);
+				free(tab[1]);
 		}
 	}
 }
