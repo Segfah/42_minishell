@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 02:32:22 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/19 04:02:53 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/19 05:15:13 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,10 @@ int				search_env(char *str, t_temp *tmp, int key, char **data)
 	else
 	{
 		if ((ret = done_list(tmp->varenv, ss, data)) == -1)
+		{
+			free(ss);
 			return (-1);
+		}
 	}
 	free(ss);
 	return (ret);
@@ -160,19 +163,19 @@ int				check_env(char *str)
 	return (0);
 }
 
-void			lback(t_lists **alst, char *str, char *str2)
+int				lback(t_lists **alst, char *str, char *str2)
 {
 	t_lists		*tmp;
 	t_lists		*new;
 
 	if (!(new = ft_memalloc(sizeof(t_lists))))
-		exit(-1);
+		return (-1);
 	if (!(new->name = ft_strdup(str)))
-		exit(1);
+		return (-1);
 	if (str2)
 	{
 		if (!(new->data = ft_strdup(str2)))
-			exit(1);
+			return (-1);
 	}
 	else
 		new->data = NULL;
@@ -182,6 +185,7 @@ void			lback(t_lists **alst, char *str, char *str2)
 		tmp = tmp->next;
 	tmp->next = new;
 	new->next = NULL;
+	return (0);
 }
 
 int				ft_cortar(char *tab[2], char *str)
@@ -245,7 +249,10 @@ void			gestion_export(t_temp *tmp)
 			}
 			else
 			{
-				lback(&tmp->varenv, tab[0], tab[1]);
+
+				if (search_env(tab[0], tmp, 1, NULL) == 0)
+					if ((lback(&tmp->varenv, tab[0], tab[1])) == -1)
+						exit(1);
 			}
 			free(tab[0]);
 			if (tab[1] != NULL)
