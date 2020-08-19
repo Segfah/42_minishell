@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 02:32:22 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/19 03:15:46 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/19 04:02:53 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,7 @@ void			gestion_export(t_temp *tmp)
 	{
 		cpy_env(&tmp->exportenv, tmp->varenv);
 		range_export(tmp->exportenv);
-		print_list(tmp->exportenv);
+		print_list(tmp->exportenv, 0);
 		free_list(tmp->exportenv);
 	}
 	else

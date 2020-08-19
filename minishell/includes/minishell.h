@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/19 03:07:23 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/19 04:01:33 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void				gestion_env(t_temp *tmp);
 ** gestion/tools/env_export
 */
 
-void				print_list(t_lists *head);
+void				print_list(t_lists *head, int key);
 void				free_list(t_lists *test);
 void				cpy_env(t_lists **cpy, t_lists *list);
 

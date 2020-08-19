@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 23:02:07 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/19 03:10:10 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/19 04:01:49 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,5 @@ void			save_env(t_lists **head, char **envp)
 
 void			gestion_env(t_temp *tmp)
 {
-	print_list(tmp->varenv);
+	print_list(tmp->varenv, 1);
 }
