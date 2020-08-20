@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/19 04:01:33 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/20 01:17:07 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,14 @@ void				ft_getline(t_temp *tmp);
 void				clean_str(char *str);
 
 /*
+** gestion/unset
+*/
+void				gestion_unset(t_temp *tmp);
+
+/*
 ** gestion/export
 */
+int					check_env(char *str, int key);
 void				cpy_env(t_lists **cpy, t_lists *list);
 void				gestion_export(t_temp *tmp);
 

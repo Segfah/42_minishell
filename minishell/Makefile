@@ -6,7 +6,7 @@
 #    By: lryst <lryst@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 05:41:03 by corozco           #+#    #+#              #
-#    Updated: 2020/08/06 02:33:02 by corozco          ###   ########.fr        #
+#    Updated: 2020/08/19 22:42:53 by corozco          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRC := \
 	srcs/gestion/pwd.c \
 	srcs/gestion/cd.c \
 	srcs/gestion/env.c \
+	srcs/gestion/unset.c \
 	srcs/gestion/command_bin.c \
 	srcs/gestion/echo.c \
 	srcs/utils/ft_split_strcmd.c \

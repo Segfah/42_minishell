@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 02:32:22 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/19 21:55:36 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/20 02:01:32 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,31 +129,21 @@ int				search_env(char *str, t_temp *tmp, int key, char **data)
 	return (ret);
 }
 
-/*
-static int	search_equal(char *str)
-{
-	int		i;
-
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i] == '=')
-			return (1);
-	}
-	return (0);
-}
-*/
-
-int				check_env(char *str)
+int				check_env(char *str, int key)
 {
 	int			i;
 
-	if ((ft_isalpha(str[0]) == 0) && str[0] != '_')
-		return (-1);
-	i = 1;
+	if (key == 1)
+	{
+		if ((ft_isalpha(str[0]) == 0) && str[0] != '_')
+			return (-1);
+		i = 1;
+	}
+	else
+		i = 0;
 	while (str[i] && str[i] != '=')
 	{
-		if (ft_isalpha(str[i]) || str[i] != '_')
+		if (ft_isalnum(str[i]) || str[i] == '_')
 			i++;
 		else
 			return (-1);
@@ -193,7 +183,7 @@ int				ft_cortar(char *tab[2], char *str)
 	int			i;
 	char		*ss;
 
-	if ((i = check_env(str)) == -1)
+	if ((i = check_env(str, 1)) == -1)
 		return (-2);
 	else if (i == 0)
 	{
