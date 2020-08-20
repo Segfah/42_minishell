@@ -6,28 +6,27 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 22:43:00 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/20 05:01:47 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/20 05:09:20 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_lists			*deletenode(t_lists *list, char *strkey)
+void			deletenode(t_lists *list, char *strkey)
 {
 	t_lists		*tmp;
 	t_lists		*previous;
 
 	if (list == NULL)
-		return (list);
+		return ;
 	previous = list;
 	if (ft_strcmp(previous->name, strkey) == 0)
 	{
 		list = previous->next;
 		free(previous->name);
-		if (previous->data != NULL)
-			free(previous->data);
+		(previous->data != NULL) ? free(previous->data) : 0;
 		free(previous);
-		return (list);
+		return ;
 	}
 	tmp = previous->next;
 	while (tmp != NULL)
@@ -36,15 +35,13 @@ t_lists			*deletenode(t_lists *list, char *strkey)
 		{
 			previous->next = tmp->next;
 			free(tmp->name);
-			if (tmp->data != NULL)
-				free(tmp->data);
+			(tmp->data != NULL) ? free(tmp->data) : 0;
 			free(tmp);
-			return (list);
+			return ;
 		}
 		previous = tmp;
 		tmp = tmp->next;
 	}
-	return (list);
 }
 
 void			gestion_unset(t_temp *tmp)
