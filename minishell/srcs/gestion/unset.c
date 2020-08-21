@@ -12,6 +12,13 @@
 
 #include "minishell.h"
 
+static void		free_node(t_lists *node)
+{
+	free(node->name);
+	(node->data != NULL) ? free(node->data) : 0;
+	free(node);
+}
+
 void			deletenode(t_lists *list, char *strkey)
 {
 	t_lists		*tmp;
@@ -23,9 +30,7 @@ void			deletenode(t_lists *list, char *strkey)
 	if (ft_strcmp(previous->name, strkey) == 0)
 	{
 		list = previous->next;
-		free(previous->name);
-		(previous->data != NULL) ? free(previous->data) : 0;
-		free(previous);
+		free_node(previous);
 		return ;
 	}
 	tmp = previous->next;
@@ -34,9 +39,7 @@ void			deletenode(t_lists *list, char *strkey)
 		if (ft_strcmp(tmp->name, strkey) == 0)
 		{
 			previous->next = tmp->next;
-			free(tmp->name);
-			(tmp->data != NULL) ? free(tmp->data) : 0;
-			free(tmp);
+			free_node(tmp);
 			return ;
 		}
 		previous = tmp;
