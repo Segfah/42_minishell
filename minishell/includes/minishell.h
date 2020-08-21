@@ -57,6 +57,7 @@ void				clean_str(char *str);
 /*
 ** gestion/unset
 */
+void				deletenode(t_lists *list, char *strkey);
 void				gestion_unset(t_temp *tmp);
 
 /*

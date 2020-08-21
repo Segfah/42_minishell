@@ -245,7 +245,11 @@ void			gestion_export(t_temp *tmp)
 						exit(1);
 				}
 				else if (ret == 1 && tab[1] != NULL)
-					ft_printf("usar el unset + el addback para hacer esto\n");
+				{
+					deletenode(tmp->varenv, tab[0]);
+					if ((lback(&tmp->varenv, tab[0], tab[1])) == -1)
+						exit(1);
+				}
 			}
 			free(tab[0]);
 			if (tab[1] != NULL)
