@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/12 22:28:55 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/17 15:58:58 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void				gestion_echo(char *str, char *arg, t_temp *temp);
 ** gestion/echo/ft_split_echo
 */
 char				*remove_cote(char *s, int *start, char cote);
-char				**ft_split_echo(char *s, t_temp *temp);
+char				**ft_split_echo(char *s, int *i, t_temp *temp);
 
 /*
 ** gestion/echo/dollar
@@ -113,6 +113,7 @@ char				**ft_split_echo(char *s, t_temp *temp);
 char				*put_dollar_variable(char *str, char *tab);
 char				*check_dollar(char *str, int *i, t_lists *var);
 void				count_dollar_varriable(char *str, int *j, t_lists *var);
+int					is_it_var(char *str, t_lists *var);
 
 /*
 ** gestion/echo/slash
