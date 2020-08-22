@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/22 18:53:44 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/22 19:05:40 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 
 void			ft_getline(t_temp *tmp)
 {
-	char		*line;
+	char		*line; // meter este line en la structura
 
 	line = NULL;
 	if (ft_gnl(0, &line) == -1 || (tmp->tabcmd = ft_split(line, ';')) == NULL)

@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 02:32:22 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/22 18:52:34 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/22 19:04:38 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void			general_free(t_temp *tmp)
 	(tmp->exportenv != NULL) ? free_list(tmp->exportenv) : 0;
 //	free_tmps(tmp->tabcmd, i, tmp);
 	ft_printf("Error: Malloc\n");
-
 	exit(1);
 }
 
@@ -79,6 +78,17 @@ int				export_arg(t_temp *tmp, int ret, int i)
 	return (0);
 }
 
+void			free_export_tab(t_temp *tmp)
+{
+	free(tmp->tab[0]);
+	tmp->tab[0] = NULL;
+	if (tmp->tab[1] != NULL)
+	{
+		free(tmp->tab[1]);
+		tmp->tab[1] = NULL;
+	}
+}
+
 void			gestion_export(t_temp *tmp, int i)
 {
 	while (tmp->strcmd[i])
@@ -99,13 +109,7 @@ void			gestion_export(t_temp *tmp, int i)
 		{
 			if (export_arg(tmp, 0, i) == -1)
 				general_free(tmp);
-			free(tmp->tab[0]);
-			tmp->tab[0] = NULL;
-			if (tmp->tab[1] != NULL)
-			{
-				free(tmp->tab[1]);
-				tmp->tab[1] = NULL;
-			}
+			free_export_tab(tmp);
 		}
 	}
 }
