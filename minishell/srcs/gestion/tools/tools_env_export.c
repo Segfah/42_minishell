@@ -14,9 +14,6 @@
 
 /*
 ** int key est pour choisir si je dois afficher le env(1) ou l'export(X!=1)
-** + 1 pour effacer le =; si on a besoin du "=" enlever le +1, il va etre...
-** dans la data (2 content)
-** arreglar los exit(1); y cambiarlos por return (-1)
 */
 
 void			print_list(t_lists *head, int key)
@@ -63,22 +60,6 @@ void			addfront(t_lists **head, char *str, char *str2)
 		new->data = NULL;
 	new->next = *head;
 	*head = new;
-}
-
-void			free_list(t_lists *test)
-{
-	t_lists		*tmp;
-
-	while (test != NULL)
-	{
-		tmp = test->next;
-		if (test->name)
-			free(test->name);
-		if (test->data)
-			free(test->data);
-		free(test);
-		test = tmp;
-	}
 }
 
 /*

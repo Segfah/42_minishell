@@ -32,6 +32,7 @@ SRC := \
 	srcs/utils/ft_split_strcmd.c \
 	srcs/utils/ft_split_echo.c \
 	srcs/gestion/tools/tools_env_export.c \
+	srcs/gestion/tools/tools_list.c \
 	srcs/gestion/export.c
 
 

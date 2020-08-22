@@ -12,13 +12,6 @@
 
 #include "minishell.h"
 
-static void		free_node(t_lists *node)
-{
-	free(node->name);
-	(node->data != NULL) ? free(node->data) : 0;
-	free(node);
-}
-
 void			deletenode(t_lists *list, char *strkey)
 {
 	t_lists		*tmp;

@@ -86,10 +86,14 @@ void				gestion_env(t_temp *tmp);
 /*
 ** gestion/tools/env_export
 */
-
-void				print_list(t_lists *head, int key);
-void				free_list(t_lists *test);
 void				cpy_env(t_lists **cpy, t_lists *list);
+
+/*
+** gestion/tools/tools_list
+*/
+void				print_list(t_lists *head, int key);
+void				free_node(t_lists *node);
+void				free_list(t_lists *test);
 
 /*
 ** gestion/command_bin
