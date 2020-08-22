@@ -233,22 +233,19 @@ void			gestion_export(t_temp *tmp)
 				break ;
 			}
 			else if (ret == -1)
-			{
-				ft_printf("error malloc\n"); // a cambiar.la foncion a int gest.
-				exit(1);
-			}
+				exit(1); //error malloc
 			else
 			{
 				if ((ret = search_env(tab[0], tmp, 1, NULL)) == 0)
 				{
 					if ((lback(&tmp->varenv, tab[0], tab[1])) == -1)
-						exit(1);
+						exit(1); // error malloc
 				}
 				else if (ret == 1 && tab[1] != NULL)
 				{
 					deletenode(tmp->varenv, tab[0]);
 					if ((lback(&tmp->varenv, tab[0], tab[1])) == -1)
-						exit(1);
+						exit(1); // error malloc
 				}
 			}
 			free(tab[0]);
