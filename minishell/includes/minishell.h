@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/22 15:41:42 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/22 16:18:59 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct		s_temp
 	char			**strcmd;
 	t_lists			*varenv;
 	t_lists			*exportenv;
+	char			*tab[2];
 }					t_temp;
 
 /*

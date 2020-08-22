@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 02:32:22 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/22 15:35:20 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/22 16:30:30 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,37 @@ int				ft_cortar(char *tab[2], char *str)
 	return (0);
 }
 
+void			export_arg(t_temp *tmp, int ret, int i)
+{
+	if ((ret = ft_cortar(tmp->tab, tmp->strcmd[i])) == -2)
+	{
+		ft_printf("minishell: export: `%s': not a valid identifier\n",
+				tmp->strcmd[i]);
+		return ;
+	}
+	else if (ret == -1)
+		exit(1); //error malloc
+	else
+	{
+		if ((ret = search_env(tmp->tab[0], tmp, 1, NULL)) == 0)
+		{
+			if ((lback(&tmp->varenv, tmp->tab[0], tmp->tab[1])) == -1)
+				exit(1); // error malloc
+		}
+		else if (ret == 1 && tmp->tab[1] != NULL)
+		{
+			deletenode(tmp->varenv, tmp->tab[0]);
+			if ((lback(&tmp->varenv, tmp->tab[0], tmp->tab[1])) == -1)
+				exit(1); // error malloc
+		}
+	}
+}
+
 void			gestion_export(t_temp *tmp)
 {
 	int			i;
-	int			ret;
-	char		*tab[2];
 
 	i = 0;
-	ret = 0;
 	while (tmp->strcmd[i])
 		i++;
 	if (i == 1)
@@ -60,31 +83,10 @@ void			gestion_export(t_temp *tmp)
 		i = 0;
 		while (tmp->strcmd[++i])
 		{
-			if ((ret = ft_cortar(tab, tmp->strcmd[i])) == -2)
-			{
-				ft_printf("minishell: export: `%s': not a valid identifier\n",
-						tmp->strcmd[i]);
-				break ;
-			}
-			else if (ret == -1)
-				exit(1); //error malloc
-			else
-			{
-				if ((ret = search_env(tab[0], tmp, 1, NULL)) == 0)
-				{
-					if ((lback(&tmp->varenv, tab[0], tab[1])) == -1)
-						exit(1); // error malloc
-				}
-				else if (ret == 1 && tab[1] != NULL)
-				{
-					deletenode(tmp->varenv, tab[0]);
-					if ((lback(&tmp->varenv, tab[0], tab[1])) == -1)
-						exit(1); // error malloc
-				}
-			}
-			free(tab[0]);
-			if (tab[1] != NULL)
-				free(tab[1]);
+			export_arg(tmp, 0, i);
+			free(tmp->tab[0]);
+			if (tmp->tab[1] != NULL)
+				free(tmp->tab[1]);
 		}
 	}
 }
