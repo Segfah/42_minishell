@@ -6,13 +6,41 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 00:50:50 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/19 04:48:22 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/22 14:53:00 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void		free_node(t_lists *node)
+void			deletenode(t_lists *list, char *strkey)
+{
+	t_lists		*tmp;
+	t_lists		*previous;
+
+	if (list == NULL)
+		return ;
+	previous = list;
+	if (ft_strcmp(previous->name, strkey) == 0)
+	{
+		list = previous->next;
+		free_node(previous);
+		return ;
+	}
+	tmp = previous->next;
+	while (tmp != NULL)
+	{
+		if (ft_strcmp(tmp->name, strkey) == 0)
+		{
+			previous->next = tmp->next;
+			free_node(tmp);
+			return ;
+		}
+		previous = tmp;
+		tmp = tmp->next;
+	}
+}
+
+void			free_node(t_lists *node)
 {
 	(node->name != NULL) ? free(node->name) : 0;
 	(node->data != NULL) ? free(node->data) : 0;
@@ -26,7 +54,7 @@ void			free_list(t_lists *test)
 	while (test != NULL)
 	{
 		tmp = test->next;
-		free_node(tmp);
+		free_node(test);
 		test = tmp;
 	}
 }

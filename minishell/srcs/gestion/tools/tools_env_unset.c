@@ -1,35 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   tools_env_unset.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/19 22:43:00 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/22 14:27:20 by corozco          ###   ########.fr       */
+/*   Created: 2020/08/22 15:36:42 by corozco           #+#    #+#             */
+/*   Updated: 2020/08/22 15:42:40 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void			gestion_unset(t_temp *tmp)
+int				check_env(char *str, int key)
 {
 	int			i;
-	int			ret;
 
-	i = 0;
-	while (tmp->strcmd[i])
-		i++;
-	if (i == 1)
-		ft_printf("unset: not enough arguments\n");
-	i = 0;
-	while (tmp->strcmd[++i])
+	if (key == 1)
 	{
-		ret = check_env(tmp->strcmd[i], 0);
-		if (ret == -1 || ret == 1)
-			ft_printf("minishell: unset: `%s': not a valid identifier \n",
-					tmp->strcmd[i]);
-		else
-			deletenode(tmp->varenv, tmp->strcmd[i]);
+		if ((ft_isalpha(str[0]) == 0) && str[0] != '_')
+			return (-1);
+		i = 1;
 	}
+	else
+		i = 0;
+	while (str[i] && str[i] != '=')
+	{
+		if (ft_isalnum(str[i]) || str[i] == '_')
+			i++;
+		else
+			return (-1);
+	}
+	if (str[i] == '=')
+		return (1);
+	return (0);
 }

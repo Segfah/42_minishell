@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/20 01:17:07 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/22 15:41:42 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,33 +38,38 @@ typedef struct		s_temp
 /*
 ** drawings
 */
-
 void				welcome(void);
 
 /*
 ** prompt
 */
-
 char				*ft_prompt(char *str);
 
 /*
 ** Parsing
 */
-
 void				ft_getline(t_temp *tmp);
 void				clean_str(char *str);
 
 /*
-** gestion/unset
+** ************************************************************************
+** **************************gestion***************************************
+** ************************************************************************
 */
-void				deletenode(t_lists *list, char *strkey);
-void				gestion_unset(t_temp *tmp);
 
+/*
+** gestion/cd
+*/
+void				gestion_cd(char *str);
+
+/*
+** env.c
+*/
+void				save_env(t_lists **head, char **envp);
+void				gestion_env(t_temp *tmp);
 /*
 ** gestion/export
 */
-int					check_env(char *str, int key);
-void				cpy_env(t_lists **cpy, t_lists *list);
 void				gestion_export(t_temp *tmp);
 
 /*
@@ -73,27 +78,40 @@ void				gestion_export(t_temp *tmp);
 int					gestion_pwd(char **tabcmd, t_temp *tmp, int i);
 
 /*
-** gestion/cd
+** gestion/unset
 */
-void				gestion_cd(char *str);
+void				gestion_unset(t_temp *tmp);
 
 /*
-** gestion/env.c
+** **************************gestion/tools*********************************
 */
-void				save_env(t_lists **head, char **envp);
-void				gestion_env(t_temp *tmp);
-
 /*
-** gestion/tools/env_export
+** tools_env_export
 */
+void				print_list(t_lists *head, int key);
+int					lback(t_lists **alst, char *str, char *str2);
 void				cpy_env(t_lists **cpy, t_lists *list);
 
 /*
-** gestion/tools/tools_list
+** tools_env_unset
 */
-void				print_list(t_lists *head, int key);
+int					check_env(char *str, int key);
+
+/*
+** tools_export
+*/
+void				range_export(t_lists *la);
+int					search_env(char *str, t_temp *tmp, int key, char **data);
+
+/*
+** tools_list
+*/
+void				deletenode(t_lists *list, char *strkey);
 void				free_node(t_lists *node);
 void				free_list(t_lists *test);
+/*
+** ************************************************************************
+*/
 
 /*
 ** gestion/command_bin
@@ -101,7 +119,7 @@ void				free_list(t_lists *test);
 int					command_bin(char **tab);
 
 /*
-** gestion/encho
+** gestion/echo
 */
 void				gestion_echo(char *str);
 

@@ -6,7 +6,7 @@
 #    By: lryst <lryst@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 05:41:03 by corozco           #+#    #+#              #
-#    Updated: 2020/08/19 22:42:53 by corozco          ###   ########.fr        #
+#    Updated: 2020/08/22 15:35:41 by corozco          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,8 @@ SRC := \
 	srcs/utils/ft_split_strcmd.c \
 	srcs/utils/ft_split_echo.c \
 	srcs/gestion/tools/tools_env_export.c \
+	srcs/gestion/tools/tools_env_unset.c \
+	srcs/gestion/tools/tools_export.c \
 	srcs/gestion/tools/tools_list.c \
 	srcs/gestion/export.c
 
