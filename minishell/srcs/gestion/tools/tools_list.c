@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 00:50:50 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/22 14:53:00 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/22 18:43:05 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,11 @@ void			deletenode(t_lists *list, char *strkey)
 void			free_node(t_lists *node)
 {
 	(node->name != NULL) ? free(node->name) : 0;
+	node->name = NULL;
 	(node->data != NULL) ? free(node->data) : 0;
+	node->data = NULL;
 	free(node);
+	node = NULL;
 }
 
 void			free_list(t_lists *test)

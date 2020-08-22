@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 02:32:22 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/22 16:30:30 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/22 18:52:34 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,55 +38,74 @@ int				ft_cortar(char *tab[2], char *str)
 	return (0);
 }
 
-void			export_arg(t_temp *tmp, int ret, int i)
+void			general_free(t_temp *tmp)
+{
+	(tmp->env != NULL) ? free(tmp->env) : 0;
+	(tmp->prompt != NULL) ? free(tmp->prompt) : 0;
+	(tmp->tab[0] != NULL) ? free(tmp->tab[0]) : 0;
+	(tmp->tab[1] != NULL) ? free(tmp->tab[1]) : 0;
+	(tmp->varenv != NULL) ? free_list(tmp->varenv) : 0;
+	(tmp->exportenv != NULL) ? free_list(tmp->exportenv) : 0;
+//	free_tmps(tmp->tabcmd, i, tmp);
+	ft_printf("Error: Malloc\n");
+
+	exit(1);
+}
+
+int				export_arg(t_temp *tmp, int ret, int i)
 {
 	if ((ret = ft_cortar(tmp->tab, tmp->strcmd[i])) == -2)
 	{
 		ft_printf("minishell: export: `%s': not a valid identifier\n",
 				tmp->strcmd[i]);
-		return ;
+		return (0);
 	}
 	else if (ret == -1)
-		exit(1); //error malloc
+		return (-1);
 	else
 	{
 		if ((ret = search_env(tmp->tab[0], tmp, 1, NULL)) == 0)
 		{
 			if ((lback(&tmp->varenv, tmp->tab[0], tmp->tab[1])) == -1)
-				exit(1); // error malloc
+				return (-1);
 		}
 		else if (ret == 1 && tmp->tab[1] != NULL)
 		{
 			deletenode(tmp->varenv, tmp->tab[0]);
 			if ((lback(&tmp->varenv, tmp->tab[0], tmp->tab[1])) == -1)
-				exit(1); // error malloc
+				return (1);
 		}
 	}
+	return (0);
 }
 
-void			gestion_export(t_temp *tmp)
+void			gestion_export(t_temp *tmp, int i)
 {
-	int			i;
-
-	i = 0;
 	while (tmp->strcmd[i])
 		i++;
 	if (i == 1)
 	{
-		cpy_env(&tmp->exportenv, tmp->varenv);
+		if (cpy_env(&tmp->exportenv, tmp->varenv) == -1)
+			general_free(tmp);
 		range_export(tmp->exportenv);
 		print_list(tmp->exportenv, 0);
 		free_list(tmp->exportenv);
+		tmp->exportenv = NULL;
 	}
 	else
 	{
 		i = 0;
 		while (tmp->strcmd[++i])
 		{
-			export_arg(tmp, 0, i);
+			if (export_arg(tmp, 0, i) == -1)
+				general_free(tmp);
 			free(tmp->tab[0]);
+			tmp->tab[0] = NULL;
 			if (tmp->tab[1] != NULL)
+			{
 				free(tmp->tab[1]);
+				tmp->tab[1] = NULL;
+			}
 		}
 	}
 }

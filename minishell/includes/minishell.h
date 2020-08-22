@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/22 16:18:59 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/22 18:38:59 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct		s_lists
 
 typedef struct		s_temp
 {
+	char			*prompt;
 	char			*env;
 	char			**tabcmd;
 	char			**strcmd;
@@ -36,6 +37,7 @@ typedef struct		s_temp
 	char			*tab[2];
 }					t_temp;
 
+void				general_free(t_temp *tmp);
 /*
 ** drawings
 */
@@ -66,12 +68,12 @@ void				gestion_cd(char *str);
 /*
 ** env.c
 */
-void				save_env(t_lists **head, char **envp);
+int		 			save_env(t_lists **head, char **envp);
 void				gestion_env(t_temp *tmp);
 /*
 ** gestion/export
 */
-void				gestion_export(t_temp *tmp);
+void				gestion_export(t_temp *tmp, int i);
 
 /*
 ** gestion/pwd
@@ -91,7 +93,7 @@ void				gestion_unset(t_temp *tmp);
 */
 void				print_list(t_lists *head, int key);
 int					lback(t_lists **alst, char *str, char *str2);
-void				cpy_env(t_lists **cpy, t_lists *list);
+int					cpy_env(t_lists **cpy, t_lists *list);
 
 /*
 ** tools_env_unset

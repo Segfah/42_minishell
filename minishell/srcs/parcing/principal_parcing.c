@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/19 23:26:33 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/22 18:53:44 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,14 @@ void			free_tmps(char **tabcmd, int i, t_temp *tmp)
 
 	a = 0;
 	while (tmp->strcmd[a])
-		free(tmp->strcmd[a++]);
+	{
+		free(tmp->strcmd[a]);
+		tmp->strcmd[a++] = NULL;
+	}
 	free(tmp->strcmd);
+	tmp->strcmd = NULL;
 	free(tabcmd[i]);
+	tabcmd[i] = NULL;
 }
 
 void			gestion_nani(char **tab)
@@ -75,7 +80,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 		else if (ft_strncmp(tabcmd[i], "nani", 4) == 0)
 			gestion_nani(tmp->strcmd);
 		else if (ft_strcmp(tmp->strcmd[0], "export") == 0)
-			gestion_export(tmp);
+			gestion_export(tmp, 0);
 		else if (ft_strcmp(tmp->strcmd[0], "unset") == 0)
 			gestion_unset(tmp);
 		else if (ft_strcmp(tmp->strcmd[0], "echo") == 0)
@@ -99,9 +104,11 @@ void			ft_getline(t_temp *tmp)
 {
 	char		*line;
 
+	line = NULL;
 	if (ft_gnl(0, &line) == -1 || (tmp->tabcmd = ft_split(line, ';')) == NULL)
-		exit(1);
+		general_free(tmp);
 	gestion_line(tmp->tabcmd, tmp);
 	free(tmp->tabcmd);
+	tmp->tabcmd = NULL;
 	free(line);
 }

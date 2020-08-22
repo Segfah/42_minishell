@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 00:50:50 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/22 15:43:01 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/22 18:41:34 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,30 +68,31 @@ int				lback(t_lists **alst, char *str, char *str2)
 	return (0);
 }
 
-static void		addfront(t_lists **head, char *str, char *str2)
+static int		addfront(t_lists **head, char *str, char *str2)
 {
 	t_lists		*new;
 
 	if (!(new = malloc(sizeof(t_lists))))
-		exit(1);
+		return (-1);
 	if (!(new->name = ft_strdup(str)))
-		exit(1);
+		return (-1);
 	if (str2)
 	{
 		if (!(new->data = ft_strdup(str2)))
-			exit(1);
+			return (-1);
 	}
 	else
 		new->data = NULL;
 	new->next = *head;
 	*head = new;
+	return (0);
 }
 
 /*
 **	Fait une copie d'une liste ch....
 */
 
-void			cpy_env(t_lists **cpy, t_lists *list)
+int				cpy_env(t_lists **cpy, t_lists *list)
 {
 	t_lists		*tmplist;
 
@@ -99,7 +100,15 @@ void			cpy_env(t_lists **cpy, t_lists *list)
 	tmplist = list;
 	while (tmplist != NULL)
 	{
-		addfront(cpy, tmplist->name, tmplist->data);
+		if (addfront(cpy, tmplist->name, tmplist->data) == -1)
+		{
+			free_list(list);
+			list = NULL;
+			free_list(*cpy);
+			*cpy = NULL;
+			return (-1);
+		}
 		tmplist = tmplist->next;
 	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 14:18:32 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/22 15:43:52 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/22 18:42:25 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,9 +122,11 @@ int				search_env(char *str, t_temp *tmp, int key, char **data)
 		if ((ret = done_list(tmp->varenv, ss, data)) == -1)
 		{
 			free(ss);
+			ss = NULL;
 			return (-1);
 		}
 	}
 	free(ss);
+	ss = NULL;
 	return (ret);
 }
