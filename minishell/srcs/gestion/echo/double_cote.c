@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/11 18:49:57 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/23 17:02:18 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/23 19:13:07 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ char	*put_in_tab_double(char *str, char *tab, int j, t_lists *var)
 		if (str[i] == '$')
 		{
 			tmp = put_dollar_variable(check_dollar(str, &i, var), tab);
+			printf("put_in_tab_double TMP = [%s]\n", tmp);
 			l = 0;
 			while (tmp[l])
 				tab[k++] = tmp[l++];

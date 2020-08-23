@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/23 18:12:00 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/23 19:02:48 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,13 @@ char				*gestion_echo_option(char *str, char *arg);
 void				gestion_echo(char *str, char *arg, t_temp *temp);
 
 /*
-** gestion/echo/ft_split_echo
+** gestion/echo/ft_split_echo/count_word
 */
 char				*remove_cote(char *s, int *start, char cote);
 char				**ft_split_echo(char *s, int *i, t_temp *temp);
+/*
+** gestion/echo/ft_split_echo/count_word
+*/
 
 /*
 ** gestion/echo/dollar

@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/11 18:51:11 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/23 18:35:21 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/23 19:29:55 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,13 @@ char		*put_dollar_variable(char *str, char *tab)
 	int i;
 
 	i = 0;
+	printf("put_dollar_variable	str[%s]\n", str);
 	if (!(tab = ft_strdup(str)))
 	{
 		if (!(tab = (char*)malloc(sizeof(char) * 2)))
+			return NULL;
 		while (i < 3)
-			tab[i] = '\0';
+			tab[i++] = '\0';
 	}
 	ft_free(str);
 	return (tab);
@@ -35,7 +37,6 @@ char		*check_dollar(char *str, int *i, t_lists *var)
 	int save;
 	int j;
 
-	printf("check dollar : char = [%c]\n", str[*i]);
 	if (str[*i + 1] != '\0')
 		(*i)++;
 	save = *i;
@@ -44,13 +45,13 @@ char		*check_dollar(char *str, int *i, t_lists *var)
 		save++;
 	if (!(tmp = (char*)malloc(sizeof(char) * (save - *i) + 1)))
 		return (0);
-	while (*i < save)
-		tmp[j++] = str[(*i)++];
-	tmp[j] = '\0';
+	*i = save;
 	while (var)
 	{
 		if (ft_strcmp(var->name, tmp) == 0)
+		{
 			return (tmp = ft_strdup(var->data));
+		}
 		var = var->next;
 	}
 	return (NULL);

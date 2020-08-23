@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 23:18:04 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/23 16:43:20 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/23 18:53:51 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,10 @@ static int          adeline(char *s, char cote, int n, int *i)
 	count = 0;
 	while (s[i] != '\0')
 	{
-		printf("str[%d] 1  = [%c]		n = %d\n", i, s[i], n);
 		if (s[i] && s[i] == ' ')
 			i++;
-		printf("str[%d] 2  = [%c]		n = %d\n", i, s[i], n);
 		if (s[i] && (s[i] == '"' || s[i] == '\''))
-		{
-			printf("\ni == %d\n\n", i);
 			n = adeline(s, s[i], n, &i);
-			printf("\ni == %d\n\n", i);
-		}
-		printf("str[%d]  3 = [%c]		n = %d\n", i, s[i], n);
 		if (s[i] && s[i] == '\\')
 		{
 			while (s[i] && s[i] == '\\')
@@ -54,14 +47,12 @@ static int          adeline(char *s, char cote, int n, int *i)
 				count++;
 				i++;
 			}
-			printf("			slash char = [%c]\n", s[i]);
 			if (s[i] == ' ' || s[i] == '\0' || s[i] == '$')
 				n++;
 			if (s[i] == '"' || s[i] == '\'')
 				n = adeline(s, s[i], n, &i);
 		}
-		printf("str[%d] 4  = [%c]		n = %d\n", i, s[i], n);
-		if (s[i] && s[i] == '$')
+		if (s[i] && s[i] == '$' && s[i + 1] != '\0')
 		{
 			char *tmp;
 			int save;
@@ -74,23 +65,19 @@ static int          adeline(char *s, char cote, int n, int *i)
 				n = n + 1;
 			while (s[save] != '\0' && ((s[save] > 47 && s[save] < 58) || (s[save] > 64 && s[save] < 91) || (s[save] > 96 && s[save] < 123)))
 				save++;
-			printf("save = %d\n", save);
 			if (!(tmp = (char*)malloc(sizeof(char) * (save - i) + 1)))
 				return (0);
 			while (i < save)
 				tmp[j++] = s[i++];
 			tmp[j] = '\0';
-			printf("COUNT DOLLAR SPLIT tmp = [%s]\n", tmp);
 			n = n + is_it_var(tmp, var);
 		}
-		printf("str[%d] 5  = [%c]		n = %d\n", i, s[i], n);
 		if (s[i] != '\0' && s[i] != '$' && s[i] != '"' && s[i] != '\'' && s[i] != '\\' && s[i] != ' ')
 		{
 			while (s[i] != '\0' && s[i] != '$' && s[i] != '"' && s[i] != '\'' && s[i] != '\\' && s[i] != ' ')
 				i++;
 			n++;
 		}
-		printf("str[%d] 5  = [%c]		n = %d\n", i, s[i], n);
 	}
 	return (n);
 }
@@ -124,27 +111,14 @@ static char			*ft_fill(char *s, int *i, char *tab, t_temp *temp)
 	k = 0;
 	while (s[*i] != '\0')
 	{
-		printf("start ======>\n");
-		printf("char[%d] = [%c]\n", *i, s[*i]);
 		if (s[*i] == '\'')
-		{
-			printf("single cote !\n");
 			return (single_cote(remove_cote(s, i, s[*i]), tab));
-		}
 		else if (s[*i] == '"')
-		{
-			printf("double cote !\n");
 			return (double_cote((remove_cote(s, i, s[*i])), tab, temp->varenv));
-		}
 		else if (s[*i] == '\\')
-		{
-			printf("slash !\n");
 			return (slash(s, i, tab, temp->varenv));
-		}
 		else if (s[*i] == '$')
 		{
-			printf("dollar !\n");
-			printf("dollar char = [%c]\n", s[*i]);
 			if (s[*i + 1] == ' ' || s[*i + 1] == '\0')
 				return (tab = ft_strdup("$\0"));
 			if ((tmp = check_dollar(s, i, temp->varenv )) != NULL)
@@ -152,10 +126,7 @@ static char			*ft_fill(char *s, int *i, char *tab, t_temp *temp)
 			(*i)++;
 		}
 		else if (s[*i] != ' ' && s[*i] != '"' && s[*i] != '\'' && s[*i] != '\\' && s[*i] != '$')
-		{
-			printf("word !\n");
 			return (word(s, i, tab));
-		}
 		(*i)++;
 	}
 	return NULL;
@@ -172,7 +143,6 @@ char				**ft_split_echo(char *s, int *n, t_temp *temp)
 	if (!s)
 		return (NULL);
 	*n = ft_count_word(s, temp->varenv);
-	printf("NBR WORD %d\n", *n);
 	if (!(tab = (char **)malloc(sizeof(tab) * (*n + 1))))
 		return (NULL);
 	while (++j < *n)

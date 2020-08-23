@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/11 18:50:48 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/23 17:02:49 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/23 19:20:21 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ char				*slash(char *str, int *i, char *tab, t_lists *var)
 		while (tmp[l] != '\0')
 			tab[k++] = tmp[l++];
 		tab[k] = '\0';
-		ft_free(tmp);
 		return (tab);
 	}
 	if ((slash % 2) == 1 && str[save] == '$')
