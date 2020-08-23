@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/11 18:50:48 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/18 17:37:23 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/23 17:02:49 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,7 @@ int					count_slash(char *str, int *j)
 	}
 	if (ret == 1)
 		return(1);
-	ret = ret / 2;
-	/* if (str[*j])
-		(*j)++; */
-	printf("str de J = %c\n", str[*j]);
-	
+	ret = ret / 2;	
 	return (ret);
 }
 
@@ -65,6 +61,7 @@ char				*slash_sort(char *str, int *i, char *tab, t_lists *var)
 	{
 		tab = double_cote(remove_slash(str, i, save), tab, var);
 	}
+	printf("	tab = [%s]\n", tab);
 	return (tab);
 }
 
@@ -82,14 +79,11 @@ char				*slash(char *str, int *i, char *tab, t_lists *var)
 	slash = -1;
 	while (str[++save] == '\\')
 	{
-		printf("str[%d] = %c\n", save, str[save]);
-		slash++;
+		++slash;
 	}
-	printf("slash = %d\n", slash);
-	printf("str[save] = %c\n", str[save]);
-	printf("str[save + 1] = %c\n", str[save + 1]);
 	if ((slash % 2) == 1 && (str[save] == '"' || str[save] == '\''))
 	{
+		printf("impair SLASH ET COTE\n");
 		slash = count_slash(str, i);
 		tmp = slash_sort(str, i, tab, var);
 		if (!(tab = (char*)malloc(sizeof(char) * slash + ft_strlen(tmp) + 1)))
@@ -104,6 +98,7 @@ char				*slash(char *str, int *i, char *tab, t_lists *var)
 	}
 	if ((slash % 2) == 1 && str[save] == '$')
 	{
+		printf("impair SLASH AND DOLLAR\n");
 		int u;
 
 		u = 0;
@@ -116,7 +111,6 @@ char				*slash(char *str, int *i, char *tab, t_lists *var)
 		}
 		if (!(tab = (char*)malloc(sizeof(char) * (u + slash) + 1)))
 			return NULL;
-		printf("slash = %d\n", slash);
 		while (k < slash)
 			tab[k++] = '\\';
 		while (*i < save)
@@ -127,6 +121,7 @@ char				*slash(char *str, int *i, char *tab, t_lists *var)
 	slash = count_slash(str, i);
 	if (str[*i] == ' ' || str[*i] == '\0')
 	{
+		printf("SLASH ONLY\n");
 		if (!(tab = (char*)malloc(sizeof(char) * slash + 1)))
 			return NULL;
 		while (k < slash)
@@ -138,22 +133,30 @@ char				*slash(char *str, int *i, char *tab, t_lists *var)
 	}
 	if (str[*i] == '$')
 	{
-		printf("slash dollar char = [%c]\n", str[*i]);
+		printf("pair SLASH AND DOLLAR\n");
 		if ((tmp = check_dollar(str, i, var)) != NULL)
+		{
 			tmp = (put_dollar_variable(tmp, tab));
-		printf("		SLASH ! tmp = [%s]\n", tmp);
-		if (!(tab = (char*)malloc(sizeof(char) * slash + ft_strlen(tmp) + 1)))
-			return NULL;
+			if (!(tab = (char*)malloc(sizeof(char) * slash + ft_strlen(tmp) + 1)))
+				return NULL;
+		}
+		else if (!(tmp))
+			if (!(tab = (char*)malloc(sizeof(char) * slash + 1)))
+				return NULL;
 		while (k < slash)
 			tab[k++] = '\\';
-		while (tmp[l] != '\0')
-			tab[k++] = tmp[l++];
+		if (tmp != NULL)
+		{
+			while (tmp[l] != '\0')
+				tab[k++] = tmp[l++];
+			ft_free(tmp);
+		}
 		tab[k] = '\0';
-		ft_free(tmp);
 		return (tab);
 	}
 	if (str[*i] == '\'' || str[*i] == '"')
 	{
+		printf("impair SLASH ET COTE\n");
 		if (str[*i] == '\'')
 			tmp = single_cote(remove_cote(str, i, str[*i]), tab);
 		if (str[*i] == '"')
@@ -170,6 +173,7 @@ char				*slash(char *str, int *i, char *tab, t_lists *var)
 	}
 	if (str[*i] != '\0')
 	{
+		printf("SLASH AND WORD\n");
 		tmp = word(str, i, tab);
 		if (!(tab = (char*)malloc(sizeof(char) * slash + ft_strlen(tmp) + 1)))
 			return NULL;

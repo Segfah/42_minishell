@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/17 15:58:58 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/23 18:12:00 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,5 +146,15 @@ char				*word(char *str, int *i, char *tab);
 */
 void    			ft_free(char *str);
 void    			ft_free_double_tab(char **tab);
+
+/*
+** gestion/controle
+*/
+void    			controle(char *c);
+
+/*
+** main
+*/
+int					launcher(t_temp tmp);
 
 #endif

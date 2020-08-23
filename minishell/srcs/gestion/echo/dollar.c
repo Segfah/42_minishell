@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/11 18:51:11 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/17 16:58:13 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/23 18:35:21 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ char		*check_dollar(char *str, int *i, t_lists *var)
 	while (*i < save)
 		tmp[j++] = str[(*i)++];
 	tmp[j] = '\0';
-	printf("	tmp = [%s]\n", tmp);
 	while (var)
 	{
 		if (ft_strcmp(var->name, tmp) == 0)

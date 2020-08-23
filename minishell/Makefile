@@ -6,7 +6,7 @@
 #    By: lryst <lryst@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 05:41:03 by corozco           #+#    #+#              #
-#    Updated: 2020/08/12 21:58:33 by lryst            ###   ########.fr        #
+#    Updated: 2020/08/23 18:08:19 by lryst            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,8 +36,9 @@ SRC := \
 	srcs/gestion/echo/double_cote.c \
 	srcs/gestion/echo/single_cote.c \
 	srcs/gestion/echo/ft_split_echo.c \
-	srcs/gestion/echo/slash.c\
-	srcs/gestion/echo/word.c
+	srcs/gestion/echo/slash.c \
+	srcs/gestion/echo/word.c \
+	srcs/gestion/controles.c
 
 OBJS = $(addprefix objs/, $(SRC:.c=.o))
 
