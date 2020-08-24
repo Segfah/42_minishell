@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/22 19:02:19 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/24 00:40:31 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void				free_list(t_lists *test);
 /*
 ** gestion/command_bin
 */
-int					command_bin(char **tab);
+int					command_bin(char **tab, t_temp *tmp);
 
 /*
 ** gestion/echo

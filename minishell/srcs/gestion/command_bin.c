@@ -6,66 +6,83 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 15:00:48 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/04 04:01:55 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/24 05:05:19 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int     command_bin(char **tab)
+/*
+char	**create_env_exec(t_lists *list)
 {
-	char *new_env[] = {NULL};
-	char *command;
-	int i;
-	pid_t f;
-	pid_t w;
-	int	 status;
+	t_lists *tmp;
+	char	tab
 
-	f = fork();
-	i = 0;
-	if (!(command = (char*)malloc(sizeof(char) * ft_strlen(tab[0]) + 6)))
-		return(0);
-	command[0] = '/';
-	command[1] = 'b';
-	command[2] = 'i';
-	command[3] = 'n';
-	command[4] = '/';
-	while (tab[0][i] != '\0')
+	tmp = list;
+	while (tmp != NULL)
 	{
-		command[i + 5] = tab[0][i];
-		i++;
+		tmp = tmp->next;
 	}
-	command[i + 5] = '\0';
-	//printf("command = [%s]\n", command);
-	/*	int a;
-		a = 0;
-		while (tab[a] != NULL)
-		{
-		printf("tab[%d] = {%s}\n", a , tab[a]);
-		a++;
-		}
-		} */
+	return (
+}
+*/
+
+static char		**build_cmd(t_temp *tmp, char *cmd, int *a)
+{
+	char		*path;
+	char		**tabpath;
+	char		*temp;
+
+	if (search_env("PATH", tmp, 0, &path) == -1)
+		return (NULL);
+	if (!(tabpath = ft_split(path, ':')))
+		return (NULL);
+	while (tabpath[++(*a)] != NULL)
+	{
+		temp = tabpath[*a];
+		if (!(tabpath[*a] = ft_strjoin(tabpath[*a], "/")))
+			return (NULL);
+		free(temp);
+		temp = tabpath[*a];
+		if (!(tabpath[*a] = ft_strjoin(tabpath[*a], cmd)))
+			return (NULL);
+		free(temp);
+		ft_printf("[%s]\n", tabpath[*a]);
+	}
+	free(path);
+	return (tabpath);
+}
+
+int				command_bin(char **tab, t_temp *tmp)
+{
+	char		*new_env[] = {NULL};
+	pid_t		f;
+	pid_t		w;
+	int			status;
+	char		**tabpath;
+	int			i;
+
+	i = -1;
+	if (!(tabpath = build_cmd(tmp, tab[0], &i)))
+		return (-1);
+	f = fork();
 	if (f == 0)
 	{
-		if (execve(command, tab, new_env) == -1)
+		if (execve(tabpath[4], tab, new_env) == -1)
 			exit(1);
 		exit(0);
 	}
 	else
 	{
-		/*
-		** Sorry pour changer un peu ta fonction, j'avais besoin de prendre...
-		** ...le return du fils pour pouvoir bien le fermer.
-		*/
 		if ((w = waitpid(f, &status, WUNTRACED | WCONTINUED)) == -1)
 			exit(1);
 		if (WIFEXITED(status))
 			if (WEXITSTATUS(status) == 1)
 			{
-				free(command);
+				ft_free_split(tabpath, i);
 				return (-1);
 			}
 	}
-	free(command);
+	ft_free_split(tabpath, i);
 	return (0);
 }

@@ -14,7 +14,7 @@
 
 void	ft_free_split(char **split, int i)
 {
-	while (i)
+	while (i >= 0)
 	{
 		free(split[i]);
 		i--;
