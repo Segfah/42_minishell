@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/11 18:50:48 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/23 19:20:21 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/24 18:20:20 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char				*slash(char *str, int *i, char *tab, t_lists *var)
 
 	k = 0;
 	l = 0;
-	save = *i;
+	save = (*i);
 	slash = -1;
 	while (str[++save] == '\\')
 	{
@@ -86,7 +86,7 @@ char				*slash(char *str, int *i, char *tab, t_lists *var)
 		printf("impair SLASH ET COTE\n");
 		slash = count_slash(str, i);
 		tmp = slash_sort(str, i, tab, var);
-		if (!(tab = (char*)malloc(sizeof(char) * slash + ft_strlen(tmp) + 1)))
+		if (!(tab = (char*)malloc(sizeof(char) * (slash + ft_strlen(tmp)) + 1)))
 			return NULL;
 		while (k < slash)
 			tab[k++] = '\\';

@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/11 18:49:37 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/12 21:57:31 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/24 18:46:17 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ char	*single_keep_cote(char *str, int *i, char *tab, t_lists *var)
 {
 	int j;
 	int save;
+	int tmp;
 	int slash;
 
 	slash = 0;
@@ -60,7 +61,7 @@ char	*single_keep_cote(char *str, int *i, char *tab, t_lists *var)
 		if (str[j] == '\\')
 			slash = slash + count_slash(str, &j);
 		if (str[j] == '$')
-			count_dollar_varriable(str, &j, var);
+			tmp = count_dollar_varriable(str, &j, var);
 		else if (str[j] != '\\' && str[j] == '$')
 			j++;
 	}

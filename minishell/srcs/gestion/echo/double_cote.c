@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/11 18:49:57 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/23 19:13:07 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/24 19:46:22 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,23 +52,37 @@ char	*put_in_tab_double(char *str, char *tab, int j, t_lists *var)
 char	*double_cote(char *str, char *tab, t_lists *var)
 {
 	int j;
+	int save;
 	int slash;
+	int tmp;
 
 	slash = 0;
 	//str = remove_cote(str, i, s[*i + 1]);
 	j = 0;
-	while (str[j])
+	tmp = 0;
+	printf("double_cote str = [%s]\n", str);
+	while (str[j] != '\0')
 	{
-		//printf("%c\n",str[j]);
-		if (str[j] == '\\')
+		if (str[j] != '\0' && str[j] != '\\' && str[j] != '$')
+			j++;
+		printf("str [%d] = %c\n",j, str[j]);
+		if (str[j] != '\0' && str[j] == '\\')
 		{
+			printf("WESHHHH !\n");
 			slash = slash + count_slash(str, &j);
 		}
-		if (str[j] == '$')
-			count_dollar_varriable(str, &j, var);
-		else if (str[j] != '\\' && str[j] != '$')
-			j++;
+		if (str[j] != '\0' && str[j] == '$')
+		{
+			tmp = j;
+			save = count_dollar_varriable(str, &j, var);
+			printf("SAVE = %d\n", save);
+			printf("			ok [%c]\n", str[j]);
+			while(str[tmp] && str[tmp] > 64 && str[tmp] < 91)
+				tmp++;
+		}
 	}
-	j = j - slash;
+	printf("slash = %d\n", slash);
+	j = j - slash + save - tmp;
+	printf("size = %d\n", j);
 	return (put_in_tab_double(str, tab, j, var));	
 }

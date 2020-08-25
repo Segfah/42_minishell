@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/11 18:51:11 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/23 19:29:55 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/24 20:46:08 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,36 +57,47 @@ char		*check_dollar(char *str, int *i, t_lists *var)
 	return (NULL);
 }
 
-void		count_dollar_varriable(char *str, int *j, t_lists *var)
+int			count_dollar_varriable(char *str, int *j, t_lists *var)
 {
 	char *variable;
+	int ret;
 	int count;
+	int save;
 	int i;
 
 	*j = *j + 1;
-	count = *j;
 	i = 0;
-	while (str[count] > 64 && str[count] < 91)
+	count = *j;
+	save = *j;
+	printf("char = [%c]\n", str[*j]);
+	printf("j before count variable = %d\n", *j);
+	while (str[*j] != '\0' && str[*j] > 64 && str[*j] < 91)
 	{
-		count++;
+		(*j)++;
 		i++;
 	}
-	if (!(variable = (char*)malloc(sizeof(char)* i + 1)))
-		return ;
+	count = *j;
+	printf("char = [%c]\n", str[*j]);
+	if (!(variable = (char*)malloc(sizeof(char) * i + 1)))
+		return (0);
 	i = 0;
-	while (*j < count)
-		variable[i++] = str[(*j)++];		
+	while (save < *j)
+		variable[i++] = str[save++];
+	printf("variable = [%s]\n", variable);	
 	while (var)
 	{
 		if (ft_strcmp(var->name, variable) == 0)
 		{
-			*j = count;
+			printf("ft_strlen = %zu\n", ft_strlen(var->data));
+			ret = ft_strlen(var->data);
+			printf("j = %d\n", *j);
 			ft_free(variable);
-			return ;
+			return (ret);
 		}
 		var = var->next;
 	}
-	return ;
+	ft_free(variable);
+	return (0);
 }
 
 int		is_it_var(char *str, t_lists *var)

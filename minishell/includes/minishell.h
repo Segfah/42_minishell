@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/23 19:02:48 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/24 18:46:33 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ char				**ft_split_echo(char *s, int *i, t_temp *temp);
 */
 char				*put_dollar_variable(char *str, char *tab);
 char				*check_dollar(char *str, int *i, t_lists *var);
-void				count_dollar_varriable(char *str, int *j, t_lists *var);
+int					count_dollar_varriable(char *str, int *j, t_lists *var);
 int					is_it_var(char *str, t_lists *var);
 
 /*

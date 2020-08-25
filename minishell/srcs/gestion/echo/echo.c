@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:54:35 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/16 14:51:20 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/24 17:32:25 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void    gestion_echo(char *str, char *arg, t_temp *temp)
 
 	i = -1;
 	n = 0;
-	printf("coucou \\ \n");
 	if (ft_strcmp(str, "echo") != 0)
 	{
 		printf("super\n");
