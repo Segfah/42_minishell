@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/24 00:40:31 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/28 04:00:14 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int					command_bin(char **tab, t_temp *tmp);
 /*
 ** gestion/echo
 */
-void				gestion_echo(char *str);
+void    			gestion_echo(char *str, char *option, t_temp *temp);
 
 /*
 ** utils/ft_split_strcmd
@@ -132,8 +132,18 @@ void				gestion_echo(char *str);
 char				**ft_split_strcmd(char *s, char c);
 
 /*
-** utils//ft_split_echo
+** gestion/echo
 */
-char				**ft_split_echo(char *s, char c);
+char				**ft_split_echo(char *s, t_temp *temp);
+int					count_slash(char *str, int *j);
+char				*double_cote(char *str, int *i, char *tab, t_temp *temp);
+char				*single_cote(char *str, int *i, char *tab);
+char				*dollar_variable(char *str, int *i, char *tab);
+
+/*
+** utils/free.c
+*/
+void    			ft_free(char *str);
+void    			ft_free_double_tab(char **tab);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/24 00:40:00 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/28 03:59:40 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 			gestion_export(tmp, 0);
 		else if (ft_strcmp(tmp->strcmd[0], "unset") == 0)
 			gestion_unset(tmp);
-		else if (ft_strcmp(tmp->strcmd[0], "echo") == 0)
-			gestion_echo(tabcmd[i]);
+//		else if (ft_strcmp(tmp->strcmd[0], "echo") == 0)
+//			gestion_echo(tabcmd[i]);
 		else if (command_bin(tmp->strcmd, tmp) == 0)
 			;
 		else if (tabcmd[i][0] == '\0')

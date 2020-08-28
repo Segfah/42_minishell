@@ -1,44 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/04 16:54:35 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/06 01:04:25 by lryst            ###   ########.fr       */
+/*   Created: 2020/08/10 17:58:38 by lryst             #+#    #+#             */
+/*   Updated: 2020/08/10 18:02:56 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    gestion_echo(char *str)
+void    ft_free(char *str)
 {
-    char *cmd;
-    char **tab;
-    int i;
-    int j;
+    free(str);
+    str = NULL;
+}
 
-    i = 4;
-    j = 0;
-    while (str[i++] != '\0')
-        j++;
-    if (!(cmd = (char*)malloc(sizeof(char) * j + 1)))
-        return ;
-    i = 4;
-    j = 0;
-    while (str[i] != '\0')
-    {
-        cmd[j++] = str[i++];
-    }
-    cmd[j] = '\0';
-    tab = ft_split_echo(cmd, ' ');
+void    ft_free_double_tab(char **tab)
+{
+    int i;
+
     i = 0;
-    while (tab[i] != NULL)
+    while(tab[i])
     {
-        ft_printf("%s", tab[i]);
+        free(tab[i]);
+        tab[i] = NULL;
         i++;
     }
-    ft_printf("\n");
-
+    free(tab);
+    tab = NULL;
 }
