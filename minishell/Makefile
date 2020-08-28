@@ -6,7 +6,7 @@
 #    By: lryst <lryst@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 05:41:03 by corozco           #+#    #+#              #
-#    Updated: 2020/08/11 18:57:14 by lryst            ###   ########.fr        #
+#    Updated: 2020/08/28 03:54:48 by corozco          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ SRC := \
 	srcs/gestion/tools/tools_env_export.c \
 	srcs/gestion/export.c \
 	srcs/utils/free.c \
-	srcs/gestion/echo/echo.c \
+#	srcs/gestion/echo/echo.c \
 	srcs/gestion/echo/dollar.c \
 	srcs/gestion/echo/double_cote \
 	srcs/gestion/echo/single_cote.c \
