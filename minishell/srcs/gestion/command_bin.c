@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 15:00:48 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/24 05:05:19 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/29 04:53:35 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,14 @@ int				command_bin(char **tab, t_temp *tmp)
 	f = fork();
 	if (f == 0)
 	{
-		if (execve(tabpath[4], tab, new_env) == -1)
-			exit(1);
-		exit(0);
+		int intento = 0;
+		int returno = 0;
+		while (tabpath[intento])
+		{
+			if ((returno = execve(tabpath[intento++], tab, new_env)) == 0)
+				exit(0);
+		}
+		exit(1);
 	}
 	else
 	{
