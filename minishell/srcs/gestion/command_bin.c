@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 15:00:48 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/29 04:53:35 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/29 05:09:36 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char		**build_cmd(t_temp *tmp, char *cmd, int *a)
 		if (!(tabpath[*a] = ft_strjoin(tabpath[*a], cmd)))
 			return (NULL);
 		free(temp);
-		ft_printf("[%s]\n", tabpath[*a]);
+	//	ft_printf("[%s]\n", tabpath[*a]);
 	}
 	free(path);
 	return (tabpath);
