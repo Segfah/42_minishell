@@ -6,31 +6,33 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 15:00:48 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/30 04:58:24 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/30 05:13:22 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <sys/stat.h>
 
-static char		**build_cmd(t_temp *tmp, char *cmd, int *a)
+static char		**build_cmd(t_temp *tmp, char *cmd)
 {
+	int			a;
 	char		*path;
 	char		**tabpath;
 	char		*temp;
 
+	a = -1;
 	if (search_env("PATH", tmp, 0, &path) == -1)
 		return (NULL);
 	if (!(tabpath = ft_split(path, ':')))
 		return (NULL);
-	while (tabpath[++(*a)] != NULL)
+	while (tabpath[++a] != NULL)
 	{
-		temp = tabpath[*a];
-		if (!(tabpath[*a] = ft_strjoin(tabpath[*a], "/")))
+		temp = tabpath[a];
+		if (!(tabpath[a] = ft_strjoin(tabpath[a], "/")))
 			return (NULL);
 		free(temp);
-		temp = tabpath[*a];
-		if (!(tabpath[*a] = ft_strjoin(tabpath[*a], cmd)))
+		temp = tabpath[a];
+		if (!(tabpath[a] = ft_strjoin(tabpath[a], cmd)))
 			return (NULL);
 		free(temp);
 	}
@@ -70,15 +72,13 @@ int				lists_size(t_lists *lst)
 	return (++i);
 }
 
-char			**creation_env(t_lists *list)
+char			**c_env(t_lists *list, int size)
 {
 	char		**tab;
-	int			size;
 	int			i;
 	char		*tempo;
 	t_lists		*tmp;
 
-	size = lists_size(list);
 	if (!(tab = malloc(sizeof(char *) * (size + 1))))
 		return (NULL);
 	i = 0;
@@ -107,19 +107,17 @@ int				command_bin(char **tab, t_temp *tmp)
 	char		**tab_env;
 	char		**tabpath;
 	int			status;
-	int			i;
 
-	i = -1;
 	if (search_env("PATH", tmp, 1, NULL) == 0)
 		return (-1);
-	if (!(tabpath = build_cmd(tmp, tab[0], &i)))
+	if (!(tabpath = build_cmd(tmp, tab[0])))
 		exit(1);
 	if ((status = cmd_is_here(tabpath)) == -1)
 	{
 		ft_free_tab(tabpath);
 		return (-1);
 	}
-	if	(!(tab_env = creation_env(tmp->varenv)))
+	if (!(tab_env = c_env(tmp->varenv, lists_size(tmp->varenv))))
 		exit(1);
 	if ((f = fork()) == 0)
 	{
