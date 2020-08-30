@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 15:00:48 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/30 01:43:34 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/30 04:58:24 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ static char		**build_cmd(t_temp *tmp, char *cmd, int *a)
 	return (tabpath);
 }
 
-
-int				cmd_is_here(char **path)
+static int		cmd_is_here(char **path)
 {
 	int			i;
 	struct stat	stats;
@@ -53,31 +52,84 @@ int				cmd_is_here(char **path)
 	return (-1);
 }
 
+int				lists_size(t_lists *lst)
+{
+	int			i;
+	t_lists		*tmp;
+
+	i = 0;
+	if (!lst)
+		return (i);
+	tmp = lst->next;
+	while (tmp != NULL)
+	{
+		if (tmp->data != NULL)
+			i++;
+		tmp = tmp->next;
+	}
+	return (++i);
+}
+
+char			**creation_env(t_lists *list)
+{
+	char		**tab;
+	int			size;
+	int			i;
+	char		*tempo;
+	t_lists		*tmp;
+
+	size = lists_size(list);
+	if (!(tab = malloc(sizeof(char *) * (size + 1))))
+		return (NULL);
+	i = 0;
+	tmp = list;
+	while (tmp != NULL)
+	{
+		if (tmp->data != NULL)
+		{
+			if (!(tab[i] = ft_strjoin(tmp->name, "=")))
+				return (NULL);
+			tempo = tab[i];
+			if (!(tab[i] = ft_strjoin(tab[i], tmp->data)))
+				return (NULL);
+			free(tempo);
+			i++;
+		}
+		tmp = tmp->next;
+	}
+	tab[size] = 0;
+	return (tab);
+}
+
 int				command_bin(char **tab, t_temp *tmp)
 {
-	char		*new_env[] = {NULL};
 	pid_t		f;
-//	pid_t		w;
-	int			status;
+	char		**tab_env;
 	char		**tabpath;
+	int			status;
 	int			i;
-	int			s_bin;
 
 	i = -1;
-	if ((search_env("PATH", tmp, 1, NULL) == 0)
-		|| !(tabpath = build_cmd(tmp, tab[0], &i)))
+	if (search_env("PATH", tmp, 1, NULL) == 0)
 		return (-1);
-	if ((s_bin =cmd_is_here(tabpath)) == -1)
-		return (-1);
-	f = fork();
-	if (f == 0)
+	if (!(tabpath = build_cmd(tmp, tab[0], &i)))
+		exit(1);
+	if ((status = cmd_is_here(tabpath)) == -1)
 	{
-		if (execve(tabpath[s_bin], tab, new_env) == -1)
+		ft_free_tab(tabpath);
+		return (-1);
+	}
+	if	(!(tab_env = creation_env(tmp->varenv)))
+		exit(1);
+	if ((f = fork()) == 0)
+	{
+		if (execve(tabpath[status], tab, tab_env) == -1)
 			exit(1);
 		exit(0);
 	}
 	if ((f = waitpid(f, &status, WUNTRACED | WCONTINUED)) == -1)
 		exit(1);
-	ft_free_split(tabpath, i);
+	ft_free_tab(tab_env);
+	ft_free_tab(tabpath);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 00:50:50 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/30 01:28:56 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/30 01:58:35 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void			deletenode(t_lists *list, char *strkey)
 	{
 		list = previous->next;
 		free_node(previous);
-//		previous = NULL;
 		return ;
 	}
 	tmp = previous->next;
@@ -34,7 +33,6 @@ void			deletenode(t_lists *list, char *strkey)
 		{
 			previous->next = tmp->next;
 			free_node(tmp);
-//			tmp = NULL;
 			return ;
 		}
 		previous = tmp;
