@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 23:18:04 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/06 00:36:24 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/30 17:24:23 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static int	adeline(char *s, char cote, int n, int *i)
 	while (s[j] && s[j] != cote)
 	 	j++;
 	*i = j + 1;
+	if (s[*i] == ' ')
+		i++;
 	return (n + 1);
  }
 
@@ -39,7 +41,25 @@ static int	adeline(char *s, char cote, int n, int *i)
 			n = adeline(s, s[i], n, &i);
 		while (s[i] != '\0' && s[i] == c)
 			i++;
-		if (s[i] != '\0' && s[i] != c && s[i] != '"' && s[i] != '\'')
+		if (s[i] == '$')
+		{
+			i++;
+			if (s[i] == '"' || s[i] == '\'')
+				n = adeline(s, s[i], n, &i);
+			else
+			{
+				while (s[i] && ((s[i] > 47 && s[i] < 58) || (s[i] > 64 && s[i] < 91) || (s[i] > 96 && s[i] < 123)))
+					i++;
+				n++;
+			}
+		}
+		if (s[i] == '\\')
+		{
+			while (s[i] == '\\' && s[i + 1] == '\\')
+				i++;
+			n++;
+		}
+		if (s[i] != '\0' && s[i] != c && s[i] != '"' && s[i] != '\'' && s[i] != '$')
 		{
 			while (s[i] != '\0' && s[i] != c && s[i] != '"' && s[i] != '\'')
 				i++;
@@ -47,6 +67,21 @@ static int	adeline(char *s, char cote, int n, int *i)
 		}
 	}
 	return (n);
+}
+
+char				*copy(char *s, int *end, int start)
+{
+	int k;
+	char *tab;
+
+	k = 0;
+	if (!(tab = (char*)malloc(sizeof(char) * (*end - start) + 1)))
+		return NULL;
+	while (start < *end)
+		tab[k++] = s[start++];
+	tab[k] = '\0';
+	printf("tab = [%s]\n", tab);
+	return (tab);
 }
 
 static char			*ft_fill(char *s, char c, int *i, char *tab)
@@ -62,42 +97,53 @@ static char			*ft_fill(char *s, char c, int *i, char *tab)
 			save = *i;
 			adeline(s, s[*i], 0, i);
 			if (save < *i)
+				return (tab = copy(s, i, save));
+		}
+		if (s[*i] == '$')
+		{
+			save = *i;
+			(*i)++;
+			if (s[*i] == '"' || s[*i] == '\'')
 			{
-				k = 0;
-				if (!(tab = (char*)malloc(sizeof(char) * (*i - save) + 1)))
-					return NULL;
-				while (*i > save)
-					tab[k++] = s[save++];
-				tab[k] = '\0';
-				return (tab);
+				adeline(s, s[*i], 0, i);
+				if (save < *i)
+					return (tab = copy(s, i, save));
+			}
+			else
+			{
+				while (s[*i] && ((s[*i] > 47 && s[*i] < 58) || (s[*i] > 64 && s[*i] < 91) || (s[*i] > 96 && s[*i] < 123)))
+					(*i)++;
+				return (tab = copy(s, i, save));
+			}
+		}
+		if (s[*i] == '\\')
+		{
+			save = *i;
+			while (s[*i] == '\\' && s[*i + 1] == '\\')
+				(*i)++;
+			if (save < *i)
+				return (tab = copy(s, i, save));
+			if (s[*i] == '\\' && (s[*i + 1] == '\'' || s[*i + 1] == '"'))
+			{
+				save = *i;
+				adeline(s, s[*i + 1], 0, i);
+				if (save < *i)
+					return (tab = copy(s, i, save));
+			}
+			else
+			{
+				save = *i;
+				while (s[*i] && s[*i] != c)
+					(*i)++;
+				return (tab = copy(s, i, save));
 			}
 		}
 		else if (s[*i] != '\0' && s[*i] != c && s[*i] != '"' && s[*i] != '\'')
 		{
 			save = *i;
-			k = 0;
-			while (s[*i] != '\0' && s[*i] != c && s[*i] != '"' && s[*i] != '\'')
+			while (s[*i] && s[*i] != c)
 				(*i)++;
-			if (s[*i] != '"' && s[*i] != '\'')
-			{
-				if (!(tab = (char*)malloc(sizeof(char) * (*i - save) + 1)))
-					return NULL;
-				while (*i > save)
-				{
-					tab[k++] = s[save++];
-				}
-				tab[k] = '\0';
-				return (tab);
-			}
-			if (s[*i] == '"' || s[*i] == '\'')
-			{
-				if (!(tab = (char*)malloc(sizeof(char) * (*i - save) + 1)))
-					return NULL;
-				while (*i > save)
-					tab[k++] = s[save++];
-				tab[k] = '\0';
-				return (tab);
-			}
+			return (tab = copy(s, i, save));
 		}
 		(*i)++;
 	}
@@ -117,14 +163,11 @@ char				**ft_split_strcmd(char *s, char c)
 	if (!s)
 		return (NULL);
 	n = ft_word(s, c);
+	printf("NBR WORD = %d\n", n);
 	if (!(tab = (char **)malloc(sizeof(tab) * (n + 1))))
 		return (NULL);
 	while (++j < n)
-	{
 		tab[j] = ft_fill(s, c, &i, tab[j]);
-		// while (s[i] != c && s[i] != '\0')
-		// 	i++;
-	}
 	tab[j] = 0;
 	return (tab);
 }

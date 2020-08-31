@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/24 18:46:33 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/30 17:17:07 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ typedef struct		s_temp
 	t_lists			*exportenv;
 }					t_temp;
 
+typedef struct		s_cmd
+{
+	char			*input;
+	char			*output;
+	int				ret;
+	struct	s_cmd	*next;
+}					l_cmd;
 /*
 ** drawings
 */
@@ -161,3 +168,26 @@ void    			controle(char *c);
 int					launcher(t_temp tmp);
 
 #endif
+
+
+
+/*
+char				*copy(char *s, int *end, int start)
+{
+	int k;
+	char *tab;
+
+	k = 0;
+	if (start < *end)
+	{
+		if (!(tab = (char*)malloc(sizeof(char) * (*end - start) + 1)))
+			return NULL;
+		while (start < *end)
+			tab[k++] = s[start++];
+		tab[k] = '\0';
+		printf("tab = [%s]\n", tab);
+		return (tab);
+	}
+	return NULL;
+}
+*/

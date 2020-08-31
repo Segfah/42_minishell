@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/23 19:03:53 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/30 16:02:02 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,105 @@
 /*
 ** fonction qui va creer le nouveau tableau a partir de tabcmd (strig)
 */
-
-void			separator_string(char *str, t_temp *tmp)
+void	dollar_cmd(l_cmd *cmd, t_lists *var)
 {
+	int i;
+	int j;
+	char *save;
+
+	i = 1;
+	j = 0;
+	
+	if (!(save = (char*)malloc(sizeof(char) * ft_strlen(cmd->input))))
+		return ;
+	while (cmd->input[i])
+		save[j++] = cmd->input[i++];
+	save[j] = '\0';
+	if (save[0] == '\'')
+	{
+		
+	}
+	while (var)
+	{
+		if (ft_strcmp(var->name, save) == 0)
+		{
+			cmd->output = ft_strdup(var->data);
+			ft_free(save);
+		}
+		var = var->next;
+	}
+}
+
+
+void	check_node(l_cmd *cmd, t_temp *temp)
+{
+	if (cmd->input[0] == '$')
+		dollar_cmd(cmd, temp->varenv);
+	else
+		cmd->output = ft_strdup(cmd->input);
+}
+
+void	ft_lstadd_back_cmd(l_cmd **alst, l_cmd *new)
+{
+	l_cmd	*tmp;
+
+	tmp = NULL;
+	if (new)
+	{
+		if (!alst || !(*alst))
+		{
+			*alst = new;
+			return ;
+		}
+		tmp = *alst;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+	}
+}
+
+l_cmd	*ft_lstnew_cmd(char *input, t_temp *temp)
+{
+	l_cmd	*tmp;
+
+	if (!(tmp = malloc(sizeof(l_cmd))))
+		return (NULL);
+	if (input)
+	{
+		tmp->input = ft_strdup(input);
+		check_node(tmp, temp);
+		if (tmp->output == NULL)
+			tmp->input = NULL;
+		tmp->next = NULL;
+		return (tmp);	
+	}
+	else
+		tmp->input = NULL;
+	tmp->next = NULL;
+	return (tmp);
+}
+
+void			separator_string(l_cmd **cmd, char *str, t_temp *tmp)
+{
+	int i;
+	l_cmd *new;
+	
+	i = 0;
 	tmp->strcmd = ft_split_strcmd(str, ' ');
+	while(tmp->strcmd[i])
+	{
+		new = ft_lstnew_cmd(tmp->strcmd[i], tmp);
+		ft_lstadd_back_cmd(cmd, new);
+		i++;
+	}
+	new = *cmd;
+	while(new != NULL)
+	{
+		printf("new->input = %s\n", new->input);
+		printf("new->output = %s\n", new->output);
+		new = new->next;
+	}
+	printf("-------------\n");
 }
 
 /*
@@ -58,12 +153,14 @@ void			gestion_nani(char **tab)
 static void		gestion_line(char **tabcmd, t_temp *tmp)
 {
 	int i;
+	l_cmd	*cmd;
 
 	i = -1;
+	cmd = NULL;
 	while (tabcmd[++i])
 	{
 		clean_str(tabcmd[i]);
-		separator_string(tabcmd[i], tmp);
+		separator_string(&cmd, tabcmd[i], tmp);
 		if (ft_strcmp(tabcmd[i], "exit") == 0)
 		{
 			write(1, "exit\n", 5);
