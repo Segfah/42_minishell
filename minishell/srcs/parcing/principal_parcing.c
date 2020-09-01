@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/30 16:02:02 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/01 19:22:34 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,40 @@
 /*
 ** fonction qui va creer le nouveau tableau a partir de tabcmd (strig)
 */
+
+void	slash_cmd(l_cmd *cmd)
+{
+	int i;
+	int count;
+
+	i = 1;
+	count = 0;
+	if (cmd->output[1] != '\\')
+		while (cmd->input[i])
+			cmd->output[count++] = cmd->input[i++];
+	printf("coucouWESH !\n");
+	else
+	{
+		i = 0;
+		while (cmd->input[i++] == '\\')
+			count++;
+		if(!(cmd->output = (char*)malloc(sizeof(char) * (ft_strlen(cmd->input) / 2) + 1)))
+			return;
+		count = count / 2;
+		i = 0;
+		while (i < count)
+			cmd->output[i++] = '\\';
+	}
+	cmd->output[i] = '\0';
+}
+
+void	replace_isspace(l_cmd *cmd, int *i, int *j, char ascii)
+{
+	cmd->output[*i] = ascii;
+	(*i)++;
+	*j = *j + 2;
+}
+
 void	dollar_cmd(l_cmd *cmd, t_lists *var)
 {
 	int i;
@@ -29,9 +63,35 @@ void	dollar_cmd(l_cmd *cmd, t_lists *var)
 	while (cmd->input[i])
 		save[j++] = cmd->input[i++];
 	save[j] = '\0';
-	if (save[0] == '\'')
+	j = 0;
+	i = 0;
+	if (save[j] == '\'')
 	{
-		
+		j++;
+		if ((cmd->output = (char*)malloc(sizeof(char) * ft_strlen(save))))
+		{
+			while (save[j] && save[j] != '\'')
+			{
+				if (save[j] == '\\' && save[j + 1] == 't')
+					replace_isspace(cmd, &i, &j, '\t');
+				else if (save[j] == '\\' && save[j + 1] == 'n')
+					replace_isspace(cmd, &i, &j, '\n');
+				else if (save[j] == '\\' && save[j + 1] == 'v')
+					replace_isspace(cmd, &i, &j, '\v');
+				else if (save[j] == '\\' && save[j + 1] == 'f')
+					replace_isspace(cmd, &i, &j, '\f');
+				else if (save[j] == '\\' && save[j + 1] == 'r')
+					replace_isspace(cmd, &i, &j, '\r');
+				else
+					cmd->output[i++] = save[j++];
+			}
+		}
+		return ;
+	}
+	if (ft_strcmp(cmd->input, "$\0") == 0)
+	{
+		cmd->output = ft_strdup(cmd->input);
+		return ;
 	}
 	while (var)
 	{
@@ -39,9 +99,11 @@ void	dollar_cmd(l_cmd *cmd, t_lists *var)
 		{
 			cmd->output = ft_strdup(var->data);
 			ft_free(save);
+			return ;
 		}
 		var = var->next;
 	}
+	cmd->output = NULL;
 }
 
 
@@ -49,6 +111,8 @@ void	check_node(l_cmd *cmd, t_temp *temp)
 {
 	if (cmd->input[0] == '$')
 		dollar_cmd(cmd, temp->varenv);
+	if (cmd->input[0] == '\\')
+		slash_cmd(cmd);
 	else
 		cmd->output = ft_strdup(cmd->input);
 }
@@ -82,10 +146,6 @@ l_cmd	*ft_lstnew_cmd(char *input, t_temp *temp)
 	{
 		tmp->input = ft_strdup(input);
 		check_node(tmp, temp);
-		if (tmp->output == NULL)
-			tmp->input = NULL;
-		tmp->next = NULL;
-		return (tmp);	
 	}
 	else
 		tmp->input = NULL;
@@ -176,8 +236,8 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 			gestion_nani(tmp->strcmd);
 		else if (ft_strcmp(tmp->strcmd[0], "export") == 0)
 			gestion_export(tmp);
-		else if (ft_strcmp(tmp->strcmd[0], "echo") == 0)
-			gestion_echo(tabcmd[i], tmp->strcmd[1], tmp);
+		/* else if (ft_strcmp(tmp->strcmd[0], "echo") == 0)
+			gestion_echo(tabcmd[i], tmp->strcmd[1], tmp); */
 		else if (command_bin(tmp->strcmd) == 0)
 			;
 		else if (tabcmd[i][0] == '\0')

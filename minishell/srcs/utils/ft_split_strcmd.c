@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 23:18:04 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/30 17:24:23 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/01 19:18:54 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ static int	adeline(char *s, char cote, int n, int *i)
 			i++;
 			if (s[i] == '"' || s[i] == '\'')
 				n = adeline(s, s[i], n, &i);
+			else if (s[i] == ' ' || s[i] == '\0' || s[i] == '\\')
+				n++;
 			else
 			{
 				while (s[i] && ((s[i] > 47 && s[i] < 58) || (s[i] > 64 && s[i] < 91) || (s[i] > 96 && s[i] < 123)))
@@ -55,14 +57,42 @@ static int	adeline(char *s, char cote, int n, int *i)
 		}
 		if (s[i] == '\\')
 		{
-			while (s[i] == '\\' && s[i + 1] == '\\')
+			int count;
+			int save;
+
+			count = 0;
+			save = i;
+			while (s[i] && s[i] == '\\')
+			{
 				i++;
-			n++;
+				count++;
+			}
+			if ((count % 2) == 0)
+				n++;
+			else if ((count % 2) == 1 && count > 1)
+			{
+				i--;
+				n++;
+			}
+			if  (s[i + 1] == '\'' || s[i + 1] == '"' || s[i] == '"' || s[i] == '\'')
+			{
+				i++;
+				n++;
+			}
+			else
+			{
+				while (s[i] && s[i] != c && s[i] != '"' && s[i] != '\'' && s[i] != '$' && s[i] != '\\')
+					i++;
+				n++;
+			}
 		}
 		if (s[i] != '\0' && s[i] != c && s[i] != '"' && s[i] != '\'' && s[i] != '$')
 		{
-			while (s[i] != '\0' && s[i] != c && s[i] != '"' && s[i] != '\'')
+			while (s[i] != '\0' && s[i] != c && s[i] != '"' && s[i] != '\'' && s[i] != '\\' && s[i] != '$')
+			{
+				printf("n = %d, s[%d] = [%c]\n", n, i, s[i]);
 				i++;
+			}
 			n++;
 		}
 	}
@@ -84,7 +114,7 @@ char				*copy(char *s, int *end, int start)
 	return (tab);
 }
 
-static char			*ft_fill(char *s, char c, int *i, char *tab)
+char			*ft_fill(char *s, char c, int *i, char *tab)
 {
 	int		save;
 	int		k;
@@ -109,6 +139,8 @@ static char			*ft_fill(char *s, char c, int *i, char *tab)
 				if (save < *i)
 					return (tab = copy(s, i, save));
 			}
+			else if (s[*i] == ' ' || s[*i] == '\0' || s[*i] == '\\')
+				return (tab = ft_strdup("$\0"));
 			else
 			{
 				while (s[*i] && ((s[*i] > 47 && s[*i] < 58) || (s[*i] > 64 && s[*i] < 91) || (s[*i] > 96 && s[*i] < 123)))
@@ -118,30 +150,38 @@ static char			*ft_fill(char *s, char c, int *i, char *tab)
 		}
 		if (s[*i] == '\\')
 		{
+			int count;
+
+			count = 0;
 			save = *i;
-			while (s[*i] == '\\' && s[*i + 1] == '\\')
-				(*i)++;
-			if (save < *i)
-				return (tab = copy(s, i, save));
-			if (s[*i] == '\\' && (s[*i + 1] == '\'' || s[*i + 1] == '"'))
+			while (s[*i] && s[*i] == '\\')
 			{
-				save = *i;
-				adeline(s, s[*i + 1], 0, i);
-				if (save < *i)
-					return (tab = copy(s, i, save));
+				(*i)++;
+				count++;
+			}
+			if ((count % 2) == 0)
+				return (tab = copy(s, i, save));
+			else if ((count % 2) == 1 && count > 1)
+			{
+				(*i)--;
+				return (tab = copy(s, i, save));
+			}
+			if  (s[*i + 1] == '\'' || s[*i + 1] == '"' || s[*i] == '"' || s[*i] == '\'')
+			{
+				(*i)++;
+				return (tab = copy(s, i, save));
 			}
 			else
 			{
-				save = *i;
-				while (s[*i] && s[*i] != c)
+				while (s[*i] && s[*i] != c && s[*i] != '"' && s[*i] != '\'' && s[*i] != '$' && s[*i] != '\\')
 					(*i)++;
 				return (tab = copy(s, i, save));
 			}
 		}
-		else if (s[*i] != '\0' && s[*i] != c && s[*i] != '"' && s[*i] != '\'')
+		if (s[*i] != '\0' && s[*i] != c && s[*i] != '"' && s[*i] != '\'' && s[*i] != '$' && s[*i] != '\\')
 		{
 			save = *i;
-			while (s[*i] && s[*i] != c)
+			while (s[*i] && s[*i] != c && s[*i] != '"' && s[*i] != '\'' && s[*i] != '$' && s[*i] != '\\')
 				(*i)++;
 			return (tab = copy(s, i, save));
 		}

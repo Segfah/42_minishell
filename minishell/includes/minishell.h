@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/30 17:17:07 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/01 17:42:46 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ char				*word(char *str, int *i, char *tab);
 /*
 ** utils/free.c
 */
+char				*ft_strcatdup(char *s1, char *s2);
 void    			ft_free(char *str);
 void    			ft_free_double_tab(char **tab);
 

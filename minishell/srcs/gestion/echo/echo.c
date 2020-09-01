@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:54:35 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/29 22:56:06 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/01 13:19:52 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void    gestion_echo(char *str, char *arg, t_temp *temp)
 	n = 0;
 	if (ft_strcmp(str, "echo") != 0)
 	{
-		printf("super\n");
 		if (!(cmd = gestion_echo_option(str, arg)))
 			return ;
 		if (!(tab = ft_split_echo(cmd, &n, temp)))

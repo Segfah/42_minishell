@@ -29,6 +29,34 @@ output : retour a la ligne
 input :echo $'coucou\n'
 output :coucou retour a la ligne
 
+input :echo \"$HOME\"
+output :"/Users/lryst"
+
+input : echo \'$HOME\'
+output :'/Users/lryst'
+
+input : echo "$HOME"
+output :/Users/lryst
+
+input :echo '$HOME'
+output :$HOME
+
+input : echo \'$HOME\\\'
+output : '/Users/lryst\'
+
+input :echo \"$HOME\\\"
+output : "/Users/lryst\"
+
+input : echo \"coucou abc def $\'HOME\' $'\n' $USER\"
+output : "coucou abc def $'HOME' 
+ lryst"
+
+input :
+output :
+
+input :
+output :
+
 input :
 output :
 
