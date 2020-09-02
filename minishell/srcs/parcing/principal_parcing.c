@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/09/01 19:22:34 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/02 20:45:17 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,148 @@
 ** fonction qui va creer le nouveau tableau a partir de tabcmd (strig)
 */
 
+void	double_cote_cmd(l_cmd *cmd, t_lists *var)
+{
+	int i;
+	int j;
+	int size;
+	int save;
+	char *tmp;
+	int len;
+	t_lists	*revar;
+
+	i = 1;
+	j = 0;
+	size = 0;
+	revar = var;
+	len = ft_strlen(cmd->input) - 1;
+	while (cmd->input[i] && i < len)
+	{
+		if (cmd->input[i] == '$')
+		{
+			if (cmd->input[i] && ((cmd->input[i + 1] > 47 && cmd->input[i + 1] < 58) || (cmd->input[i + 1] > 64 && cmd->input[i + 1] < 91) || (cmd->input[i + 1] > 96 && cmd->input[i + 1] < 123)))
+			{
+				i++;
+				save = i;
+				printf("save = %d, i = %d", save, i);
+				while (cmd->input[i] && ((cmd->input[i] > 47 && cmd->input[i] < 58) || (cmd->input[i] > 64 && cmd->input[i] < 91) || (cmd->input[i] > 96 && cmd->input[i] < 123)))
+					i++;
+				if (!(tmp = (char*)malloc(sizeof(char) * (i - save) + 1)))
+					return ;
+				printf("save = %d, i = %d", save, i);
+				while (save < i)
+					tmp[j++] = cmd->input[save++];
+				tmp[j] = '\0';
+				printf("	tmp = [%s]\n", tmp);
+				while (var)
+				{
+					if (ft_strcmp(var->name, tmp) == 0)
+						size = size + ft_strlen(var->data);
+					var = var->next;
+				}
+				ft_free(tmp);
+			}
+			else
+				size++;
+			i++;
+		}
+		if (cmd->input[i] == '\\')
+		{
+			save = 0;
+			while (cmd->input[i] && cmd->input[i] == '\\')
+			{
+				save++;
+				i++;
+			}
+			if (save == 1)
+				size++;
+			else
+				size = size + (save / 2);
+		}
+		if (cmd->input[i] != '\\' && cmd->input[i] != '$')
+			size++;
+		i++;
+	}
+	if (!(cmd->output = (char*)malloc(sizeof(char) * size + 1)))
+		return ;
+	printf("size = %d\n", size);
+	size = 0;
+	i = 1;
+	j = 0;
+	while (cmd->input[i] && i < len)
+	{
+		if (cmd->input[i] == '$')
+		{
+			if (cmd->input[i] && ((cmd->input[i + 1] > 47 && cmd->input[i + 1] < 58) || (cmd->input[i + 1] > 64 && cmd->input[i + 1] < 91) || (cmd->input[i + 1] > 96 && cmd->input[i + 1] < 123)))
+			{
+				i++;
+				save = i;
+				while (cmd->input[i] && ((cmd->input[i] > 47 && cmd->input[i] < 58) || (cmd->input[i] > 64 && cmd->input[i] < 91) || (cmd->input[i] > 96 && cmd->input[i] < 123)))
+					i++;
+				if (!(tmp = (char*)malloc(sizeof(char) * (i - save) + 1)))
+					return ;
+				size = 0;
+				while (save < i)
+					tmp[size++] = cmd->input[save++];
+				tmp[size] = '\0';
+				printf("	tmp = [%s]\n", tmp);
+				size = 0;
+				while (revar)
+				{
+					printf("GOOOOO !\n");
+					if (ft_strcmp(revar->name, tmp) == 0)
+						while (revar->data[size])
+							cmd->output[j++] = revar->data[size++];
+					revar = revar->next;
+				}
+				printf("cmd->FAILED = [%s]\n", cmd->output);
+				if (size == 0)
+					i++;
+			}
+			else
+				cmd->output[j++] = cmd->input[i];
+			i++;
+		}
+		printf("	ICI\n");
+		if (cmd->input[i] == '\\')
+		{
+			save = 0;
+			size = 0;
+			while (cmd->input[i] && cmd->input[i] == '\\')
+			{
+				save++;
+				i++;
+			}
+			if (save == 1)
+				cmd->output[j++] = cmd->input[i++];
+			else
+				while (size++ < (save / 2))
+					cmd->output[j] = '\\';
+		}
+		if (cmd->input[i] != '\\' && cmd->input[i] != '$')
+			cmd->output[j] = cmd->input[i];
+		i++;
+		j++;
+	}
+	cmd->output[j] = '\0';
+}
+
+void	single_cote_cmd(l_cmd *cmd)
+{
+	int i;
+	int j;
+	int len;
+
+	i = 1;
+	j = 0;
+	len = ft_strlen(cmd->input);
+	if (!(cmd->output = (char*)malloc(sizeof(char) * len)))
+		return ;
+	while (cmd->input[i] && i < (len - 1))
+		cmd->output[j++] = cmd->input[i++];
+	cmd->output[j] = '\0';
+}
+
 void	slash_cmd(l_cmd *cmd)
 {
 	int i;
@@ -23,14 +165,17 @@ void	slash_cmd(l_cmd *cmd)
 
 	i = 1;
 	count = 0;
-	if (cmd->output[1] != '\\')
+	if (cmd->input[i] != '\0' && cmd->input[i] != '\\')
+	{
+		if (!(cmd->output = (char*)malloc(sizeof(char) * ft_strlen(cmd->input))))
+			return ;
 		while (cmd->input[i])
 			cmd->output[count++] = cmd->input[i++];
-	printf("coucouWESH !\n");
+	}
 	else
 	{
 		i = 0;
-		while (cmd->input[i++] == '\\')
+		while (cmd->input[i] && cmd->input[i++] == '\\')
 			count++;
 		if(!(cmd->output = (char*)malloc(sizeof(char) * (ft_strlen(cmd->input) / 2) + 1)))
 			return;
@@ -106,13 +251,16 @@ void	dollar_cmd(l_cmd *cmd, t_lists *var)
 	cmd->output = NULL;
 }
 
-
 void	check_node(l_cmd *cmd, t_temp *temp)
 {
 	if (cmd->input[0] == '$')
 		dollar_cmd(cmd, temp->varenv);
 	if (cmd->input[0] == '\\')
 		slash_cmd(cmd);
+	if (cmd->input[0] == '\'')
+		single_cote_cmd(cmd);
+	if (cmd->input[0] == '"')
+		double_cote_cmd(cmd, temp->varenv);
 	else
 		cmd->output = ft_strdup(cmd->input);
 }
@@ -169,8 +317,8 @@ void			separator_string(l_cmd **cmd, char *str, t_temp *tmp)
 	new = *cmd;
 	while(new != NULL)
 	{
-		printf("new->input = %s\n", new->input);
-		printf("new->output = %s\n", new->output);
+		printf("new->input = [%s]\n", new->input);
+		printf("new->output = [%s]\n", new->output);
 		new = new->next;
 	}
 	printf("-------------\n");

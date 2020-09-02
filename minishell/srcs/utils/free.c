@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 17:58:38 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/01 17:42:18 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/02 18:18:54 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ char				*ft_strcatdup(char *s1, char *s2)
 	while (s2[j])
 		ret[i++] = s2[j++];
 	ret[i] = '\0';
+	ft_free(s1);
+	ft_free(s2);
 	return (ret);
 }
 
