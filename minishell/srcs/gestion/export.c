@@ -6,108 +6,110 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 02:32:22 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/06 05:14:44 by corozco          ###   ########.fr       */
+/*   Updated: 2020/08/22 19:04:38 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-/*
-** Elle tri la liste export
-*/
-
-void			range_export(t_lists *la)
+int				ft_cortar(char *tab[2], char *str)
 {
-	t_lists *tmp;
-	t_lists *tmp1;
-	t_lists *tmp3;
-	char	*s1;
-	char	*s2;
+	int			i;
+	char		*ss;
 
-	tmp = la;
-	while (tmp->next != NULL)
-	{
-		tmp3 = tmp;
-		tmp1 = tmp->next;
-		while (tmp1 != NULL)
-		{
-			if (ft_strcmp(tmp1->name, tmp3->name) < 0)
-				tmp3 = tmp1;
-			tmp1 = tmp1->next;
-		}
-		s1 = tmp->name;
-		s2 = tmp->data;
-		tmp->name = tmp3->name;
-		tmp->data = tmp3->data;
-		tmp3->name = s1;
-		tmp3->data = s2;
-		tmp = tmp->next;
-	}
-}
-
-/*
-**	Fait une copie d'une liste ch....
-*/
-
-void			cpy_env(t_lists **cpy, t_lists *list)
-{
-	t_lists *tmplist;
-
-	*cpy = NULL;
-	tmplist = list;
-	while (tmplist != NULL)
-	{
-		add_list_front(cpy, tmplist->name, tmplist->data);
-		tmplist = tmplist->next;
-	}
-}
-
-static int	search_equal(char *str)
-{
-	int		i;
-
-	i = -1;
-	if (str[0] == '=')
+	if ((i = check_env(str, 1)) == -1)
 		return (-2);
-	while (str[++i])
+	else if (i == 0)
 	{
-		if (str[i] == '=' && str[i + 1] == '=')
+		if (!(tab[0] = ft_strdup(str)))
 			return (-1);
-		if (str[i] == '=' && str[i + 1] != '=')
-			return (1);
+		tab[1] = NULL;
+	}
+	else
+	{
+		ss = ft_strchr(str, '=');
+		if (!(tab[1] = ft_strdup(ss + 1)))
+			return (-1);
+		str[ss - str] = 0;
+		if (!(tab[0] = ft_strdup(str)))
+			return (-1);
+		str[(int)ft_strlen(str)] = '=';
 	}
 	return (0);
 }
 
-void		gestion_export(t_temp *tmp)
+void			general_free(t_temp *tmp)
 {
-	int		i;
-	int		ret;
+	(tmp->env != NULL) ? free(tmp->env) : 0;
+	(tmp->prompt != NULL) ? free(tmp->prompt) : 0;
+	(tmp->tab[0] != NULL) ? free(tmp->tab[0]) : 0;
+	(tmp->tab[1] != NULL) ? free(tmp->tab[1]) : 0;
+	(tmp->varenv != NULL) ? free_list(tmp->varenv) : 0;
+	(tmp->exportenv != NULL) ? free_list(tmp->exportenv) : 0;
+//	free_tmps(tmp->tabcmd, i, tmp);
+	ft_printf("Error: Malloc\n");
+	exit(1);
+}
 
-	i = 0;
-	ret = 0;
+int				export_arg(t_temp *tmp, int ret, int i)
+{
+	if ((ret = ft_cortar(tmp->tab, tmp->strcmd[i])) == -2)
+	{
+		ft_printf("minishell: export: `%s': not a valid identifier\n",
+				tmp->strcmd[i]);
+		return (0);
+	}
+	else if (ret == -1)
+		return (-1);
+	else
+	{
+		if ((ret = search_env(tmp->tab[0], tmp, 1, NULL)) == 0)
+		{
+			if ((lback(&tmp->varenv, tmp->tab[0], tmp->tab[1])) == -1)
+				return (-1);
+		}
+		else if (ret == 1 && tmp->tab[1] != NULL)
+		{
+			deletenode(tmp->varenv, tmp->tab[0]);
+			if ((lback(&tmp->varenv, tmp->tab[0], tmp->tab[1])) == -1)
+				return (1);
+		}
+	}
+	return (0);
+}
+
+void			free_export_tab(t_temp *tmp)
+{
+	free(tmp->tab[0]);
+	tmp->tab[0] = NULL;
+	if (tmp->tab[1] != NULL)
+	{
+		free(tmp->tab[1]);
+		tmp->tab[1] = NULL;
+	}
+}
+
+void			gestion_export(t_temp *tmp, int i)
+{
 	while (tmp->strcmd[i])
 		i++;
 	if (i == 1)
 	{
+		if (cpy_env(&tmp->exportenv, tmp->varenv) == -1)
+			general_free(tmp);
 		range_export(tmp->exportenv);
-		print_list(tmp->exportenv);
+		print_list(tmp->exportenv, 0);
+		free_list(tmp->exportenv);
+		tmp->exportenv = NULL;
 	}
 	else
 	{
 		i = 0;
 		while (tmp->strcmd[++i])
 		{
-			if ((ret = search_equal(tmp->strcmd[i])) == 1)
-				ft_printf("export et env\n");
-			else if (ret == -1)
-				ft_printf("Error \"=\"\n");
-			else if (ret == -2)
-				ft_printf("minishell: export: `%s': not avalid identifier\n"
-				, tmp->strcmd[i]);
-			else
-				ft_printf("solo en export\n");
+			if (export_arg(tmp, 0, i) == -1)
+				general_free(tmp);
+			free_export_tab(tmp);
 		}
 	}
 }

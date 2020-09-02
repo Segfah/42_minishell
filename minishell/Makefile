@@ -6,7 +6,7 @@
 #    By: lryst <lryst@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 05:41:03 by corozco           #+#    #+#              #
-#    Updated: 2020/08/23 18:08:19 by lryst            ###   ########.fr        #
+#    Updated: 2020/09/02 21:09:18 by lryst            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,12 +26,16 @@ SRC := \
 	srcs/gestion/pwd.c \
 	srcs/gestion/cd.c \
 	srcs/gestion/env.c \
+	srcs/gestion/unset.c \
 	srcs/gestion/command_bin.c \
 	srcs/utils/ft_split_strcmd.c \
 	srcs/gestion/tools/tools_env_export.c \
+	srcs/gestion/tools/tools_env_unset.c \
+	srcs/gestion/tools/tools_export.c \
+	srcs/gestion/tools/tools_list.c \
 	srcs/gestion/export.c \
-	srcs/utils/free.c \
-	srcs/gestion/echo/echo.c \
+	srcs/utils/free.c 
+#	srcs/gestion/echo/echo.c \
 	srcs/gestion/echo/dollar.c \
 	srcs/gestion/echo/double_cote.c \
 	srcs/gestion/echo/single_cote.c \

@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 11:44:28 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/29 23:29:34 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/02 21:05:32 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_list			*ft_lstnew(void *content);
 int				ft_putchar(char c);
 int				ft_putstr(char *s);
 int				ft_lentab(char **tab);
+void			ft_free_tab(char **tab);
 void			ft_free_split(char **split, int i);
 void			ft_bzero(void *s, size_t n);
 void			ft_putnbr_fd(int n, int fd);

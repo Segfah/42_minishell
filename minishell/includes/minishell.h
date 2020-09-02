@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/09/01 17:42:46 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/02 21:04:58 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,13 @@ typedef struct		s_lists
 
 typedef struct		s_temp
 {
+	char			*prompt;
 	char			*env;
 	char			**tabcmd;
 	char			**strcmd;
 	t_lists			*varenv;
 	t_lists			*exportenv;
+	char			*tab[2];
 }					t_temp;
 
 typedef struct		s_cmd
@@ -42,36 +44,29 @@ typedef struct		s_cmd
 	int				ret;
 	struct	s_cmd	*next;
 }					l_cmd;
+
+void				general_free(t_temp *tmp);
 /*
 ** drawings
 */
-
 void				welcome(void);
 
 /*
 ** prompt
 */
-
 char				*ft_prompt(char *str);
 
 /*
 ** Parsing
 */
-
 void				ft_getline(t_temp *tmp);
 void				clean_str(char *str);
 
-
 /*
-** gestion/export
+** ************************************************************************
+** **************************gestion***************************************
+** ************************************************************************
 */
-void				cpy_env(t_lists **cpy, t_lists *list);
-void				gestion_export(t_temp *tmp);
-
-/*
-** gestion/pwd
-*/
-int					gestion_pwd(char **tabcmd, t_temp *tmp, int i);
 
 /*
 ** gestion/cd
@@ -79,23 +74,65 @@ int					gestion_pwd(char **tabcmd, t_temp *tmp, int i);
 void				gestion_cd(char *str);
 
 /*
-** gestion/env.c
+** env.c
 */
+int					save_env(t_lists **head, char **envp);
 void				gestion_env(t_temp *tmp);
+/*
+** gestion/export
+*/
+void				gestion_export(t_temp *tmp, int i);
 
 /*
-** gestion/tools/env_export
+** gestion/pwd
 */
+int					gestion_pwd(char **tabcmd, t_temp *tmp, int i);
 
-void				print_list(t_lists *head);
-void				add_list_front(t_lists **head, char *str, char *str2);
+/*
+** gestion/unset
+*/
+void				gestion_unset(t_temp *tmp);
+
+/*
+** **************************gestion/tools*********************************
+*/
+/*
+** tools_env_export
+*/
+void				print_list(t_lists *head, int key);
+int					lback(t_lists **alst, char *str, char *str2);
+int					cpy_env(t_lists **cpy, t_lists *list);
+
+/*
+** tools_env_unset
+*/
+int					check_env(char *str, int key);
+
+/*
+** tools_export
+*/
+void				range_export(t_lists *la);
+int					search_env(char *str, t_temp *tmp, int key, char **data);
+
+/*
+** tools_list
+*/
+void				deletenode(t_lists *list, char *strkey);
+void				free_node(t_lists *node);
 void				free_list(t_lists *test);
+/*
+** ************************************************************************
+*/
 
 /*
 ** gestion/command_bin
 */
-int					command_bin(char **tab);
+int					command_bin(char **tab, t_temp *tmp);
 
+/*
+** gestion/echo
+*/
+void				gestion_echo(char *str, char *option, t_temp *temp);
 
 /*
 ** utils/ft_split_strcmd
@@ -169,26 +206,3 @@ void    			controle(char *c);
 int					launcher(t_temp tmp);
 
 #endif
-
-
-
-/*
-char				*copy(char *s, int *end, int start)
-{
-	int k;
-	char *tab;
-
-	k = 0;
-	if (start < *end)
-	{
-		if (!(tab = (char*)malloc(sizeof(char) * (*end - start) + 1)))
-			return NULL;
-		while (start < *end)
-			tab[k++] = s[start++];
-		tab[k] = '\0';
-		printf("tab = [%s]\n", tab);
-		return (tab);
-	}
-	return NULL;
-}
-*/

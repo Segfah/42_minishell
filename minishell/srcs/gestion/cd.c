@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <string.h>
+#include <errno.h>
 
 void			gestion_cd(char *str)
 {
@@ -28,7 +30,7 @@ void			gestion_cd(char *str)
 		while (str[i++] != '\0')
 			path[i - 3] = str[i];
 		if (chdir(path) != 0)
-			ft_printf("cd: no such file or directory: %s\n", path);
+			ft_printf("cd: %s: %s\n", strerror(errno), path);
 		free(path);
 	}
 }

@@ -6,7 +6,7 @@
 #    By: corozco <corozco@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 05:41:03 by corozco           #+#    #+#              #
-#    Updated: 2020/05/26 16:41:12 by corozco          ###   ########.fr        #
+#    Updated: 2020/08/30 03:46:49 by corozco          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,7 @@ SRC := \
 	srcs/libc/ft_isupper.c \
 	srcs/libc/ft_islower.c \
 	srcs/libc/ft_free_split.c \
+	srcs/libc/ft_free_tab.c \
 	srcs/libc/ft_isspace.c
 
 BNS := \

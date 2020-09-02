@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_split.c                                    :+:      :+:    :+:   */
+/*   ft_free_tab.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corozco <corozco@student.42.fr>            +#+  +:+       +#+        */
+/*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/14 23:48:33 by corozco           #+#    #+#             */
-/*   Updated: 2019/11/02 02:29:27 by corozco          ###   ########.fr       */
+/*   Created: 2020/08/30 03:40:07 by corozco           #+#    #+#             */
+/*   Updated: 2020/08/30 03:44:08 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft.h"
 
-void	ft_free_split(char **split, int i)
+void		ft_free_tab(char **tab)
 {
-	while (i >= 0)
+	int		i;
+
+	i = -1;
+	while(tab[++i])
 	{
-		free(split[i]);
-		i--;
+		free(tab[i]);
+		tab[i] = NULL;
 	}
-	free(split);
-	split = NULL;
+	free(tab);
+	tab = NULL;
 }
