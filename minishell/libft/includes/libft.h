@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corozco <corozco@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 11:44:28 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/30 03:44:54 by corozco          ###   ########.fr       */
+/*   Updated: 2020/09/02 21:05:32 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 
 typedef struct	s_list
 {
+	char	c;
 	void			*content;
 	struct s_list	*next;
 }				t_list;

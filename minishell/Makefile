@@ -6,7 +6,7 @@
 #    By: lryst <lryst@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 05:41:03 by corozco           #+#    #+#              #
-#    Updated: 2020/08/28 04:01:04 by corozco          ###   ########.fr        #
+#    Updated: 2020/09/02 21:09:18 by lryst            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,13 +34,15 @@ SRC := \
 	srcs/gestion/tools/tools_export.c \
 	srcs/gestion/tools/tools_list.c \
 	srcs/gestion/export.c \
-	srcs/utils/free.c \
+	srcs/utils/free.c 
 #	srcs/gestion/echo/echo.c \
 	srcs/gestion/echo/dollar.c \
-	srcs/gestion/echo/double_cote \
+	srcs/gestion/echo/double_cote.c \
 	srcs/gestion/echo/single_cote.c \
-	srcs/gestion/echo/ft_split_echo \
-	srcs/gestion/echo/slash.c
+	srcs/gestion/echo/ft_split_echo.c \
+	srcs/gestion/echo/slash.c \
+	srcs/gestion/echo/word.c \
+	srcs/gestion/controles.c
 
 OBJS = $(addprefix objs/, $(SRC:.c=.o))
 

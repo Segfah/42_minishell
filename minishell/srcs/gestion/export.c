@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 02:32:22 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/22 19:04:38 by corozco          ###   ########.fr       */
+/*   Updated: 2020/09/06 04:14:13 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,8 @@ int				export_arg(t_temp *tmp, int ret, int i)
 		}
 		else if (ret == 1 && tmp->tab[1] != NULL)
 		{
-			deletenode(tmp->varenv, tmp->tab[0]);
-			if ((lback(&tmp->varenv, tmp->tab[0], tmp->tab[1])) == -1)
-				return (1);
+			if ((change_list(tmp->varenv, tmp->tab[0], tmp->tab[1])) == -1)
+				return (-1);
 		}
 	}
 	return (0);

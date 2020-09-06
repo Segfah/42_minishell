@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 23:18:04 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/11 20:19:54 by lryst            ###   ########.fr       */
+/*   Updated: 2020/08/23 18:53:51 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,33 +17,64 @@
 
 static int          adeline(char *s, char cote, int n, int *i)
  {
-	int j;
-
-	j = *i + 1;
-	while (s[j] && s[j] != cote)
-	 	j++;
-	*i = j + 1;
+	(*i)++;
+	while (s[*i] && s[*i] != cote)
+	 	(*i)++;
+	if (s[*i] && s[*i] == cote)
+		(*i)++;
 	return (n + 1);
  }
 
- static int			ft_count_word(char *s)
+ static int			ft_count_word(char *s, t_lists *var)
 {
 	int		n;
 	int		i;
+	int		count;
 
 	i = 0;
 	n = 0;
+	count = 0;
 	while (s[i] != '\0')
 	{
-		if (s[i] != '\\' && (s[i + 1] == '"' || s[i +1] == '\''))
-			n = adeline(s, s[i], n, &i);
-		if (s[i] == '\\' && (s[i + 1] == '"' || s[i +1] == '\''))
-			n = adeline(s, s[i + 1], n, &i);
-		while (s[i] != '\0' && s[i] == ' ')
+		if (s[i] && s[i] == ' ')
 			i++;
-		if (s[i] != '\0' && s[i] != ' ' && s[i] != '"' && s[i] != '\'')
+		if (s[i] && (s[i] == '"' || s[i] == '\''))
+			n = adeline(s, s[i], n, &i);
+		if (s[i] && s[i] == '\\')
 		{
-			while (s[i] != '\0' && s[i] != ' ' && s[i] != '"' && s[i] != '\'')
+			while (s[i] && s[i] == '\\')
+			{
+				count++;
+				i++;
+			}
+			if (s[i] == ' ' || s[i] == '\0' || s[i] == '$')
+				n++;
+			if (s[i] == '"' || s[i] == '\'')
+				n = adeline(s, s[i], n, &i);
+		}
+		if (s[i] && s[i] == '$' && s[i + 1] != '\0')
+		{
+			char *tmp;
+			int save;
+			int j;
+
+			i++;
+			save = i;
+			j = 0;
+			if (s[i + 1] == ' ' || s[i] == '\0')
+				n = n + 1;
+			while (s[save] != '\0' && ((s[save] > 47 && s[save] < 58) || (s[save] > 64 && s[save] < 91) || (s[save] > 96 && s[save] < 123)))
+				save++;
+			if (!(tmp = (char*)malloc(sizeof(char) * (save - i) + 1)))
+				return (0);
+			while (i < save)
+				tmp[j++] = s[i++];
+			tmp[j] = '\0';
+			n = n + is_it_var(tmp, var);
+		}
+		if (s[i] != '\0' && s[i] != '$' && s[i] != '"' && s[i] != '\'' && s[i] != '\\' && s[i] != ' ')
+		{
+			while (s[i] != '\0' && s[i] != '$' && s[i] != '"' && s[i] != '\'' && s[i] != '\\' && s[i] != ' ')
 				i++;
 			n++;
 		}
@@ -51,99 +82,73 @@ static int          adeline(char *s, char cote, int n, int *i)
 	return (n);
 }
 
-static	char		*remove_cote(char *s, int start, int *end, char cote)
+char				*remove_cote(char *s, int *start, char cote)
 {
 	int i;
 	char *ret;
+	int save;
 
-	i = *end;
-	if (s[start] == cote)
-		start++;
-	while (start < *end && s[*end] != cote)
-		(*end)--;
-	if (*end == start)
-		*end = i;
-	if (!(ret = (char*)malloc(sizeof(char) * (*end - start) + 1)))
+	if (s[*start] == cote)
+		(*start)++;
+	save = *start;
+	while (s[*start] && s[*start] != cote)
+		(*start)++;
+	if (!(ret = (char*)malloc(sizeof(char) * (*start - save) + 1)))
 		return NULL;
 	i = 0;
-	while (start < *end)
-	{
-		ret[i++] = s[start++];
-	}
+	while (save < *start)
+		ret[i++] = s[save++];
 	ret[i]= '\0';
+	if (s[*start])
+		(*start)++;
 	return (ret);
 }
 
 static char			*ft_fill(char *s, int *i, char *tab, t_temp *temp)
 {
-	int		save;
 	int		k;
-
+	char 	*tmp;
 	k = 0;
 	while (s[*i] != '\0')
 	{
 		if (s[*i] == '\'')
-			return (single_cote(s, i + 1, tab));
-		else if (s[*i] != '"')
-			return (double_cote(s, i + 1, tab, temp));
+			return (single_cote(remove_cote(s, i, s[*i]), tab));
+		else if (s[*i] == '"')
+			return (double_cote((remove_cote(s, i, s[*i])), tab, temp->varenv));
 		else if (s[*i] == '\\')
-			return (slash());
-		else if (s[*i] == ' ')
-			i++;
+			return (slash(s, i, tab, temp->varenv));
 		else if (s[*i] == '$')
-			return (dollar_variable());
-		else if (s[*i] != ' ' && s[*i] != '"' && s[*i] != '\'' && s[*i] != '\\' && s[*i] != '$')
-			return (word());
-		/* else if (s[*i] != '\0' && s[*i] != c && s[*i] != '"' && s[*i] != '\'')
 		{
-			save = *i;
-			k = 0;
-			while (s[*i] != '\0' && s[*i] != c && s[*i] != '"' && s[*i] != '\'')
-				(*i)++;
-			if (s[*i] != '"' && s[*i] != '\'')
-			{
-				if (s[*i] == c)
-					(*i)++;
-				if (!(tab = (char*)malloc(sizeof(char) * (*i - save) + 1)))
-					return NULL;
-				while (*i > save)
-					tab[k++] = s[save++];
-				tab[k] = '\0';
-				return (tab);
-			}
-			if (s[*i] == '"' || s[*i] == '\'')
-			{
-				if (!(tab = (char*)malloc(sizeof(char) * (*i - save) + 1)))
-					return NULL;
-				while (*i > save)
-					tab[k++] = s[save++];
-				tab[k] = '\0';
-				return (tab);
-			}
+			if (s[*i + 1] == ' ' || s[*i + 1] == '\0')
+				return (tab = ft_strdup("$\0"));
+			if ((tmp = check_dollar(s, i, temp->varenv )) != NULL)
+				return (put_dollar_variable(tmp, tab));
+			(*i)++;
 		}
-		(*i)++; */
+		else if (s[*i] != ' ' && s[*i] != '"' && s[*i] != '\'' && s[*i] != '\\' && s[*i] != '$')
+			return (word(s, i, tab));
+		(*i)++;
 	}
 	return NULL;
 }
 
-char				**ft_split_echo(char *s, t_temp *temp)
+char				**ft_split_echo(char *s, int *n, t_temp *temp)
 {
 	char	**tab;
 	int		i;
-	int		n;
 	int		j;
 
 	i = 0;
-	n = 0;
 	j = -1;
 	if (!s)
 		return (NULL);
-	n = ft_count_word(s);
-	printf("NBR WORD %d\n", n);
-	if (!(tab = (char **)malloc(sizeof(tab) * (n + 1))))
+	*n = ft_count_word(s, temp->varenv);
+	if (!(tab = (char **)malloc(sizeof(tab) * (*n + 1))))
 		return (NULL);
-	while (++j < n)
+	while (++j < *n)
+	{
 		tab[j] = ft_fill(s, &i, tab[j], temp);
+	}
 	tab[j] = NULL;
 	return (tab);
 }

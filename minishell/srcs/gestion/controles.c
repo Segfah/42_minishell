@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
+/*   controles.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/12 07:38:32 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/29 23:31:55 by lryst            ###   ########.fr       */
+/*   Created: 2020/08/23 17:03:10 by lryst             #+#    #+#             */
+/*   Updated: 2020/08/23 18:18:30 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-t_list	*ft_lstnew(void *content)
+void    controle(char *c)
 {
-	t_list	*tmp;
-
-	if (!(tmp = ft_memalloc(sizeof(t_list))))
-		return (NULL);
-	if (content)
-		tmp->content = content;
-	else
-		tmp->content = NULL;
-	tmp->next = NULL;
-	return (tmp);
+    if ((int)c == 3)
+    {
+        printf("STARFF\n");
+        return;
+    }
+    if ((int)c == 4)
+    {
+        write(1, "\n", 1);
+        exit (EXIT_SUCCESS);
+    }
 }

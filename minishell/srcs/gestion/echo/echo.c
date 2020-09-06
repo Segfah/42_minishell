@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:54:35 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/11 20:19:11 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/01 13:19:52 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,22 @@ void    gestion_echo(char *str, char *arg, t_temp *temp)
 {
 	char *cmd;
 	char **tab;
+	int n;
 	int i;
 
 	i = -1;
+	n = 0;
 	if (ft_strcmp(str, "echo") != 0)
 	{
 		if (!(cmd = gestion_echo_option(str, arg)))
 			return ;
-		if (!(tab = ft_split_echo(cmd, temp)))
+		if (!(tab = ft_split_echo(cmd, &n, temp)))
 			return ;
 		ft_free(cmd);
-		while (tab[++i] != NULL)
+		while (++i < n)
+		{
 			ft_printf("%s", tab[i]);
+		}
 		ft_free_double_tab(tab);
 	}
 	if (ft_strcmp(str, "echo") == 0 || ft_strcmp(arg, "-n") != 0)
