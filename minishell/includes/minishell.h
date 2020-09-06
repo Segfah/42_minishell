@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/09/02 21:04:58 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/06 04:57:42 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct		s_cmd
 	char			*input;
 	char			*output;
 	int				ret;
-	struct	s_cmd	*next;
+	struct s_cmd	*next;
 }					l_cmd;
 
 void				general_free(t_temp *tmp);
@@ -102,6 +102,7 @@ void				gestion_unset(t_temp *tmp);
 void				print_list(t_lists *head, int key);
 int					lback(t_lists **alst, char *str, char *str2);
 int					cpy_env(t_lists **cpy, t_lists *list);
+int					change_list(t_lists *head, char *ss, char *newdata);
 
 /*
 ** tools_env_unset
@@ -192,13 +193,13 @@ char				*word(char *str, int *i, char *tab);
 ** utils/free.c
 */
 char				*ft_strcatdup(char *s1, char *s2);
-void    			ft_free(char *str);
-void    			ft_free_double_tab(char **tab);
+void				ft_free(char *str);
+void				ft_free_double_tab(char **tab);
 
 /*
 ** gestion/controle
 */
-void    			controle(char *c);
+void				controle(char *c);
 
 /*
 ** main

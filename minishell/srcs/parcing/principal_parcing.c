@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/09/02 21:02:54 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/06 04:58:15 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -372,7 +372,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 	cmd = NULL;
 	while (tabcmd[++i])
 	{
-		clean_str(tabcmd[i]);
+//		clean_str(tabcmd[i]);
 		separator_string(&cmd, tabcmd[i], tmp);
 		if (ft_strcmp(tabcmd[i], "exit") == 0)
 		{
