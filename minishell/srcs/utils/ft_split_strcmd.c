@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 23:18:04 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/01 19:18:54 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/08 20:06:28 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,17 @@ static int	adeline(char *s, char cote, int n, int *i)
 
 	j = *i + 1;
 	while (s[j] && s[j] != cote)
+	{
+		if (s[j] == '\\' && s[j + 1] == cote)
+			j = j + 2;
 	 	j++;
+	}
 	*i = j + 1;
 	if (s[*i] == ' ')
+	{
+		printf("oh yeah !!\n");
 		i++;
+	}
 	return (n + 1);
  }
 
@@ -39,8 +46,6 @@ static int	adeline(char *s, char cote, int n, int *i)
 	{
 		if (s[i] == '"' || s[i] == '\'')
 			n = adeline(s, s[i], n, &i);
-		while (s[i] != '\0' && s[i] == c)
-			i++;
 		if (s[i] == '$')
 		{
 			i++;
@@ -89,10 +94,12 @@ static int	adeline(char *s, char cote, int n, int *i)
 		if (s[i] != '\0' && s[i] != c && s[i] != '"' && s[i] != '\'' && s[i] != '$')
 		{
 			while (s[i] != '\0' && s[i] != c && s[i] != '"' && s[i] != '\'' && s[i] != '\\' && s[i] != '$')
-			{
-				printf("n = %d, s[%d] = [%c]\n", n, i, s[i]);
 				i++;
-			}
+			n++;
+		}
+		if (s[i - 1] != ' ' && s[i] == ' ' && s[i + 1] != ' ')
+		{
+			i++;
 			n++;
 		}
 	}
@@ -185,6 +192,9 @@ char			*ft_fill(char *s, char c, int *i, char *tab)
 				(*i)++;
 			return (tab = copy(s, i, save));
 		}
+		printf("char")
+		if (s[*i - 1] != ' ' && s[*i] == ' ' && s[*i + 1] != ' ')
+			return(tab = ft_strdup(" \0"));
 		(*i)++;
 	}
 	return NULL;

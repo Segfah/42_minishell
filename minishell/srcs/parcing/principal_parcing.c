@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/09/02 21:02:54 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/08 19:33:34 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,13 @@ void	double_cote_cmd(l_cmd *cmd, t_lists *var)
 			{
 				i++;
 				save = i;
-				printf("save = %d, i = %d", save, i);
 				while (cmd->input[i] && ((cmd->input[i] > 47 && cmd->input[i] < 58) || (cmd->input[i] > 64 && cmd->input[i] < 91) || (cmd->input[i] > 96 && cmd->input[i] < 123)))
 					i++;
 				if (!(tmp = (char*)malloc(sizeof(char) * (i - save) + 1)))
 					return ;
-				printf("save = %d, i = %d", save, i);
 				while (save < i)
 					tmp[j++] = cmd->input[save++];
 				tmp[j] = '\0';
-				printf("	tmp = [%s]\n", tmp);
 				while (var)
 				{
 					if (ft_strcmp(var->name, tmp) == 0)
@@ -100,25 +97,18 @@ void	double_cote_cmd(l_cmd *cmd, t_lists *var)
 				while (save < i)
 					tmp[size++] = cmd->input[save++];
 				tmp[size] = '\0';
-				printf("	tmp = [%s]\n", tmp);
 				size = 0;
 				while (revar)
 				{
-					printf("GOOOOO !\n");
 					if (ft_strcmp(revar->name, tmp) == 0)
 						while (revar->data[size])
 							cmd->output[j++] = revar->data[size++];
 					revar = revar->next;
 				}
-				printf("cmd->FAILED = [%s]\n", cmd->output);
-				if (size == 0)
-					i++;
 			}
 			else
-				cmd->output[j++] = cmd->input[i];
-			i++;
+				cmd->output[j++] = cmd->input[i++];
 		}
-		printf("	ICI\n");
 		if (cmd->input[i] == '\\')
 		{
 			save = 0;
@@ -128,16 +118,15 @@ void	double_cote_cmd(l_cmd *cmd, t_lists *var)
 				save++;
 				i++;
 			}
-			if (save == 1)
-				cmd->output[j++] = cmd->input[i++];
+			if (save == 1 && cmd->input[i] != '"' && cmd->input[i] != '\'')
+				cmd->output[j++] = '\\';
 			else
 				while (size++ < (save / 2))
-					cmd->output[j] = '\\';
+					cmd->output[j++] = '\\';
 		}
-		if (cmd->input[i] != '\\' && cmd->input[i] != '$')
-			cmd->output[j] = cmd->input[i];
+		if (cmd->input[i] && i < len && cmd->input[i] != '\\' && cmd->input[i] != '$')
+			cmd->output[j++] = cmd->input[i];
 		i++;
-		j++;
 	}
 	cmd->output[j] = '\0';
 }
@@ -150,10 +139,10 @@ void	single_cote_cmd(l_cmd *cmd)
 
 	i = 1;
 	j = 0;
-	len = ft_strlen(cmd->input);
+	len = ft_strlen(cmd->input) - 1;
 	if (!(cmd->output = (char*)malloc(sizeof(char) * len)))
 		return ;
-	while (cmd->input[i] && i < (len - 1))
+	while (cmd->input[i] && i < len)
 		cmd->output[j++] = cmd->input[i++];
 	cmd->output[j] = '\0';
 }
@@ -255,11 +244,11 @@ void	check_node(l_cmd *cmd, t_temp *temp)
 {
 	if (cmd->input[0] == '$')
 		dollar_cmd(cmd, temp->varenv);
-	if (cmd->input[0] == '\\')
+	else if (cmd->input[0] == '\\')
 		slash_cmd(cmd);
-	if (cmd->input[0] == '\'')
+	else if (cmd->input[0] == '\'')
 		single_cote_cmd(cmd);
-	if (cmd->input[0] == '"')
+	else if (cmd->input[0] == '"')
 		double_cote_cmd(cmd, temp->varenv);
 	else
 		cmd->output = ft_strdup(cmd->input);
