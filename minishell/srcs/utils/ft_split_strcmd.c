@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 23:18:04 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/08 20:06:28 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/08 20:17:38 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ char				*copy(char *s, int *end, int start)
 	while (start < *end)
 		tab[k++] = s[start++];
 	tab[k] = '\0';
-	printf("tab = [%s]\n", tab);
 	return (tab);
 }
 
@@ -129,6 +128,7 @@ char			*ft_fill(char *s, char c, int *i, char *tab)
 	k = 0;
 	while (s[*i] != '\0')
 	{
+		printf("char = %c\n", s[*i]);
 		if (s[*i] == '"' || s[*i] == '\'')
 		{
 			save = *i;
@@ -192,9 +192,11 @@ char			*ft_fill(char *s, char c, int *i, char *tab)
 				(*i)++;
 			return (tab = copy(s, i, save));
 		}
-		printf("char")
 		if (s[*i - 1] != ' ' && s[*i] == ' ' && s[*i + 1] != ' ')
+		{
+			(*i)++;
 			return(tab = ft_strdup(" \0"));
+		}
 		(*i)++;
 	}
 	return NULL;
@@ -219,6 +221,12 @@ char				**ft_split_strcmd(char *s, char c)
 	while (++j < n)
 		tab[j] = ft_fill(s, c, &i, tab[j]);
 	tab[j] = 0;
+	i = 0;
+	while (tab[i])
+	{
+		printf("tab[%d] = [%s]\n",i,  tab[i]);
+		i++;
+	}
 	return (tab);
 }
 
