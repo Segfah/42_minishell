@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/09/06 04:57:42 by corozco          ###   ########.fr       */
+/*   Updated: 2020/09/09 22:32:18 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,21 +130,17 @@ void				free_list(t_lists *test);
 */
 int					command_bin(char **tab, t_temp *tmp);
 
-/*
-** gestion/echo
-*/
-void				gestion_echo(char *str, char *option, t_temp *temp);
 
 /*
 ** utils/ft_split_strcmd
 */
-char				**ft_split_strcmd(char *s, char c);
+char				**ft_split_strcmd(char *s, int echo);
 
 /*
 ** gestion/echo/echo
 */
 char				*gestion_echo_option(char *str, char *arg);
-void				gestion_echo(char *str, char *arg, t_temp *temp);
+void    			gestion_echo(l_cmd *cmd);
 
 /*
 ** gestion/echo/ft_split_echo/count_word

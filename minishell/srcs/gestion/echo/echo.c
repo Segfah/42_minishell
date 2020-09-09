@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:54:35 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/01 13:19:52 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/09 20:51:46 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,33 +36,45 @@ char 	*gestion_echo_option(char *str, char *arg)
 	return (cmd);
 }
 
-void    gestion_echo(char *str, char *arg, t_temp *temp)
+void    gestion_echo(l_cmd *cmd)
 {
-	char *cmd;
-	char **tab;
+	l_cmd *test;
 	int n;
-	int i;
 
-	i = -1;
+	test = cmd;
 	n = 0;
-	if (ft_strcmp(str, "echo") != 0)
+	if (test->next != NULL)
 	{
-		if (!(cmd = gestion_echo_option(str, arg)))
-			return ;
-		if (!(tab = ft_split_echo(cmd, &n, temp)))
-			return ;
-		ft_free(cmd);
-		while (++i < n)
-		{
-			ft_printf("%s", tab[i]);
-		}
-		ft_free_double_tab(tab);
+		test = test->next;
 	}
-	if (ft_strcmp(str, "echo") == 0 || ft_strcmp(arg, "-n") != 0)
+	else
+	{
+		n = 1;
+	}
+	if (test->next != NULL)
+		test = test->next;
+	if (ft_strcmp(test->output, "-n") == 0)
+	{
+		if (test->next != NULL)
+			test = test->next;
+		if (test->next != NULL && (ft_strcmp(test->output, " ") == 0))
+			test = test->next;
+		n = 2;
+	}
+	if (n == 1)
+	{
+		write(1, "\n", 1);
+		return ;
+	}
+	while (test)
+	{
+		ft_printf("%s", test->output);
+		test = test->next;
+	}
+	//ft_free_double_tab(tab);
+	if (n == 0)
 		ft_printf("\n");
 }
-
-
 
 /* void	gestion_echo(char *str, char *arg)
 {
