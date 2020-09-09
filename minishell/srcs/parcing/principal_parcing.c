@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/09/08 19:33:34 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/09 20:16:50 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,10 +293,14 @@ l_cmd	*ft_lstnew_cmd(char *input, t_temp *temp)
 void			separator_string(l_cmd **cmd, char *str, t_temp *tmp)
 {
 	int i;
+	int echo;
 	l_cmd *new;
 	
+	echo = 0;
 	i = 0;
-	tmp->strcmd = ft_split_strcmd(str, ' ');
+	if (ft_strncmp(str, "echo ", 5) == 0 || ft_strncmp(str, "echo\0", 5) == 0)
+		echo = 1;
+	tmp->strcmd = ft_split_strcmd(str, echo);
 	while(tmp->strcmd[i])
 	{
 		new = ft_lstnew_cmd(tmp->strcmd[i], tmp);
@@ -361,7 +365,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 	cmd = NULL;
 	while (tabcmd[++i])
 	{
-		clean_str(tabcmd[i]);
+		//clean_str(tabcmd[i]);
 		separator_string(&cmd, tabcmd[i], tmp);
 		if (ft_strcmp(tabcmd[i], "exit") == 0)
 		{
@@ -380,8 +384,8 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 			gestion_export(tmp, 0);
 		else if (ft_strcmp(tmp->strcmd[0], "unset") == 0)
 			gestion_unset(tmp);
-//		else if (ft_strcmp(tmp->strcmd[0], "echo") == 0)
-//			gestion_echo(tabcmd[i]);
+		else if (ft_strcmp(tmp->strcmd[0], "echo") == 0)
+			gestion_echo(cmd);
 		else if (command_bin(tmp->strcmd, tmp) == 0)
 			;
 		else if (tabcmd[i][0] == '\0')

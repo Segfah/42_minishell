@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 23:18:04 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/08 20:17:38 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/09 20:13:41 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	adeline(char *s, char cote, int n, int *i)
 	return (n + 1);
  }
 
- static int			ft_word(char *s, char c)
+ static int			ft_word(char *s, int echo)
 {
 	int		n;
 	int		i;
@@ -86,18 +86,18 @@ static int	adeline(char *s, char cote, int n, int *i)
 			}
 			else
 			{
-				while (s[i] && s[i] != c && s[i] != '"' && s[i] != '\'' && s[i] != '$' && s[i] != '\\')
+				while (s[i] && s[i] != ' ' && s[i] != '"' && s[i] != '\'' && s[i] != '$' && s[i] != '\\')
 					i++;
 				n++;
 			}
 		}
-		if (s[i] != '\0' && s[i] != c && s[i] != '"' && s[i] != '\'' && s[i] != '$')
+		if (s[i] != '\0' && s[i] != ' ' && s[i] != '"' && s[i] != '\'' && s[i] != '$')
 		{
-			while (s[i] != '\0' && s[i] != c && s[i] != '"' && s[i] != '\'' && s[i] != '\\' && s[i] != '$')
+			while (s[i] != '\0' && s[i] != ' ' && s[i] != '"' && s[i] != '\'' && s[i] != '\\' && s[i] != '$')
 				i++;
 			n++;
 		}
-		if (s[i - 1] != ' ' && s[i] == ' ' && s[i + 1] != ' ')
+		if (echo == 1 && s[i - 1] != ' ' && s[i] == ' ' && s[i + 1] != ' ')
 		{
 			i++;
 			n++;
@@ -120,7 +120,7 @@ char				*copy(char *s, int *end, int start)
 	return (tab);
 }
 
-char			*ft_fill(char *s, char c, int *i, char *tab)
+char			*ft_fill(char *s, int echo, int *i, char *tab)
 {
 	int		save;
 	int		k;
@@ -180,19 +180,19 @@ char			*ft_fill(char *s, char c, int *i, char *tab)
 			}
 			else
 			{
-				while (s[*i] && s[*i] != c && s[*i] != '"' && s[*i] != '\'' && s[*i] != '$' && s[*i] != '\\')
+				while (s[*i] && s[*i] != ' ' && s[*i] != '"' && s[*i] != '\'' && s[*i] != '$' && s[*i] != '\\')
 					(*i)++;
 				return (tab = copy(s, i, save));
 			}
 		}
-		if (s[*i] != '\0' && s[*i] != c && s[*i] != '"' && s[*i] != '\'' && s[*i] != '$' && s[*i] != '\\')
+		if (s[*i] != '\0' && s[*i] != ' ' && s[*i] != '"' && s[*i] != '\'' && s[*i] != '$' && s[*i] != '\\')
 		{
 			save = *i;
-			while (s[*i] && s[*i] != c && s[*i] != '"' && s[*i] != '\'' && s[*i] != '$' && s[*i] != '\\')
+			while (s[*i] && s[*i] != ' ' && s[*i] != '"' && s[*i] != '\'' && s[*i] != '$' && s[*i] != '\\')
 				(*i)++;
 			return (tab = copy(s, i, save));
 		}
-		if (s[*i - 1] != ' ' && s[*i] == ' ' && s[*i + 1] != ' ')
+		if (echo == 1 && s[*i - 1] != ' ' && s[*i] == ' ' && s[*i + 1] != ' ')
 		{
 			(*i)++;
 			return(tab = ft_strdup(" \0"));
@@ -202,7 +202,7 @@ char			*ft_fill(char *s, char c, int *i, char *tab)
 	return NULL;
 }
 
-char				**ft_split_strcmd(char *s, char c)
+char				**ft_split_strcmd(char *s, int echo)
 {
 	char	**tab;
 	int		i;
@@ -214,12 +214,12 @@ char				**ft_split_strcmd(char *s, char c)
 	j = -1;
 	if (!s)
 		return (NULL);
-	n = ft_word(s, c);
+	n = ft_word(s, echo);
 	printf("NBR WORD = %d\n", n);
 	if (!(tab = (char **)malloc(sizeof(tab) * (n + 1))))
 		return (NULL);
 	while (++j < n)
-		tab[j] = ft_fill(s, c, &i, tab[j]);
+		tab[j] = ft_fill(s, echo, &i, tab[j]);
 	tab[j] = 0;
 	i = 0;
 	while (tab[i])
