@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 00:50:50 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/22 18:41:34 by corozco          ###   ########.fr       */
+/*   Updated: 2020/09/06 04:14:49 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,3 +112,27 @@ int				cpy_env(t_lists **cpy, t_lists *list)
 	}
 	return (0);
 }
+
+int				change_list(t_lists *head, char *ss, char *newdata)
+{
+	t_lists		*tmp;
+
+	tmp = head;
+	while (tmp != NULL)
+	{
+		if (ft_strcmp(tmp->name, ss) == 0)
+		{
+			if (tmp->data)
+				free(tmp->data);
+			if (newdata != NULL)
+			{
+				if (!(tmp->data = ft_strdup(newdata)))
+					return (-1);
+			}
+			return (1);
+		}
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
