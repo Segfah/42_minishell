@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 23:18:04 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/10 04:45:29 by corozco          ###   ########.fr       */
+/*   Updated: 2020/09/10 17:25:58 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,6 @@ static int	adeline(char *s, char cote, int n, int *i)
 	 	j++;
 	}
 	*i = j + 1;
-	if (s[*i] == ' ')
-	{
-		printf("oh yeah !!\n");
-		i++;
-	}
 	return (n + 1);
  }
 
@@ -79,7 +74,7 @@ static int	adeline(char *s, char cote, int n, int *i)
 				i--;
 				n++;
 			}
-			if  (s[i + 1] == '\'' || s[i + 1] == '"' || s[i] == '"' || s[i] == '\'')
+			if  ((count % 2) == 1 && count > 1 && (s[i + 1] == '\'' || s[i + 1] == '"' || s[i] == '"' || s[i] == '\''))
 			{
 				i++;
 				n++;
@@ -97,12 +92,14 @@ static int	adeline(char *s, char cote, int n, int *i)
 				i++;
 			n++;
 		}
-		if (echo == 1 && s[i - 1] != ' ' && s[i] == ' ' && s[i + 1] != ' ')
+		if (s[i] == ' ')
 		{
-			//i++; coucou, j'ai deplacé le i++ apres ce if car si je faisait un cd .. il reste en boucle infini
-			n++;
+			while (s[i] && s[i] == ' ')
+				i++;
+			if (echo == 1)
+				n++;
 		}
-		i++; // je l'ai mis la 
+		i++;
 	}
 	return (n);
 }
@@ -124,9 +121,7 @@ char				*copy(char *s, int *end, int start)
 char			*ft_fill(char *s, int echo, int *i, char *tab)
 {
 	int		save;
-	int		k;
 
-	k = 0;
 	while (s[*i] != '\0')
 	{
 		printf("char = %c\n", s[*i]);
@@ -193,10 +188,12 @@ char			*ft_fill(char *s, int echo, int *i, char *tab)
 				(*i)++;
 			return (tab = copy(s, i, save));
 		}
-		if (echo == 1 && s[*i - 1] != ' ' && s[*i] == ' ' && s[*i + 1] != ' ')
+		if (s[*i] == ' ')
 		{
-			(*i)++;
-			return(tab = ft_strdup(" \0"));
+			while (s[*i] && s[*i] == ' ')
+				(*i)++;
+			if (echo == 1)
+				return(tab = ft_strdup(" \0"));
 		}
 		(*i)++;
 	}
@@ -230,7 +227,6 @@ char				**ft_split_strcmd(char *s, int echo)
 	}
 	return (tab);
 }
-
 /* int main()
 {
 	char *str1 = "bonjour les cop1, il ma dit \"          \' c\' wesh\"";

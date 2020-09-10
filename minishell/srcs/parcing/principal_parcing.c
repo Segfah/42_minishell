@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/09/10 04:57:04 by corozco          ###   ########.fr       */
+/*   Updated: 2020/09/10 18:52:27 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	double_cote_cmd(l_cmd *cmd, t_lists *var)
 	}
 	if (!(cmd->output = (char*)malloc(sizeof(char) * size + 1)))
 		return ;
-	printf("size = %d\n", size);
 	size = 0;
 	i = 1;
 	j = 0;
@@ -365,6 +364,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 	cmd = NULL;
 	while (tabcmd[++i])
 	{
+		printf("tabcmd[%d] = [%s]\n", i, tabcmd[i]);
 		//clean_str(tabcmd[i]);
 		separator_string(&cmd, tabcmd[i], tmp);
 		if (ft_strcmp(tabcmd[i], "exit") == 0)
@@ -393,6 +393,9 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 		else
 			ft_printf("minishell: command not found: %s\n", tabcmd[i]);
 		free_tmps(tabcmd, i, tmp);
+		free_cmd(cmd);
+		/* if ((ft_strncmp(tabcmd[i], "echo -n ", 8) != 0) && (ft_strncmp(tabcmd[i], "echo -n\0", 8) != 0))
+			write(1, "\n", 1); */
 	}
 }
 
@@ -406,10 +409,15 @@ void			ft_getline(t_temp *tmp)
 	char		*line; // meter este line en la structura
 
 	line = NULL;
-	if (ft_gnl(0, &line) == -1 || (tmp->tabcmd = ft_split(line, ';')) == NULL)
+	if (ft_gnl(0, &line) == -1 || (tmp->tabcmd = ft_split_line(line)) == NULL)
 		general_free(tmp);
+	int i = 0;
+	while(tmp->tabcmd[i])
+	{
+		printf("tmp->strcmd[%d] = [%s]\n", i, tmp->tabcmd[i]);
+		i++;
+	}
 	gestion_line(tmp->tabcmd, tmp);
-	free(tmp->tabcmd);
-	tmp->tabcmd = NULL;
+	//ft_free_double_tab(tmp->tabcmd);
 	free(line);
 }

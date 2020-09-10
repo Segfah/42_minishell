@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/09/10 04:56:25 by corozco          ###   ########.fr       */
+/*   Updated: 2020/09/10 17:54:48 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,5 +201,13 @@ void				controle(char *c);
 ** main
 */
 int					launcher(t_temp tmp);
+
+int					ft_count_word(char *str);
+char				*copy(char *s, int *end, int start);
+char				*ft_fill_line(char *str, int *i, char *tab);
+char				**ft_split_line(char *str);
+
+void				free_cmd(l_cmd *cmd);
+void				free_node_cmd(l_cmd *node);
 
 #endif
