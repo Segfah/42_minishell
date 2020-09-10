@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 23:18:04 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/09 20:13:41 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/10 04:45:29 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,10 @@ static int	adeline(char *s, char cote, int n, int *i)
 		}
 		if (echo == 1 && s[i - 1] != ' ' && s[i] == ' ' && s[i + 1] != ' ')
 		{
-			i++;
+			//i++; coucou, j'ai deplacé le i++ apres ce if car si je faisait un cd .. il reste en boucle infini
 			n++;
 		}
+		i++; // je l'ai mis la 
 	}
 	return (n);
 }
