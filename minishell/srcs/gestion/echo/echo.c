@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 16:54:35 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/09 20:51:46 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/10 02:41:44 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void    gestion_echo(l_cmd *cmd)
 	n = 0;
 	if (test->next != NULL)
 	{
+
 		test = test->next;
 	}
 	else
@@ -55,9 +56,8 @@ void    gestion_echo(l_cmd *cmd)
 		test = test->next;
 	if (ft_strcmp(test->output, "-n") == 0)
 	{
-		if (test->next != NULL)
-			test = test->next;
-		if (test->next != NULL && (ft_strcmp(test->output, " ") == 0))
+		test = test->next;
+		if (test != NULL)
 			test = test->next;
 		n = 2;
 	}
