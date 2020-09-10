@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/09/09 22:32:18 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/10 04:56:25 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void				clean_str(char *str);
 /*
 ** gestion/cd
 */
-void				gestion_cd(char *str);
+void				gestion_cd(char *str, t_temp *tmp);
 
 /*
 ** env.c

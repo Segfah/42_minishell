@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 22:10:58 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/03 20:39:11 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/10 05:02:50 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <string.h>
 #include <errno.h>
 
-void			gestion_cd(char *str)
+void			gestion_cd(char *str, t_temp *tmp)
 {
 	char		*path;
 	int			i;
@@ -27,10 +27,17 @@ void			gestion_cd(char *str)
 			ft_printf("gestion_cd2, error malloc\n");
 			exit(0);
 		}
+		tmp->env = getcwd(NULL, 0);
 		while (str[i++] != '\0')
 			path[i - 3] = str[i];
 		if (chdir(path) != 0)
 			ft_printf("cd: %s: %s\n", strerror(errno), path);
+		else
+		{
+			change_list(tmp->varenv, "OLDPWD", tmp->env);
+			tmp->env = getcwd(NULL, 0);
+			change_list(tmp->varenv, "PWD", tmp->env);
+		}
 		free(path);
 	}
 }
