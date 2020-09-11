@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/09/10 18:52:27 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/11 05:08:27 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -361,13 +361,15 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 	l_cmd	*cmd;
 
 	i = -1;
-	cmd = NULL;
 	while (tabcmd[++i])
 	{
+		cmd = NULL;
 		printf("tabcmd[%d] = [%s]\n", i, tabcmd[i]);
 		//clean_str(tabcmd[i]);
 		separator_string(&cmd, tabcmd[i], tmp);
-		if (ft_strcmp(tabcmd[i], "exit") == 0)
+		if (tabcmd[i][0] == 0 ||!tmp->strcmd || !tmp->strcmd[i])
+			;
+		else if (ft_strcmp(tabcmd[i], "exit") == 0)
 		{
 			write(1, "exit\n", 5);
 			exit(0);
@@ -388,12 +390,11 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 			gestion_echo(cmd);
 		else if (command_bin(tmp->strcmd, tmp) == 0)
 			;
-		else if (tabcmd[i][0] == '\0')
-			;
 		else
 			ft_printf("minishell: command not found: %s\n", tabcmd[i]);
 		free_tmps(tabcmd, i, tmp);
-		free_cmd(cmd);
+		if (cmd != NULL)
+			free_cmd(cmd);
 		/* if ((ft_strncmp(tabcmd[i], "echo -n ", 8) != 0) && (ft_strncmp(tabcmd[i], "echo -n\0", 8) != 0))
 			write(1, "\n", 1); */
 	}
@@ -418,6 +419,7 @@ void			ft_getline(t_temp *tmp)
 		i++;
 	}
 	gestion_line(tmp->tabcmd, tmp);
-	//ft_free_double_tab(tmp->tabcmd);
+//ft_free_double_tab(tmp->tabcmd);
+	free(tmp->tabcmd);
 	free(line);
 }
