@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 22:10:58 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/10 05:02:50 by corozco          ###   ########.fr       */
+/*   Updated: 2020/09/13 01:47:07 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,11 @@ void			gestion_cd(char *str, t_temp *tmp)
 		else
 		{
 			change_list(tmp->varenv, "OLDPWD", tmp->env);
+			free(tmp->env);
 			tmp->env = getcwd(NULL, 0);
 			change_list(tmp->varenv, "PWD", tmp->env);
 		}
+		free(tmp->env);
 		free(path);
 	}
 }
