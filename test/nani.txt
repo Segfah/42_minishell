@@ -1,3 +1,0 @@
-a.out
-nani.txt
-redi.c
