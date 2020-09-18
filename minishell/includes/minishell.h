@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/09/10 17:54:48 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/18 15:28:15 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <sys/types.h>
 # include <signal.h>
+# include <errno.h>
 # include "libft.h"
 
 typedef struct		s_lists
@@ -44,6 +45,8 @@ typedef struct		s_cmd
 	int				ret;
 	struct s_cmd	*next;
 }					l_cmd;
+
+int					g_ret;
 
 void				general_free(t_temp *tmp);
 /*
@@ -130,6 +133,7 @@ void				free_list(t_lists *test);
 */
 int					command_bin(char **tab, t_temp *tmp);
 
+void				gestion_nani(char **tab);
 
 /*
 ** utils/ft_split_strcmd
@@ -191,6 +195,9 @@ char				*word(char *str, int *i, char *tab);
 char				*ft_strcatdup(char *s1, char *s2);
 void				ft_free(char *str);
 void				ft_free_double_tab(char **tab);
+void				free_cmd(l_cmd *cmd);
+void				free_node_cmd(l_cmd *node);
+void				free_tmps(char **tabcmd, int i, t_temp *tmp);
 
 /*
 ** gestion/controle
@@ -207,7 +214,16 @@ char				*copy(char *s, int *end, int start);
 char				*ft_fill_line(char *str, int *i, char *tab);
 char				**ft_split_line(char *str);
 
-void				free_cmd(l_cmd *cmd);
-void				free_node_cmd(l_cmd *node);
+void				separator_string(l_cmd **cmd, char *str, t_temp *tmp);
+void				double_cote_cmd(l_cmd *cmd, t_lists *var);
+void				check_node(l_cmd *cmd, t_temp *temp);
+void				ft_lstadd_back_cmd(l_cmd **alst, l_cmd *new);
+l_cmd				*ft_lstnew_cmd(char *input, t_temp *temp);
+void				single_cote_cmd(l_cmd *cmd);
+void				slash_cmd(l_cmd *cmd);
+
+
+void				replace_isspace(l_cmd *cmd, int *i, int *j, char ascii);
+void				dollar_cmd(l_cmd *cmd, t_lists *var);
 
 #endif

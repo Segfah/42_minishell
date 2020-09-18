@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corozco <corozco@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 04:05:39 by corozco           #+#    #+#             */
-/*   Updated: 2020/09/03 19:05:22 by corozco          ###   ########.fr       */
+/*   Updated: 2020/09/14 12:20:29 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,8 +163,7 @@ char		**ft_split_mini(char const *s, char c)
 	if (!s)
 		return (NULL);
 	word = ft_counter((char *)s, c);
-	printf("word [%d]\n",word);
-	if (!(bs = (char **)malloc(sizeof(char*) * (word + 1))))
+=	if (!(bs = (char **)malloc(sizeof(char*) * (word + 1))))
 		return (NULL);
 	bs[word] = 0;
 	ft_writing(bs, (char *)s, 0, 0);

@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 14:28:38 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/10 18:29:30 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/14 12:04:27 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ char				*ft_fill_line(char *str, int *i, char *tab)
 
 	save = *i;
 	slash = 0;
-	printf("i = %d\n", *i);
 	while (str[*i])
 	{
 		if (str[*i] == '\\')
@@ -94,7 +93,7 @@ char				*ft_fill_line(char *str, int *i, char *tab)
 		(*i)++;
 	}
 	if (str)
-		return (tab = ft_strdup(str));
+		return (tab = copy(str, i, save));
 	return NULL;
 }
 
@@ -111,7 +110,6 @@ char				**ft_split_line(char *str)
 	if (!str)
 		return NULL;
 	word = ft_count_word(str);
-	printf("NBR WORD = %d\n", word);
 	if (!(tab = (char **)malloc(sizeof(char*) * (word + 1))))
 		return NULL;
 	while (++j < word)
@@ -119,7 +117,6 @@ char				**ft_split_line(char *str)
 		while (str[i] && str[i] == ' ')
 			i++;
 		tab[j] = ft_fill_line(str, &i, tab[j]);
-		printf("TABLINE = [%s]\n", tab[j]);
 	}
 	tab[j] = 0;
 	return (tab);

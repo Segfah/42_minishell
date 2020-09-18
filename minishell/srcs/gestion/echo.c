@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 17:27:31 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/10 17:28:42 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/18 15:55:02 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void    gestion_echo(l_cmd *cmd)
 		test = test->next;
 	}
 	//ft_free_double_tab(tab);
+	g_ret = 0;
 	if (n == 0)
 		ft_printf("\n");
 }

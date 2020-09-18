@@ -6,7 +6,7 @@
 #    By: lryst <lryst@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 05:41:03 by corozco           #+#    #+#              #
-#    Updated: 2020/09/10 17:27:45 by lryst            ###   ########.fr        #
+#    Updated: 2020/09/15 16:28:34 by lryst            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC := \
 	srcs/gestion/env.c \
 	srcs/gestion/unset.c \
 	srcs/gestion/command_bin.c \
+	srcs/gestion/nani.c \
 	srcs/utils/ft_split_strcmd.c \
 	srcs/gestion/tools/tools_env_export.c \
 	srcs/gestion/tools/tools_env_unset.c \
@@ -36,14 +37,14 @@ SRC := \
 	srcs/gestion/export.c \
 	srcs/utils/free.c \
 	srcs/gestion/echo.c \
-	srcs/utils/ft_split_line.c
-	#srcs/gestion/echo/dollar.c \
-	srcs/gestion/echo/double_cote.c \
-	srcs/gestion/echo/single_cote.c \
-	srcs/gestion/echo/ft_split_echo.c \
-	srcs/gestion/echo/slash.c \
-	srcs/gestion/echo/word.c \
-	srcs/gestion/controles.c
+	srcs/utils/ft_split_line.c \
+	srcs/parcing/separator_string/node_cmd.c \
+	srcs/parcing/separator_string/separator_string.c \
+	srcs/parcing/separator_string/double_cote.c \
+	srcs/parcing/separator_string/single_cote.c \
+	srcs/parcing/separator_string/slash.c \
+	srcs/parcing/separator_string/dollar.c \
+	srcs/utils/ft_strcatdup.c
 
 OBJS = $(addprefix objs/, $(SRC:.c=.o))
 

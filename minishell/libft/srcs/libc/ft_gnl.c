@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_gnl.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 23:30:58 by corozco           #+#    #+#             */
-/*   Updated: 2020/07/31 00:17:10 by corozco          ###   ########.fr       */
+/*   Updated: 2020/09/18 13:31:37 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <unistd.h>
+#include <stdio.h>
 
 int				fbo0(char *buf, int *i)
 {
