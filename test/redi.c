@@ -7,12 +7,12 @@
 #include <string.h>
 
 
-void		intentofork(char **av, char **envp)
+void		intentofork(char **av, char **envp, char *path)
 {
 	pid_t	f;
 	char	*pwd = getcwd(NULL, 0);
 	int		fd;
-	char	*path = "tontolonero";
+//	char	*path = "tontolonero";
 
 	if ((fd = open(path, O_RDWR | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR
                      | S_IRGRP | S_IROTH)) == -1)
@@ -26,32 +26,13 @@ void		intentofork(char **av, char **envp)
 		execve("/bin/ls",av, envp);
 		exit(1);
 	}
-//	printf("%s\n", pwd);
-	close(fd);
-}
-void		intento(char **av, char **envp)
-{
-	char	*pwd = getcwd(NULL, 0);
-	int		fd;
-	char	*path = "tontolonero";
-
-	if ((fd = open(path, O_RDWR | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR
-                     | S_IRGRP | S_IROTH)) == -1)
-	{
-		printf("minishell: %s: %s\n", strerror(errno), path);
-		return ;
-	}
-	dup2(fd, 1);
-	execve("/bin/ls",av, envp);
-//	printf("%s\n", pwd);
 	close(fd);
 }
 
-void		intento2()
+void		intento2(char *path)
 {
 	char	*pwd = getcwd(NULL, 0);
 	int		fd;
-	char	*path = "toto.txt";
 
 	if ((fd = open(path, O_APPEND | O_WRONLY | O_CREAT , 0644)) == -1)
 	{
@@ -59,7 +40,7 @@ void		intento2()
 		return ;
 	}
 	dup2(fd, 1);
-	printf("%s", pwd);
+	printf("%s\n", pwd);
 	close(fd);
 }
 
@@ -102,14 +83,15 @@ void		check_redi(char **cmd, char **av, char **envp)
 			continue ;
 		else if (!(strcmp(">", cmd[i])))
 		{
-			intentofork(av, envp);
+			intentofork(av, envp, cmd[i + 2]);
 		}
 		else if (!(strcmp(">>", cmd[i])))
 		{
-			intento2();
+			intento2(cmd[i + 2]);
 		}
 		else if (!(strcmp("<<", cmd[i])))
 			printf("Aqui viene <<\n");
+			printf("nani");
 	}
 
 }
@@ -124,11 +106,11 @@ int			main(int ac, char **av, char **envp)
 	cmd[1] = " ";
 	cmd[2] = ">>";
 	cmd[3] = " ";
-	cmd[4] = "nanita";
+	cmd[4] = "test1";
 	cmd[5] = " ";
 	cmd[6] = ">";
 	cmd[7] = " ";
-	cmd[8] = "nanita";
+	cmd[8] = "test2";
 	cmd[9] = NULL;
 
 	for (int i = 0; cmd[i] != NULL ; i++)
