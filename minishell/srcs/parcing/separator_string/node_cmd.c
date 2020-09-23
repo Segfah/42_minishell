@@ -6,11 +6,45 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 14:02:09 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/14 14:02:56 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/23 17:21:13 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_lstdelone_cmd(l_cmd *lst)
+{
+	if (lst)
+	{
+		if (lst->input)
+			free(lst->input);
+		if (lst->output)
+			free(lst->output);
+		free(lst);
+	}
+}
+
+void	remove_null_node(l_cmd **cmd)
+{
+	l_cmd *save;
+	l_cmd *tmp;
+	
+	tmp = *cmd;
+	while (tmp)
+	{
+		save = NULL;
+		if (tmp->next && tmp->next->output == NULL)
+		{
+			
+			save = tmp->next->next;
+			ft_lstdelone_cmd(tmp->next);
+			tmp->next = save;
+			
+		}
+		tmp = tmp->next;
+	}
+	write(1, "coucou\n", 7);
+}
 
 void	check_node(l_cmd *cmd, t_temp *temp)
 {
