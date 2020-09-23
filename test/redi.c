@@ -91,7 +91,6 @@ void		check_redi(char **cmd, char **av, char **envp)
 		}
 		else if (!(strcmp("<<", cmd[i])))
 			printf("Aqui viene <<\n");
-			printf("nani");
 	}
 
 }
@@ -104,11 +103,11 @@ int			main(int ac, char **av, char **envp)
 	cmd = malloc(sizeof(char*) * 10);
 	cmd[0] = "pwd";
 	cmd[1] = " ";
-	cmd[2] = ">>";
+	cmd[2] = ">";
 	cmd[3] = " ";
 	cmd[4] = "test1";
 	cmd[5] = " ";
-	cmd[6] = ">";
+	cmd[6] = ">>";
 	cmd[7] = " ";
 	cmd[8] = "test2";
 	cmd[9] = NULL;
@@ -116,6 +115,7 @@ int			main(int ac, char **av, char **envp)
 	for (int i = 0; cmd[i] != NULL ; i++)
 		printf("tab[%d] = [%s]\n", i, cmd[i]);
 	check_redi(cmd, av, envp);
+	printf("nani");
 	(void)ac;
 	return (0);
 }
