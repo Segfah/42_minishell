@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:00:46 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/22 18:25:27 by corozco          ###   ########.fr       */
+/*   Updated: 2020/09/18 15:28:48 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int				main(int ac, char **av, char **envp)
 {
 	t_temp		tmp;
 
+	g_ret = 0;
 	initialize_tmp(&tmp);
 	welcome();
 	if (save_env(&tmp.varenv, envp) == -1)

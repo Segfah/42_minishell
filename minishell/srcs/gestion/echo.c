@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/04 16:54:35 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/10 02:41:44 by corozco          ###   ########.fr       */
+/*   Created: 2020/09/10 17:27:31 by lryst             #+#    #+#             */
+/*   Updated: 2020/09/23 12:35:30 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,9 @@ void    gestion_echo(l_cmd *cmd)
 	test = cmd;
 	n = 0;
 	if (test->next != NULL)
-	{
-
 		test = test->next;
-	}
 	else
-	{
 		n = 1;
-	}
 	if (test->next != NULL)
 		test = test->next;
 	if (ft_strcmp(test->output, "-n") == 0)
@@ -72,24 +67,7 @@ void    gestion_echo(l_cmd *cmd)
 		test = test->next;
 	}
 	//ft_free_double_tab(tab);
+	g_ret = 0;
 	if (n == 0)
 		ft_printf("\n");
 }
-
-/* void	gestion_echo(char *str, char *arg)
-{
-	//char *cmd;
-	//char **tab;
-	int i;
-
-	i = 4;
-	if (ft_strcmp(str, "echo") != 0)
-	{
-		ft_strcmp(arg, "-n") == 0 ? i = 8 : 0;
-		printf("i = %d\n", i);
-		
-		ft_printf("str = [%s]\n", str);
-	}
-	if (ft_strcmp(str, "echo") == 0 || ft_strcmp(arg, "-n") != 0)
-		ft_printf("\n");
-} */ 

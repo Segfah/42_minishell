@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 23:18:04 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/10 04:45:29 by corozco          ###   ########.fr       */
+/*   Updated: 2020/09/18 15:27:03 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,6 @@ static int	adeline(char *s, char cote, int n, int *i)
 	 	j++;
 	}
 	*i = j + 1;
-	if (s[*i] == ' ')
-	{
-		printf("oh yeah !!\n");
-		i++;
-	}
 	return (n + 1);
  }
 
@@ -44,12 +39,21 @@ static int	adeline(char *s, char cote, int n, int *i)
 	n = 0;
 	while (s[i] != '\0')
 	{
+		printf("ft_word\n");
+		printf("char[%d] = [%c]\n", i, s[i]);
 		if (s[i] == '"' || s[i] == '\'')
 			n = adeline(s, s[i], n, &i);
 		if (s[i] == '$')
 		{
+			printf("dollar\n");
 			i++;
-			if (s[i] == '"' || s[i] == '\'')
+			if (s[i] == '?')
+			{
+				printf("dollar question ?\n");
+				i++;
+				n++;
+			}
+			else if (s[i] == '"' || s[i] == '\'')
 				n = adeline(s, s[i], n, &i);
 			else if (s[i] == ' ' || s[i] == '\0' || s[i] == '\\')
 				n++;
@@ -79,7 +83,7 @@ static int	adeline(char *s, char cote, int n, int *i)
 				i--;
 				n++;
 			}
-			if  (s[i + 1] == '\'' || s[i + 1] == '"' || s[i] == '"' || s[i] == '\'')
+			if  ((count % 2) == 1 && count > 1 && (s[i + 1] == '\'' || s[i + 1] == '"' || s[i] == '"' || s[i] == '\''))
 			{
 				i++;
 				n++;
@@ -97,12 +101,13 @@ static int	adeline(char *s, char cote, int n, int *i)
 				i++;
 			n++;
 		}
-		if (echo == 1 && s[i - 1] != ' ' && s[i] == ' ' && s[i + 1] != ' ')
+		if (s[i] == ' ')
 		{
-			//i++; coucou, j'ai deplacé le i++ apres ce if car si je faisait un cd .. il reste en boucle infini
-			n++;
+			while (s[i] && s[i] == ' ')
+				i++;
+			if (echo == 1)
+				n++;
 		}
-		i++; // je l'ai mis la 
 	}
 	return (n);
 }
@@ -124,12 +129,10 @@ char				*copy(char *s, int *end, int start)
 char			*ft_fill(char *s, int echo, int *i, char *tab)
 {
 	int		save;
-	int		k;
 
-	k = 0;
 	while (s[*i] != '\0')
 	{
-		printf("char = %c\n", s[*i]);
+		printf("		char[%d] = [%c]\n", *i, s[*i]);
 		if (s[*i] == '"' || s[*i] == '\'')
 		{
 			save = *i;
@@ -141,7 +144,12 @@ char			*ft_fill(char *s, int echo, int *i, char *tab)
 		{
 			save = *i;
 			(*i)++;
-			if (s[*i] == '"' || s[*i] == '\'')
+			if (s[*i] == '?')
+			{
+				(*i)++;
+				return (tab = copy(s, i, save));
+			}
+			else if (s[*i] == '"' || s[*i] == '\'')
 			{
 				adeline(s, s[*i], 0, i);
 				if (save < *i)
@@ -193,12 +201,13 @@ char			*ft_fill(char *s, int echo, int *i, char *tab)
 				(*i)++;
 			return (tab = copy(s, i, save));
 		}
-		if (echo == 1 && s[*i - 1] != ' ' && s[*i] == ' ' && s[*i + 1] != ' ')
+		if (s[*i] == ' ')
 		{
-			(*i)++;
-			return(tab = ft_strdup(" \0"));
+			while (s[*i] && s[*i] == ' ')
+				(*i)++;
+			if (echo == 1)
+				return(tab = ft_strdup(" \0"));
 		}
-		(*i)++;
 	}
 	return NULL;
 }
@@ -230,40 +239,3 @@ char				**ft_split_strcmd(char *s, int echo)
 	}
 	return (tab);
 }
-
-/* int main()
-{
-	char *str1 = "bonjour les cop1, il ma dit \"          \' c\' wesh\"";
-	char *str3 = "h\"wesh\"";
-	char *str2 = "bonjour les cop1, il ma dit : wesh, vous en pesez quoi ?";
-	char **tab1;
-	char **tab2;
-	char **tab3;
-	int i;
-
-	i = 0;
-	printf("------------ STR1 ------------\n");
-	tab1 = ft_split_strcmd(str1, ' ');
-	while (tab1[i] != NULL)
-	{
-		printf("tab1[%d] = [%s]\n", i, tab1[i]);
-		i++;
-	}
-	printf("------------ STR2 ------------\n");
-	i = 0;
-	tab2 = ft_split_strcmd(str2, ' ');
-	while (tab2[i] != NULL)
-	{
-		printf("tab2[%d] = [%s]\n", i, tab2[i]);
-		i++;
-	}
-	printf("------------ STR3 ------------\n");
-	i = 0;
-	tab3 = ft_split_strcmd(str3, ' ');
-	while ((tab3[i] != NULL))
-	{
-		printf("tab3[%d] = [%s]\n", i, tab3[i]);
-		i++;
-	}
-	return (0);
-} */

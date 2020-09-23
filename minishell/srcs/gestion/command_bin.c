@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 15:00:48 by lryst             #+#    #+#             */
-/*   Updated: 2020/08/30 05:13:22 by corozco          ###   ########.fr       */
+/*   Updated: 2020/09/18 15:52:30 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,10 @@ int				command_bin(char **tab, t_temp *tmp)
 	if ((f = fork()) == 0)
 	{
 		if (execve(tabpath[status], tab, tab_env) == -1)
+		{
+			g_ret = 1;
 			exit(1);
+		}
 		exit(0);
 	}
 	if ((f = waitpid(f, &status, WUNTRACED | WCONTINUED)) == -1)
