@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 14:28:38 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/24 19:44:10 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/24 21:27:05 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int					multi_pv(char *str)
 			write(1, "minishell: syntax error near unexpected token ';;'\n", 51);
 			return (0);
 		}
-		if (str[i] == ';' && str[i + 1])
+		if (str[i + 1] && str[i] == ';')
 		{
 			i++;
 			while (str[i] && str[i] == ' ')
@@ -120,7 +120,8 @@ int					multi_pv(char *str)
 				return (0);
 			}
 		}
-		i++;
+		if (str[i])
+			i++;
 	}
 	return (1);
 }
@@ -140,11 +141,11 @@ char				**ft_split_line(char *str)
 		return NULL;
 	if (!(multi_pv(str)))
 	{
-		tab = malloc(sizeof(char*) * 1);
+		if (!(tab = malloc(sizeof(char*) * 1)))
+			return (NULL);
 		tab[0] = NULL;
 		return (tab);
 	}
-	if (tab[0])
 	word = ft_count_word(str);
 	if (!(tab = (char **)malloc(sizeof(char*) * (word + 1))))
 		return NULL;

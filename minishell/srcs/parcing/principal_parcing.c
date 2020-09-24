@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/09/24 19:43:13 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/24 21:25:36 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,9 @@ void			ft_getline(t_temp *tmp)
 	line = NULL;
 	if (ft_gnl(0, &line) == -1 || (tmp->tabcmd = ft_split_line(line)) == NULL)
 		general_free(tmp);
-	if (tmp->tabcmd[0] != NULL)
+	if (tmp->tabcmd != NULL && tmp->tabcmd[0])
 	{
+
 		printf("line = [%s]\n", line);
 		gestion_line(tmp->tabcmd, tmp);
 //ft_free_double_tab(tmp->tabcmd);
