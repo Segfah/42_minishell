@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 14:28:38 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/14 12:04:27 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/24 21:27:05 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,7 @@ char				*ft_fill_line(char *str, int *i, char *tab)
 				(*i)++;
 		}
 		if (str[*i] == '"' || str[*i] == '\'')
-		{
 			adeline_la_best(str, str[*i], i);
-		}
 		if (str[*i] == ';' || str[*i] == '\0')
 		{
 			tab = copy(str, i, save);
@@ -97,6 +95,37 @@ char				*ft_fill_line(char *str, int *i, char *tab)
 	return NULL;
 }
 
+int					multi_pv(char *str)
+{
+	int i;
+	int check;
+
+	i = 0;
+	check = 0;
+	while (str[i])
+	{
+		if (str[i] == ';' && str[i + 1] == ';')
+		{
+			write(1, "minishell: syntax error near unexpected token ';;'\n", 51);
+			return (0);
+		}
+		if (str[i + 1] && str[i] == ';')
+		{
+			i++;
+			while (str[i] && str[i] == ' ')
+				i++;
+			if (str[i] == ';')
+			{
+				write(1, "minishell: syntax error near unexpected token ';'\n", 50);
+				return (0);
+			}
+		}
+		if (str[i])
+			i++;
+	}
+	return (1);
+}
+
 char				**ft_split_line(char *str)
 {
 	char **tab;
@@ -107,8 +136,16 @@ char				**ft_split_line(char *str)
 	i = 0;
 	j = -1;
 	word = 0;
+	tab = NULL;
 	if (!str)
 		return NULL;
+	if (!(multi_pv(str)))
+	{
+		if (!(tab = malloc(sizeof(char*) * 1)))
+			return (NULL);
+		tab[0] = NULL;
+		return (tab);
+	}
 	word = ft_count_word(str);
 	if (!(tab = (char **)malloc(sizeof(char*) * (word + 1))))
 		return NULL;
