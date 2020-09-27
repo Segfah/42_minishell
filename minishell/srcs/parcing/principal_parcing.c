@@ -6,15 +6,26 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/09/24 21:25:36 by corozco          ###   ########.fr       */
+/*   Updated: 2020/09/26 19:18:52 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-** fonction qui va creer le nouveau tableau a partir de tabcmd (strig)
-*/
+int			mlist_size(l_cmd *head)
+{
+	int		i;
+
+	i = 0;
+	if (!head)
+		return (i);
+	while (head)
+	{
+		i++;
+		head = head->next;
+	}
+	return (i);
+}
 
 /*
 ** Elle cherche dans le tableau de commandes, si la commande existe
@@ -31,6 +42,9 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 	{
 		cmd = NULL;
 		separator_string(&cmd, tabcmd[i], tmp);
+
+		ft_printf("list size = %d \n", mlist_size(cmd));
+		exit(1);
 		if (tabcmd[i][0] == 0)
 			;
 		else if (ft_strcmp(tabcmd[i], "exit") == 0)
