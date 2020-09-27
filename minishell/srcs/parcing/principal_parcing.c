@@ -6,12 +6,12 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/09/26 19:18:52 by corozco          ###   ########.fr       */
+/*   Updated: 2020/09/27 14:37:28 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
 int			mlist_size(l_cmd *head)
 {
 	int		i;
@@ -26,7 +26,7 @@ int			mlist_size(l_cmd *head)
 	}
 	return (i);
 }
-
+*/
 /*
 ** Elle cherche dans le tableau de commandes, si la commande existe
 ** ensuite elle free la string du tableau free(tabcmd[i])
@@ -43,8 +43,8 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 		cmd = NULL;
 		separator_string(&cmd, tabcmd[i], tmp);
 
-		ft_printf("list size = %d \n", mlist_size(cmd));
-		exit(1);
+//		ft_printf("list size = %d \n", mlist_size(cmd));
+//		exit(1);
 		if (tabcmd[i][0] == 0)
 			;
 		else if (ft_strcmp(tabcmd[i], "exit") == 0)
