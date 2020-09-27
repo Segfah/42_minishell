@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-/*
+
 int			mlist_size(l_cmd *head)
 {
 	int		i;
@@ -21,12 +21,30 @@ int			mlist_size(l_cmd *head)
 		return (i);
 	while (head)
 	{
-		i++;
+		if (ft_strcmp(head->input, " "))
+			i++;
 		head = head->next;
 	}
 	return (i);
 }
-*/
+
+char		**llist_astring(l_cmd *head, char **tabstr)
+{
+	int		i;
+
+	i = 0;
+	if (!(tabstr = (char**)malloc(sizeof(char*) * (mlist_size(head) + 1))))
+		return (NULL);
+	while (head)
+	{
+		if (ft_strcmp(head->input, " "))
+			tabstr[i++] = head->output;
+		head = head->next;
+	}
+	tabstr[i] = 0;
+	return (tabstr);
+}
+
 /*
 ** Elle cherche dans le tableau de commandes, si la commande existe
 ** ensuite elle free la string du tableau free(tabcmd[i])
@@ -42,9 +60,8 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 	{
 		cmd = NULL;
 		separator_string(&cmd, tabcmd[i], tmp);
-
-//		ft_printf("list size = %d \n", mlist_size(cmd));
-//		exit(1);
+		if (tabcmd[i][0] == 0 && !(tmp->strcmd = llist_astring(cmd, tmp->strcmd)))
+			exit(1); // cambiar
 		if (tabcmd[i][0] == 0)
 			;
 		else if (ft_strcmp(tabcmd[i], "exit") == 0)
