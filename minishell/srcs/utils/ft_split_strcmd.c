@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 23:18:04 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/18 15:27:03 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/26 17:21:14 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 /* #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h> */
+
+static int	adeline2(char *s, char c, int n, int *i)
+{
+	while (s[*i] && s[*i] == c)
+		(*i)++;
+	return (n + 1);
+}
 
 static int	adeline(char *s, char cote, int n, int *i)
  {
@@ -41,6 +48,8 @@ static int	adeline(char *s, char cote, int n, int *i)
 	{
 		printf("ft_word\n");
 		printf("char[%d] = [%c]\n", i, s[i]);
+		if (s[i] == '>' || s[i] == '<' || s[i] == '|')
+			n = adeline2(s, s[i], n, &i);
 		if (s[i] == '"' || s[i] == '\'')
 			n = adeline(s, s[i], n, &i);
 		if (s[i] == '$')
@@ -95,9 +104,9 @@ static int	adeline(char *s, char cote, int n, int *i)
 				n++;
 			}
 		}
-		if (s[i] != '\0' && s[i] != ' ' && s[i] != '"' && s[i] != '\'' && s[i] != '$')
+		if (s[i] != '\0' && s[i] != ' ' && s[i] != '"' && s[i] != '\'' && s[i] != '$' && s[i] != '>' && s[i] != '<' && s[i] != '|')
 		{
-			while (s[i] != '\0' && s[i] != ' ' && s[i] != '"' && s[i] != '\'' && s[i] != '\\' && s[i] != '$')
+			while (s[i] != '\0' && s[i] != ' ' && s[i] != '"' && s[i] != '\'' && s[i] != '\\' && s[i] != '$' && s[i] != '>' && s[i] != '<' && s[i] != '|')
 				i++;
 			n++;
 		}
@@ -133,6 +142,13 @@ char			*ft_fill(char *s, int echo, int *i, char *tab)
 	while (s[*i] != '\0')
 	{
 		printf("		char[%d] = [%c]\n", *i, s[*i]);
+		if (s[*i] == '>' || s[*i] == '<' || s[*i] == '|')
+		{
+			save = *i;
+			adeline2(s, s[*i], 0, i);
+			if (save < *i)
+				return (tab = copy(s, i, save));
+		}
 		if (s[*i] == '"' || s[*i] == '\'')
 		{
 			save = *i;
@@ -194,10 +210,10 @@ char			*ft_fill(char *s, int echo, int *i, char *tab)
 				return (tab = copy(s, i, save));
 			}
 		}
-		if (s[*i] != '\0' && s[*i] != ' ' && s[*i] != '"' && s[*i] != '\'' && s[*i] != '$' && s[*i] != '\\')
+		if (s[*i] != '\0' && s[*i] != ' ' && s[*i] != '"' && s[*i] != '\'' && s[*i] != '$' && s[*i] != '\\' && s[*i] != '>' && s[*i] != '<' && s[*i] != '|')
 		{
 			save = *i;
-			while (s[*i] && s[*i] != ' ' && s[*i] != '"' && s[*i] != '\'' && s[*i] != '$' && s[*i] != '\\')
+			while (s[*i] && s[*i] != ' ' && s[*i] != '"' && s[*i] != '\'' && s[*i] != '$' && s[*i] != '\\' && s[*i] != '>' && s[*i] != '<' && s[*i] != '|')
 				(*i)++;
 			return (tab = copy(s, i, save));
 		}

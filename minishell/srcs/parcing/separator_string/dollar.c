@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 14:09:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/18 15:31:34 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/26 15:18:49 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ void	dollar_cmd(l_cmd *cmd, t_lists *var)
 		}
 		var = var->next;
 	}
+	ft_free(save);
 	cmd->output = NULL;
 }
