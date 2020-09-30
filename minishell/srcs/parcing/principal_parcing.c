@@ -6,11 +6,85 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/09/30 18:08:46 by corozco          ###   ########.fr       */
+/*   Updated: 2020/09/30 22:46:43 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <sys/stat.h>
+
+static char		**build_cmd(t_temp *tmp, char *cmd)
+{
+	int			a;
+	char		*path;
+	char		**tabpath;
+	char		*temp;
+
+	a = -1;
+	if (search_env("PATH", tmp, 0, &path) == -1)
+		return (NULL);
+	if (!(tabpath = ft_split(path, ':')))
+		return (NULL);
+	while (tabpath[++a] != NULL)
+	{
+		temp = tabpath[a];
+		if (!(tabpath[a] = ft_strjoin(tabpath[a], "/")))
+			return (NULL);
+		free(temp);
+		temp = tabpath[a];
+		if (!(tabpath[a] = ft_strjoin(tabpath[a], cmd)))
+			return (NULL);
+		free(temp);
+	}
+	free(path);
+	return (tabpath);
+}
+
+static int		cmd_is_here(char **path)
+{
+	int			i;
+	struct stat	stats;
+
+	i = -1;
+	while (path[++i])
+	{
+		if (stat(path[i], &stats) == 0)
+			return (i);
+	}
+	return (-1);
+}
+
+
+int			cmd_exist(char *cmd, t_temp *tmp)
+{
+	int		flag;
+
+	flag = 0;
+	flag = !ft_strcmp(cmd, "exit") ? 1 : flag;
+	flag = !ft_strcmp(cmd, "cd") ? 2 : flag;
+	flag = !ft_strcmp(cmd, "env") ? 3 : flag;
+	flag = !ft_strcmp(cmd, "pwd") ? 4 : flag;
+	flag = !ft_strcmp(cmd, "nani") ? 5 : flag;
+	flag = !ft_strcmp(cmd, "export") ? 6 : flag;
+	flag = !ft_strcmp(cmd, "unset") ? 7 : flag;
+	flag = !ft_strcmp(cmd, "echo") ? 8 : flag;
+	if (flag)
+		return (flag);
+	if (!flag && !search_env("PATH", tmp, 1, NULL))
+		return (flag);
+	if (!(tmp->tabpath = build_cmd(tmp, cmd)))
+		return(-1);
+	if ((tmp->status = cmd_is_here(tmp->tabpath)) == -1)
+	{
+		ft_free_tab(tmp->tabpath);
+		return (0);
+	}
+	return (9);
+}
+
+/*
+** fonction qui compte la liste sans les espaces de echo -n
+*/
 
 int			mlist_size(l_cmd *head)
 {
@@ -28,24 +102,9 @@ int			mlist_size(l_cmd *head)
 	return (i);
 }
 
-
-int			cmd_exist(char *cmd)
-{
-	int		flag;
-
-	flag = 0;
-	flag = !ft_strcmp(cmd, "exit") ? 1 : flag;
-	flag = !ft_strcmp(cmd, "cd") ? 2 : flag;
-	flag = !ft_strcmp(cmd, "env") ? 3 : flag;
-	flag = !ft_strcmp(cmd, "pwd") ? 4 : flag;
-	flag = !ft_strcmp(cmd, "nani") ? 5 : flag;
-	flag = !ft_strcmp(cmd, "export") ? 6 : flag;
-	flag = !ft_strcmp(cmd, "unset") ? 7 : flag;
-	flag = !ft_strcmp(cmd, "echo") ? 8 : flag;
-	return (flag);
-}
-
-
+/*
+** Fonction qui modifie strcmd avec la liste, maj + supp des espaces
+*/
 
 char		**llist_astring(l_cmd *head, char **tabstr)
 {
@@ -66,11 +125,6 @@ char		**llist_astring(l_cmd *head, char **tabstr)
 		tabstr[i] = 0;
 	}
 
-	int j;
-	printf("[%s] , [%d]\n", tabstr[0] , j = cmd_exist(tabstr[0]));
-	if (j > 0)
-		printf("flag activado\n");
-
 	return (tabstr);
 }
 
@@ -82,36 +136,42 @@ char		**llist_astring(l_cmd *head, char **tabstr)
 static void		gestion_line(char **tabcmd, t_temp *tmp)
 {
 	int i;
+				int j;
 	l_cmd	*cmd;
 
 	i = -1;
 	while (tabcmd[++i])
 	{
+		j = 0;
 		cmd = NULL;
 		separator_string(&cmd, tabcmd[i], tmp);
 		(cmd) ? tmp->strcmd = llist_astring(cmd, tmp->strcmd) : 0 ;
+		
+		(cmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
+		if (j > 0)
+			printf("flag activado\n");
 		if (tabcmd[i][0] == 0)
 			;
-		else if (ft_strcmp(tabcmd[i], "exit") == 0)
+		else if (j == 1)
 		{
 			write(1, "exit\n", 5);
 			exit(0);
 		}
-		else if (ft_strcmp(tmp->strcmd[0], "cd") == 0)
+		else if (j == 2)
 			gestion_cd(tabcmd[i], tmp);
-		else if (ft_strcmp(tmp->strcmd[0], "env") == 0)
+		else if (j == 3)
 			gestion_env(tmp);
-		else if (ft_strcmp(tmp->strcmd[0], "pwd") == 0)
+		else if (j == 4)
 			gestion_pwd(tabcmd, tmp, i);
-		else if (ft_strcmp(tmp->strcmd[0], "nani") == 0)
+		else if (j == 5)
 			gestion_nani(tmp->strcmd);
-		else if (ft_strcmp(tmp->strcmd[0], "export") == 0)
+		else if (j == 6)
 			gestion_export(tmp, 0);
-		else if (ft_strcmp(tmp->strcmd[0], "unset") == 0)
+		else if (j == 7)
 			gestion_unset(tmp);
-		else if (ft_strcmp(tmp->strcmd[0], "echo") == 0)
+		else if (j == 8)
 			gestion_echo(cmd);
-		else if (command_bin(tmp->strcmd, tmp) == 0)
+		else if (j == 9 && command_bin(tmp->strcmd, tmp) == 0)
 			;
 		else
 		{

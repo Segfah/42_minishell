@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/09/30 14:25:55 by corozco          ###   ########.fr       */
+/*   Updated: 2020/09/30 22:20:22 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ typedef struct		s_temp
 	t_lists			*varenv;
 	t_lists			*exportenv;
 	char			*tab[2];
+	char			**tabpath; //path pour cmd bin
+	int				status; //pour tabpath
 }					t_temp;
 
 typedef struct		s_cmd
