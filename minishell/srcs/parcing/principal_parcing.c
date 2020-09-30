@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/09/30 14:25:20 by corozco          ###   ########.fr       */
+/*   Updated: 2020/09/30 18:08:46 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,25 @@ int			mlist_size(l_cmd *head)
 	return (i);
 }
 
+
+int			cmd_exist(char *cmd)
+{
+	int		flag;
+
+	flag = 0;
+	flag = !ft_strcmp(cmd, "exit") ? 1 : flag;
+	flag = !ft_strcmp(cmd, "cd") ? 2 : flag;
+	flag = !ft_strcmp(cmd, "env") ? 3 : flag;
+	flag = !ft_strcmp(cmd, "pwd") ? 4 : flag;
+	flag = !ft_strcmp(cmd, "nani") ? 5 : flag;
+	flag = !ft_strcmp(cmd, "export") ? 6 : flag;
+	flag = !ft_strcmp(cmd, "unset") ? 7 : flag;
+	flag = !ft_strcmp(cmd, "echo") ? 8 : flag;
+	return (flag);
+}
+
+
+
 char		**llist_astring(l_cmd *head, char **tabstr)
 {
 	int		i;
@@ -46,6 +65,12 @@ char		**llist_astring(l_cmd *head, char **tabstr)
 		}
 		tabstr[i] = 0;
 	}
+
+	int j;
+	printf("[%s] , [%d]\n", tabstr[0] , j = cmd_exist(tabstr[0]));
+	if (j > 0)
+		printf("flag activado\n");
+
 	return (tabstr);
 }
 
