@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/09/27 14:37:28 by corozco          ###   ########.fr       */
+/*   Updated: 2020/09/30 14:25:20 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,19 @@ char		**llist_astring(l_cmd *head, char **tabstr)
 	int		i;
 
 	i = 0;
-	if (!(tabstr = (char**)malloc(sizeof(char*) * (mlist_size(head) + 1))))
-		return (NULL);
-	while (head)
+	if (head)
 	{
-		if (ft_strcmp(head->input, " "))
-			tabstr[i++] = head->output;
-		head = head->next;
+		ft_free_double_tab(tabstr);
+		if (!(tabstr = (char**)malloc(sizeof(char*) * (mlist_size(head) + 1))))
+			return (NULL);
+		while (head)
+		{
+			if (ft_strcmp(head->input, " "))
+				tabstr[i++] = ft_strdup(head->output);
+			head = head->next;
+		}
+		tabstr[i] = 0;
 	}
-	tabstr[i] = 0;
 	return (tabstr);
 }
 
@@ -60,8 +64,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 	{
 		cmd = NULL;
 		separator_string(&cmd, tabcmd[i], tmp);
-		if (tabcmd[i][0] == 0 && !(tmp->strcmd = llist_astring(cmd, tmp->strcmd)))
-			exit(1); // cambiar
+		(cmd) ? tmp->strcmd = llist_astring(cmd, tmp->strcmd) : 0 ;
 		if (tabcmd[i][0] == 0)
 			;
 		else if (ft_strcmp(tabcmd[i], "exit") == 0)
@@ -90,9 +93,12 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 			g_ret = 127;
 			ft_printf("minishell: command not found: %s\n", tabcmd[i]);
 		}
-		free_tmps(tabcmd, i, tmp);
+		ft_free_double_tab(tmp->strcmd);
 		if (cmd != NULL)
 			free_cmd(cmd);
+		if (tabcmd[i] != NULL)
+			free(tabcmd[i]);
+		tabcmd[i] = NULL;
 	}
 }
 
@@ -113,7 +119,7 @@ void			ft_getline(t_temp *tmp)
 
 		printf("line = [%s]\n", line);
 		gestion_line(tmp->tabcmd, tmp);
-//ft_free_double_tab(tmp->tabcmd);
+//		ft_free_double_tab(tmp->tabcmd);
 	}
 	free(tmp->tabcmd);
 	free(line);

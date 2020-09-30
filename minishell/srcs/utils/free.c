@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 17:58:38 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/15 16:27:44 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/30 14:25:29 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,4 @@ void				free_cmd(l_cmd *cmd)
 		cmd = tmp;
 	}
 	free(cmd);
-}
-
-void			free_tmps(char **tabcmd, int i, t_temp *tmp)
-{
-	int			a;
-
-	a = 0;
-	while (tmp->strcmd[a])
-	{
-		free(tmp->strcmd[a]);
-		tmp->strcmd[a++] = NULL;
-	}
-	free(tmp->strcmd);
-	tmp->strcmd = NULL;
-	free(tabcmd[i]);
-	tabcmd[i] = NULL;
 }

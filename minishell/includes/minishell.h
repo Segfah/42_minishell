@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/09/23 17:12:41 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/30 14:25:55 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,6 @@ void				ft_free(char *str);
 void				ft_free_double_tab(char **tab);
 void				free_cmd(l_cmd *cmd);
 void				free_node_cmd(l_cmd *node);
-void				free_tmps(char **tabcmd, int i, t_temp *tmp);
 
 /*
 ** gestion/controle
