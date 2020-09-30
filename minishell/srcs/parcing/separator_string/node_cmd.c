@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 14:02:09 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/23 17:21:13 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/30 18:58:09 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,28 @@ void	ft_lstdelone_cmd(l_cmd *lst)
 		free(lst);
 	}
 }
+void	remove_space_node(l_cmd **cmd)
+{
+	l_cmd *save;
+	l_cmd *tmp;
+	
+	tmp = *cmd;
+	while (tmp)
+	{
+		save = NULL;
+		if (tmp->next && (ft_strcmp(tmp->next->output, " ") == 0) && (ft_strcmp(tmp->next->next->output, " ") == 0))
+		{
+			
+			save = tmp->next->next;
+			ft_lstdelone_cmd(tmp->next);
+			tmp->next = save;
+			
+		}
+		tmp = tmp->next;
+	}
+	write(1, "coucou\n", 7);
+}
+
 
 void	remove_null_node(l_cmd **cmd)
 {
