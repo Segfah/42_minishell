@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/01 20:52:01 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/01 22:55:39 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ int					is_redi(char *str);
 /*
 ** gestion/cd
 */
-void				gestion_cd(char *str, t_temp *tmp);
+//void				gestion_cd(char *str, t_temp *tmp);
+void				gestion_cd(char **strcmd, t_temp *tmp);
 
 /*
 ** env.c

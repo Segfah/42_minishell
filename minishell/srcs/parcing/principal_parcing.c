@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/01 20:51:14 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/01 22:56:00 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,7 +255,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 			exit(0);
 		}
 		else if (j == 2)
-			gestion_cd(tabcmd[i], tmp);
+			gestion_cd(tmp->strcmd, tmp);
 		else if (j == 3)
 			gestion_env(tmp);
 		else if (j == 4)
