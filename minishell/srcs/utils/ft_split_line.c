@@ -6,27 +6,11 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 14:28:38 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/01 16:37:36 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/01 22:35:51 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void		adeline_la_best(char *s, char cote, int *i)
-{
-	int j;
-
-	j = *i + 1;
-	while (s[j] && s[j] != cote)
-	{
-		if (s[j] == '\\' && s[j + 1] == cote)
-			j++;
-		j++;
-	}
-	if (s[j] != '\0')
-		*i = j + 1;
-	return ;
-}
 
 int				ft_count_word(char *str)
 {
@@ -74,68 +58,27 @@ char			*ft_fill_line(char *str, int *i, char *tab)
 	}
 	if (str)
 		return (tab = copy(str, i, save));
-	return NULL;
-}
-
-int				multi_pv(char *str)
-{
-	int i;
-	int slash;
-	int check;
-
-	i = 0;
-	slash = 0;
-	check = 0;
-	while (str[i])
-	{
-		count_slash(str, &i);
-		if (str[i] == '\'' || str[i] == '"')
-			adeline_la_best(str, str[i], &i);
-		if (str[i] == ';' && str[i + 1] == ';')
-		{
-			write(1, "minishell: syntax error near unexpected token ';;'\n", 51);
-			return (0);
-		}
-		if (str[i + 1] && str[i] == ';')
-		{
-			i++;
-			while (str[i] && str[i] == ' ')
-				i++;
-			if (str[i] == ';')
-			{
-				write(1, "minishell: syntax error near unexpected token ';'\n", 50);
-				return (0);
-			}
-		}
-		else if (str[i])
-			i++;
-	}
-	return (1);
+	return (NULL);
 }
 
 char			**ft_split_line(char *str)
 {
-	char **tab;
-	int i;
-	int j;
-	int word;
+	char	**tab;
+	int		i;
+	int		j;
+	int		word;
 
 	i = 0;
 	j = -1;
 	word = 0;
 	tab = NULL;
 	if (!str)
-		return NULL;
+		return (NULL);
 	if (!(multi_pv(str)))
-	{
-		if (!(tab = malloc(sizeof(char*) * 1)))
-			return (NULL);
-		tab[0] = NULL;
-		return (tab);
-	}
+		return (tab_null(tab));
 	word = ft_count_word(str);
 	if (!(tab = (char **)malloc(sizeof(char*) * (word + 1))))
-		return NULL;
+		return (NULL);
 	while (++j < word)
 	{
 		while (str[i] && str[i] == ' ')
@@ -143,8 +86,5 @@ char			**ft_split_line(char *str)
 		tab[j] = ft_fill_line(str, &i, tab[j]);
 	}
 	tab[j] = 0;
-	j = -1;
-	while(tab[++j])
-		printf("lineTAB[%d] = {%s]\n", j, tab[j]);
 	return (tab);
 }

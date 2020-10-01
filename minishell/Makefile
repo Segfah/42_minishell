@@ -6,7 +6,7 @@
 #    By: lryst <lryst@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 05:41:03 by corozco           #+#    #+#              #
-#    Updated: 2020/09/15 16:28:34 by lryst            ###   ########.fr        #
+#    Updated: 2020/10/01 22:57:12 by lryst            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,11 @@ SRC := \
 	srcs/gestion/unset.c \
 	srcs/gestion/command_bin.c \
 	srcs/gestion/nani.c \
-	srcs/utils/ft_split_strcmd.c \
+	srcs/utils/ft_split_strcmd/ft_split_strcmd.c \
+	srcs/utils/ft_split_strcmd/cmd_dollar.c \
+	srcs/utils/ft_split_strcmd/cmd_slash.c \
+	srcs/utils/ft_split_strcmd/space.c \
+	srcs/utils/ft_split_strcmd/char.c \
 	srcs/gestion/tools/tools_env_export.c \
 	srcs/gestion/tools/tools_env_unset.c \
 	srcs/gestion/tools/tools_export.c \
@@ -44,7 +48,9 @@ SRC := \
 	srcs/parcing/separator_string/single_cote.c \
 	srcs/parcing/separator_string/slash.c \
 	srcs/parcing/separator_string/dollar.c \
-	srcs/utils/ft_strcatdup.c
+	srcs/utils/ft_strcatdup.c \
+	srcs/utils/pv.c \
+	srcs/utils/adelines.c 
 
 OBJS = $(addprefix objs/, $(SRC:.c=.o))
 
