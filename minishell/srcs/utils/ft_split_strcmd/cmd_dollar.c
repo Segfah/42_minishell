@@ -1,33 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcatdup.c                                     :+:      :+:    :+:   */
+/*   cmd_dollar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/14 14:00:14 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/01 20:37:34 by lryst            ###   ########.fr       */
+/*   Created: 2020/10/01 22:26:11 by lryst             #+#    #+#             */
+/*   Updated: 2020/10/01 22:57:54 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char				*ft_strcatdup(char *s1, char *s2)
+void	ft_count_word_dollar(char *s, int *i, int *n)
 {
-	char *ret;
-	int i;
-	int j;
+	int count;
 
-	i = 0;
-	j = 0;
-	if (!(ret = (char*)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 1)))
-		return (NULL);
-	while (s1[i++])
-		ret[i] = s1[i];
-	while (s2[j])
-		ret[i++] = s2[j++];
-	ret[i] = '\0';
-	ft_free(s1);
-	ft_free(s2);
-	return (ret);
+	count = *n;
+	(*i)++;
+	if (s[*i] == '?')
+	{
+		(*i)++;
+		(*n)++;
+	}
+	else if (s[*i] == '"' || s[*i] == '\'')
+		*n = adeline(s, s[*i], count, i);
+	else if (s[*i] == ' ' || s[*i] == '\0' || s[*i] == '\\')
+		(*n)++;
+	else
+	{
+		while (s[*i] && ((s[*i] > 47 && s[*i] < 58) || (s[*i] > 64 && s[*i] < 91) || (s[*i] > 96 && s[*i] < 123)))
+			(*i)++;
+		(*n)++;
+	}
 }

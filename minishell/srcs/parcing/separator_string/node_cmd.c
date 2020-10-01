@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 14:02:09 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/30 18:58:09 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/01 15:14:28 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	remove_space_node(l_cmd **cmd)
 	while (tmp)
 	{
 		save = NULL;
-		if (tmp->next && (ft_strcmp(tmp->next->output, " ") == 0) && (ft_strcmp(tmp->next->next->output, " ") == 0))
+		if (tmp->next && (ft_strcmp(tmp->next->output, " ") == 0) && (tmp->next->next == NULL || (ft_strcmp(tmp->next->next->output, " ") == 0)))
 		{
 			
 			save = tmp->next->next;
@@ -42,7 +42,6 @@ void	remove_space_node(l_cmd **cmd)
 		}
 		tmp = tmp->next;
 	}
-	write(1, "coucou\n", 7);
 }
 
 
@@ -65,7 +64,6 @@ void	remove_null_node(l_cmd **cmd)
 		}
 		tmp = tmp->next;
 	}
-	write(1, "coucou\n", 7);
 }
 
 void	check_node(l_cmd *cmd, t_temp *temp)

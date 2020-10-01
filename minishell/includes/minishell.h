@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/01 22:55:39 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/01 23:11:08 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,6 @@ int					is_it_var(char *str, t_lists *var);
 /*
 ** gestion/echo/slash
 */
-int					count_slash(char *str, int *j);
 char				*remove_slash(char *str, int *i, char save);
 char				*slash_sort(char *str, int *i, char *tab, t_lists *var);
 char				*slash(char *str, int *i, char *tab, t_lists *var);
@@ -254,4 +253,21 @@ void				slash_cmd(l_cmd *cmd);
 void				replace_isspace(l_cmd *cmd, int *i, int *j, char ascii);
 void				dollar_cmd(l_cmd *cmd, t_lists *var);
 
+void				count_slash(char *str, int *i);
+
+int					message_error_pv(int pv);
+int					multi_pv(char *str);
+char				**tab_null(char **tab);
+
+int					adeline2(char *s, char c, int n, int *i);
+int					adeline(char *s, char cote, int n, int *i);
+void				adeline_la_best(char *s, char cote, int *i);
+
+void				ft_count_word_dollar(char *s, int *i, int *n);
+
+void				ft_count_word_slash(char *s, int *i, int *n);
+
+void        		ft_count_word_space(char *s, int *i, int *n, int *echo);
+
+void				ft_count_word_char(char *s, int *i, int *n);
 #endif

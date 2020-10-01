@@ -1,32 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   space.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/10 06:47:21 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/01 23:10:53 by lryst            ###   ########.fr       */
+/*   Created: 2020/10/01 22:46:14 by lryst             #+#    #+#             */
+/*   Updated: 2020/10/01 22:49:26 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strdup(const char *s1)
+void        ft_count_word_space(char *s, int *i, int *n, int *echo)
 {
-	char	*s2;
-	int		i;
-
-	if (s1 == NULL)
-		return (NULL);
-	if (!(s2 = (char*)malloc(sizeof(char) * ft_strlen(s1) + 1)))
-		return (NULL);
-	i = 0;
-	while (s1[i])
-	{
-		s2[i] = s1[i];
-		i++;
-	}
-	s2[i] = '\0';
-	return (s2);
+    while (s[*i] && s[*i] == ' ')
+        (*i)++;
+    if (*echo == 1)
+        (*n)++;
 }
