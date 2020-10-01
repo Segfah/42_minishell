@@ -6,13 +6,13 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 14:28:38 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/24 21:27:05 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/01 16:37:36 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void			 adeline_la_best(char *s, char cote, int *i)
+static void		adeline_la_best(char *s, char cote, int *i)
 {
 	int j;
 
@@ -28,7 +28,7 @@ static void			 adeline_la_best(char *s, char cote, int *i)
 	return ;
 }
 
-int					ft_count_word(char *str)
+int				ft_count_word(char *str)
 {
 	int word;
 	int i;
@@ -41,16 +41,7 @@ int					ft_count_word(char *str)
 		word = 1;
 	while (str[i])
 	{
-		if (str[i] == '\\')
-		{
-			while (str[i] && str[i] == '\\')
-			{
-				slash++;
-				i++;
-			}
-			if ((slash % 2) == 1 && (str[i] == '"' || str[i] == '\''))
-				i++;
-		}
+		count_slash(str, &i);
 		if (str[i] == '"' || str[i] == '\'')
 			adeline_la_best(str, str[i], &i);
 		if (str[i] == ';')
@@ -60,7 +51,7 @@ int					ft_count_word(char *str)
 	return (word);
 }
 
-char				*ft_fill_line(char *str, int *i, char *tab)
+char			*ft_fill_line(char *str, int *i, char *tab)
 {
 	int save;
 	int slash;
@@ -69,16 +60,7 @@ char				*ft_fill_line(char *str, int *i, char *tab)
 	slash = 0;
 	while (str[*i])
 	{
-		if (str[*i] == '\\')
-		{
-			while (str[*i] && str[*i] == '\\')
-			{
-				slash++;
-				(*i)++;
-			}
-			if ((slash % 2) == 1 && (str[*i] == '"' || str[*i] == '\''))
-				(*i)++;
-		}
+		count_slash(str, i);
 		if (str[*i] == '"' || str[*i] == '\'')
 			adeline_la_best(str, str[*i], i);
 		if (str[*i] == ';' || str[*i] == '\0')
@@ -95,15 +77,20 @@ char				*ft_fill_line(char *str, int *i, char *tab)
 	return NULL;
 }
 
-int					multi_pv(char *str)
+int				multi_pv(char *str)
 {
 	int i;
+	int slash;
 	int check;
 
 	i = 0;
+	slash = 0;
 	check = 0;
 	while (str[i])
 	{
+		count_slash(str, &i);
+		if (str[i] == '\'' || str[i] == '"')
+			adeline_la_best(str, str[i], &i);
 		if (str[i] == ';' && str[i + 1] == ';')
 		{
 			write(1, "minishell: syntax error near unexpected token ';;'\n", 51);
@@ -120,13 +107,13 @@ int					multi_pv(char *str)
 				return (0);
 			}
 		}
-		if (str[i])
+		else if (str[i])
 			i++;
 	}
 	return (1);
 }
 
-char				**ft_split_line(char *str)
+char			**ft_split_line(char *str)
 {
 	char **tab;
 	int i;
@@ -156,5 +143,8 @@ char				**ft_split_line(char *str)
 		tab[j] = ft_fill_line(str, &i, tab[j]);
 	}
 	tab[j] = 0;
+	j = -1;
+	while(tab[++j])
+		printf("lineTAB[%d] = {%s]\n", j, tab[j]);
 	return (tab);
 }

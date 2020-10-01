@@ -6,11 +6,28 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 14:08:13 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/14 14:08:54 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/01 16:35:50 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	count_slash(char *str, int *i)
+{
+	int slash;
+
+	slash = 0;
+	if (str[*i] ==  '\\')
+	{
+		while (str[*i] && str[*i] == '\\')
+		{
+			(*i)++;
+			slash++;
+		}
+		if ((slash % 2) == 1 && (str[*i] == ';' || str[*i] == '"' || str[*i] == '\''))
+			(*i)++;
+	}
+}
 
 void	slash_cmd(l_cmd *cmd)
 {

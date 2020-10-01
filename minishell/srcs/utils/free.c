@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 17:58:38 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/30 14:25:29 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/01 14:23:32 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void				ft_free_double_tab(char **tab)
 	int i;
 
 	i = 0;
-	while(tab[i])
+	while (tab[i])
 	{
 		free(tab[i]);
 		tab[i] = NULL;

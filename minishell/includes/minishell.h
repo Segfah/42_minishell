@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/01 13:59:25 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/01 16:30:23 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,6 @@ int					is_it_var(char *str, t_lists *var);
 /*
 ** gestion/echo/slash
 */
-int					count_slash(char *str, int *j);
 char				*remove_slash(char *str, int *i, char save);
 char				*slash_sort(char *str, int *i, char *tab, t_lists *var);
 char				*slash(char *str, int *i, char *tab, t_lists *var);
@@ -242,5 +241,7 @@ void				slash_cmd(l_cmd *cmd);
 
 void				replace_isspace(l_cmd *cmd, int *i, int *j, char ascii);
 void				dollar_cmd(l_cmd *cmd, t_lists *var);
+
+void				count_slash(char *str, int *i);
 
 #endif

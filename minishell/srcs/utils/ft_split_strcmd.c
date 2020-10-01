@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 23:18:04 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/26 17:21:14 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/01 15:16:10 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ static int	adeline(char *s, char cote, int n, int *i)
 	n = 0;
 	while (s[i] != '\0')
 	{
-		printf("ft_word\n");
 		printf("char[%d] = [%c]\n", i, s[i]);
 		if (s[i] == '>' || s[i] == '<' || s[i] == '|')
 			n = adeline2(s, s[i], n, &i);
