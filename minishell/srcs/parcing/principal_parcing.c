@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/01 18:35:32 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/01 19:09:33 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,18 @@ int			simple_redi(char *path, t_temp *tmp)
 	return (0);
 }
 
+int			contre_redi(char *path, t_temp *tmp)
+{
+	tmp->fd = 0;
+	if ((tmp->fd = open(path, O_RDONLY)) == -1)
+	{
+		printf("minishell: %s: %s\n", strerror(errno), path);
+		return (-1);
+	}
+	close(tmp->fd);
+	return (0);
+}
+
 int		double_redi(char *path, t_temp *tmp)
 {
 	tmp->fd = 0;
@@ -200,14 +212,12 @@ int		check_redi(char **cmd, t_temp *tmp)
 			if (double_redi(cmd[i + 1], tmp) == -1)
 				return (-1);
 			ft_printf(">> [%s]\n",cmd[i + 1]);
-		//	intento2(cmd[i + 1]);
 		}
 		else if (!(ft_strcmp("<", cmd[i])))
 		{
-			if (i > 1)
-				ft_printf("nombre del fichero <[%s]\n",cmd[i + 1]);
-			else
-				return (0); // flag no activo = 0????
+			if (contre_redi(cmd[i + 1], tmp) == -1)
+				return (-1);
+			ft_printf("<< [%s]\n",cmd[i + 1]);
 		}
 	}
 	return (ret);
@@ -235,9 +245,8 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 		(cmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
 		tmp->flag[0] = (j > 0) ? 1 : 0;
 		if (cmd)
-		{
-			printf("redi?[%d]\n", tmp->flag[1] = check_redi(tmp->strcmd, tmp));
-		}
+			tmp->flag[1] = check_redi(tmp->strcmd, tmp);
+		printf("----------cmd = [%d], redi = [%d]\n", tmp->flag[0], tmp->flag[1]);
 		if (tabcmd[i][0] == 0)
 			;
 		else if (j == 1)
