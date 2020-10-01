@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 00:50:50 by corozco           #+#    #+#             */
-/*   Updated: 2020/09/06 04:14:49 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/01 20:25:55 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,4 +135,3 @@ int				change_list(t_lists *head, char *ss, char *newdata)
 	}
 	return (0);
 }
-

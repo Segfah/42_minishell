@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/30 03:40:07 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/30 03:44:08 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/01 20:24:31 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		ft_free_tab(char **tab)
 	int		i;
 
 	i = -1;
-	while(tab[++i])
+	while (tab[++i])
 	{
 		free(tab[i]);
 		tab[i] = NULL;

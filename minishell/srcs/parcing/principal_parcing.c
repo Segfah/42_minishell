@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/01 19:14:20 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/01 20:51:14 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,7 +259,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 		else if (j == 3)
 			gestion_env(tmp);
 		else if (j == 4)
-			gestion_pwd(tabcmd, tmp, i);
+			gestion_pwd(tmp->strcmd, tmp);
 		else if (j == 5)
 			gestion_nani(tmp->strcmd);
 		else if (j == 6)

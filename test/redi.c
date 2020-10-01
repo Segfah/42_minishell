@@ -62,11 +62,11 @@ void		check_redi(char **cmd, char **av, char **envp)
 	{
 		if (is_redi(cmd[i]))
 		{
-			if (cmd[i])
+			if (cmd[i + 1])
 			{
 				if (!(cmd[i + 1]) || is_redi(cmd[i + 1]))
 				{
-					printf("minishell: syntax error near unexpected token `%s'\n", cmd[i - 1]);
+					printf("minishell: syntax error near unexpected token `%s'\n", cmd[i]);
 					return ;
 				}
 			}
@@ -104,7 +104,7 @@ int			main(int ac, char **av, char **envp)
 	cmd = malloc(sizeof(char*) * 6);
 	cmd[0] = "pwd";
 	cmd[1] = ">";
-	cmd[2] = "test1";
+	cmd[2] = NULL;
 	cmd[3] = ">>";
 	cmd[4] = "test2";
 	cmd[5] = NULL;

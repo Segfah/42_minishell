@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 11:44:28 by corozco           #+#    #+#             */
-/*   Updated: 2020/09/02 21:05:32 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/01 20:24:57 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 typedef struct	s_list
 {
-	char	c;
+	char			c;
 	void			*content;
 	struct s_list	*next;
 }				t_list;

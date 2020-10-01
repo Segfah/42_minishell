@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/01 17:37:22 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/01 20:52:01 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ char				*ft_prompt(char *str);
 ** Parsing
 */
 void				ft_getline(t_temp *tmp);
-void				clean_str(char *str);
+int					is_redi(char *str);
+//void				clean_str(char *str);
 
 /*
 ** ************************************************************************
@@ -109,7 +110,7 @@ void				gestion_export(t_temp *tmp, int i);
 /*
 ** gestion/pwd
 */
-int					gestion_pwd(char **tabcmd, t_temp *tmp, int i);
+void				gestion_pwd(char **strcmd, t_temp *tmp);
 
 /*
 ** gestion/unset

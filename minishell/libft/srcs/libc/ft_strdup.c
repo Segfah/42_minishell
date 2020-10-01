@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 06:47:21 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/16 14:46:45 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/01 20:24:07 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strdup(const char *s1)
 	int		i;
 
 	if (s1 == NULL)
-		return NULL;
+		return (NULL);
 	if (!(s2 = (char*)malloc(sizeof(char) * ft_strlen(s1) + 1)))
 		return (NULL);
 	i = 0;
