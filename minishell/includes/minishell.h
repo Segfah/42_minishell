@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/09/30 22:20:22 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/01 13:52:36 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,14 @@ typedef struct		s_lists
 	struct s_lists	*next;
 }					t_lists;
 
+/*
+** flag[0] = cmd existe
+** flag[1] = redi exite
+** flag[2] = pipe existe
+** tabpath = cmd bin
+** status = pour tabpath
+*/
+
 typedef struct		s_temp
 {
 	char			*prompt;
@@ -36,8 +44,9 @@ typedef struct		s_temp
 	t_lists			*varenv;
 	t_lists			*exportenv;
 	char			*tab[2];
-	char			**tabpath; //path pour cmd bin
-	int				status; //pour tabpath
+	char			**tabpath;
+	int				status;
+	int				flag[3];
 }					t_temp;
 
 typedef struct		s_cmd
@@ -177,13 +186,16 @@ char				*slash(char *str, int *i, char *tab, t_lists *var);
 ** gestion/echo/single_cote
 */
 char				*single_cote(char *str, char *tab);
-char				*put_in_tab_single(char *str, int *i, char *tab, int j, t_lists *var);
-char				*single_keep_cote(char *str, int *i, char *tab, t_lists *var);
+char				*put_in_tab_single(char *str, int *i
+						, char *tab, int j, t_lists *var);
+char				*single_keep_cote(char *str, int *i
+						, char *tab, t_lists *var);
 
 /*
 ** gestion/echo/double_cote
 */
-char				*put_in_tab(char *str, int *i, char *tab, int j, t_lists *var);
+char				*put_in_tab(char *str, int *i, char *tab
+						, int j, t_lists *var);
 char				*double_cote(char *str, char *tab, t_lists *var);
 
 /*

@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/09/30 22:46:43 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/01 13:55:41 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,10 +146,9 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 		cmd = NULL;
 		separator_string(&cmd, tabcmd[i], tmp);
 		(cmd) ? tmp->strcmd = llist_astring(cmd, tmp->strcmd) : 0 ;
-		
 		(cmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
-		if (j > 0)
-			printf("flag activado\n");
+		tmp->flag[0] = (j > 0) ? 1 : 0;
+		//printf("%d\n", tmp->flag[0]);
 		if (tabcmd[i][0] == 0)
 			;
 		else if (j == 1)
