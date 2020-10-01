@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/01 13:52:36 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/01 13:59:25 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,6 +231,7 @@ void				separator_string(l_cmd **cmd, char *str, t_temp *tmp);
 void				double_cote_cmd(l_cmd *cmd, t_lists *var);
 void				check_node(l_cmd *cmd, t_temp *temp);
 
+void				remove_space_node(l_cmd **cmd);
 void				ft_lstdelone_cmd(l_cmd *lst);
 void				remove_null_node(l_cmd **cmd);
 void				ft_lstadd_back_cmd(l_cmd **alst, l_cmd *new);

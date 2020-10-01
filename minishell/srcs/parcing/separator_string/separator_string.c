@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 13:58:31 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/24 17:01:02 by lryst            ###   ########.fr       */
+/*   Updated: 2020/09/30 18:59:33 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,13 @@ void			separator_string(l_cmd **cmd, char *str, t_temp *tmp)
 		new = new->next;
 	}
 	printf("*************\n");
+	remove_space_node(cmd);
+	new = *cmd;
+	while(new != NULL)
+	{
+		printf("new->input = [%s]\n", new->input);
+		printf("new->output = [%s]\n", new->output);
+		new = new->next;
+	}
+	printf("+++++++++++++\n");
 }
