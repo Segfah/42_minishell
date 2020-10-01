@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/01 13:55:41 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/01 18:35:32 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,92 @@ char		**llist_astring(l_cmd *head, char **tabstr)
 
 	return (tabstr);
 }
+/////////////////////////////////////////////////////////////////////////
+int			is_redi(char *str)
+{
+	return (!(ft_strcmp(">", str)) || !(ft_strcmp(">>", str))
+			|| !(ft_strcmp("<", str)));
+}
+
+int			simple_redi(char *path, t_temp *tmp)
+{
+	tmp->fd = 0;
+	if ((tmp->fd = open(path, O_RDWR | O_TRUNC |
+			O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) == -1)
+	{
+		printf("minishell: %s: %s\n", strerror(errno), path);
+		return (-1);
+	}
+	close(tmp->fd);
+	return (0);
+}
+
+int		double_redi(char *path, t_temp *tmp)
+{
+	tmp->fd = 0;
+	if ((tmp->fd = open(path, O_APPEND | O_WRONLY | O_CREAT , 0644)) == -1)
+	{
+		ft_printf("minishell: %s: %s\n", strerror(errno), path);
+		return (-1);
+	}
+	close(tmp->fd);
+	return (0);
+}
+
+int		check_redi(char **cmd, t_temp *tmp)
+{
+	int		i;
+	int		ret;
+
+	i = -1;
+	ret = 0;
+	while (cmd[++i])
+	{
+		if (is_redi(cmd[i]))
+		{
+			ret = 1;
+			if (cmd[i + 1])
+			{
+				if (is_redi(cmd[i + 1]))
+				{
+					printf("minishell: syntax error near unexpected token `%s'\n", cmd[i]);
+					return (-1);
+				}
+			}
+			else
+			{
+				printf("minishell: syntax error near unexpected token `newline'\n");
+				return (-1);
+			}
+		}
+	}
+	i = -1;
+	while (cmd[++i])
+	{
+		if (!(ft_strcmp(">", cmd[i])))
+		{
+			if (double_redi(cmd[i + 1], tmp) == -1)
+				return (-1);
+			ft_printf("> [%s]\n",cmd[i + 1]);
+		}
+		else if (!(ft_strcmp(">>", cmd[i])))
+		{
+			if (double_redi(cmd[i + 1], tmp) == -1)
+				return (-1);
+			ft_printf(">> [%s]\n",cmd[i + 1]);
+		//	intento2(cmd[i + 1]);
+		}
+		else if (!(ft_strcmp("<", cmd[i])))
+		{
+			if (i > 1)
+				ft_printf("nombre del fichero <[%s]\n",cmd[i + 1]);
+			else
+				return (0); // flag no activo = 0????
+		}
+	}
+	return (ret);
+}
+//////////////////////////////////////////////////////////////////////////
 
 /*
 ** Elle cherche dans le tableau de commandes, si la commande existe
@@ -148,7 +234,10 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 		(cmd) ? tmp->strcmd = llist_astring(cmd, tmp->strcmd) : 0 ;
 		(cmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
 		tmp->flag[0] = (j > 0) ? 1 : 0;
-		//printf("%d\n", tmp->flag[0]);
+		if (cmd)
+		{
+			printf("redi?[%d]\n", tmp->flag[1] = check_redi(tmp->strcmd, tmp));
+		}
 		if (tabcmd[i][0] == 0)
 			;
 		else if (j == 1)

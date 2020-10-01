@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/01 13:59:25 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/01 17:37:22 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@
 # include <unistd.h>
 # include <sys/types.h>
 # include <signal.h>
+# include <string.h>
 # include <errno.h>
 # include "libft.h"
+# include <fcntl.h>
 
 typedef struct		s_lists
 {
@@ -26,6 +28,12 @@ typedef struct		s_lists
 	char			*data;
 	struct s_lists	*next;
 }					t_lists;
+
+typedef struct		s_fd
+{
+	int				fd;
+	struct s_fd		*next;
+}					t_fd;
 
 /*
 ** flag[0] = cmd existe
@@ -47,6 +55,7 @@ typedef struct		s_temp
 	char			**tabpath;
 	int				status;
 	int				flag[3];
+	int				fd;
 }					t_temp;
 
 typedef struct		s_cmd
