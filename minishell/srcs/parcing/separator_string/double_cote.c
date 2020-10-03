@@ -6,13 +6,13 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 14:06:11 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/14 14:06:45 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/03 20:42:31 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	double_cote_cmd(l_cmd *cmd, t_lists *var)
+void	double_cote_cmd(t_cmd *cmd, t_lists *var)
 {
 	int i;
 	int j;

@@ -6,21 +6,21 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/01 22:57:34 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/01 22:57:36 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/03 20:42:31 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
 
-void	replace_isspace(l_cmd *cmd, int *i, int *j, char ascii)
+void	replace_isspace(t_cmd *cmd, int *i, int *j, char ascii)
 {
 	cmd->output[*i] = ascii;
 	(*i)++;
 	*j = *j + 2;
 }
 
-void	dollar_cmd(l_cmd *cmd, t_lists *var)
+void	dollar_cmd(t_cmd *cmd, t_lists *var)
 {
 	int i;
 	int j;

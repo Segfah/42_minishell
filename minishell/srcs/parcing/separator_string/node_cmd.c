@@ -6,13 +6,13 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 14:02:09 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/01 15:14:28 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/03 20:42:31 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_lstdelone_cmd(l_cmd *lst)
+void	ft_lstdelone_cmd(t_cmd *lst)
 {
 	if (lst)
 	{
@@ -23,10 +23,11 @@ void	ft_lstdelone_cmd(l_cmd *lst)
 		free(lst);
 	}
 }
-void	remove_space_node(l_cmd **cmd)
+
+void	remove_space_node(t_cmd **cmd)
 {
-	l_cmd *save;
-	l_cmd *tmp;
+	t_cmd *save;
+	t_cmd *tmp;
 	
 	tmp = *cmd;
 	while (tmp)
@@ -40,15 +41,15 @@ void	remove_space_node(l_cmd **cmd)
 			tmp->next = save;
 			
 		}
-		tmp = tmp->next;
+		else
+			tmp = tmp->next;
 	}
 }
 
-
-void	remove_null_node(l_cmd **cmd)
+void	remove_null_node(t_cmd **cmd)
 {
-	l_cmd *save;
-	l_cmd *tmp;
+	t_cmd *save;
+	t_cmd *tmp;
 	
 	tmp = *cmd;
 	while (tmp)
@@ -66,7 +67,7 @@ void	remove_null_node(l_cmd **cmd)
 	}
 }
 
-void	check_node(l_cmd *cmd, t_temp *temp)
+void	check_node(t_cmd *cmd, t_temp *temp)
 {
 	if (cmd->input[0] == '$')
 		dollar_cmd(cmd, temp->varenv);
@@ -80,9 +81,9 @@ void	check_node(l_cmd *cmd, t_temp *temp)
 		cmd->output = ft_strdup(cmd->input);
 }
 
-void	ft_lstadd_back_cmd(l_cmd **alst, l_cmd *new)
+void	ft_lstadd_back_cmd(t_cmd **alst, t_cmd *new)
 {
-	l_cmd	*tmp;
+	t_cmd	*tmp;
 
 	tmp = NULL;
 	if (new)
@@ -99,11 +100,11 @@ void	ft_lstadd_back_cmd(l_cmd **alst, l_cmd *new)
 	}
 }
 
-l_cmd	*ft_lstnew_cmd(char *input, t_temp *temp)
+t_cmd	*ft_lstnew_cmd(char *input, t_temp *temp)
 {
-	l_cmd	*tmp;
+	t_cmd	*tmp;
 
-	if (!(tmp = malloc(sizeof(l_cmd))))
+	if (!(tmp = malloc(sizeof(t_cmd))))
 		return (NULL);
 	if (input)
 	{

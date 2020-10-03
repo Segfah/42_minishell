@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 14:28:38 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/01 22:35:51 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/03 22:44:38 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,11 @@ char			**ft_split_line(char *str)
 		tab[j] = ft_fill_line(str, &i, tab[j]);
 	}
 	tab[j] = 0;
+	j = 0;
+	while (tab[j])
+	{
+		printf("tab[%d] = [%s]\n", j, tab[j]);
+		j++;
+	}
 	return (tab);
 }

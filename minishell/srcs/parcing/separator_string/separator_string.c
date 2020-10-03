@@ -6,22 +6,23 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 13:58:31 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/01 23:05:07 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/03 21:15:30 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void			separator_string(l_cmd **cmd, char *str, t_temp *tmp)
+void			separator_string(t_cmd **cmd, char *str, t_temp *tmp)
 {
 	int i;
 	int echo;
-	l_cmd *new;
+	t_cmd *new;
 	
 	echo = 0;
 	i = 0;
 	if (ft_strncmp(str, "echo ", 5) == 0 || ft_strncmp(str, "echo\0", 5) == 0)
 		echo = 1;
+	//write (1, "youhou\n", 7);
 	tmp->strcmd = ft_split_strcmd(str, echo);
 	while(tmp->strcmd[i])
 	{

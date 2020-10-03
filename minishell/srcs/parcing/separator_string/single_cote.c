@@ -6,13 +6,13 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 14:07:09 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/14 14:07:51 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/03 20:42:31 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	single_cote_cmd(l_cmd *cmd)
+void	single_cote_cmd(t_cmd *cmd)
 {
 	int i;
 	int j;

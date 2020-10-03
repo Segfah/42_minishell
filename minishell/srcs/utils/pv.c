@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/01 20:49:55 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/01 22:34:52 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/03 22:49:25 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,15 @@ int				multi_pv(char *str)
 	int i;
 
 	i = 0;
+	if (ft_strcmp(";", str) == 0)
+		return (message_error_pv(1));
 	while (str[i])
 	{
 		count_slash(str, &i);
 		if (str[i] == '\'' || str[i] == '"')
 			adeline_la_best(str, str[i], &i);
 		if (str[i] == ';' && str[i + 1] == ';')
-			return (0);
+			return (message_error_pv(2));
 		if (str[i + 1] && str[i] == ';')
 		{
 			i++;

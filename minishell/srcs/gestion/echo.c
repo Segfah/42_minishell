@@ -6,11 +6,24 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 17:27:31 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/23 12:35:30 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/03 23:12:14 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		check_option_echo(char *arg)
+{
+	int i;
+	int len;
+
+	len = ft_strlen(arg);
+	i = 0;
+	if (arg[i] == '-' && arg[i + 1] == 'n')
+	{
+		while
+	}
+}
 
 char 	*gestion_echo_option(char *str, char *arg)
 {
@@ -36,9 +49,9 @@ char 	*gestion_echo_option(char *str, char *arg)
 	return (cmd);
 }
 
-void    gestion_echo(l_cmd *cmd)
+void    gestion_echo(t_cmd *cmd)
 {
-	l_cmd *test;
+	t_cmd *test;
 	int n;
 
 	test = cmd;
