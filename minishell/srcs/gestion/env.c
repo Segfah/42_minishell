@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 23:02:07 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/03 22:41:07 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/04 14:29:47 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ static int		add_list_front(t_lists **head, char *str)
 }
 
 /*
-** fonction qui garde le env dans une liste c
-*/
+ ** fonction qui garde le env dans une liste c
+ */
 
 int				save_env(t_lists **head, char **envp)
 {
@@ -55,17 +55,29 @@ int				save_env(t_lists **head, char **envp)
 	return (0);
 }
 
-void			gestion_env(t_temp *tmp)
+void			gestion_env(char **strcmd, t_temp *tmp)
 {
-	if (tmp->flag[1])
+	if (!strcmd[1])
 	{
-		tmp->oldfd = dup(1);
-		dup2(tmp->fd, 1);
+		if (tmp->flag[1])
+		{
+			tmp->oldfd = dup(1);
+			dup2(tmp->fd, 1);
+		}
+		print_list(tmp->varenv, 1);
+		if (tmp->flag[1])
+		{
+			dup2(tmp->oldfd, 1);
+			close(tmp->fd);
+		}
+		return ;
 	}
-	print_list(tmp->varenv, 1);
-	if (tmp->flag[1])
-	{
-		dup2(tmp->oldfd, 1);
+	else if (!strcmd[1] && tmp->flag[1])
 		close(tmp->fd);
+	else if (strcmd[1])
+	{
+		ft_printf("env: %s: No such file or directory\n", strcmd[1]);
+		if (tmp->flag[1])
+			close(tmp->fd);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/03 22:17:39 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/04 13:56:59 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void				gestion_cd(char **strcmd, t_temp *tmp);
 ** env.c
 */
 int					save_env(t_lists **head, char **envp);
-void				gestion_env(t_temp *tmp);
+void				gestion_env(char **strcmd, t_temp *tmp);
 /*
 ** gestion/export
 */

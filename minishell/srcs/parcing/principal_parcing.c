@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/03 23:14:36 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/04 13:57:51 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -280,7 +280,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 		else if (j == 2)
 			gestion_cd(tmp->strcmd, tmp);
 		else if (j == 3)
-			gestion_env(tmp);
+			gestion_env(tmp->strcmd, tmp);
 		else if (j == 4)
 			gestion_pwd(tmp->strcmd, tmp);
 		else if (j == 5)
