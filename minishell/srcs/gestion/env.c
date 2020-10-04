@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 23:02:07 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/04 14:29:47 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/04 14:33:43 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ static int		add_list_front(t_lists **head, char *str)
 }
 
 /*
- ** fonction qui garde le env dans une liste c
- */
+** fonction qui garde le env dans une liste c
+*/
 
 int				save_env(t_lists **head, char **envp)
 {

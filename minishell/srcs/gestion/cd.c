@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 22:10:58 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/01 23:09:31 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/04 14:34:37 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,6 @@ void			gestion_cd(char **strcmd, t_temp *tmp)
 		}
 		free(tmp->env);
 	}
+	if (tmp->flag[1])
+		close(tmp->fd);
 }
