@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/04 16:58:46 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/04 17:56:35 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,7 @@ int		check_redi(char **cmd, t_temp *tmp)
 	{
 		if (!(ft_strcmp(">", cmd[i])))
 		{
-			if (double_redi(cmd[i + 1], tmp) == -1)
+			if (simple_redi(cmd[i + 1], tmp) == -1)
 				return (-1);
 			ft_printf("> [%s]\n",cmd[i + 1]);
 		}
@@ -214,9 +214,9 @@ int		check_redi(char **cmd, t_temp *tmp)
 		}
 		else if (!(ft_strcmp("<", cmd[i])))
 		{
+			ret = 2;
 			if (contre_redi(cmd[i + 1], tmp) == -1)
 				return (-1);
-				
 			ft_printf("< [%s]\n",cmd[i + 1]);
 		}
 	}
@@ -264,7 +264,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 		separator_string(&cmd, tabcmd[i], tmp);
 		(cmd) ? tmp->strcmd = llist_astring(cmd, tmp->strcmd) : 0;
 		(cmd) ? tmp->flag[1] = check_redi(tmp->strcmd, tmp) : 0;
-		tmp->flag[1] == 1 ? skip_redi(tmp->strcmd) : 0;
+		(tmp->flag[1] && tmp->flag[1] != -1) ? skip_redi(tmp->strcmd) : 0;
 		(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
 		tmp->flag[0] = (j > 0) ? 1 : 0;
 		printf("----------cmd = [%d], redi = [%d], fd = [%d]\n", tmp->flag[0], tmp->flag[1], tmp->fd);

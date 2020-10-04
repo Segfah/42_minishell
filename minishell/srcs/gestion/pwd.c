@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/01 01:51:46 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/03 23:12:11 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/04 17:51:12 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@ void		gestion_pwd(char **strcmd, t_temp *tmp)
 {
 	if (strcmd[1])
 	{
+			printf("=========================[%s]\n",strcmd[1]);	
 		ft_printf("pwd: too many arguments\n");
 		if (tmp->flag[1])
 			close(tmp->fd);
 		return ;
 	}
-	if (tmp->flag[1])
+	if (tmp->flag[1] == 1)
 	{
 		tmp->oldfd = dup(1);
 		dup2(tmp->fd, 1);
@@ -32,7 +33,8 @@ void		gestion_pwd(char **strcmd, t_temp *tmp)
 	tmp->env = NULL;
 	if (tmp->flag[1])
 	{
-		dup2(tmp->oldfd, 1);
+		if (tmp->flag[1] == 1)
+			dup2(tmp->oldfd, 1);
 		close(tmp->fd);
 	}
 }
