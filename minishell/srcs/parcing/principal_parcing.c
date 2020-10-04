@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/04 13:57:51 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/04 16:58:46 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int			cmd_exist(char *cmd, t_temp *tmp)
 {
 	int		flag;
 
+	if (!cmd)
+		return -2;
 	flag = 0;
 	flag = !ft_strcmp(cmd, "exit") ? 1 : flag;
 	flag = !ft_strcmp(cmd, "cd") ? 2 : flag;
@@ -143,7 +145,6 @@ int			simple_redi(char *path, t_temp *tmp)
 		printf("minishell: %s: %s\n", strerror(errno), path);
 		return (-1);
 	}
-//	close(tmp->fd);
 	return (0);
 }
 
@@ -155,7 +156,6 @@ int			contre_redi(char *path, t_temp *tmp)
 		printf("minishell: %s: %s\n", strerror(errno), path);
 		return (-1);
 	}
-//	close(tmp->fd);
 	return (0);
 }
 
@@ -167,7 +167,6 @@ int		double_redi(char *path, t_temp *tmp)
 		ft_printf("minishell: %s: %s\n", strerror(errno), path);
 		return (-1);
 	}
-//	close(tmp->fd);
 	return (0);
 }
 
@@ -217,7 +216,8 @@ int		check_redi(char **cmd, t_temp *tmp)
 		{
 			if (contre_redi(cmd[i + 1], tmp) == -1)
 				return (-1);
-			ft_printf("<< [%s]\n",cmd[i + 1]);
+				
+			ft_printf("< [%s]\n",cmd[i + 1]);
 		}
 	}
 	return (ret);
@@ -262,15 +262,13 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 		j = 0;
 		cmd = NULL;
 		separator_string(&cmd, tabcmd[i], tmp);
-		(cmd) ? tmp->strcmd = llist_astring(cmd, tmp->strcmd) : 0 ;
-		(cmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
+		(cmd) ? tmp->strcmd = llist_astring(cmd, tmp->strcmd) : 0;
+		(cmd) ? tmp->flag[1] = check_redi(tmp->strcmd, tmp) : 0;
+		tmp->flag[1] == 1 ? skip_redi(tmp->strcmd) : 0;
+		(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
 		tmp->flag[0] = (j > 0) ? 1 : 0;
-		if (cmd)
-			tmp->flag[1] = check_redi(tmp->strcmd, tmp);
 		printf("----------cmd = [%d], redi = [%d], fd = [%d]\n", tmp->flag[0], tmp->flag[1], tmp->fd);
-		tmp->flag[1] == 1 ? skip_redi(tmp->strcmd): 0;
-		(cmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
-		if (tabcmd[i][0] == 0)
+		if (tabcmd[i][0] == 0 ||  j == -2 || tmp->flag[1] == -1)
 			;
 		else if (j == 1)
 		{

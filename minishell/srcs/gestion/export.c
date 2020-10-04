@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 02:32:22 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/04 14:56:54 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/04 15:24:06 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,33 +91,27 @@ void			gestion_export(t_temp *tmp, int i)
 {
 	while (tmp->strcmd[i])
 		i++;
-	if (i == 1)
+	if (i == 1 || (i = 0))
 	{
 		if (tmp->flag[1])
 		{
 			tmp->oldfd = dup(1);
 			dup2(tmp->fd, 1);
 		}
-		if (cpy_env(&tmp->exportenv, tmp->varenv) == -1)
-			general_free(tmp);
+		(cpy_env(&tmp->exportenv, tmp->varenv) == -1) ? general_free(tmp) : 0;
 		range_export(tmp->exportenv);
 		print_list(tmp->exportenv, 0);
 		free_list(tmp->exportenv);
 		tmp->exportenv = NULL;
-		if (tmp->flag[1])
-		{
-			dup2(tmp->oldfd, 1);
-			close(tmp->fd);
-		}
+		(tmp->flag[1]) ? dup2(tmp->oldfd, 1) : 0;
 	}
 	else
 	{
-		i = 0;
 		while (tmp->strcmd[++i])
 		{
-			if (export_arg(tmp, 0, i) == -1)
-				general_free(tmp);
+			(export_arg(tmp, 0, i) == -1) ? general_free(tmp) : 0;
 			free_export_tab(tmp);
 		}
 	}
+	(tmp->flag[1]) ? close(tmp->fd) : 0;
 }
