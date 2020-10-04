@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 23:02:07 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/04 14:33:43 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/04 20:30:30 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,14 @@ void			gestion_env(char **strcmd, t_temp *tmp)
 {
 	if (!strcmd[1])
 	{
-		if (tmp->flag[1])
+		if (tmp->flag[1] == 1)
 		{
 			tmp->oldfd = dup(1);
 			dup2(tmp->fd, 1);
 		}
 		print_list(tmp->varenv, 1);
-		if (tmp->flag[1])
-		{
-			dup2(tmp->oldfd, 1);
-			close(tmp->fd);
-		}
+		(tmp->flag[1] == 1) ? dup2(tmp->oldfd, 1): 0;
+		(tmp->flag[1]) ? close(tmp->fd): 0;
 		return ;
 	}
 	else if (!strcmd[1] && tmp->flag[1])
