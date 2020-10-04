@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 02:32:22 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/01 22:35:16 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/04 14:56:54 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,22 @@ void			gestion_export(t_temp *tmp, int i)
 		i++;
 	if (i == 1)
 	{
+		if (tmp->flag[1])
+		{
+			tmp->oldfd = dup(1);
+			dup2(tmp->fd, 1);
+		}
 		if (cpy_env(&tmp->exportenv, tmp->varenv) == -1)
 			general_free(tmp);
 		range_export(tmp->exportenv);
 		print_list(tmp->exportenv, 0);
 		free_list(tmp->exportenv);
 		tmp->exportenv = NULL;
+		if (tmp->flag[1])
+		{
+			dup2(tmp->oldfd, 1);
+			close(tmp->fd);
+		}
 	}
 	else
 	{

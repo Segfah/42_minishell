@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 22:43:00 by corozco           #+#    #+#             */
-/*   Updated: 2020/08/22 14:27:20 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/04 14:56:05 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,6 @@ void			gestion_unset(t_temp *tmp)
 		else
 			deletenode(tmp->varenv, tmp->strcmd[i]);
 	}
+	if (tmp->flag[1])
+		close(tmp->fd);
 }
