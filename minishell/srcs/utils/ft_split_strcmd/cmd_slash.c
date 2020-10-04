@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/01 22:37:22 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/03 22:40:49 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/04 19:12:19 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ char	*ft_fill_slash(char *s, int *i, char *tab)
 		return (tab = copy(s, i, save));
 	else if ((count % 2) == 1 && count > 1)
 	{
-		//write(1, "YOUHOU\n", 7);
 		(*i)--;
 		return (tab = copy(s, i, save));
 	}
