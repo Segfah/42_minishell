@@ -3,23 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   nani.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
+/*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/14 14:10:33 by lryst             #+#    #+#             */
-/*   Updated: 2020/09/14 14:10:53 by lryst            ###   ########.fr       */
+/*   Created: 2020/10/07 22:03:19 by corozco           #+#    #+#             */
+/*   Updated: 2020/10/07 22:03:58 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void			gestion_nani(char **tab)
+void		gestion_nani(char **tab)
 {
-	int i;
-	
+	int		i;
+
 	i = 0;
 	while (tab[i] != NULL)
-	{
-		ft_printf("tab = [%s]\n", tab[i]);
-		i++;
-	}
+		ft_printf("tab = [%s]\n", tab[i++]);
 }

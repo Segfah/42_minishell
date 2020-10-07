@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 15:00:48 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/07 17:56:12 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/07 22:01:38 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ char			**c_env(t_lists *list, int size)
 	return (tab);
 }
 
-void sighandlerrr(int signum) {
-
+void			sighandlerrr(int signum)
+{
 	write(1, "\b\b  \n", 5);
 	(void)signum;
 }

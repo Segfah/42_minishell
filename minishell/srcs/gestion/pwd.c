@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/01 01:51:46 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/04 17:51:12 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/07 21:55:27 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void		gestion_pwd(char **strcmd, t_temp *tmp)
 {
 	if (strcmd[1])
 	{
-			printf("=========================[%s]\n",strcmd[1]);	
 		ft_printf("pwd: too many arguments\n");
 		if (tmp->flag[1])
 			close(tmp->fd);

@@ -6,15 +6,9 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:00:46 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/07 17:52:57 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/07 21:57:10 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <signal.h>
-
-
 
 #include "minishell.h"
 
@@ -36,9 +30,10 @@ void			initialize_tmp(t_temp *tmp)
 ** ps (trouver une autre maniere de le faire sans fais autant d'appel à getcwd)
 */
 
-void sighandler(int signum) {
-	char *prompt;
-	char *env;
+void			sighandler(int signum)
+{
+	char		*prompt;
+	char		*env;
 
 	write(1, "\b\b  \n", 5);
 	env = getcwd(NULL, 0);
@@ -52,7 +47,7 @@ void sighandler(int signum) {
 
 void			launcher(t_temp tmp)
 {
-	int		ret;
+	int			ret;
 
 	ret = 1;
 	while (ret)
