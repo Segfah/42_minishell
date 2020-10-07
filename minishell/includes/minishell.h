@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/04 13:56:59 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/07 14:13:26 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char				*ft_prompt(char *str);
 /*
 ** Parsing
 */
-void				ft_getline(t_temp *tmp);
+int				ft_getline(t_temp *tmp);
 int					is_redi(char *str);
 //void				clean_str(char *str);
 
@@ -231,7 +231,7 @@ void				controle(char *c);
 /*
 ** main
 */
-int					launcher(t_temp tmp);
+void					launcher(t_temp tmp);
 
 int					ft_count_word(char *str);
 char				*copy(char *s, int *end, int start);

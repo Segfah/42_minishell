@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/04 17:56:35 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/07 14:06:40 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -310,16 +310,20 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 ** ...et lance aussi le parcing
 */
 
-void			ft_getline(t_temp *tmp)
+int			ft_getline(t_temp *tmp)
 {
 	char		*line; // meter este line en la structura
+	int			ret;
 
 	line = NULL;
-	if (ft_gnl(0, &line) == -1 || (tmp->tabcmd = ft_split_line(line)) == NULL)
+	if ((ret = ft_gnl(0, &line)) == -1 || (tmp->tabcmd = ft_split_line(line)) == NULL)
 		general_free(tmp);
+	if (ret == 0)
+		return (0);
 	if (tmp->tabcmd != NULL && tmp->tabcmd[0])
 		gestion_line(tmp->tabcmd, tmp);
 //		ft_free_double_tab(tmp->tabcmd);
 	free(tmp->tabcmd);
 	free(line);
+	return (1);
 }
