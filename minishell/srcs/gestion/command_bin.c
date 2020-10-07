@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 15:00:48 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/03 16:10:01 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/07 17:56:12 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,12 @@ char			**c_env(t_lists *list, int size)
 	return (tab);
 }
 
+void sighandlerrr(int signum) {
+
+	write(1, "\b\b  \n", 5);
+	(void)signum;
+}
+
 int				command_bin(char **tab, t_temp *tmp)
 {
 	pid_t		f;
@@ -78,6 +84,8 @@ int				command_bin(char **tab, t_temp *tmp)
 		}
 		exit(0);
 	}
+	else
+		signal(SIGINT, sighandlerrr);
 	if ((f = waitpid(f, &tmp->status, WUNTRACED | WCONTINUED)) == -1)
 		exit(1);
 	ft_free_tab(tab_env);

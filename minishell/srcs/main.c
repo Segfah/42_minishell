@@ -6,9 +6,15 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:00:46 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/07 14:13:04 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/07 17:52:57 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <signal.h>
+
+
 
 #include "minishell.h"
 
@@ -30,6 +36,20 @@ void			initialize_tmp(t_temp *tmp)
 ** ps (trouver une autre maniere de le faire sans fais autant d'appel à getcwd)
 */
 
+void sighandler(int signum) {
+	char *prompt;
+	char *env;
+
+	write(1, "\b\b  \n", 5);
+	env = getcwd(NULL, 0);
+	if ((prompt = ft_prompt(env)) == NULL)
+		exit(1);
+	ft_printf("\x1b[33m%s\x1b[0m🐰: ", prompt);
+	free(env);
+	free(prompt);
+	(void)signum;
+}
+
 void			launcher(t_temp tmp)
 {
 	int		ret;
@@ -41,6 +61,7 @@ void			launcher(t_temp tmp)
 		if ((tmp.prompt = ft_prompt(tmp.env)) == NULL)
 			general_free(&tmp);
 		ft_printf("\x1b[33m%s\x1b[0m🐰: ", tmp.prompt);
+		signal(SIGINT, sighandler);
 		free(tmp.env);
 		tmp.env = NULL;
 		ret = ft_getline(&tmp);
