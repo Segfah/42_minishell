@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 15:00:48 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/07 22:01:38 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/07 22:13:01 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,10 @@ int				command_bin(char **tab, t_temp *tmp)
 		exit(1);
 	if ((f = fork()) == 0)
 	{
-		if (tmp->flag[1])
+		if (tmp->flag[1] == 1)
 			dup2(tmp->fd, 1);
+		if (tmp->flag[1] == 2)
+			dup2(tmp->fd, 0);
 		if (execve(tmp->tabpath[tmp->status], tab, tab_env) == -1)
 		{
 			g_ret = 1;
