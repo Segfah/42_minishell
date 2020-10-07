@@ -7,3 +7,4 @@ cat "<"
 echo """                   ;"
 cat < srcs/main.c >> test ------------------> "Bad file descriptor"
 pwd\t or pwd \t
+cd -----------> HOME
