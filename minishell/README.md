@@ -14,7 +14,8 @@ echo """                   ;"
 pwd\t or pwd \t
 
 # cd
-cd -----------> HOME
+cd -----------> HOME terminado!! -> meter hnull en la generalfree
+cd ~ ??????????
 
 
 # export

@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:00:46 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/07 21:57:10 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/08 20:05:36 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void			initialize_tmp(t_temp *tmp)
 	tmp->env = NULL;
 	tmp->tab[0] = NULL;
 	tmp->tab[1] = NULL;
+	tmp->hnull = NULL;
 }
 
 /*

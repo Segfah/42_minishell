@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 22:10:58 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/08 19:52:19 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/08 20:09:15 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 void			gestion_cd(char **strcmd, t_temp *tmp)
 {
 	char *home;
+//	char *hnull;
 
 	home = NULL;
 	tmp->env = getcwd(NULL, 0);
@@ -32,7 +33,8 @@ void			gestion_cd(char **strcmd, t_temp *tmp)
 	else
 	{
 		search_env("HOME", tmp, 0, &home);
-		chdir(home);
+		home ? chdir(home) : chdir(tmp->hnull);
+//		chdir(home);
 		home ? free(home) : 0;
 	}
 	change_list(tmp->varenv, "OLDPWD", tmp->env);
