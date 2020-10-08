@@ -1,10 +1,21 @@
-falta > >> en echo
-Falta aun el < en echo + command_bin
+# bin
 falta el ./  y mirar si ./../exec sirve
 
+# > >> <
+falta > >> en echo
+Falta aun el < en echo + command_bin
+pwd >> nani < nano
+cat < srcs/main.c >> test ------------------> "Bad file descriptor"
 echo "<"
 cat "<"
+
+# parsing
 echo """                   ;"
-cat < srcs/main.c >> test ------------------> "Bad file descriptor"
 pwd\t or pwd \t
+
+# cd
 cd -----------> HOME
+
+
+# export
+export nani="nano"
