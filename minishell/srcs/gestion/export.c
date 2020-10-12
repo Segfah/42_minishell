@@ -46,6 +46,7 @@ void			general_free(t_temp *tmp)
 	(tmp->tab[1] != NULL) ? free(tmp->tab[1]) : 0;
 	(tmp->varenv != NULL) ? free_list(tmp->varenv) : 0;
 	(tmp->exportenv != NULL) ? free_list(tmp->exportenv) : 0;
+	(tmp->hnull != NULL) ? free(tmp->hnull) : 0;
 	ft_printf("Error: Malloc\n");
 	exit(1);
 }
