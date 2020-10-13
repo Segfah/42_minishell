@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/03 21:14:20 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/13 15:52:12 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,7 +246,6 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 		tmp->flag[0] = (j > 0) ? 1 : 0;
 		if (cmd)
 			tmp->flag[1] = check_redi(tmp->strcmd, tmp);
-		printf("----------cmd = [%d], redi = [%d]\n", tmp->flag[0], tmp->flag[1]);
 		if (tabcmd[i][0] == 0)
 			;
 		else if (j == 1)

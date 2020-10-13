@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/01 22:37:22 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/04 19:12:19 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/09 17:12:55 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,30 @@ void	ft_count_word_slash(char *s, int *i, int *n)
 		ft_count_word_slash_2(s, i, n);
 }
 
+char	*ft_fill_slash_2(char *s, int *i, char *tab)
+{
+	int save;
+
+	save = *i;
+	if (s[*i + 1] == '\'' || s[*i + 1] == '"' || s[*i] == '"' || s[*i] == '\'')
+	{
+		(*i)++;
+		return (tab = copy(s, i, save));
+	}
+	else
+	{
+		while (s[*i] && s[*i] != ' ' && s[*i] != '"' && s[*i] != '\'' &&
+		s[*i] != '$' && s[*i] != '\\')
+			(*i)++;
+		return (tab = copy(s, i, save));
+	}
+}
+
 char	*ft_fill_slash(char *s, int *i, char *tab)
 {
 	int count;
 	int save;
-	
+
 	count = 0;
 	save = *i;
 	while (s[*i] && s[*i] == '\\')
@@ -68,15 +87,5 @@ char	*ft_fill_slash(char *s, int *i, char *tab)
 		(*i)--;
 		return (tab = copy(s, i, save));
 	}
-	if  (s[*i + 1] == '\'' || s[*i + 1] == '"' || s[*i] == '"' || s[*i] == '\'')
-	{
-		(*i)++;
-		return (tab = copy(s, i, save));
-	}
-	else
-	{
-		while (s[*i] && s[*i] != ' ' && s[*i] != '"' && s[*i] != '\'' && s[*i] != '$' && s[*i] != '\\')
-			(*i)++;
-		return (tab = copy(s, i, save));
-	}
+	return (ft_fill_slash_2(s, i, tab));
 }

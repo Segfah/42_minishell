@@ -6,11 +6,54 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 14:06:11 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/03 20:42:31 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/13 16:33:01 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		double_cote_size_var(t_cmd *cmd, int save, int *i, t_lists *var)
+{
+	char *tmp;
+	int j;
+	int size;
+
+	j = 0;
+	if (!(tmp = (char*)malloc(sizeof(char) * (*i - save) + 1)))
+		return (-1);
+	while (save < *i)
+		tmp[j++] = cmd->input[save++];
+	tmp[j] = '\0';
+	while (var)
+	{
+		if (ft_strcmp(var->name, tmp) == 0)
+			size = size + ft_strlen(var->data);
+		var = var->next;
+	}
+	ft_free(tmp);
+	return (size);
+}
+
+void	double_cote_count_dollar(t_cmd *cmd, int *i, int *size, t_lists *var)
+{
+	int save;
+
+	if (cmd->input[*i] && ((cmd->input[*i + 1] > 47 && cmd->input[*i + 1] < 58)
+	|| (cmd->input[*i + 1] > 64 && cmd->input[*i + 1] < 91) ||
+	(cmd->input[*i + 1] > 96 && cmd->input[*i + 1] < 123)))
+	{
+		(*i)++;
+		save = *i;
+		while (cmd->input[*i] && ((cmd->input[*i] > 47 && cmd->input[*i] < 58)
+		|| (cmd->input[*i] > 64 && cmd->input[*i] < 91) ||
+		(cmd->input[*i] > 96 && cmd->input[*i] < 123)))
+			(*i)++;
+		size = size + double_cote_size_var(cmd, save, i, var);
+	}
+	else
+		size++;
+	(*i)++;
+}
 
 void	double_cote_cmd(t_cmd *cmd, t_lists *var)
 {
@@ -30,7 +73,8 @@ void	double_cote_cmd(t_cmd *cmd, t_lists *var)
 	while (cmd->input[i] && i < len)
 	{
 		if (cmd->input[i] == '$')
-		{
+			double_cote_count_dollar(cmd, &i, &size, var);
+		/* {
 			if (cmd->input[i] && ((cmd->input[i + 1] > 47 && cmd->input[i + 1] < 58) || (cmd->input[i + 1] > 64 && cmd->input[i + 1] < 91) || (cmd->input[i + 1] > 96 && cmd->input[i + 1] < 123)))
 			{
 				i++;
@@ -53,7 +97,7 @@ void	double_cote_cmd(t_cmd *cmd, t_lists *var)
 			else
 				size++;
 			i++;
-		}
+		} */
 		if (cmd->input[i] == '\\')
 		{
 			save = 0;

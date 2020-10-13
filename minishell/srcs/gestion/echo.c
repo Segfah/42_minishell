@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 17:27:31 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/04 18:54:07 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/13 15:51:48 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,27 @@ int		ft_check_option_echo(char *s)
 		while (s[i] && s[i] == 'n')
 			i++;
 	}
-	printf("len = %d | i = %d | total = %d\n", len, i, len - 1);
 	if (i == len)
 		return (i);
 	return (0);
 }
 
-void    gestion_echo(t_cmd *cmd)
+void	gestion_echo_2(t_cmd *test, int n)
 {
-	t_cmd *test;
-	int n;
+	while (test)
+	{
+		ft_printf("%s", test->output);
+		test = test->next;
+	}
+	g_ret = 0;
+	if (n == 0)
+		ft_printf("\n");
+}
+
+void	gestion_echo(t_cmd *cmd)
+{
+	t_cmd	*test;
+	int		n;
 
 	test = cmd;
 	n = 0;
@@ -57,13 +68,5 @@ void    gestion_echo(t_cmd *cmd)
 		write(1, "\n", 1);
 		return ;
 	}
-	while (test)
-	{
-		ft_printf("%s", test->output);
-		test = test->next;
-	}
-	//ft_free_double_tab(tab);
-	g_ret = 0;
-	if (n == 0)
-		ft_printf("\n");
+	gestion_echo_2(test, n);
 }
