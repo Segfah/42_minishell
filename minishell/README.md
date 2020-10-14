@@ -11,8 +11,8 @@ echo "<"
 cat "<"
 
 # parsing
-echo """                   ;"
-pwd\t or pwd \t
+echo """                   ;"	lulu
+pwd\t or pwd \t					lulu
 
 # cd
 cd -----------> HOME terminado!! -> meter hnull en la generalfree
@@ -20,4 +20,4 @@ cd ~ ??????????
 
 
 # export
-export nani="nano"
+export nani="nano"				lulu
