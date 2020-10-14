@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 15:00:48 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/14 20:25:51 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/14 22:10:38 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,16 @@ int				command_bin(char **tab, t_temp *tmp)
 			dup2(tmp->fd, 1);
 		if (tmp->flag[1] == 2)
 			dup2(tmp->fd, 0);
-		if (execve(tmp->tabpath[tmp->status], tab, tab_env) == -1)
+		if (!tmp->tabpath)
+		{
+			if (execve(tab[0], tab, tab_env) == -1)//else
+			{
+				g_ret = 1;
+				exit(1);
+			}
+			exit(0);
+		}
+		else if (execve(tmp->tabpath[tmp->status], tab, tab_env) == -1)//else
 		{
 			g_ret = 1;
 			exit(1);
@@ -99,7 +108,10 @@ int				command_bin(char **tab, t_temp *tmp)
 	}
 	if ((f = waitpid(f, &tmp->status, WUNTRACED | WCONTINUED)) == -1)
 		exit(1);
+	printf("que [%d]\n",f); // toca mirar como ver el waitpid si es bueno o no
+	//else if (f == 1)
+	//	printf("que paso\n"); // toca mirar como ver el waitpid si es bueno o no
 	ft_free_tab(tab_env);
-	ft_free_tab(tmp->tabpath);
+	tmp->tabpath ? ft_free_tab(tmp->tabpath) : 0;
 	return (0);
 }

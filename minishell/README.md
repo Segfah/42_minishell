@@ -14,11 +14,9 @@ falta el ./  y mirar si ./../exec sirve
 cd -----------> HOME terminado!! -> meter hnull en la generalfree
 cd ~ ??????????
 
-
 # parsing
-echo """                   ;"
-pwd\t or pwd \t
-
+echo """                   ;"	lulu
+pwd\t or pwd \t					lulu
 
 # export
-export nani="nano"
+export nani="nano"				lulu
