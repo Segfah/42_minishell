@@ -1,5 +1,6 @@
 # bin
 falta el ./  y mirar si ./../exec sirve
+signal control^\
 
 # > >> <
 falta > >> en echo
