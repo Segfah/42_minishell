@@ -1,7 +1,3 @@
-# bin
-falta el ./  y mirar si ./../exec sirve
-signal control^\
-
 # > >> <
 falta > >> en echo
 Falta aun el < en echo + command_bin
@@ -10,13 +6,18 @@ cat < srcs/main.c >> test ------------------> "Bad file descriptor"
 echo "<"
 cat "<"
 
-# parsing
-echo """                   ;"
-pwd\t or pwd \t
+# bin
+falta el ./  y mirar si ./../exec sirve
+^\ -> como hago para ocultar el ^\
 
 # cd
 cd -----------> HOME terminado!! -> meter hnull en la generalfree
 cd ~ ??????????
+
+
+# parsing
+echo """                   ;"
+pwd\t or pwd \t
 
 
 # export

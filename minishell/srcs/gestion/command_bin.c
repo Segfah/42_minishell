@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 15:00:48 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/07 22:13:01 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/14 20:25:51 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,12 @@ void			sighandlerrr(int signum)
 	(void)signum;
 }
 
+void			sighandlerrr2(int signum)
+{
+	write(1, "Quit: 3  \n", 10);
+	(void)signum;
+}
+
 int				command_bin(char **tab, t_temp *tmp)
 {
 	pid_t		f;
@@ -87,7 +93,10 @@ int				command_bin(char **tab, t_temp *tmp)
 		exit(0);
 	}
 	else
+	{
+		signal(SIGQUIT, sighandlerrr2);
 		signal(SIGINT, sighandlerrr);
+	}
 	if ((f = waitpid(f, &tmp->status, WUNTRACED | WCONTINUED)) == -1)
 		exit(1);
 	ft_free_tab(tab_env);

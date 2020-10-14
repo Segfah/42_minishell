@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:00:46 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/14 14:37:03 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/14 17:08:32 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,13 @@ void			sighandler(int signum)
 	(void)signum;
 }
 
+void			sighandler2(int signum)
+{
+	write(1, "\b\b", 2);
+	
+	(void)signum;
+}
+
 void			launcher(t_temp tmp)
 {
 	int			ret;
@@ -58,6 +65,7 @@ void			launcher(t_temp tmp)
 			general_free(&tmp);
 		ft_printf("\x1b[33m%s\x1b[0m🐰: ", tmp.prompt);
 		signal(SIGINT, sighandler);
+		signal(SIGQUIT, sighandler2);
 		free(tmp.env);
 		tmp.env = NULL;
 		ret = ft_getline(&tmp);
