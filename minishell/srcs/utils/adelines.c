@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/01 22:21:10 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/01 22:35:50 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/15 21:31:20 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,11 @@ int			adeline(char *s, char cote, int n, int *i)
 
 void		adeline_la_best(char *s, char cote, int *i)
 {
-	int j;
-
-	j = *i + 1;
-	while (s[j] && s[j] != cote)
+	(*i)++;
+	while (s[*i] && s[*i] != cote)
 	{
-		if (s[j] == '\\' && s[j + 1] == cote)
-			j++;
-		j++;
+		if (s[*i] == '\\' && s[*i + 1] == cote)
+			(*i)++;
+		(*i)++;
 	}
-	if (s[j] != '\0')
-		*i = j + 1;
-	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/01 20:49:55 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/09 17:17:37 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/15 21:08:51 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int				multi_pv(char *str)
 		if (str[i + 1] && str[i] == ';')
 		{
 			i++;
-			while (str[i] && str[i] == ' ')
+			while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 				i++;
 			if (str[i] == ';')
 				return (message_error_pv(1));

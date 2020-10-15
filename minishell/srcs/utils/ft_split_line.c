@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 14:28:38 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/09 17:13:53 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/15 21:38:06 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int				ft_count_word(char *str)
 		count_slash(str, &i);
 		if (str[i] == '"' || str[i] == '\'')
 			adeline_la_best(str, str[i], &i);
-		if (str[i] == ';')
+		else if (str[i] == ';')
 			word++;
 		i++;
 	}
@@ -81,7 +81,7 @@ char			**ft_split_line(char *str)
 		return (NULL);
 	while (++j < word)
 	{
-		while (str[i] && str[i] == ' ')
+		while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 			i++;
 		tab[j] = ft_fill_line(str, &i, tab[j]);
 	}

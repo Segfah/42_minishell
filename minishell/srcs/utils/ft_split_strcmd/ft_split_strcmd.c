@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 23:18:04 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/03 22:44:28 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/15 21:43:20 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,11 @@ static int			ft_word(char *s, int echo)
 			ft_count_word_dollar(s, &i, &n);
 		if (s[i] == '\\')
 			ft_count_word_slash(s, &i, &n);
-		if (s[i] != '\0' && s[i] != ' ' && s[i] != '"' && s[i] != '\'' &&
-		s[i] != '$' && s[i] != '>' && s[i] != '<' && s[i] != '|')
+		if (s[i] != '\0' && s[i] != ' ' && s[i] != '\t' && s[i] != '"' &&
+		s[i] != '\'' && s[i] != '$' && s[i] != '>' &&
+		s[i] != '<' && s[i] != '|')
 			ft_count_word_char(s, &i, &n);
-		if (s[i] == ' ')
+		if (s[i] == ' ' || s[i] == '\t')
 			ft_count_word_space(s, &i, &n, &echo);
 	}
 	return (n);
@@ -50,13 +51,13 @@ char				*ft_fill(char *s, int echo, int *i, char *tab)
 			return (ft_fill_dollar(s, i, tab));
 		if (s[*i] == '\\')
 			return (ft_fill_slash(s, i, tab));
-		if (s[*i] != '\0' && s[*i] != ' ' && s[*i] != '"' && s[*i] != '\'' &&
-		s[*i] != '$' && s[*i] != '\\' && s[*i] != '>' &&
+		if (s[*i] != '\0' && s[*i] != ' ' && s[*i] != '\t' && s[*i] != '"' &&
+		s[*i] != '\'' && s[*i] != '$' && s[*i] != '\\' && s[*i] != '>' &&
 		s[*i] != '<' && s[*i] != '|')
 			return (ft_fill_char(s, i, tab));
-		if (s[*i] == ' ')
+		if (s[*i] == ' ' || s[*i] == '\t')
 		{
-			while (s[*i] && s[*i] == ' ')
+			while (s[*i] && (s[*i] == ' ' || s[*i] == '\t'))
 				(*i)++;
 			if (echo == 1)
 				return (tab = ft_strdup(" \0"));
@@ -83,5 +84,11 @@ char				**ft_split_strcmd(char *s, int echo)
 	while (++j < n)
 		tab[j] = ft_fill(s, echo, &i, tab[j]);
 	tab[j] = 0;
+	j = 0;
+	while(tab[j])
+	{
+		printf("tab[%d] =[%s]\n", j, tab[j]);
+		j++;
+	}
 	return (tab);
 }
