@@ -6,7 +6,7 @@
 #    By: lryst <lryst@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 05:41:03 by corozco           #+#    #+#              #
-#    Updated: 2020/10/01 22:57:12 by lryst            ###   ########.fr        #
+#    Updated: 2020/10/15 17:55:16 by lryst            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRC := \
 	srcs/utils/ft_split_strcmd/cmd_dollar.c \
 	srcs/utils/ft_split_strcmd/cmd_slash.c \
 	srcs/utils/ft_split_strcmd/space.c \
+	srcs/utils/ft_split_strcmd/copy.c \
 	srcs/utils/ft_split_strcmd/char.c \
 	srcs/gestion/tools/tools_env_export.c \
 	srcs/gestion/tools/tools_env_unset.c \
@@ -43,8 +44,10 @@ SRC := \
 	srcs/gestion/echo.c \
 	srcs/utils/ft_split_line.c \
 	srcs/parcing/separator_string/node_cmd.c \
+	srcs/parcing/separator_string/delete_node.c \
 	srcs/parcing/separator_string/separator_string.c \
 	srcs/parcing/separator_string/double_cote.c \
+	srcs/parcing/separator_string/double_cote_utils.c \
 	srcs/parcing/separator_string/single_cote.c \
 	srcs/parcing/separator_string/slash.c \
 	srcs/parcing/separator_string/dollar.c \

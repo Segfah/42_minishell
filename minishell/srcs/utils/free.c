@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 17:58:38 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/01 14:23:32 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/15 14:46:22 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 void				ft_free(char *str)
 {
-	free(str);
-	str = NULL;
+	if (str)
+	{
+		free(str);
+		str = NULL;
+	}
 }
 
 void				ft_free_double_tab(char **tab)
@@ -33,7 +36,7 @@ void				ft_free_double_tab(char **tab)
 	tab = NULL;
 }
 
-void				free_node_cmd(l_cmd *node)
+void				free_node_cmd(t_cmd *node)
 {
 	(node->input != NULL) ? free(node->input) : 0;
 	node->input = NULL;
@@ -43,9 +46,9 @@ void				free_node_cmd(l_cmd *node)
 	node = NULL;
 }
 
-void				free_cmd(l_cmd *cmd)
+void				free_cmd(t_cmd *cmd)
 {
-	l_cmd		*tmp;
+	t_cmd		*tmp;
 
 	while (cmd != NULL)
 	{

@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/15 18:48:32 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/15 20:50:20 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int			cmd_exist(char *cmd, t_temp *tmp)
 ** fonction qui compte la liste sans les espaces de echo -n
 */
 
-int			mlist_size(l_cmd *head)
+int			mlist_size(t_cmd *head)
 {
 	int		i;
 
@@ -116,7 +116,7 @@ int			mlist_size(l_cmd *head)
 ** Fonction qui modifie strcmd avec la liste, maj + supp des espaces
 */
 
-char		**llist_astring(l_cmd *head, char **tabstr)
+char		**llist_astring(t_cmd *head, char **tabstr)
 {
 	int		i;
 
@@ -258,7 +258,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 {
 	int i;
 				int j;
-	l_cmd	*cmd;
+	t_cmd	*cmd;
 
 	i = -1;
 	while (tabcmd[++i])

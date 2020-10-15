@@ -6,16 +6,16 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/01 22:46:14 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/01 22:49:26 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/03 20:05:45 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void        ft_count_word_space(char *s, int *i, int *n, int *echo)
+void	ft_count_word_space(char *s, int *i, int *n, int *echo)
 {
-    while (s[*i] && s[*i] == ' ')
-        (*i)++;
-    if (*echo == 1)
-        (*n)++;
+	while (s[*i] && s[*i] == ' ')
+		(*i)++;
+	if (*echo == 1)
+		(*n)++;
 }

@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/15 18:54:28 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/15 20:44:47 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct		s_cmd
 	char			*output;
 	int				ret;
 	struct s_cmd	*next;
-}					l_cmd;
+}					t_cmd;
 
 int					g_ret;
 
@@ -168,7 +168,7 @@ char				**ft_split_strcmd(char *s, int echo);
 ** gestion/echo/echo
 */
 char				*gestion_echo_option(char *str, char *arg);
-void    			gestion_echo(l_cmd *cmd);
+void    			gestion_echo(t_cmd *cmd);
 
 /*
 ** gestion/echo/ft_split_echo/count_word
@@ -221,8 +221,8 @@ char				*word(char *str, int *i, char *tab);
 char				*ft_strcatdup(char *s1, char *s2);
 void				ft_free(char *str);
 void				ft_free_double_tab(char **tab);
-void				free_cmd(l_cmd *cmd);
-void				free_node_cmd(l_cmd *node);
+void				free_cmd(t_cmd *cmd);
+void				free_node_cmd(t_cmd *node);
 
 /*
 ** gestion/controle
@@ -239,21 +239,32 @@ char				*copy(char *s, int *end, int start);
 char				*ft_fill_line(char *str, int *i, char *tab);
 char				**ft_split_line(char *str);
 
-void				separator_string(l_cmd **cmd, char *str, t_temp *tmp);
-void				double_cote_cmd(l_cmd *cmd, t_lists *var);
-void				check_node(l_cmd *cmd, t_temp *temp);
+void				separator_string(t_cmd **cmd, char *str, t_temp *tmp);
 
-void				remove_space_node(l_cmd **cmd);
-void				ft_lstdelone_cmd(l_cmd *lst);
-void				remove_null_node(l_cmd **cmd);
-void				ft_lstadd_back_cmd(l_cmd **alst, l_cmd *new);
-l_cmd				*ft_lstnew_cmd(char *input, t_temp *temp);
-void				single_cote_cmd(l_cmd *cmd);
-void				slash_cmd(l_cmd *cmd);
+void				double_cote_cmd(t_cmd *cmd, t_lists *var);
+void				double_cote_cmd_2(t_cmd *cmd, t_lists *revar, int size);
+void				double_cote_cmd_3(t_cmd *cmd, t_lists *revar, int *i, int *j);
+
+void				check_node(t_cmd *cmd, t_temp *temp);
+
+void				double_cote_fill_slash(t_cmd *cmd, int *i, int *j);
+void				double_cote_count_slash(t_cmd *cmd, int *i, int *size);
+void				double_cote_fill_dollar(t_cmd *cmd, t_lists *revar, int *i, int *j);
+void				double_cote_count_dollar(t_cmd *cmd, t_lists *var, int *i, int *size);
+void				before_count_dollar(t_cmd *cmd, t_lists *var, int *i, int *size);
+
+void				ft_lstdelone_cmd(t_cmd *lst);
+void				remove_space_node(t_cmd **cmd);
+void				remove_null_node(t_cmd **cmd);
+
+void				ft_lstadd_back_cmd(t_cmd **alst, t_cmd *new);
+t_cmd				*ft_lstnew_cmd(char *input, t_temp *temp);
+void				single_cote_cmd(t_cmd *cmd);
+void				slash_cmd(t_cmd *cmd);
 
 
-void				replace_isspace(l_cmd *cmd, int *i, int *j, char ascii);
-void				dollar_cmd(l_cmd *cmd, t_lists *var);
+void				replace_isspace(t_cmd *cmd, int *i, int *j, char ascii);
+void				dollar_cmd(t_cmd *cmd, t_lists *var);
 
 void				count_slash(char *str, int *i);
 
@@ -266,10 +277,25 @@ int					adeline(char *s, char cote, int n, int *i);
 void				adeline_la_best(char *s, char cote, int *i);
 
 void				ft_count_word_dollar(char *s, int *i, int *n);
+char				*ft_fill_dollar(char *s, int *i, char *tab);
 
+void				ft_count_word_slash_2(char *s, int *i, int *n);
 void				ft_count_word_slash(char *s, int *i, int *n);
+char				*ft_fill_slash(char *s, int*i, char *tab);
+char				*ft_fill_slash_2(char *s, int *i, char *tab);
 
 void        		ft_count_word_space(char *s, int *i, int *n, int *echo);
 
 void				ft_count_word_char(char *s, int *i, int *n);
+char				*ft_fill_char(char *s, int *i, char *tab);
+
+char				*copy_adeline(char *s, int *i, char *tab);
+char				*copy_adeline2(char *s, int *i, char *tab);
+char				*copy(char *s, int *end, int start);
+
+char				*copy(char *s, int *end, int start);
+char				*copy_slash_m(char *s, int *i, char *tab, int save);
+char				*copy_slash_p(char *s, int *i, char *tab, int save);
+char				*copy_adeline2(char *s, int *i, char *tab);
+char				*copy_adeline(char *s, int *i, char *tab);
 #endif
