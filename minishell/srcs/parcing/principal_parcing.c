@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/14 21:52:57 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/15 15:37:40 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ int			cmd_exist(char *cmd, t_temp *tmp)
 		return (flag);
 	if (!(tmp->tabpath = build_cmd(tmp, cmd)))
 		return(-1);
-	if ((tmp->status = cmd_is_here(tmp->tabpath)) == -1)
+//	if ((tmp->status = cmd_is_here(tmp->tabpath)) == -1)
+	if ((tmp->status = cmd_is_here(tmp->tabpath)) == -1 || tmp->status == 0)
 	{
 		ft_free_tab(tmp->tabpath);
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 15:00:48 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/14 22:10:38 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/15 17:15:30 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int				command_bin(char **tab, t_temp *tmp)
 		{
 			if (execve(tab[0], tab, tab_env) == -1)//else
 			{
+				ft_printf("minishell: %s: %s\n",tab[0], strerror(errno));
 				g_ret = 1;
 				exit(1);
 			}
@@ -108,9 +109,6 @@ int				command_bin(char **tab, t_temp *tmp)
 	}
 	if ((f = waitpid(f, &tmp->status, WUNTRACED | WCONTINUED)) == -1)
 		exit(1);
-	printf("que [%d]\n",f); // toca mirar como ver el waitpid si es bueno o no
-	//else if (f == 1)
-	//	printf("que paso\n"); // toca mirar como ver el waitpid si es bueno o no
 	ft_free_tab(tab_env);
 	tmp->tabpath ? ft_free_tab(tmp->tabpath) : 0;
 	return (0);

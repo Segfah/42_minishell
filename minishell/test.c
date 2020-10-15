@@ -1,10 +1,15 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/errno.h>
+#include <string.h>
+
 int	main(int ac, char **av)
 {
 	char **tab_env;
-	int	f;
+	int j;
 
-	f =execve(av[1], av, tab_env);
+	j = execve(av[1], av, tab_env);
 
-	printf("%d\n",f);
+	printf("%d <-> %s\n", j ,strerror(errno));
 	return (0);
 }
