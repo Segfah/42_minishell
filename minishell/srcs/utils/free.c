@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 17:58:38 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/03 20:42:31 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/15 14:46:22 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 void				ft_free(char *str)
 {
-	free(str);
-	str = NULL;
+	if (str)
+	{
+		free(str);
+		str = NULL;
+	}
 }
 
 void				ft_free_double_tab(char **tab)

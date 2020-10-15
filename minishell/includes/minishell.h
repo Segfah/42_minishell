@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/09 17:08:42 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/15 18:05:06 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,12 +238,23 @@ char				*ft_fill_line(char *str, int *i, char *tab);
 char				**ft_split_line(char *str);
 
 void				separator_string(t_cmd **cmd, char *str, t_temp *tmp);
+
 void				double_cote_cmd(t_cmd *cmd, t_lists *var);
+void				double_cote_cmd_2(t_cmd *cmd, t_lists *revar, int size);
+void				double_cote_cmd_3(t_cmd *cmd, t_lists *revar, int *i, int *j);
+
 void				check_node(t_cmd *cmd, t_temp *temp);
 
-void				remove_space_node(t_cmd **cmd);
+void				double_cote_fill_slash(t_cmd *cmd, int *i, int *j);
+void				double_cote_count_slash(t_cmd *cmd, int *i, int *size);
+void				double_cote_fill_dollar(t_cmd *cmd, t_lists *revar, int *i, int *j);
+void				double_cote_count_dollar(t_cmd *cmd, t_lists *var, int *i, int *size);
+void				before_count_dollar(t_cmd *cmd, t_lists *var, int *i, int *size);
+
 void				ft_lstdelone_cmd(t_cmd *lst);
+void				remove_space_node(t_cmd **cmd);
 void				remove_null_node(t_cmd **cmd);
+
 void				ft_lstadd_back_cmd(t_cmd **alst, t_cmd *new);
 t_cmd				*ft_lstnew_cmd(char *input, t_temp *temp);
 void				single_cote_cmd(t_cmd *cmd);
