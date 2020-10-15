@@ -7,7 +7,6 @@ echo "<"
 cat "<"
 
 # bin
-falta el ./  y mirar si ./../exec sirve
 ^\ -> como hago para ocultar el ^\
 
 # cd
