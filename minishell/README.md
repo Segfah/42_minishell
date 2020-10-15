@@ -20,3 +20,14 @@ pwd\t or pwd \t					lulu
 
 # export
 export nani="nano"				lulu
+
+###				norma
+# gestion 
+norma cd.c
+norma command_bin.c
+# parcing
+principal_parcing.c
+
+## lu
+# gestion
+ controles, echo, nani

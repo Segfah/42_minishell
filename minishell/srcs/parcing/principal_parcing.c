@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/15 15:37:40 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/15 18:48:32 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,22 @@ static int		cmd_is_here(char **path)
 	return (-1);
 }
 
+/*
+** si algo falla, era
+**	if (flag)
+**		return (flag);
+**	if (!flag && !search_env("PATH", tmp, 1, NULL))
+**		return (flag);
+** y
+**	if ((tmp->status = cmd_is_here(tmp->tabpath)) == -1)
+*/
 
 int			cmd_exist(char *cmd, t_temp *tmp)
 {
 	int		flag;
 
 	if (!cmd)
-		return -2;
+		return (-2);
 	flag = 0;
 	tmp->tabpath = NULL;
 	flag = !ft_strcmp(cmd, "exit") ? 1 : flag;
@@ -71,13 +80,10 @@ int			cmd_exist(char *cmd, t_temp *tmp)
 	flag = !ft_strcmp(cmd, "export") ? 6 : flag;
 	flag = !ft_strcmp(cmd, "unset") ? 7 : flag;
 	flag = !ft_strncmp(cmd, "./", 2) ? 9 : flag;
-	if (flag)
-		return (flag);
-	if (!flag && !search_env("PATH", tmp, 1, NULL))
+	if (flag || (!flag && !search_env("PATH", tmp, 1, NULL)))
 		return (flag);
 	if (!(tmp->tabpath = build_cmd(tmp, cmd)))
-		return(-1);
-//	if ((tmp->status = cmd_is_here(tmp->tabpath)) == -1)
+		return (-1);
 	if ((tmp->status = cmd_is_here(tmp->tabpath)) == -1 || tmp->status == 0)
 	{
 		ft_free_tab(tmp->tabpath);
@@ -128,7 +134,6 @@ char		**llist_astring(l_cmd *head, char **tabstr)
 		}
 		tabstr[i] = 0;
 	}
-
 	return (tabstr);
 }
 /////////////////////////////////////////////////////////////////////////
@@ -206,20 +211,17 @@ int		check_redi(char **cmd, t_temp *tmp)
 		{
 			if (simple_redi(cmd[i + 1], tmp) == -1)
 				return (-1);
-			ft_printf("> [%s]\n",cmd[i + 1]);
 		}
 		else if (!(ft_strcmp(">>", cmd[i])))
 		{
 			if (double_redi(cmd[i + 1], tmp) == -1)
 				return (-1);
-			ft_printf(">> [%s]\n",cmd[i + 1]);
 		}
 		else if (!(ft_strcmp("<", cmd[i])))
 		{
 			ret = 2;
 			if (contre_redi(cmd[i + 1], tmp) == -1)
 				return (-1);
-			ft_printf("< [%s]\n",cmd[i + 1]);
 		}
 	}
 	return (ret);

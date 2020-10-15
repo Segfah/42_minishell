@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:00:46 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/14 17:08:32 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/15 18:01:23 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void			sighandler(int signum)
 void			sighandler2(int signum)
 {
 	write(1, "\b\b", 2);
-	
 	(void)signum;
 }
 
