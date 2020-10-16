@@ -79,7 +79,9 @@ int			cmd_exist(char *cmd, t_temp *tmp)
 	flag = !ft_strcmp(cmd, "nani") ? 5 : flag;
 	flag = !ft_strcmp(cmd, "export") ? 6 : flag;
 	flag = !ft_strcmp(cmd, "unset") ? 7 : flag;
-	flag = !ft_strncmp(cmd, "./", 2) ? 9 : flag;
+	if (!ft_strncmp(cmd, "./", 2) || !ft_strncmp(cmd, "/", 1))
+		flag = 9;
+//	flag = !ft_strncmp(cmd, "./", 2) ? 9 : flag;
 	if (flag || (!flag && !search_env("PATH", tmp, 1, NULL)))
 		return (flag);
 	if (!(tmp->tabpath = build_cmd(tmp, cmd)))
