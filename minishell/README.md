@@ -7,6 +7,8 @@ cat "<"
 
 # bin
 ^\ -> como hago para ocultar el ^\
+/bin/ls debe funcionar
+/bin/cat debe funcionar
 
 # cd ------------------ me toca re hacerlo
 cd -----------> HOME terminado!! -> meter hnull en la generalfree
