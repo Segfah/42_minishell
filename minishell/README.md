@@ -31,3 +31,15 @@ principal_parcing.c
 ## lu
 # gestion
  controles, echo, nani
+
+
+
+revisar los 
+unset HOME
+echo $? y estas cositas!!!!!!!!!!!!!!!
+
+
+
+
+dato curioso jajaja 
+echo"                				\\""\""
