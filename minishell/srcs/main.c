@@ -87,6 +87,7 @@ int				main(int ac, char **av, char **envp)
 	welcome();
 	if (save_env(&tmp.varenv, envp) == -1)
 		return (-1);
+	!tmp.hnull ? search_env("HOME", &tmp, 0, &tmp.hnull) : 0;
 	launcher(tmp);
 	free_list(tmp.varenv);
 	(void)ac;

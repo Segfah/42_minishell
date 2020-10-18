@@ -26,23 +26,29 @@ char			*cp_str(char *str, t_temp *tmp)
 	new_str = NULL;
 	if (search_env("HOME", tmp, 1, NULL))
 	{
-		search_env("HOME", tmp, 0, &tmp_str); // malloc
+		search_env("HOME", tmp, 0, &tmp_str);
 		size = ft_strlen(str) + ft_strlen(tmp_str);
-		new_str = malloc(sizeof(char) * size + 1);
-		i = -1;
-		while (tmp_str[++i])
-			new_str[i] = tmp_str[i];
-		j = 1;
-		while (str[j])
-			new_str[i++] = str[j++];
-		new_str[i] = 0;
-		printf("---[%d]----->[%s]-[%s] -> nuevo [%s]\n",size , tmp_str, str, new_str);
-		
+		if (!(new_str = malloc(sizeof(char) * size + 1)))
+			return (NULL);
 	}
 	else
 	{
-	;
+		if (!(tmp_str = ft_strdup(tmp->hnull)))
+			return (NULL);
+		size = ft_strlen(str) + ft_strlen(tmp->hnull);
+		if (!(new_str = malloc(sizeof(char) * size + 1)))
+			return (NULL);
 	}
+	i = -1;
+	while (tmp_str[++i])
+		new_str[i] = tmp_str[i];
+	j = 1;
+	while (str[j])
+		new_str[i++] = str[j++];
+	new_str[i] = 0;
+	free(tmp_str);
+	free(str);
+	printf("---[%d]----->[%s]-[%s] -> nuevo [%s]\n",size , tmp_str, str, new_str);
 	return (new_str);
 }
 
