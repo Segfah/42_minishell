@@ -10,9 +10,7 @@ cat "<"
 /bin/ls debe funcionar------------------------listo
 /bin/cat debe funcionar-----------------------listo
 
-# cd ------------------ me toca re hacerlo
-cd -----------> HOME terminado!! -> meter hnull en la generalfree
-cd ~ ??????????
+# cd ------------------> Terminadoo
 
 # parsing
 echo """                   ;"	lulu
