@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/31 02:30:51 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/15 20:50:20 by lryst            ###   ########.fr       */
+/*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
+/*   Updated: 2020/10/20 16:33:07 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,6 +274,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 		(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
 		tmp->flag[0] = (j > 0) ? 1 : 0;
 		printf("----------cmd = [%d], redi = [%d], fd = [%d]\n", tmp->flag[0], tmp->flag[1], tmp->fd);
+		printf("naniiiiiiiiii =%d", j);
 		if (tabcmd[i][0] == 0 ||  j == -2 || tmp->flag[1] == -1)
 			;
 		else if (j == 1)
@@ -295,8 +296,8 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 			gestion_unset(tmp);
 		else if (j == 8)
 			gestion_echo(cmd);
-		else if (j == 9 && command_bin(tmp->strcmd, tmp) == 0)
-			;
+		/* else if (j == 9 && command_bin(tmp->strcmd, tmp) == 0)
+			; */
 		else
 		{
 			g_ret = 127;

@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/15 20:44:47 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/20 15:47:30 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,6 @@ void    			gestion_echo(t_cmd *cmd);
 /*
 ** gestion/echo/ft_split_echo/count_word
 */
-char				*remove_cote(char *s, int *start, char cote);
 char				**ft_split_echo(char *s, int *i, t_temp *temp);
 /*
 ** gestion/echo/ft_split_echo/count_word
@@ -298,4 +297,9 @@ char				*copy_slash_m(char *s, int *i, char *tab, int save);
 char				*copy_slash_p(char *s, int *i, char *tab, int save);
 char				*copy_adeline2(char *s, int *i, char *tab);
 char				*copy_adeline(char *s, int *i, char *tab);
+
+void				check_echo(t_cmd **cmd);
+void				remove_all_space_node(t_cmd **cmd);
+int					strcat_cmd(t_cmd **cmd);
+
 #endif
