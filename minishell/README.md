@@ -22,3 +22,8 @@ echo $? y estas cositas!!!!!!!!!!!!!!!
 
 dato curioso jajaja 
 echo"                				\\""\""
+
+
+
+
+pwd; Ec"h"o "'bonsoirParis !!!' hjhdsgf" $HSHSH $home $HOME
