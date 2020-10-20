@@ -8,9 +8,6 @@ cat "<"
 # bin
 ^\ -> como hago para ocultar el ^\
 
-# parsing
-Hay un segfault en el separator_string (cuando das solo clic)
-
 ## lu
 # gestion
  controles, echo, nani
@@ -24,6 +21,9 @@ dato curioso jajaja
 echo"                				\\""\""
 
 
-
-
 pwd; Ec"h"o "'bonsoirParis !!!' hjhdsgf" $HSHSH $home $HOME
+
+
+## astuces
+
+Para la parte de redi, coger un lado para redi izquierda y otro redi derecha

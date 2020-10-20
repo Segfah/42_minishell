@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/20 18:56:41 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/20 19:29:57 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ int			contre_redi(char *path, t_temp *tmp)
 {
 	(tmp->fdi > 0) ? close(tmp->fdi) : 0;
 	tmp->fdi = 0;
-	if ((tmp->fd = open(path, O_RDONLY)) == -1)
+	if ((tmp->fdi = open(path, O_RDONLY)) == -1)
 	{
 		printf("minishell: %s: %s\n", strerror(errno), path);
 		return (-1);
@@ -287,7 +287,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 		tmp->flag[0] = (j > 0) ? 1 : 0;
 		printf("----------cmd = [%d], redi de= [%d], redi iz=[%d], fd = [%d], fdi[%d]\n", tmp->flag[0], tmp->flag[1], tmp->flag[2], tmp->fd, tmp->fdi);
 		printf("--------------j= %d \n", j);
-		if (tabcmd[i][0] == 0 ||  j == -2 || tmp->flag[1] == -1)
+		if (tabcmd[i][0] == 0 ||  j == -2 || tmp->flag[1] == -1 || tmp->flag[2] == -1)
 			;
 		else if (j == 1)
 		{
