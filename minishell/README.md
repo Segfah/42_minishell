@@ -7,36 +7,17 @@ cat "<"
 
 # bin
 ^\ -> como hago para ocultar el ^\
-/bin/ls debe funcionar------------------------listo
-/bin/cat debe funcionar-----------------------listo
-
-# cd ------------------> Terminadoo
 
 # parsing
-echo """                   ;"	lulu
-pwd\t or pwd \t					lulu
-# export
 export nani="nano"				lulu
-
-
-###				norma
-# gestion 
-norma cd.c
-norma command_bin.c
-# parcing
-principal_parcing.c
 
 ## lu
 # gestion
  controles, echo, nani
 
-
-
 revisar los 
 unset HOME
 echo $? y estas cositas!!!!!!!!!!!!!!!
-
-
 
 
 dato curioso jajaja 
