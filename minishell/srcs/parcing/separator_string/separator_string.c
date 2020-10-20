@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 13:58:31 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/20 16:30:22 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/20 19:15:32 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int			strcat_cmd(t_cmd **cmd)
 
 int				check_echo_2(int *check, int *i, char c, char *s)
 {
-	if (s[*i] == c || s[*i] == c - 40)
+	if (s && s[*i] && (s[*i] == c || s[*i] == c - 40))
 	{
 		*check += 1;
 		(*i)++;
@@ -67,10 +67,11 @@ void			check_echo(t_cmd **cmd)
 	int i;
 	int check;
 
-
 	tmp = *cmd;
 	i = 0;
 	check = 0;
+	if (!tmp)
+		return ;
 	if (check_echo_2(&check, &i, 'e', tmp->output) == 1)
 	{
 		if (check_echo_2(&check, &i, 'c', tmp->output) == 2)
@@ -78,9 +79,7 @@ void			check_echo(t_cmd **cmd)
 			if (check_echo_2(&check, &i, 'h', tmp->output) == 3)
 			{
 				if (check_echo_2(&check, &i, 'o', tmp->output) == 4)
-				{
 					check = 99;
-				}
 			}
 		}
 	}
@@ -94,6 +93,8 @@ void			separator_string(t_cmd **cmd, char *str, t_temp *tmp)
 	t_cmd	*new;
 
 	i = 0;
+	if (!tmp)
+	return ;
 	tmp->strcmd = ft_split_strcmd(str, 1);
 	while (tmp->strcmd[i])
 	{
@@ -103,19 +104,7 @@ void			separator_string(t_cmd **cmd, char *str, t_temp *tmp)
 	}
 	while (strcat_cmd(cmd) == 1)
 		strcat_cmd(cmd);
-	new = *cmd;
-	while (new)
-	{
-		ft_printf("[%s]\n", new->output);
-		new = new->next;
-	}
 	remove_null_node(cmd);
 	remove_space_node(cmd);
 	check_echo(cmd);
-	new = *cmd;
-	while (new)
-	{
-		ft_printf("FINISH => [%s]\n", new->output);
-		new = new->next;
-	}
 }
