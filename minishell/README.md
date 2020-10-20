@@ -9,7 +9,7 @@ cat "<"
 ^\ -> como hago para ocultar el ^\
 
 # parsing
-export nani="nano"				lulu
+Hay un segfault en el separator_string (cuando das solo clic)
 
 ## lu
 # gestion

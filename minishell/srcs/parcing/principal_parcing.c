@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/20 18:27:27 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/20 18:56:41 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ int			is_redi(char *str)
 
 int			simple_redi(char *path, t_temp *tmp)
 {
+	(tmp->fd > 0) ? close(tmp->fd) : 0;
 	tmp->fd = 0;
 	if ((tmp->fd = open(path, O_RDWR | O_TRUNC |
 			O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) == -1)
@@ -159,7 +160,8 @@ int			simple_redi(char *path, t_temp *tmp)
 
 int			contre_redi(char *path, t_temp *tmp)
 {
-	tmp->fd = 0;
+	(tmp->fdi > 0) ? close(tmp->fdi) : 0;
+	tmp->fdi = 0;
 	if ((tmp->fd = open(path, O_RDONLY)) == -1)
 	{
 		printf("minishell: %s: %s\n", strerror(errno), path);
@@ -170,6 +172,7 @@ int			contre_redi(char *path, t_temp *tmp)
 
 int		double_redi(char *path, t_temp *tmp)
 {
+	(tmp->fd > 0) ? close(tmp->fd) : 0;
 	tmp->fd = 0;
 	if ((tmp->fd = open(path, O_APPEND | O_WRONLY | O_CREAT , 0644)) == -1)
 	{
@@ -184,6 +187,8 @@ int		check_redi(char **cmd, t_temp *tmp)
 	int		i;
 	int		ret;
 
+	tmp->fd = 0;
+	tmp->fdi = 0;
 	i = -1;
 	ret = 0;
 	while (cmd[++i]) //Posiblemente cambie este por uno que haga el check de la lista encadenada, y que mire el input y no el otro
@@ -274,13 +279,13 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 		cmd = NULL;
 		separator_string(&cmd, tabcmd[i], tmp);
 		(cmd) ? tmp->strcmd = llist_astring(cmd, tmp->strcmd) : 0;
+//aqui viene el pipe
 		(cmd) ? tmp->flag[1] = check_redi(tmp->strcmd, tmp) : 0;
-
-	//	while (1);
 		(tmp->flag[1] && tmp->flag[1] != -1) ? skip_redi(tmp->strcmd) : 0;
+
 		(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
 		tmp->flag[0] = (j > 0) ? 1 : 0;
-		printf("----------cmd = [%d], redi = [%d], fd = [%d]\n", tmp->flag[0], tmp->flag[1], tmp->fd);
+		printf("----------cmd = [%d], redi de= [%d], redi iz=[%d], fd = [%d], fdi[%d]\n", tmp->flag[0], tmp->flag[1], tmp->flag[2], tmp->fd, tmp->fdi);
 		printf("--------------j= %d \n", j);
 		if (tabcmd[i][0] == 0 ||  j == -2 || tmp->flag[1] == -1)
 			;

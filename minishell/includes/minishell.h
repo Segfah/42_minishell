@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/20 16:53:35 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/20 18:50:27 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct		s_temp
 	int				status;
 	int				flag[4];
 	int				fd;
+	int				fdi;
 	int				oldfd;
 	char			*hnull;
 }					t_temp;
