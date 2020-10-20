@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/20 16:49:35 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/20 18:27:27 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ int		check_redi(char **cmd, t_temp *tmp)
 
 	i = -1;
 	ret = 0;
-	while (cmd[++i])
+	while (cmd[++i]) //Posiblemente cambie este por uno que haga el check de la lista encadenada, y que mire el input y no el otro
 	{
 		if (is_redi(cmd[i]))
 		{
@@ -240,7 +240,11 @@ void		skip_redi(char **cmd)
 	while (cmd[i])
 	{
 		if (!(ft_strcmp(">", cmd[i])) || !(ft_strcmp(">>", cmd[i])) || !(ft_strcmp("<", cmd[i])))
+		{
+			ft_free(cmd[i]);
+			ft_free(cmd[i + 1]);
 			i = i + 2;
+		}
 		else
 			cmd[j++] = cmd[i++];
 	}
@@ -272,6 +276,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 		(cmd) ? tmp->strcmd = llist_astring(cmd, tmp->strcmd) : 0;
 		(cmd) ? tmp->flag[1] = check_redi(tmp->strcmd, tmp) : 0;
 
+	//	while (1);
 		(tmp->flag[1] && tmp->flag[1] != -1) ? skip_redi(tmp->strcmd) : 0;
 		(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
 		tmp->flag[0] = (j > 0) ? 1 : 0;
