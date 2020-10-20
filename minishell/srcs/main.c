@@ -48,8 +48,8 @@ void			sighandler(int signum)
 
 void			sighandler2(int signum)
 {
-	write(1, "\b\b", 2);
 	(void)signum;
+	write(1, " \b\b \b", 5);
 }
 
 void			launcher(t_temp tmp)
@@ -87,6 +87,7 @@ int				main(int ac, char **av, char **envp)
 	welcome();
 	if (save_env(&tmp.varenv, envp) == -1)
 		return (-1);
+	!tmp.hnull ? search_env("HOME", &tmp, 0, &tmp.hnull) : 0;
 	launcher(tmp);
 	free_list(tmp.varenv);
 	(void)ac;

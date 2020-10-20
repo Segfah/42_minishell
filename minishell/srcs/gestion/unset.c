@@ -17,7 +17,7 @@ void			gestion_unset(t_temp *tmp)
 	int			i;
 	int			ret;
 
-	!tmp->hnull ? search_env("HOME", tmp, 0, &tmp->hnull) : 0;
+	//!tmp->hnull ? search_env("HOME", tmp, 0, &tmp->hnull) : 0;
 	i = 0;
 	while (tmp->strcmd[i])
 		i++;
