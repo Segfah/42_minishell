@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/20 19:29:57 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/21 15:08:24 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,32 +182,35 @@ int		double_redi(char *path, t_temp *tmp)
 	return (0);
 }
 
-int		check_redi(char **cmd, t_temp *tmp)
+void		check_redi(char **cmd, t_temp *tmp)
 {
 	int		i;
-	int		ret;
+//	int		ret;
 
 	tmp->fd = 0;
 	tmp->fdi = 0;
 	i = -1;
-	ret = 0;
+//	ret = 0;
 	while (cmd[++i]) //Posiblemente cambie este por uno que haga el check de la lista encadenada, y que mire el input y no el otro
 	{
 		if (is_redi(cmd[i]))
 		{
-			ret = 1;
 			if (cmd[i + 1])
 			{
 				if (is_redi(cmd[i + 1]))
 				{
 					printf("minishell: syntax error near unexpected token `%s'\n", cmd[i]);
-					return (-1);
+					tmp->flag[1] = -1;
+					return ;
+//					return (-1);
 				}
 			}
 			else
 			{
 				printf("minishell: syntax error near unexpected token `newline'\n");
-				return (-1);
+				tmp->flag[1] = -1;
+				return ;
+//				return (-1);
 			}
 		}
 	}
@@ -217,22 +220,27 @@ int		check_redi(char **cmd, t_temp *tmp)
 //		if (!(ft_strcmp(">", cmd[i]))) // y que en la lista encadenada no sea ">" con guimes
 		if (!(ft_strcmp(">", cmd[i])))
 		{
-			if (simple_redi(cmd[i + 1], tmp) == -1)
-				return (-1);
+			tmp->flag[1] = 1;
+			if (tmp->flag[2] != -1 && simple_redi(cmd[i + 1], tmp) == -1)
+				tmp->flag[1] = -1;
+//				return (-1);
 		}
-		else if (!(ft_strcmp(">>", cmd[i])))
+		else if (tmp->flag[2] != -1 && !(ft_strcmp(">>", cmd[i])))
 		{
+			tmp->flag[1] = 1;
 			if (double_redi(cmd[i + 1], tmp) == -1)
-				return (-1);
+				tmp->flag[1] = -1;
+//				return (-1);
 		}
 		else if (!(ft_strcmp("<", cmd[i])))
 		{
-			ret = 2;
+			tmp->flag[2] = 1;
 			if (contre_redi(cmd[i + 1], tmp) == -1)
-				return (-1);
+				tmp->flag[2] = -1;
+//				return (-1);
 		}
 	}
-	return (ret);
+//	return (ret);
 }
 
 void		skip_redi(char **cmd)
@@ -282,21 +290,15 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 		separator_string(&cmd, tabcmd[i], tmp);
 		(cmd) ? tmp->strcmd = llist_astring(cmd, tmp->strcmd) : 0;
 //aqui viene el pipe
-		if (cmd)
-		{ //cambiar bien los flag metiendo tmp->flag en vez de retornar
-			if (check_redi(tmp->strcmd, tmp) == -1)
-				tmp->flag[1] = -1;
-			else if (check_redi(tmp->strcmd, tmp) == 1)
-				tmp->flag[1] = 1;
-			if (check_redi(tmp->strcmd, tmp) == 2)
-				tmp->flag[2] = 1;
-		}
-//		(cmd) ? tmp->flag[1] = check_redi(tmp->strcmd, tmp) : 0;
-		((tmp->flag[2] && tmp->flag[2] != -1) || (tmp->flag[1] && tmp->flag[1] != -1)) ? skip_redi(tmp->strcmd) : 0;
-
+		cmd ? check_redi(tmp->strcmd, tmp) : 0;
+		((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1) ? skip_redi(tmp->strcmd) : 0;
 		(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
-		tmp->flag[0] = (j > 0) ? 1 : 0;
+
+		for (int ll= 0; tmp->strcmd[ll] ;ll++)
+			printf("#######[%s]\n",tmp->strcmd[ll]);
 		printf("----------cmd = [%d], redi de= [%d], redi iz=[%d], fd = [%d], fdi[%d]\n", tmp->flag[0], tmp->flag[1], tmp->flag[2], tmp->fd, tmp->fdi);
+		//exit(1);
+		tmp->flag[0] = (j > 0) ? 1 : 0;
 		printf("--------------j= %d \n", j);
 		if (tabcmd[i][0] == 0 ||  j == -2 || tmp->flag[1] == -1 || tmp->flag[2] == -1)
 			;
