@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/21 17:45:50 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/21 18:14:04 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,16 @@ static int		cmd_is_here(char **path)
 **		return (flag);
 ** y
 **	if ((tmp->status = cmd_is_here(tmp->tabpath)) == -1)
+** si el flag deja de servir cambiar el !(flag = 0) por un flag = 0
+** despues del return (-2);
 */
 
 int			cmd_exist(char *cmd, t_temp *tmp)
 {
 	int		flag;
 
-	if (!cmd)
+	if (!(flag = 0) && !cmd)
 		return (-2);
-	flag = 0;
 	tmp->tabpath = NULL;
 	flag = !ft_strcmp(cmd, "exit") ? 1 : flag;
 	flag = !ft_strcmp(cmd, "cd") ? 2 : flag;
@@ -158,6 +159,19 @@ int			simple_redi(char *path, t_temp *tmp)
 	return (0);
 }
 
+
+int		double_redi(char *path, t_temp *tmp)
+{
+	(tmp->fd > 0) ? close(tmp->fd) : 0;
+	tmp->fd = 0;
+	if ((tmp->fd = open(path, O_APPEND | O_WRONLY | O_CREAT, 0644)) == -1)
+	{
+		ft_printf("minishell: %s: %s\n", strerror(errno), path);
+		return (-1);
+	}
+	return (0);
+}
+
 int			contre_redi(char *path, t_temp *tmp)
 {
 	(tmp->fdi > 0) ? close(tmp->fdi) : 0;
@@ -170,27 +184,13 @@ int			contre_redi(char *path, t_temp *tmp)
 	return (0);
 }
 
-int		double_redi(char *path, t_temp *tmp)
-{
-	(tmp->fd > 0) ? close(tmp->fd) : 0;
-	tmp->fd = 0;
-	if ((tmp->fd = open(path, O_APPEND | O_WRONLY | O_CREAT , 0644)) == -1)
-	{
-		ft_printf("minishell: %s: %s\n", strerror(errno), path);
-		return (-1);
-	}
-	return (0);
-}
-
-void		check_redi(char **cmd, t_temp *tmp)
+int		check_redi(char **cmd, t_temp *tmp)
 {
 	int		i;
-//	int		ret;
 
 	tmp->fd = 0;
 	tmp->fdi = 0;
 	i = -1;
-//	ret = 0;
 	while (cmd[++i]) //Posiblemente cambie este por uno que haga el check de la lista encadenada, y que mire el input y no el otro
 	{
 		if (is_redi(cmd[i]))
@@ -200,17 +200,13 @@ void		check_redi(char **cmd, t_temp *tmp)
 				if (is_redi(cmd[i + 1]))
 				{
 					printf("minishell: syntax error near unexpected token `%s'\n", cmd[i]);
-					tmp->flag[1] = -1;
-					return ;
-//					return (-1);
+					return (tmp->flag[1] = -1);
 				}
 			}
 			else
 			{
 				printf("minishell: syntax error near unexpected token `newline'\n");
-				tmp->flag[1] = -1;
-				return ;
-//				return (-1);
+				return (tmp->flag[1] = -1);
 			}
 		}
 	}
@@ -222,25 +218,22 @@ void		check_redi(char **cmd, t_temp *tmp)
 		{
 			tmp->flag[1] = 1;
 			if (tmp->flag[2] != -1 && simple_redi(cmd[i + 1], tmp) == -1)
-				tmp->flag[1] = -1;
-//				return (-1);
+				return (tmp->flag[1] = -1);
 		}
 		else if (tmp->flag[2] != -1 && !(ft_strcmp(">>", cmd[i])))
 		{
 			tmp->flag[1] = 1;
 			if (double_redi(cmd[i + 1], tmp) == -1)
-				tmp->flag[1] = -1;
-//				return (-1);
+				return (tmp->flag[1] = -1);
 		}
 		else if (!(ft_strcmp("<", cmd[i])))
 		{
 			tmp->flag[2] = 1;
 			if (contre_redi(cmd[i + 1], tmp) == -1)
-				tmp->flag[2] = -1;
-//				return (-1);
+				return (tmp->flag[2] = -1);
 		}
 	}
-//	return (ret);
+	return (0);
 }
 
 void		skip_redi(char **cmd)
@@ -262,9 +255,6 @@ void		skip_redi(char **cmd)
 			cmd[j++] = cmd[i++];
 	}
 	cmd[j] = 0;
-//	for(int k = 0; cmd[k]; k++)
-//		printf("cmd [%s]\n", cmd[k]);
-//	exit(1);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -280,7 +270,7 @@ void		skip_redi(char **cmd)
 static void		gestion_line(char **tabcmd, t_temp *tmp)
 {
 	int i;
-				int j;
+	int j;
 	t_cmd	*cmd;
 
 	i = -1;
@@ -297,8 +287,8 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 		((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1) ? skip_redi(tmp->strcmd) : 0;
 		(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
 
-//		printf("----------cmd = [%d], redi de= [%d], redi iz=[%d], fd = [%d], fdi[%d]\n", tmp->flag[0], tmp->flag[1], tmp->flag[2], tmp->fd, tmp->fdi);
-//		printf("--------------j= %d \n", j);
+		printf("----------cmd = [%d], redi de= [%d], redi iz=[%d], fd = [%d], fdi[%d]\n", tmp->flag[0], tmp->flag[1], tmp->flag[2], tmp->fd, tmp->fdi);
+		printf("--------------j= %d \n", j);
 		tmp->flag[0] = (j > 0) ? 1 : 0;
 		if (tabcmd[i][0] == 0 ||  j == -2 || tmp->flag[1] == -1 || tmp->flag[2] == -1)
 			;
@@ -334,6 +324,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 		if (tabcmd[i] != NULL)
 			free(tabcmd[i]);
 		tabcmd[i] = NULL;
+		// no volvidar hacerle un close a cada cosa
 	}
 }
 
