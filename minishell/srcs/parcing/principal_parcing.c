@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/21 19:11:09 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/21 19:32:25 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -324,7 +324,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 		if (tabcmd[i] != NULL)
 			free(tabcmd[i]);
 		tabcmd[i] = NULL;
-		tmp->tabpath ? ft_free_tab(tmp->tabpath) : 0;
+	//	tmp->tabpath ? ft_free_tab(tmp->tabpath) : 0;
 		tmp->flag[1] == 1 ? close(tmp->fd) : 0;
 		tmp->flag[2] == 1 ? close(tmp->fdi) : 0;
 	}

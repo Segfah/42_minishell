@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 22:10:58 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/21 16:01:55 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/21 19:27:07 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ char			*cp_str(char *str, t_temp *tmp)
 	while (str[j])
 		new_str[i++] = str[j++];
 	new_str[i] = 0;
-	free(tmp_str);
-	free(str);
+	ft_free(tmp_str);
+	ft_free(str);
 	printf("---[%d]----->[%s]-[%s] -> nuevo [%s]\n",size , tmp_str, str, new_str);
 	return (new_str);
 }

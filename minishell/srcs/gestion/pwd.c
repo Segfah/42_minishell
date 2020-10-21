@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/01 01:51:46 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/21 15:56:48 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/21 19:26:07 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,4 @@ void		gestion_pwd(char **strcmd, t_temp *tmp)
 	free(tmp->env);
 	tmp->env = NULL;
 	(tmp->flag[1] == 1) ? dup2(tmp->oldfd, 1) : 0;
-//	if (tmp->flag[1])
-//	{
-//		if (tmp->flag[1] == 1)
-//			dup2(tmp->oldfd, 1);
-//		close(tmp->fd);
-//	}
 }
