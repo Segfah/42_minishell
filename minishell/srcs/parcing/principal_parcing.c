@@ -275,13 +275,24 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 	i = -1;
 	while (tabcmd[++i])
 	{
+		tmp->flag[1] = 0;
+		tmp->flag[2] = 0;
 		j = 0;
 		cmd = NULL;
 		separator_string(&cmd, tabcmd[i], tmp);
 		(cmd) ? tmp->strcmd = llist_astring(cmd, tmp->strcmd) : 0;
 //aqui viene el pipe
-		(cmd) ? tmp->flag[1] = check_redi(tmp->strcmd, tmp) : 0;
-		(tmp->flag[1] && tmp->flag[1] != -1) ? skip_redi(tmp->strcmd) : 0;
+		if (cmd)
+		{ //cambiar bien los flag metiendo tmp->flag en vez de retornar
+			if (check_redi(tmp->strcmd, tmp) == -1)
+				tmp->flag[1] = -1;
+			else if (check_redi(tmp->strcmd, tmp) == 1)
+				tmp->flag[1] = 1;
+			if (check_redi(tmp->strcmd, tmp) == 2)
+				tmp->flag[2] = 1;
+		}
+//		(cmd) ? tmp->flag[1] = check_redi(tmp->strcmd, tmp) : 0;
+		((tmp->flag[2] && tmp->flag[2] != -1) || (tmp->flag[1] && tmp->flag[1] != -1)) ? skip_redi(tmp->strcmd) : 0;
 
 		(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
 		tmp->flag[0] = (j > 0) ? 1 : 0;
