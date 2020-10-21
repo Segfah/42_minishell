@@ -20,10 +20,14 @@ echo $? y estas cositas!!!!!!!!!!!!!!!
 dato curioso jajaja 
 echo"                				\\""\""
 
-
 pwd; Ec"h"o "'bonsoirParis !!!' hjhdsgf" $HSHSH $home $HOME
 
 
-## astuces
-
-Para la parte de redi, coger un lado para redi izquierda y otro redi derecha
+#close
+cd						no
+comman echo					(mirar bien si toca hacerle algo)
+echo					(aun no lo he hecho)
+env						no
+export					no
+pwdi					no
+unset					no
