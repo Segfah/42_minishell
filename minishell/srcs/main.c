@@ -41,8 +41,8 @@ void			sighandler(int signum)
 	if ((prompt = ft_prompt(env)) == NULL)
 		exit(1);
 	ft_printf("\x1b[33m%s\x1b[0m🐰: ", prompt);
-	free(env);
-	free(prompt);
+	ft_free(env);
+	ft_free(prompt);
 	(void)signum;
 }
 
@@ -65,11 +65,9 @@ void			launcher(t_temp tmp)
 		ft_printf("\x1b[33m%s\x1b[0m🐰: ", tmp.prompt);
 		signal(SIGINT, sighandler);
 		signal(SIGQUIT, sighandler2);
-		free(tmp.env);
-		tmp.env = NULL;
+		ft_free(tmp.env);
 		ret = ft_getline(&tmp);
-		free(tmp.prompt);
-		tmp.prompt = NULL;
+		ft_free(tmp.prompt);
 	}
 }
 

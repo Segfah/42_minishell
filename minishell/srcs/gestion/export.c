@@ -40,13 +40,13 @@ int				ft_cortar(char *tab[2], char *str)
 
 void			general_free(t_temp *tmp)
 {
-	(tmp->env != NULL) ? free(tmp->env) : 0;
-	(tmp->prompt != NULL) ? free(tmp->prompt) : 0;
-	(tmp->tab[0] != NULL) ? free(tmp->tab[0]) : 0;
-	(tmp->tab[1] != NULL) ? free(tmp->tab[1]) : 0;
+	ft_free(tmp->env);
+	ft_free(tmp->prompt);
+	ft_free(tmp->tab[0]);
+	ft_free(tmp->tab[1]);
 	(tmp->varenv != NULL) ? free_list(tmp->varenv) : 0;
 	(tmp->exportenv != NULL) ? free_list(tmp->exportenv) : 0;
-	(tmp->hnull != NULL) ? free(tmp->hnull) : 0;
+	ft_free(tmp->hnull);
 	ft_printf("Error: Malloc\n");
 	exit(1);
 }
@@ -79,13 +79,13 @@ int				export_arg(t_temp *tmp, int ret, int i)
 
 void			free_export_tab(t_temp *tmp)
 {
-	free(tmp->tab[0]);
-	tmp->tab[0] = NULL;
-	if (tmp->tab[1] != NULL)
-	{
-		free(tmp->tab[1]);
-		tmp->tab[1] = NULL;
-	}
+	ft_free(tmp->tab[0]);
+	ft_free(tmp->tab[1]);
+//	if (tmp->tab[1] != NULL)
+//	{
+//		free(tmp->tab[1]);
+//		tmp->tab[1] = NULL;
+//	}
 }
 
 void			gestion_export(t_temp *tmp, int i)

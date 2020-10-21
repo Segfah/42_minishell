@@ -30,13 +30,13 @@ static char		**build_cmd(t_temp *tmp, char *cmd)
 		temp = tabpath[a];
 		if (!(tabpath[a] = ft_strjoin(tabpath[a], "/")))
 			return (NULL);
-		free(temp);
+		ft_free(temp);
 		temp = tabpath[a];
 		if (!(tabpath[a] = ft_strjoin(tabpath[a], cmd)))
 			return (NULL);
-		free(temp);
+		ft_free(temp);
 	}
-	free(path);
+	ft_free(path);
 	return (tabpath);
 }
 
@@ -72,7 +72,6 @@ int			cmd_exist(char *cmd, t_temp *tmp)
 
 	if (!(flag = 0) && !cmd)
 		return (-2);
-	tmp->tabpath = NULL;
 	flag = !ft_strcmp(cmd, "exit") ? 1 : flag;
 	flag = !ft_strcmp(cmd, "cd") ? 2 : flag;
 	flag = !ft_strcmp(cmd, "env") ? 3 : flag;
@@ -89,7 +88,7 @@ int			cmd_exist(char *cmd, t_temp *tmp)
 		return (-1);
 	if ((tmp->status = cmd_is_here(tmp->tabpath)) == -1 || tmp->status == 0)
 	{
-		ft_free_tab(tmp->tabpath);
+		//ft_free_tab(tmp->tabpath);
 		return (0);
 	}
 	return (9);
@@ -278,6 +277,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 	{
 		tmp->flag[1] = 0;
 		tmp->flag[2] = 0;
+		tmp->tabpath = NULL;
 		j = 0;
 		cmd = NULL;
 		separator_string(&cmd, tabcmd[i], tmp);
@@ -287,8 +287,8 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 		((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1) ? skip_redi(tmp->strcmd) : 0;
 		(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
 
-//		printf("----------cmd = [%d], redi de= [%d], redi iz=[%d], fd = [%d], fdi[%d]\n", tmp->flag[0], tmp->flag[1], tmp->flag[2], tmp->fd, tmp->fdi);
-//		printf("--------------j= %d \n", j);
+		printf("----------cmd = [%d], redi de= [%d], redi iz=[%d], fd = [%d], fdi[%d]\n", tmp->flag[0], tmp->flag[1], tmp->flag[2], tmp->fd, tmp->fdi);
+		printf("--------------j= %d \n", j);
 		tmp->flag[0] = (j > 0) ? 1 : 0;
 		if (tabcmd[i][0] == 0 ||  j == -2 || tmp->flag[1] == -1 || tmp->flag[2] == -1)
 			;
@@ -321,10 +321,8 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 		ft_free_double_tab(tmp->strcmd);
 		if (cmd != NULL)
 			free_cmd(cmd);
-		if (tabcmd[i] != NULL)
-			free(tabcmd[i]);
-		tabcmd[i] = NULL;
-	//	tmp->tabpath ? ft_free_tab(tmp->tabpath) : 0;
+		ft_free(tabcmd[i]);
+		tmp->tabpath ? ft_free_tab(tmp->tabpath) : 0;
 		tmp->flag[1] == 1 ? close(tmp->fd) : 0;
 		tmp->flag[2] == 1 ? close(tmp->fdi) : 0;
 	}
@@ -349,6 +347,6 @@ int			ft_getline(t_temp *tmp)
 		gestion_line(tmp->tabcmd, tmp);
 //		ft_free_double_tab(tmp->tabcmd);
 	free(tmp->tabcmd);
-	free(line);
+	ft_free(line);
 	return (1);
 }

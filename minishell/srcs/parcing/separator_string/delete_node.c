@@ -20,7 +20,7 @@ void	ft_lstdelone_cmd(t_cmd *lst)
 			ft_free(lst->input);
 		if (lst->output)
 			ft_free(lst->output);
-		free(lst);
+		ft_free(lst);
 	}
 }
 

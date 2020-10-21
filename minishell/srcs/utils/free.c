@@ -12,38 +12,22 @@
 
 #include "minishell.h"
 
-void				ft_free(char *str)
-{
-	if (str)
-	{
-		free(str);
-		str = NULL;
-	}
-}
-
 void				ft_free_double_tab(char **tab)
 {
 	int i;
 
 	i = 0;
 	while (tab[i])
-	{
-		free(tab[i]);
-		tab[i] = NULL;
-		i++;
-	}
+		ft_free(tab[i++]);
 	free(tab);
 	tab = NULL;
 }
 
 void				free_node_cmd(t_cmd *node)
 {
-	(node->input != NULL) ? free(node->input) : 0;
-	node->input = NULL;
-	(node->output != NULL) ? free(node->output) : 0;
-	node->output = NULL;
-	free(node);
-	node = NULL;
+	ft_free(node->input);
+	ft_free(node->output);
+	ft_free(node);
 }
 
 void				free_cmd(t_cmd *cmd)
@@ -56,5 +40,5 @@ void				free_cmd(t_cmd *cmd)
 		free_node_cmd(cmd);
 		cmd = tmp;
 	}
-	free(cmd);
+	ft_free(cmd);
 }

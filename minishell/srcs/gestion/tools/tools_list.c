@@ -42,12 +42,9 @@ void			deletenode(t_lists *list, char *strkey)
 
 void			free_node(t_lists *node)
 {
-	(node->name != NULL) ? free(node->name) : 0;
-	node->name = NULL;
-	(node->data != NULL) ? free(node->data) : 0;
-	node->data = NULL;
-	free(node);
-	node = NULL;
+	ft_free(node->name);
+	ft_free(node->data);
+	ft_free(node);
 }
 
 void			free_list(t_lists *test)

@@ -218,7 +218,6 @@ char				*word(char *str, int *i, char *tab);
 ** utils/free.c
 */
 char				*ft_strcatdup(char *s1, char *s2);
-void				ft_free(char *str);
 void				ft_free_double_tab(char **tab);
 void				free_cmd(t_cmd *cmd);
 void				free_node_cmd(t_cmd *node);

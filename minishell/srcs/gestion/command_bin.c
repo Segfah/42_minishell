@@ -51,7 +51,7 @@ char			**c_env(t_lists *list, int size)
 			tempo = tab[i];
 			if (!(tab[i] = ft_strjoin(tab[i], tmp->data)))
 				return (NULL);
-			free(tempo);
+			ft_free(tempo);
 			i++;
 		}
 		tmp = tmp->next;

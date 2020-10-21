@@ -87,5 +87,6 @@ size_t			ft_strlcat(char *dst, const char *src, size_t dstsize);
 size_t			ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char			*ft_itoa_base(long value, int base, char c);
 char			*ft_ltoa(long n);
+void			ft_free(void *str);
 
 #endif

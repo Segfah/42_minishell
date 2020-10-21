@@ -121,12 +121,10 @@ int				search_env(char *str, t_temp *tmp, int key, char **data)
 	{
 		if ((ret = done_list(tmp->varenv, ss, data)) == -1)
 		{
-			free(ss);
-			ss = NULL;
+			ft_free(ss);
 			return (-1);
 		}
 	}
-	free(ss);
-	ss = NULL;
+	ft_free(ss);
 	return (ret);
 }

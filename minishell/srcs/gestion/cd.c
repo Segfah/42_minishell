@@ -77,12 +77,12 @@ void			gestion_cd(char **strcmd, t_temp *tmp)
 		}
 		else
 			(g_ret = 1) ? write(1, "minishell: cd: HOME not set\n", 28) : 0;
-		home ? free(home) : 0;
+		home ? ft_free(home) : 0;
 	}
 	!g_ret ? change_list(tmp->varenv, "OLDPWD", tmp->env) : 0;
-	free(tmp->env);
+	ft_free(tmp->env);
 	tmp->env = getcwd(NULL, 0);
 	change_list(tmp->varenv, "PWD", tmp->env);
-	free(tmp->env);
+	ft_free(tmp->env);
 //	tmp->flag[1] ? close(tmp->fd) : 0;
 }

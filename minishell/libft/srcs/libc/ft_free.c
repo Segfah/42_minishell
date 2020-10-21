@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_split.c                                    :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corozco <corozco@student.42.fr>            +#+  +:+       +#+        */
+/*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/14 23:48:33 by corozco           #+#    #+#             */
-/*   Updated: 2019/11/02 02:29:27 by corozco          ###   ########.fr       */
+/*   Created: 2020/08/05 23:02:07 by corozco           #+#    #+#             */
+/*   Updated: 2020/10/21 19:24:48 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft.h"
 
-void	ft_free_split(char **split, int i)
+void				ft_free(void *str)
 {
-	while (i >= 0)
+	if (str)
 	{
-		free(split[i]);
-		split[i] = NULL;
-		i--;
+		free(str);
+		str = NULL;
 	}
-	free(split);
-	split = NULL;
 }

@@ -64,6 +64,7 @@ SRC := \
 	srcs/libc/ft_islower.c \
 	srcs/libc/ft_free_split.c \
 	srcs/libc/ft_free_tab.c \
+	srcs/libc/ft_free.c \
 	srcs/libc/ft_isspace.c
 
 BNS := \

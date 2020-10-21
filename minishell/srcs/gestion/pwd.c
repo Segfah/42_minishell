@@ -28,7 +28,6 @@ void		gestion_pwd(char **strcmd, t_temp *tmp)
 	}
 	tmp->env = getcwd(NULL, 0);
 	ft_printf("%s\n", tmp->env);
-	free(tmp->env);
-	tmp->env = NULL;
+	ft_free(tmp->env);
 	(tmp->flag[1] == 1) ? dup2(tmp->oldfd, 1) : 0;
 }

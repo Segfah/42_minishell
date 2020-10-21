@@ -122,8 +122,7 @@ int				change_list(t_lists *head, char *ss, char *newdata)
 	{
 		if (ft_strcmp(tmp->name, ss) == 0)
 		{
-			if (tmp->data)
-				free(tmp->data);
+			ft_free(tmp->data);
 			if (newdata != NULL)
 			{
 				if (!(tmp->data = ft_strdup(newdata)))
