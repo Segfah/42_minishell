@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 15:00:48 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/15 18:02:38 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/21 19:09:44 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,8 @@ int				command_bin(char **tab, t_temp *tmp)
 		exit(1);
 	if ((f = fork()) == 0)
 	{
-		if (tmp->flag[1] == 1)
-			dup2(tmp->fd, 1);
-		if (tmp->flag[1] == 2)
-			dup2(tmp->fd, 0);
+		(tmp->flag[2] == 1) ? dup2(tmp->fdi, 0) : 0;
+		(tmp->flag[1] == 1) ? dup2(tmp->fd, 1) : 0;
 		if (!tmp->tabpath)
 		{
 			if (execve(tab[0], tab, tab_env) == -1)
@@ -110,6 +108,5 @@ int				command_bin(char **tab, t_temp *tmp)
 	if ((f = waitpid(f, &tmp->status, WUNTRACED | WCONTINUED)) == -1)
 		exit(1);
 	ft_free_tab(tab_env);
-	tmp->tabpath ? ft_free_tab(tmp->tabpath) : 0;
 	return (0);
 }

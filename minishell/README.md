@@ -1,9 +1,5 @@
 # > >> <
 falta > >> < en echo
-pwd >> nani < nano
-cat < srcs/main.c >> test ------------------> "Bad file descriptor"
-echo "<"
-cat "<"
 
 # bin
 ^\ -> como hago para ocultar el ^\
@@ -16,7 +12,6 @@ revisar los
 unset HOME
 echo $? y estas cositas!!!!!!!!!!!!!!!
 
-
 dato curioso jajaja 
 echo"                				\\""\""
 
@@ -25,9 +20,20 @@ pwd; Ec"h"o "'bonsoirParis !!!' hjhdsgf" $HSHSH $home $HOME
 
 #close
 cd						no
-comman echo					(mirar bien si toca hacerle algo)
+comman echo				no
 echo					(aun no lo he hecho)
 env						no
 export					no
 pwdi					no
 unset					no
+
+
+
+#leaks
+cuando hago 
+cat < objs #siendo objs una carpeta, y luego hago una comanda buena como ls empiezan a salir leaks
+		->cat < obsj
+		->ls
+
+#leo
+pwd > nani < nani
