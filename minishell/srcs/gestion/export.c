@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 02:32:22 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/04 20:32:04 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/21 15:54:38 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,5 @@ void			gestion_export(t_temp *tmp, int i)
 			free_export_tab(tmp);
 		}
 	}
-	(tmp->flag[1]) ? close(tmp->fd) : 0;
+//	(tmp->flag[1]) ? close(tmp->fd) : 0;
 }

@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/21 15:08:24 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/21 15:43:13 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,7 +272,10 @@ void		skip_redi(char **cmd)
 /*
 ** Elle cherche dans le tableau de commandes, si la commande existe
 ** ensuite elle free la string du tableau free(tabcmd[i])
+**		for (int ll= 0; tmp->strcmd[ll] ;ll++) printf("#######[%s]\n",tmp->strcmd[ll]);
 */
+
+//	tmp->flag[1] ? close(tmp->fd) : 0;
 
 static void		gestion_line(char **tabcmd, t_temp *tmp)
 {
@@ -294,10 +297,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 		((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1) ? skip_redi(tmp->strcmd) : 0;
 		(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
 
-		for (int ll= 0; tmp->strcmd[ll] ;ll++)
-			printf("#######[%s]\n",tmp->strcmd[ll]);
-		printf("----------cmd = [%d], redi de= [%d], redi iz=[%d], fd = [%d], fdi[%d]\n", tmp->flag[0], tmp->flag[1], tmp->flag[2], tmp->fd, tmp->fdi);
-		//exit(1);
+//		printf("----------cmd = [%d], redi de= [%d], redi iz=[%d], fd = [%d], fdi[%d]\n", tmp->flag[0], tmp->flag[1], tmp->flag[2], tmp->fd, tmp->fdi);
 		tmp->flag[0] = (j > 0) ? 1 : 0;
 		printf("--------------j= %d \n", j);
 		if (tabcmd[i][0] == 0 ||  j == -2 || tmp->flag[1] == -1 || tmp->flag[2] == -1)

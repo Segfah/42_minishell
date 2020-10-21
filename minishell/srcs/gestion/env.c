@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 23:02:07 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/07 21:57:42 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/21 15:54:12 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void			gestion_env(char **strcmd, t_temp *tmp)
 	else if (strcmd[1])
 	{
 		ft_printf("env: %s: No such file or directory\n", strcmd[1]);
-		if (tmp->flag[1])
-			close(tmp->fd);
+//	tmp->flag[1] ? close(tmp->fd) : 0;
 	}
 }

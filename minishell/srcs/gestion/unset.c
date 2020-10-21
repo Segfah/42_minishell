@@ -6,7 +6,7 @@
 /*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 22:43:00 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/08 20:10:04 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/21 16:02:33 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void			gestion_unset(t_temp *tmp)
 	int			i;
 	int			ret;
 
-	//!tmp->hnull ? search_env("HOME", tmp, 0, &tmp->hnull) : 0;
 	i = 0;
 	while (tmp->strcmd[i])
 		i++;
@@ -33,6 +32,5 @@ void			gestion_unset(t_temp *tmp)
 		else
 			deletenode(tmp->varenv, tmp->strcmd[i]);
 	}
-	if (tmp->flag[1])
-		close(tmp->fd);
+//	tmp->flag[1] ? close(tmp->fd) : 0;
 }

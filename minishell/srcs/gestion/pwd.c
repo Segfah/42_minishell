@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/01 01:51:46 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/07 21:55:27 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/21 15:56:48 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,11 @@ void		gestion_pwd(char **strcmd, t_temp *tmp)
 	ft_printf("%s\n", tmp->env);
 	free(tmp->env);
 	tmp->env = NULL;
-	if (tmp->flag[1])
-	{
-		if (tmp->flag[1] == 1)
-			dup2(tmp->oldfd, 1);
-		close(tmp->fd);
-	}
+	(tmp->flag[1] == 1) ? dup2(tmp->oldfd, 1) : 0;
+//	if (tmp->flag[1])
+//	{
+//		if (tmp->flag[1] == 1)
+//			dup2(tmp->oldfd, 1);
+//		close(tmp->fd);
+//	}
 }
