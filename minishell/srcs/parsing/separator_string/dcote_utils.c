@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   double_cote_utils.c                                :+:      :+:    :+:   */
+/*   dcote_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	double_cote_fill_slash(t_cmd *cmd, int *i, int *j)
+void	dcote_fill_slash(t_cmd *cmd, int *i, int *j)
 {
 	int save;
 	int size;
@@ -31,7 +31,7 @@ void	double_cote_fill_slash(t_cmd *cmd, int *i, int *j)
 			cmd->output[(*j)++] = '\\';
 }
 
-void	double_cote_count_slash(t_cmd *cmd, int *i, int *size)
+void	dcote_count_slash(t_cmd *cmd, int *i, int *size)
 {
 	int save;
 
@@ -47,7 +47,7 @@ void	double_cote_count_slash(t_cmd *cmd, int *i, int *size)
 		(*size) = (*size) + (save / 2);
 }
 
-void	double_cote_fill_dollar(t_cmd *cmd, t_lists *revar, int *i, int *j)
+void	dcote_fill_dollar(t_cmd *cmd, t_lists *revar, int *i, int *j)
 {
 	int		size;
 	int		save;
@@ -76,7 +76,7 @@ void	double_cote_fill_dollar(t_cmd *cmd, t_lists *revar, int *i, int *j)
 	ft_free(tmp);
 }
 
-void	double_cote_count_dollar(t_cmd *cmd, t_lists *var, int *i, int *size)
+void	dcote_count_dollar(t_cmd *cmd, t_lists *var, int *i, int *size)
 {
 	int		save;
 	char	*tmp;
@@ -109,7 +109,7 @@ void	before_count_dollar(t_cmd *cmd, t_lists *var, int *i, int *size)
 		cmd->input[*i + 1] < 58) || (cmd->input[*i + 1] > 64 &&
 		cmd->input[*i + 1] < 91) || (cmd->input[*i + 1] > 96 &&
 		cmd->input[*i + 1] < 123)))
-		double_cote_count_dollar(cmd, var, i, size);
+		dcote_count_dollar(cmd, var, i, size);
 	else
 		(*size)++;
 	(*i)++;

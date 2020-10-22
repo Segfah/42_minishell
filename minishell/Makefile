@@ -45,8 +45,8 @@ SRC := \
 	srcs/parsing/separator_string/node_cmd.c \
 	srcs/parsing/separator_string/delete_node.c \
 	srcs/parsing/separator_string/separator_string.c \
-	srcs/parsing/separator_string/double_cote.c \
-	srcs/parsing/separator_string/double_cote_utils.c \
+	srcs/parsing/separator_string/dcote.c \
+	srcs/parsing/separator_string/dcote_utils.c \
 	srcs/parsing/separator_string/single_cote.c \
 	srcs/parsing/separator_string/slash.c \
 	srcs/parsing/separator_string/dollar.c \

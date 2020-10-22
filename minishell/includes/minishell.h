@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/20 18:50:27 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/22 13:11:39 by corozco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char				*ft_prompt(char *str);
 /*
 ** Parsing
 */
-int				ft_getline(t_temp *tmp);
+int					ft_getline(t_temp *tmp);
 int					is_redi(char *str);
 
 /*
@@ -97,7 +97,6 @@ int					is_redi(char *str);
 /*
 ** gestion/cd
 */
-//void				gestion_cd(char *str, t_temp *tmp);
 void				gestion_cd(char **strcmd, t_temp *tmp);
 
 /*
@@ -168,7 +167,7 @@ char				**ft_split_strcmd(char *s, int echo);
 ** gestion/echo/echo
 */
 char				*gestion_echo_option(char *str, char *arg);
-void    			gestion_echo(t_cmd *cmd, t_temp *tmp);
+void				gestion_echo(t_cmd *cmd, t_temp *tmp);
 
 /*
 ** gestion/echo/ft_split_echo/count_word
@@ -203,11 +202,11 @@ char				*single_keep_cote(char *str, int *i
 						, char *tab, t_lists *var);
 
 /*
-** gestion/echo/double_cote
+** gestion/echo/dcote
 */
 char				*put_in_tab(char *str, int *i, char *tab
 						, int j, t_lists *var);
-char				*double_cote(char *str, char *tab, t_lists *var);
+char				*dcote(char *str, char *tab, t_lists *var);
 
 /*
 ** gestion/echo/word
@@ -230,7 +229,7 @@ void				controle(char *c);
 /*
 ** main
 */
-void					launcher(t_temp tmp);
+void				launcher(t_temp tmp);
 
 int					ft_count_word(char *str);
 char				*copy(char *s, int *end, int start);
@@ -239,17 +238,20 @@ char				**ft_split_line(char *str);
 
 void				separator_string(t_cmd **cmd, char *str, t_temp *tmp);
 
-void				double_cote_cmd(t_cmd *cmd, t_lists *var);
-void				double_cote_cmd_2(t_cmd *cmd, t_lists *revar, int size);
-void				double_cote_cmd_3(t_cmd *cmd, t_lists *revar, int *i, int *j);
+void				dcote_cmd(t_cmd *cmd, t_lists *var);
+void				dcote_cmd_2(t_cmd *cmd, t_lists *revar, int size);
+void				dcote_cmd_3(t_cmd *cmd, t_lists *revar, int *i, int *j);
 
 void				check_node(t_cmd *cmd, t_temp *temp);
 
-void				double_cote_fill_slash(t_cmd *cmd, int *i, int *j);
-void				double_cote_count_slash(t_cmd *cmd, int *i, int *size);
-void				double_cote_fill_dollar(t_cmd *cmd, t_lists *revar, int *i, int *j);
-void				double_cote_count_dollar(t_cmd *cmd, t_lists *var, int *i, int *size);
-void				before_count_dollar(t_cmd *cmd, t_lists *var, int *i, int *size);
+void				dcote_fill_slash(t_cmd *cmd, int *i, int *j);
+void				dcote_count_slash(t_cmd *cmd, int *i, int *size);
+void				dcote_fill_dollar(t_cmd *cmd, t_lists *revar,
+						int *i, int *j);
+void				dcote_count_dollar(t_cmd *cmd, t_lists *var,
+						int *i, int *size);
+void				before_count_dollar(t_cmd *cmd, t_lists *var,
+						int *i, int *size);
 
 void				ft_lstdelone_cmd(t_cmd *lst);
 void				remove_space_node(t_cmd **cmd);
@@ -259,7 +261,6 @@ void				ft_lstadd_back_cmd(t_cmd **alst, t_cmd *new);
 t_cmd				*ft_lstnew_cmd(char *input, t_temp *temp);
 void				single_cote_cmd(t_cmd *cmd);
 void				slash_cmd(t_cmd *cmd);
-
 
 void				replace_isspace(t_cmd *cmd, int *i, int *j, char ascii);
 void				dollar_cmd(t_cmd *cmd, t_lists *var);
@@ -282,7 +283,7 @@ void				ft_count_word_slash(char *s, int *i, int *n);
 char				*ft_fill_slash(char *s, int*i, char *tab);
 char				*ft_fill_slash_2(char *s, int *i, char *tab);
 
-void        		ft_count_word_space(char *s, int *i, int *n, int *echo);
+void				ft_count_word_space(char *s, int *i, int *n, int *echo);
 
 void				ft_count_word_char(char *s, int *i, int *n);
 char				*ft_fill_char(char *s, int *i, char *tab);

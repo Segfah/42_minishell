@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   double_cote.c                                      :+:      :+:    :+:   */
+/*   dcote.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	double_cote_cmd_3(t_cmd *cmd, t_lists *revar, int *i, int *j)
+void	dcote_cmd_3(t_cmd *cmd, t_lists *revar, int *i, int *j)
 {
 	if (cmd->input[*i] == '$')
 	{
@@ -20,15 +20,15 @@ void	double_cote_cmd_3(t_cmd *cmd, t_lists *revar, int *i, int *j)
 		cmd->input[*i + 1] < 58) ||
 		(cmd->input[*i + 1] > 64 && cmd->input[*i + 1] < 91) ||
 		(cmd->input[*i + 1] > 96 && cmd->input[*i + 1] < 123)))
-			double_cote_fill_dollar(cmd, revar, i, j);
+			dcote_fill_dollar(cmd, revar, i, j);
 		else
 			cmd->output[(*j)++] = cmd->input[(*i)++];
 	}
 	if (cmd->input[*i] == '\\')
-		double_cote_fill_slash(cmd, i, j);
+		dcote_fill_slash(cmd, i, j);
 }
 
-void	double_cote_cmd_2(t_cmd *cmd, t_lists *revar, int size)
+void	dcote_cmd_2(t_cmd *cmd, t_lists *revar, int size)
 {
 	int i;
 	int j;
@@ -42,7 +42,7 @@ void	double_cote_cmd_2(t_cmd *cmd, t_lists *revar, int size)
 	len = ft_strlen(cmd->input) - 1;
 	while (cmd->input[i] && i < len)
 	{
-		double_cote_cmd_3(cmd, revar, &i, &j);
+		dcote_cmd_3(cmd, revar, &i, &j);
 		if (cmd->input[i] && i < len && cmd->input[i] != '\\' &&
 			cmd->input[i] != '$')
 			cmd->output[j++] = cmd->input[i];
@@ -51,7 +51,7 @@ void	double_cote_cmd_2(t_cmd *cmd, t_lists *revar, int size)
 	cmd->output[j] = '\0';
 }
 
-void	double_cote_cmd(t_cmd *cmd, t_lists *var)
+void	dcote_cmd(t_cmd *cmd, t_lists *var)
 {
 	int		i;
 	int		size;
@@ -67,10 +67,10 @@ void	double_cote_cmd(t_cmd *cmd, t_lists *var)
 		if (cmd->input[i] == '$')
 			before_count_dollar(cmd, var, &i, &size);
 		if (cmd->input[i] == '\\')
-			double_cote_count_slash(cmd, &i, &size);
+			dcote_count_slash(cmd, &i, &size);
 		if (cmd->input[i] != '\\' && cmd->input[i] != '$')
 			size++;
 		i++;
 	}
-	double_cote_cmd_2(cmd, revar, size);
+	dcote_cmd_2(cmd, revar, size);
 }

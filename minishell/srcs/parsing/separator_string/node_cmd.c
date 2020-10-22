@@ -40,7 +40,7 @@ void	check_node(t_cmd *cmd, t_temp *temp)
 	else if (cmd->input[0] == '\'')
 		single_cote_cmd(cmd);
 	else if (cmd->input[0] == '"')
-		double_cote_cmd(cmd, temp->varenv);
+		dcote_cmd(cmd, temp->varenv);
 	else
 		cmd->output = ft_strdup(cmd->input);
 }
