@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   principal_parcing.c                                :+:      :+:    :+:   */
+/*   principal_parsing.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -330,7 +330,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 
 /*
 ** ft_getline reçoit avec l'aide du get_next_line la ligne avec les commandes...
-** ...et lance aussi le parcing
+** ...et lance aussi le parsing
 */
 
 int			ft_getline(t_temp *tmp)

@@ -1,7 +1,7 @@
 # > >> <
 falta > >> < en echo
 
-al dar enter hay un problema con los free, es en la linea 327 del parcing que esta el error
+al dar enter hay un problema con los free, es en la linea 327 del parsing que esta el error
 
 #cd 
 export HOME=

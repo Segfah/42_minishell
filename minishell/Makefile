@@ -21,7 +21,7 @@ SRC := \
 	srcs/main.c \
 	srcs/drawings/welcome.c \
 	srcs/prompt/ft_prompt.c \
-	srcs/parcing/principal_parcing.c \
+	srcs/parsing/principal_parsing.c \
 	srcs/gestion/pwd.c \
 	srcs/gestion/cd.c \
 	srcs/gestion/env.c \
@@ -42,14 +42,14 @@ SRC := \
 	srcs/utils/free.c \
 	srcs/gestion/echo.c \
 	srcs/utils/ft_split_line.c \
-	srcs/parcing/separator_string/node_cmd.c \
-	srcs/parcing/separator_string/delete_node.c \
-	srcs/parcing/separator_string/separator_string.c \
-	srcs/parcing/separator_string/double_cote.c \
-	srcs/parcing/separator_string/double_cote_utils.c \
-	srcs/parcing/separator_string/single_cote.c \
-	srcs/parcing/separator_string/slash.c \
-	srcs/parcing/separator_string/dollar.c \
+	srcs/parsing/separator_string/node_cmd.c \
+	srcs/parsing/separator_string/delete_node.c \
+	srcs/parsing/separator_string/separator_string.c \
+	srcs/parsing/separator_string/double_cote.c \
+	srcs/parsing/separator_string/double_cote_utils.c \
+	srcs/parsing/separator_string/single_cote.c \
+	srcs/parsing/separator_string/slash.c \
+	srcs/parsing/separator_string/dollar.c \
 	srcs/utils/ft_strcatdup.c \
 	srcs/utils/pv.c \
 	srcs/utils/adelines.c 
