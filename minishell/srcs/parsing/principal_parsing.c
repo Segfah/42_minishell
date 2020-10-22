@@ -266,18 +266,60 @@ void		skip_redi(char **cmd)
 
 //	tmp->flag[1] ? close(tmp->fd) : 0;
 
-static void		gestion_line(char **tabcmd, t_temp *tmp)
+void			initialize(t_temp *tmp)
 {
-	int i;
+	tmp->flag[1] = 0;
+	tmp->flag[2] = 0;
+	tmp->tabpath = NULL;
+}
+
+void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, t_cmd *cmd)
+{
+	if (j == 7)
+		gestion_unset(tmp);
+	else if (j == 8)
+		gestion_echo(cmd, tmp);
+	else if (j == 9 && command_bin(tmp->strcmd, tmp) == 0)
+		return ;
+	else
+	{
+		g_ret = 127;
+		ft_printf("minishell: command not found: %s\n", tabcmd);
+	}	
+}
+
+void			launcher_cmd(char *tabcmd, t_temp *tmp, int j, t_cmd *cmd)
+{
+	if (tabcmd[0] == 0 ||  j == -2 || tmp->flag[1] == -1 || tmp->flag[2] == -1)
+		return ;
+	else if (j == 1)
+	{
+		write(1, "exit\n", 5);
+		exit(0);
+	}
+	else if (j == 2)
+		gestion_cd(tmp->strcmd, tmp);
+	else if (j == 3)
+		gestion_env(tmp->strcmd, tmp);
+	else if (j == 4)
+		gestion_pwd(tmp->strcmd, tmp);
+	else if (j == 5)
+		gestion_nani(tmp->strcmd);
+	else if (j == 6)
+		gestion_export(tmp, 0);
+	else
+		launcher_cmd2(tabcmd, tmp, j, cmd);
+}
+
+static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
+{
 	int j;
 	t_cmd	*cmd;
 
-	i = -1;
+
 	while (tabcmd[++i])
 	{
-		tmp->flag[1] = 0;
-		tmp->flag[2] = 0;
-		tmp->tabpath = NULL;
+		initialize(tmp);
 		j = 0;
 		cmd = NULL;
 		separator_string(&cmd, tabcmd[i], tmp);
@@ -290,34 +332,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 		printf("----------cmd = [%d], redi de= [%d], redi iz=[%d], fd = [%d], fdi[%d]\n", tmp->flag[0], tmp->flag[1], tmp->flag[2], tmp->fd, tmp->fdi);
 		printf("--------------j= %d \n", j);
 		tmp->flag[0] = (j > 0) ? 1 : 0;
-		if (tabcmd[i][0] == 0 ||  j == -2 || tmp->flag[1] == -1 || tmp->flag[2] == -1)
-			;
-		else if (j == 1)
-		{
-			write(1, "exit\n", 5);
-			exit(0);
-		}
-		else if (j == 2)
-			gestion_cd(tmp->strcmd, tmp);
-		else if (j == 3)
-			gestion_env(tmp->strcmd, tmp);
-		else if (j == 4)
-			gestion_pwd(tmp->strcmd, tmp);
-		else if (j == 5)
-			gestion_nani(tmp->strcmd);
-		else if (j == 6)
-			gestion_export(tmp, 0);
-		else if (j == 7)
-			gestion_unset(tmp);
-		else if (j == 8)
-			gestion_echo(cmd, tmp);
-		else if (j == 9 && command_bin(tmp->strcmd, tmp) == 0)
-			;
-		else
-		{
-			g_ret = 127;
-			ft_printf("minishell: command not found: %s\n", tabcmd[i]);
-		}
+		launcher_cmd(tabcmd[i], tmp, j, cmd);
 		ft_free_double_tab(tmp->strcmd);
 		if (cmd != NULL)
 			free_cmd(cmd);
@@ -335,7 +350,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 
 int			ft_getline(t_temp *tmp)
 {
-	char		*line; // meter este line en la structura
+	char		*line;
 	int			ret;
 
 	line = NULL;
@@ -344,8 +359,7 @@ int			ft_getline(t_temp *tmp)
 	if (ret == 0)
 		return (0);
 	if (tmp->tabcmd != NULL && tmp->tabcmd[0])
-		gestion_line(tmp->tabcmd, tmp);
-//		ft_free_double_tab(tmp->tabcmd);
+		gestion_line(tmp->tabcmd, tmp, -1);
 	free(tmp->tabcmd);
 	ft_free(line);
 	return (1);

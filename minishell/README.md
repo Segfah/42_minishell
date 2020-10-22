@@ -58,7 +58,6 @@ echo \$?
 
 #problema grande
 echo > $aoueb (cuando la direccion es nula luego) segfault
-env -e ./the_big_minishell seguido de un export = segfault
 
 # de los test del fichero ese
 

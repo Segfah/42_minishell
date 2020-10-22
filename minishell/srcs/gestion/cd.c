@@ -48,7 +48,6 @@ char			*cp_str(char *str, t_temp *tmp)
 	new_str[i] = 0;
 	ft_free(tmp_str);
 	ft_free(str);
-	printf("---[%d]----->[%s]-[%s] -> nuevo [%s]\n",size , tmp_str, str, new_str);
 	return (new_str);
 }
 
@@ -84,5 +83,4 @@ void			gestion_cd(char **strcmd, t_temp *tmp)
 	tmp->env = getcwd(NULL, 0);
 	change_list(tmp->varenv, "PWD", tmp->env);
 	ft_free(tmp->env);
-//	tmp->flag[1] ? close(tmp->fd) : 0;
 }
