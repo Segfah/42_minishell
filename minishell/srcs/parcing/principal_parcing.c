@@ -310,7 +310,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp)
 		else if (j == 7)
 			gestion_unset(tmp);
 		else if (j == 8)
-			gestion_echo(cmd);
+			gestion_echo(cmd, tmp);
 		else if (j == 9 && command_bin(tmp->strcmd, tmp) == 0)
 			;
 		else

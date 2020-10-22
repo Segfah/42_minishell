@@ -168,7 +168,7 @@ char				**ft_split_strcmd(char *s, int echo);
 ** gestion/echo/echo
 */
 char				*gestion_echo_option(char *str, char *arg);
-void    			gestion_echo(t_cmd *cmd);
+void    			gestion_echo(t_cmd *cmd, t_temp *tmp);
 
 /*
 ** gestion/echo/ft_split_echo/count_word

@@ -43,11 +43,16 @@ void	gestion_echo_2(t_cmd *test, int n)
 		ft_printf("\n");
 }
 
-void	gestion_echo(t_cmd *cmd)
+void	gestion_echo(t_cmd *cmd, t_temp *tmp)
 {
 	t_cmd	*test;
 	int		n;
 
+	if (tmp->flag[1] == 1)
+	{
+		tmp->oldfd = dup(1);
+		dup2(tmp->fd, 1);
+	}
 	test = cmd;
 	n = 0;
 	if (test->next != NULL)
@@ -69,4 +74,5 @@ void	gestion_echo(t_cmd *cmd)
 		return ;
 	}
 	gestion_echo_2(test, n);
+	(tmp->flag[1] == 1) ? dup2(tmp->oldfd, 1) : 0;
 }
