@@ -25,7 +25,7 @@ void			range_export(t_lists *la)
 	char		*s2;
 
 	tmp = la;
-	while (tmp->next != NULL)
+	while (tmp && tmp->next != NULL)
 	{
 		tmp3 = tmp;
 		tmp1 = tmp->next;
