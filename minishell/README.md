@@ -43,3 +43,23 @@ cat < objs #siendo objs una carpeta, y luego hago una comanda buena como ls empi
 
 #leo
 pwd > nani < nani
+
+#parsing
+echo \$?
+\"pwd\"
+
+#redirecciones
+< \" \" < ' '<
+\" \" ' ' > < > ''
+>>>
+<<<<<<<<
+<<<
+>>>
+
+#problema grande
+echo > $aoueb (cuando la direccion es nula luego) segfault
+env -e ./the_big_minishell seguido de un export = segfault
+
+# de los test del fichero ese
+
+pwd a -> pwd: too many arguments (toca quitarlo)?
