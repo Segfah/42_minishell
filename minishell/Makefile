@@ -52,6 +52,9 @@ SRC := \
 	srcs/parsing/separator_string/dollar.c \
 	srcs/utils/ft_strcatdup.c \
 	srcs/utils/pv.c \
+	srcs/parsing/tools_parsing/cmd_exist.c \
+	srcs/parsing/tools_parsing/redirection.c \
+	srcs/parsing/tools_parsing/open_redirection.c \
 	srcs/utils/adelines.c 
 
 OBJS = $(addprefix objs/, $(SRC:.c=.o))

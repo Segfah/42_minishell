@@ -21,6 +21,7 @@
 # include <errno.h>
 # include "libft.h"
 # include <fcntl.h>
+# include <sys/stat.h>
 
 typedef struct		s_lists
 {
@@ -86,7 +87,25 @@ char				*ft_prompt(char *str);
 ** Parsing
 */
 int					ft_getline(t_temp *tmp);
+
+/*
+**	parsing/tools/cmd_exit
+*/
+int					cmd_exist(char *cmd, t_temp *tmp);
+
+/*
+**	parsing/tools/redirection
+*/
+int					check_redi(char **cmd, t_temp *tmp);
+void				skip_redi(char **cmd);
+
+/*
+** parsing/tools/open_rediction
+*/
 int					is_redi(char *str);
+int					simple_redi(char *path, t_temp *tmp);
+int					double_redi(char *path, t_temp *tmp);
+int					contre_redi(char *path, t_temp *tmp);
 
 /*
 ** ************************************************************************
