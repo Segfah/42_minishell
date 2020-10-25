@@ -14,13 +14,6 @@
 
 void		gestion_pwd(char **strcmd, t_temp *tmp)
 {
-	if (strcmd[1])
-	{
-		ft_printf("pwd: too many arguments\n");
-		if (tmp->flag[1])
-			close(tmp->fd);
-		return ;
-	}
 	if (tmp->flag[1] == 1)
 	{
 		tmp->oldfd = dup(1);
@@ -30,4 +23,5 @@ void		gestion_pwd(char **strcmd, t_temp *tmp)
 	ft_printf("%s\n", tmp->env);
 	ft_free(tmp->env);
 	(tmp->flag[1] == 1) ? dup2(tmp->oldfd, 1) : 0;
+	(void)strcmd;
 }
