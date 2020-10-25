@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 13:58:31 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/25 14:20:51 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/20 19:15:32 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,27 @@ int			strcat_cmd(t_cmd **cmd)
 
 	tmp = *cmd;
 	i = 0;
-	while (tmp->next)
+	while (tmp)
 	{
 		if ((ft_strcmp(tmp->output, " ") != 0) &&
 		tmp->next && (ft_strcmp(tmp->next->output, " ") != 0))
 		{
+			//printf("\n\n---------------\n");
+			//printf("tmp->input = [%s]\n", tmp->input);
+			//printf("tmp->next->input = [%s]\n", tmp->next->input);
+			//printf("tmp->output = [%s]\n", tmp->output);
+			//printf("tmp->next->output = [%s]\n", tmp->next->output);
+			//printf("---------------\n\n");
+			//printf("input before -> [%s] | ", tmp->input);
 			if ((tmp->input = ft_strcatdup(tmp->input, tmp->next->input)))
 				tmp->next->input = NULL;
+			//while (1);
+			//printf("input after -> [%s]\n", tmp->input);
+			//printf("output before -> [%s] | ", tmp->output);
 			if ((tmp->output = ft_strcatdup(tmp->output, tmp->next->output)))
 				tmp->next->output = NULL;
 			i = 1;
+			//while (1);
 			break ;
 		}
 		tmp = tmp->next;
