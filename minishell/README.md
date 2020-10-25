@@ -34,16 +34,6 @@ pwdi					no
 unset					no
 
 
-
-#leaks
-cuando hago 
-cat < objs #siendo objs una carpeta, y luego hago una comanda buena como ls empiezan a salir leaks
-		->cat < obsj
-		->ls
-
-#leo
-pwd > nani < nani
-
 #parsing
 echo \$?
 \"pwd\"
