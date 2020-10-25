@@ -60,10 +60,11 @@ void			gestion_cd(char **strcmd, t_temp *tmp)
 	g_ret = 0;
 	if (strcmd[1] != NULL)
 	{
-		printf("------>[%s]\n", strcmd[1]);
 		if (!ft_strncmp(strcmd[1], "~", 1))
 			strcmd[1] = cp_str(strcmd[1], tmp);
-		if (chdir(strcmd[1]) != 0 && (g_ret = 1))
+		if (!ft_strcmp(strcmd[1], ""))
+			;
+		else if (chdir(strcmd[1]) != 0 && (g_ret = 1))
 			ft_printf("cd: %s: %s\n", strerror(errno), strcmd[1]);
 	}
 	else
@@ -71,7 +72,9 @@ void			gestion_cd(char **strcmd, t_temp *tmp)
 		search_env("HOME", tmp, 0, &home);
 		if (home)
 		{
-			if (chdir(home) != 0 && (g_ret = 1))
+			if (!ft_strcmp(home, ""))
+				;
+			else if (chdir(home) != 0 && (g_ret = 1))
 				ft_printf("cd: %s: %s\n", strerror(errno), home);
 		}
 		else
