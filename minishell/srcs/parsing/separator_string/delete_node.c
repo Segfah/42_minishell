@@ -33,9 +33,9 @@ void	remove_space_node(t_cmd **cmd)
 	while (tmp)
 	{
 		save = NULL;
-		if (tmp->next && (ft_strcmp(tmp->next->output, " ") == 0) &&
+		if (tmp->next && (ft_strcmp(tmp->next->input, " ") == 0) &&
 		(tmp->next->next == NULL ||
-		(ft_strcmp(tmp->next->next->output, " ") == 0)))
+		(ft_strcmp(tmp->next->next->input, " ") == 0)))
 		{
 			save = tmp->next->next;
 			ft_lstdelone_cmd(tmp->next);
@@ -55,7 +55,7 @@ void	remove_all_space_node(t_cmd **cmd)
 	while (tmp)
 	{
 		save = NULL;
-		if (tmp->next && (ft_strcmp(tmp->next->output, " ") == 0))
+		if (tmp->next && (ft_strcmp(tmp->next->input, " ") == 0))
 		{
 			save = tmp->next->next;
 			ft_lstdelone_cmd(tmp->next);

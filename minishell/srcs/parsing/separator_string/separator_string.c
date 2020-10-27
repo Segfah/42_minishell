@@ -61,7 +61,7 @@ int				check_echo_2(int *check, int *i, char c, char *s)
 	return (0);
 }
 
-void			check_echo(t_cmd **cmd)
+void			check_echo(t_cmd **cmd) // poner una key para activarlo si necesitamos en la cadena
 {
 	t_cmd *tmp;
 	int i;
