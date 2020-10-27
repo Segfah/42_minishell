@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/01 22:37:22 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/09 17:12:55 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/27 14:11:14 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_count_word_slash(char *s, int *i, int *n)
 		i--;
 		(*n)++;
 	}
-	else if ((count % 2) == 1 && count > 1 && (s[*i + 1] == '\'' ||
+	else if ((count % 2) == 1 && count == 1 && (s[*i + 1] == '\'' ||
 	s[*i + 1] == '"' || s[*i] == '"' || s[*i] == '\''))
 	{
 		(*i)++;
@@ -49,23 +49,12 @@ void	ft_count_word_slash(char *s, int *i, int *n)
 		ft_count_word_slash_2(s, i, n);
 }
 
-char	*ft_fill_slash_2(char *s, int *i, char *tab)
+char	*ft_fill_slash_2(char *s, int *i, char *tab, int save)
 {
-	int save;
-
-	save = *i;
-	if (s[*i + 1] == '\'' || s[*i + 1] == '"' || s[*i] == '"' || s[*i] == '\'')
-	{
+	while (s[*i] && s[*i] != ' ' && s[*i] != '"' && s[*i] != '\'' &&
+	s[*i] != '$' && s[*i] != '\\')
 		(*i)++;
-		return (tab = copy(s, i, save));
-	}
-	else
-	{
-		while (s[*i] && s[*i] != ' ' && s[*i] != '"' && s[*i] != '\'' &&
-		s[*i] != '$' && s[*i] != '\\')
-			(*i)++;
-		return (tab = copy(s, i, save));
-	}
+	return (tab = copy(s, i, save));
 }
 
 char	*ft_fill_slash(char *s, int *i, char *tab)
@@ -87,5 +76,11 @@ char	*ft_fill_slash(char *s, int *i, char *tab)
 		(*i)--;
 		return (tab = copy(s, i, save));
 	}
-	return (ft_fill_slash_2(s, i, tab));
+	else if ((count % 2) == 1 && count == 1 && (s[*i] == '\'' ||
+		s[*i] == '"'))
+	{
+		(*i)++;
+		return (tab = copy(s, i, save));
+	}
+	return (ft_fill_slash_2(s, i, tab, save));
 }

@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 13:58:31 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/20 19:15:32 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/25 16:07:26 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int			strcat_cmd(t_cmd **cmd)
 	i = 0;
 	while (tmp)
 	{
-		if ((ft_strcmp(tmp->output, " ") != 0) &&
-		tmp->next && (ft_strcmp(tmp->next->output, " ") != 0))
+		if (tmp->next && (ft_strcmp(tmp->output, " ") != 0) &&
+		(ft_strcmp(tmp->next->output, " ") != 0))
 		{
 			//printf("\n\n---------------\n");
 			//printf("tmp->input = [%s]\n", tmp->input);
