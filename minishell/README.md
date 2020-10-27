@@ -1,19 +1,12 @@
-# > >> <
-falta > >> < en echo
-
 # bin
 ^\ -> como hago para ocultar el ^\
-
-## lu
-# gestion
- controles, echo, nani
 
 revisar los 
 unset HOME
 echo $? y estas cositas!!!!!!!!!!!!!!!
+
 #parsing
 echo \$?
-\"pwd\"
 
 #redirecciones
 < \" \" < ' '<

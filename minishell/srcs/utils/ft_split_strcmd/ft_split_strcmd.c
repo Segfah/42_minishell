@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 23:18:04 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/20 16:00:07 by lryst            ###   ########.fr       */
+/*   Updated: 2020/10/25 16:10:02 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,17 @@ char				**ft_split_strcmd(char *s, int echo)
 	if (!s)
 		return (NULL);
 	n = ft_word(s, echo);
+	printf("NBR = %d\n", n);
 	if (!(tab = (char **)malloc(sizeof(tab) * (n + 1))))
 		return (NULL);
 	while (++j < n)
 		tab[j] = ft_fill(s, echo, &i, tab[j]);
 	tab[j] = 0;
-	/* j = 0;
+	j = 0;
 	while(tab[j])
 	{
 		printf("tab[%d] =[%s]\n", j, tab[j]);
 		j++;
-	} */
+	}
 	return (tab);
 }

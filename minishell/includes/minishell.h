@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/22 13:11:39 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/25 16:59:48 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,7 +300,7 @@ char				*ft_fill_dollar(char *s, int *i, char *tab);
 void				ft_count_word_slash_2(char *s, int *i, int *n);
 void				ft_count_word_slash(char *s, int *i, int *n);
 char				*ft_fill_slash(char *s, int*i, char *tab);
-char				*ft_fill_slash_2(char *s, int *i, char *tab);
+char				*ft_fill_slash_2(char *s, int *i, char *tab, int save);
 
 void				ft_count_word_space(char *s, int *i, int *n, int *echo);
 

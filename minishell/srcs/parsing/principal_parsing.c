@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/22 16:19:30 by corozco          ###   ########.fr       */
+/*   Updated: 2020/10/25 16:16:58 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 
 	while (tabcmd[++i])
 	{
+		printf("tabcmd[%d] = [%s]\n", i, tabcmd[i]);
 		initialize(tmp);
 		j = 0;
 		cmd = NULL;
