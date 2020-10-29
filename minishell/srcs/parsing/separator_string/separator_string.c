@@ -106,5 +106,5 @@ void			separator_string(t_cmd **cmd, char *str, t_temp *tmp)
 		strcat_cmd(cmd);
 	remove_null_node(cmd);
 	remove_space_node(cmd);
-	check_echo(cmd);
+//	check_echo(cmd);
 }

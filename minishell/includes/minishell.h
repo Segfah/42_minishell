@@ -60,6 +60,7 @@ typedef struct		s_temp
 	int				fdi;
 	int				oldfd;
 	char			*hnull;
+	char			***tpipe;
 }					t_temp;
 
 typedef struct		s_cmd

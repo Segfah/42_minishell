@@ -12,11 +12,33 @@
 
 #include "minishell.h"
 
+void	printftab(char **tab)// a borrar
+{
+	printf("----printtab----\n");
+	for (int i = 0; tab[i]; i++)
+		printf("---[%d], --- [%s]\n", i, tab[i]);
+	printf("-----------------\n");
+}
+
+void	printflist(t_cmd *cmd)
+{
+	t_cmd *tmp;
+
+	tmp = cmd;
+	printf("----printlist----\n");
+	while (tmp)
+	{
+		printf("list in[%s] out[%s]\n",tmp->input, tmp->output);
+		tmp = tmp->next;
+	}
+	printf("-----------------\n");
+}
+
 /*
 ** fonction qui compte la liste sans les espaces de echo -n
 */
 
-int				mlist_size(t_cmd *head)
+int				mlist_size(t_cmd *head, int key)
 {
 	int			i;
 
@@ -25,7 +47,12 @@ int				mlist_size(t_cmd *head)
 		return (i);
 	while (head)
 	{
-		if (ft_strcmp(head->input, " "))
+		if (key)
+		{
+			if (ft_strcmp(head->input, " "))
+				i++;
+		}
+		else
 			i++;
 		head = head->next;
 	}
@@ -36,7 +63,7 @@ int				mlist_size(t_cmd *head)
 ** Fonction qui modifie strcmd avec la liste, maj + supp des espaces
 */
 
-char			**llist_astring(t_cmd *head, char **tabstr)
+char			**llist_astring(t_cmd *head, char **tabstr, int key)
 {
 	int			i;
 
@@ -44,11 +71,16 @@ char			**llist_astring(t_cmd *head, char **tabstr)
 	if (head)
 	{
 		ft_free_double_tab(tabstr);
-		if (!(tabstr = (char**)malloc(sizeof(char*) * (mlist_size(head) + 1))))
+		if (!(tabstr = (char**)malloc(sizeof(char*) * (mlist_size(head, key) + 1))))
 			return (NULL);
 		while (head)
 		{
-			if (ft_strcmp(head->input, " "))
+			if (key)
+			{
+				if (ft_strcmp(head->input, " "))
+				tabstr[i++] = ft_strdup(head->output);
+			}
+			else
 				tabstr[i++] = ft_strdup(head->output);
 			head = head->next;
 		}
@@ -74,6 +106,7 @@ void			initialize(t_temp *tmp)
 	tmp->flag[1] = 0;
 	tmp->flag[2] = 0;
 	tmp->tabpath = NULL;
+	tmp->tpipe = NULL;
 }
 
 void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, t_cmd *cmd)
@@ -114,10 +147,112 @@ void			launcher_cmd(char *tabcmd, t_temp *tmp, int j, t_cmd *cmd)
 		launcher_cmd2(tabcmd, tmp, j, cmd);
 }
 
+
+int			len_split3d(t_cmd *cmd)
+{
+	int		pipe;
+	t_cmd	*tmp;
+
+	tmp = cmd;
+	pipe = 0;
+	if (tmp && !ft_strcmp(tmp->input, "|")) //si le premier est | erreur
+		return (-1);
+	while (tmp)
+	{
+		if (!ft_strcmp(tmp->input, "|") && (!tmp->next || !tmp->next->next)) // si le derniere est un | erreur
+			return (-1);
+		else if (!ft_strcmp(tmp->input, "|") && !ft_strcmp(tmp->next->next->input, "|")) // si il y a un | et que celui d'apres et un | erreur
+			return (-2);
+		else if (!ft_strcmp(tmp->input, "|"))
+			pipe++;
+		tmp = tmp->next;
+	}
+	if (pipe == 0)
+		return (0);
+	return (pipe + 1);
+}
+
+int				len_tabsplit3d(t_cmd *cmd)
+{
+	t_cmd		*tmp;
+	int			ret;
+
+	ret = 0;
+	tmp = cmd;
+	while (tmp)
+	{
+		if (!ft_strcmp(tmp->input, "|"))
+			return (ret);
+		ret++;
+		tmp = tmp->next;
+	}
+	return (ret);
+}
+
+void			tab2_3d(t_cmd *cmd, char ***tpipe)
+{
+	t_cmd		*tmp;
+	int			i;
+	int			k;
+	int			len;
+
+
+	i = 0;
+	tmp = cmd;
+	while (tmp)
+	{
+		k = 0;
+		len = len_tabsplit3d(tmp); // len = 2
+		printf("i=[%d]----len [%d]\n",i, len);
+	//	exit(1);
+		tpipe[i] = malloc(sizeof(char *) * len);
+		while (k < len)
+		{
+			tpipe[i][k] = ft_strdup(tmp->input);
+			printf("-----------------input[%s]\n", tmp->input);
+			k++;
+			if (tmp->next)
+				tmp = tmp->next;
+		}
+		printf("-----------------nani\n");
+		tpipe[i][k] = NULL;
+		i++;
+	//	if (tmp->next)
+			tmp = tmp->next;
+		if (i == 10)
+			exit(1);	
+//		tmp->next;
+	}
+
+}
+
+int				split3d(t_cmd *cmd, t_temp *tmp, char ***tpipe)
+{
+	int			ret;
+
+	printf("              il y a [%d] mots\n", len_split3d(cmd));
+	if ((ret = len_split3d(cmd)) == 0)
+		return (0);
+	if (ret < 0)
+		return (-1);
+	tpipe = malloc(sizeof(char**) * ret);
+	tpipe[ret] = NULL;
+	tab2_3d(cmd, tpipe);
+
+	//podriamos hacer los tableros, despues de los tableros, reformar la lista, y de esa lista volver a sacar el nuevo tablero
+	// a partir de la lista ya hecha con la funcion que tenemos de pasar de lista a tablero.
+
+	(void)tmp;
+	(void)tpipe;
+	return (1);
+}
+
+
 /*
 **	printf("----------cmd = [%d], redi de= [%d], redi iz=[%d], fd = [%d], fdi[%d]\n", tmp->flag[0], tmp->flag[1], tmp->flag[2], tmp->fd, tmp->fdi);
 **	printf("--------------j= %d \n", j);
 */
+
 
 static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 {
@@ -126,13 +261,25 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 
 	while (tabcmd[++i])
 	{
-		printf("tabcmd[%d] = [%s]\n", i, tabcmd[i]);
+	//	printf("tabcmd[%d] = [%s]\n", i, tabcmd[i]);
 		initialize(tmp);
 		j = 0;
 		cmd = NULL;
 		separator_string(&cmd, tabcmd[i], tmp);
-		(cmd) ? tmp->strcmd = llist_astring(cmd, tmp->strcmd) : 0;
-//aqui viene el pipe
+
+		printflist(cmd);
+
+		(cmd) ? split3d(cmd, tmp, tmp->tpipe) : 0;
+
+
+		(cmd) ? tmp->strcmd = llist_astring(cmd, tmp->strcmd, 1) : 0;
+
+
+//notre tab 3d
+// echo tmp->strcmd[0] = echo key 0 sinon key 1
+		printftab(tmp->strcmd);
+	//	exit(1);
+		//aqui viene el pipe
 		cmd ? check_redi(tmp->strcmd, tmp) : 0;
 		((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)
 			? skip_redi(tmp->strcmd) : 0;
