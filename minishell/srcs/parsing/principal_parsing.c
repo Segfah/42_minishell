@@ -189,6 +189,13 @@ int				len_tabsplit3d(t_cmd *cmd)
 	return (ret);
 }
 
+int				no_redi(char *input)
+{
+	return (!ft_strcmp(input, "\">\"") || !ft_strcmp(input, "\"<\"")
+	|| !ft_strcmp(input, "\">>\"") || !ft_strcmp(input, "'>'")
+	|| !ft_strcmp(input, "'<'") || !ft_strcmp(input, "'>>'"));
+}
+
 void			tab2_3d(t_cmd *cmd, t_temp *tmp)
 {
 	t_cmd		*tmpo;
@@ -207,7 +214,10 @@ void			tab2_3d(t_cmd *cmd, t_temp *tmp)
 		tmp->tpipe[i] = (char**)malloc(sizeof(char *) * len + 1);
 		while (k < len)
 		{
-			tmp->tpipe[i][k] = ft_strdup(tmpo->output);
+			if (no_redi(tmpo->input))
+				tmp->tpipe[i][k] = ft_strdup(tmpo->input);
+			else
+				tmp->tpipe[i][k] = ft_strdup(tmpo->output);
 			k++;
 			if (tmpo->next)
 				tmpo = tmpo->next;
@@ -216,29 +226,28 @@ void			tab2_3d(t_cmd *cmd, t_temp *tmp)
 		i++;
 		tmpo = tmpo->next;
 	}
-
-//	printf("dos-------i=%d-------input[%s]\n",i, tmp->tpipe[0][0]);
-//	tmp->tpipe[i] = NULL;
-//	printf("------nanii-----------input[%s]\n", tmp->tpipe[0][0]);
+	tmp->tpipe[i] = NULL;
 }
 
 int				split3d(t_cmd *cmd, t_temp *tmp)
 {
 	int			ret;
-
-	printf("              il y a [%d] mots\n", len_split3d(cmd));
+	int			o;
+	
+	o = 0;
 	if ((ret = len_split3d(cmd)) == 0)
 		return (0);
 	if (ret < 0)
 		return (-1);
-	tmp->tpipe = (char***)malloc(sizeof(char**) * ret);
+	tmp->tpipe = (char***)malloc(sizeof(char**) * ret + 1);
 	
 	tab2_3d(cmd, tmp);
-	tmp->tpipe[ret] = NULL;
-	for (int o = 0; tmp->tpipe[o]; o++)
+
+	while (tmp->tpipe[o])
 	{
 		printf("tab[%d]\n",o);
 		printftab(tmp->tpipe[o]);
+		o++;
 	}
 	//podriamos hacer los tableros, despues de los tableros, reformar la lista, y de esa lista volver a sacar el nuevo tablero
 	// a partir de la lista ya hecha con la funcion que tenemos de pasar de lista a tablero.
