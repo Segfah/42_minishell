@@ -189,44 +189,40 @@ int				len_tabsplit3d(t_cmd *cmd)
 	return (ret);
 }
 
-void			tab2_3d(t_cmd *cmd, char ***tpipe)
+void			tab2_3d(t_cmd *cmd, t_temp *tmp)
 {
-	t_cmd		*tmp;
+	t_cmd		*tmpo;
 	int			i;
 	int			k;
 	int			len;
 
 
 	i = 0;
-	tmp = cmd;
-	while (tmp)
+	tmpo = cmd;
+	while (tmpo)
 	{
 		k = 0;
-		len = len_tabsplit3d(tmp); // len = 2
-		printf("i=[%d]----len [%d]\n",i, len);
-	//	exit(1);
-		tpipe[i] = malloc(sizeof(char *) * len);
+		len = len_tabsplit3d(tmpo); // len = 2
+		printf("estoy aqui\n");
+		tmp->tpipe[i] = (char**)malloc(sizeof(char *) * len + 1);
 		while (k < len)
 		{
-			tpipe[i][k] = ft_strdup(tmp->input);
-			printf("-----------------input[%s]\n", tmp->input);
+			tmp->tpipe[i][k] = ft_strdup(tmpo->output);
 			k++;
-			if (tmp->next)
-				tmp = tmp->next;
+			if (tmpo->next)
+				tmpo = tmpo->next;
 		}
-		printf("-----------------nani\n");
-		tpipe[i][k] = NULL;
+		tmp->tpipe[i][k] = NULL;		
 		i++;
-	//	if (tmp->next)
-			tmp = tmp->next;
-		if (i == 10)
-			exit(1);	
-//		tmp->next;
+		tmpo = tmpo->next;
 	}
 
+//	printf("dos-------i=%d-------input[%s]\n",i, tmp->tpipe[0][0]);
+//	tmp->tpipe[i] = NULL;
+//	printf("------nanii-----------input[%s]\n", tmp->tpipe[0][0]);
 }
 
-int				split3d(t_cmd *cmd, t_temp *tmp, char ***tpipe)
+int				split3d(t_cmd *cmd, t_temp *tmp)
 {
 	int			ret;
 
@@ -235,15 +231,18 @@ int				split3d(t_cmd *cmd, t_temp *tmp, char ***tpipe)
 		return (0);
 	if (ret < 0)
 		return (-1);
-	tpipe = malloc(sizeof(char**) * ret);
-	tpipe[ret] = NULL;
-	tab2_3d(cmd, tpipe);
-
+	tmp->tpipe = (char***)malloc(sizeof(char**) * ret);
+	
+	tab2_3d(cmd, tmp);
+	tmp->tpipe[ret] = NULL;
+	for (int o = 0; tmp->tpipe[o]; o++)
+	{
+		printf("tab[%d]\n",o);
+		printftab(tmp->tpipe[o]);
+	}
 	//podriamos hacer los tableros, despues de los tableros, reformar la lista, y de esa lista volver a sacar el nuevo tablero
 	// a partir de la lista ya hecha con la funcion que tenemos de pasar de lista a tablero.
 
-	(void)tmp;
-	(void)tpipe;
 	return (1);
 }
 
@@ -269,7 +268,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 
 		printflist(cmd);
 
-		(cmd) ? split3d(cmd, tmp, tmp->tpipe) : 0;
+		(cmd) ? split3d(cmd, tmp) : 0;
 
 
 		(cmd) ? tmp->strcmd = llist_astring(cmd, tmp->strcmd, 1) : 0;
@@ -277,7 +276,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 
 //notre tab 3d
 // echo tmp->strcmd[0] = echo key 0 sinon key 1
-		printftab(tmp->strcmd);
+//		printftab(tmp->strcmd);
 	//	exit(1);
 		//aqui viene el pipe
 		cmd ? check_redi(tmp->strcmd, tmp) : 0;
