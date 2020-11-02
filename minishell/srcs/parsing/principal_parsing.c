@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/27 18:02:15 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/01 16:41:43 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,10 +216,6 @@ void			tab2_3d(t_cmd *cmd, t_temp *tmp)
 		i++;
 		tmpo = tmpo->next;
 	}
-
-//	printf("dos-------i=%d-------input[%s]\n",i, tmp->tpipe[0][0]);
-//	tmp->tpipe[i] = NULL;
-//	printf("------nanii-----------input[%s]\n", tmp->tpipe[0][0]);
 }
 
 int				split3d(t_cmd *cmd, t_temp *tmp)
@@ -231,8 +227,7 @@ int				split3d(t_cmd *cmd, t_temp *tmp)
 		return (0);
 	if (ret < 0)
 		return (-1);
-	tmp->tpipe = (char***)malloc(sizeof(char**) * ret);
-	
+	tmp->tpipe = (char***)malloc(sizeof(char**) * ret + 1);
 	tab2_3d(cmd, tmp);
 	tmp->tpipe[ret] = NULL;
 	for (int o = 0; tmp->tpipe[o]; o++)
@@ -240,9 +235,6 @@ int				split3d(t_cmd *cmd, t_temp *tmp)
 		printf("tab[%d]\n",o);
 		printftab(tmp->tpipe[o]);
 	}
-	//podriamos hacer los tableros, despues de los tableros, reformar la lista, y de esa lista volver a sacar el nuevo tablero
-	// a partir de la lista ya hecha con la funcion que tenemos de pasar de lista a tablero.
-
 	return (1);
 }
 
