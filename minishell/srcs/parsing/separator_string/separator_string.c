@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 13:58:31 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/02 14:21:07 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/02 14:36:52 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@ int			isalpha1(char *s)
 	i = 0;
 	while (s[i])
 	{
-		if (!((int)s[i] >= 65 && (int)s[i] <= 90) || ((int)s[i] >= 97 &&
-		(int)s[i] <= 122))
+		if (!(((int)s[i] >= 65 && (int)s[i] <= 90) || ((int)s[i] >= 97 &&
+		(int)s[i] <= 122)))
 			return (-1);
+		ret++;
 		i++;
 	}
 	return (ret);
@@ -38,7 +39,6 @@ int			strcat_cmd(t_cmd **cmd)
 	i = 0;
 	while (tmp)
 	{
-		
 		if (tmp->next && (isalpha1(tmp->output) > 0) &&
 		(isalpha1(tmp->next->output) > 0))
 		{
