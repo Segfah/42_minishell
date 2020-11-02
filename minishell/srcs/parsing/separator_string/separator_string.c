@@ -6,11 +6,29 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 13:58:31 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/25 16:07:26 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/02 14:36:52 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int			isalpha1(char *s)
+{
+	int i;
+	int ret;
+
+	ret = 0;
+	i = 0;
+	while (s[i])
+	{
+		if (!(((int)s[i] >= 65 && (int)s[i] <= 90) || ((int)s[i] >= 97 &&
+		(int)s[i] <= 122)))
+			return (-1);
+		ret++;
+		i++;
+	}
+	return (ret);
+}
 
 int			strcat_cmd(t_cmd **cmd)
 {
@@ -21,8 +39,8 @@ int			strcat_cmd(t_cmd **cmd)
 	i = 0;
 	while (tmp)
 	{
-		if (tmp->next && (ft_strcmp(tmp->output, " ") != 0) &&
-		(ft_strcmp(tmp->next->output, " ") != 0))
+		if (tmp->next && (isalpha1(tmp->output) > 0) &&
+		(isalpha1(tmp->next->output) > 0))
 		{
 			//printf("\n\n---------------\n");
 			//printf("tmp->input = [%s]\n", tmp->input);
