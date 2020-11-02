@@ -263,6 +263,136 @@ void			tab2_3d(t_cmd *cmd, t_temp *tmp)
 	tmp->inpipe[i] = NULL;
 }
 
+void			clean_tab2d(char **tabin, char **tabout)
+{
+	int			i;
+	int			k;
+
+	k = 0;
+	i = 0;
+	while (tabin[i])
+	{
+		if (!ft_strcmp(tabin[i], " "))
+		{
+			ft_free(tabin[i]);
+			ft_free(tabout[i]);
+			i++;
+		}
+		else
+		{
+			tabin[k] = tabin[i];
+			tabout[k] = tabout[i];
+			i++;
+			k++;
+		}
+	}
+	tabin[k] = 0;
+	tabout[k] = 0;
+}
+
+void			clean_tab2d_echo(char **tabin, char **tabout)
+{
+	int			i;
+	int			k;
+
+	k = 0;
+	i = 0;
+	if (!ft_strcmp(tabin[i], " "))
+	{
+		ft_free(tabin[i]);
+		ft_free(tabout[i]);
+		i++;
+	}
+	while (tabin[i])
+	{
+		tabin[k] = tabin[i];
+		tabout[k] = tabout[i];
+		i++;
+		k++;
+	}
+	if (!ft_strcmp(tabin[k - 1], " "))
+	{
+		ft_free(tabin[k - 1]);
+		ft_free(tabout[k - 1]);
+		tabin[k - 1] = 0;
+		tabout[k - 1] = 0;
+	}
+	else
+	{
+		tabin[k] = 0;
+		tabout[k] = 0;
+	}
+}
+
+int				scheck_echo_2(int *check, int *i, char c, char *s)
+{
+	if (s && s[*i] && (s[*i] == c || s[*i] == c - 40))
+	{
+		*check += 1;
+		(*i)++;
+		return (*check);
+	}
+	*check = 0;
+	return (0);
+}
+
+int				scheck_echo(char *cmd) // poner una key para activarlo si necesitamos en la cadena
+{
+	int i;
+	int check;
+
+	i = 0;
+	check = 0;
+	if (!cmd)
+		return (-1);
+	if (ft_strlen(cmd) < 4)
+		return (0);
+	if (scheck_echo_2(&check, &i, 'e', cmd) == 1)
+	{
+		if (scheck_echo_2(&check, &i, 'c', cmd) == 2)
+		{
+			if (scheck_echo_2(&check, &i, 'h', cmd) == 3)
+			{
+				if (scheck_echo_2(&check, &i, 'o', cmd) == 4)
+					return (1);
+			}
+		}
+	}
+	return (0);
+}
+
+int				cherche_echo(char **tab)
+{
+	int			i;
+
+	i = 0;
+	while (tab[i])
+	{
+		if (scheck_echo(tab[i]))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void			clean_split3d(t_temp *tmp)
+{
+	int			i;
+
+	i = 0;
+	while (tmp->inpipe[i])
+	{
+		if (cherche_echo(tmp->outpipe[i]))
+		{
+			clean_tab2d_echo(tmp->inpipe[i], tmp->outpipe[i]);
+			printf("hay un echo\n");
+		}
+		else
+			clean_tab2d(tmp->inpipe[i], tmp->outpipe[i]);
+		i++;
+	}
+}
+
 int				split3d(t_cmd *cmd, t_temp *tmp)
 {
 	int			ret;
@@ -280,19 +410,21 @@ int				split3d(t_cmd *cmd, t_temp *tmp)
 	//podriamos hacer los tableros, despues de los tableros, reformar la lista, y de esa lista volver a sacar el nuevo tablero
 	// a partir de la lista ya hecha con la funcion que tenemos de pasar de lista a tablero.
 	int		o = 0;
+	clean_split3d(tmp);
+	while (tmp->inpipe[o])
+	{
+		printf("tab inpipe[%d]\n",o);
+		printftab(tmp->inpipe[o]);
+		o++;
+	}
+	o = 0;
 	while (tmp->outpipe[o])
 	{
 		printf("tab outpipe[%d]\n",o);
 		printftab(tmp->outpipe[o]);
 		o++;
 	}
-	o = 0;
-	while (tmp->outpipe[o])
-	{
-		printf("tab inpipe[%d]\n",o);
-		printftab(tmp->inpipe[o]);
-		o++;
-	}
+	exit(1);
 	return (1);
 }
 
