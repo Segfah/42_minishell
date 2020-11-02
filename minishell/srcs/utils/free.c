@@ -14,13 +14,24 @@
 
 void				ft_free_double_tab(char **tab)
 {
-	int i;
+	int				i;
 
 	i = 0;
 	while (tab[i])
 		ft_free(tab[i++]);
 	free(tab);
 	tab = NULL;
+}
+
+void				ft_free_triple_tab(char ***tab3d)
+{
+	int				i;
+
+	i = 0;
+	while(tab3d[i])
+		ft_free_double_tab(tab3d[i++]);
+	free(tab3d);
+	tab3d = NULL;
 }
 
 void				free_node_cmd(t_cmd *node)
@@ -32,7 +43,7 @@ void				free_node_cmd(t_cmd *node)
 
 void				free_cmd(t_cmd *cmd)
 {
-	t_cmd		*tmp;
+	t_cmd			*tmp;
 
 	while (cmd != NULL)
 	{

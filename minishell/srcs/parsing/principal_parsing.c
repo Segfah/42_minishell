@@ -424,14 +424,12 @@ int				split3d(t_cmd *cmd, t_temp *tmp)
 		printftab(tmp->outpipe[o]);
 		o++;
 	}
-	exit(1);
 	return (1);
 }
 
 /*
 **	printf("----------cmd = [%d], redi de= [%d], redi iz=[%d], fd = [%d], fdi[%d]\n", tmp->flag[0], tmp->flag[1], tmp->flag[2], tmp->fd, tmp->fdi);
 **	printf("--------------j= %d \n", j);
-*/
 
 static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 {
@@ -448,7 +446,8 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 		printflist(cmd);
 		(cmd) ? split3d(cmd, tmp) : 0;
 
-
+	system("leaks minishell");
+	exit(1);
 
 		(cmd) ? tmp->strcmd = llist_astring(cmd, tmp->strcmd, 1) : 0;
 
@@ -471,6 +470,95 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 		tmp->tabpath ? ft_free_tab(tmp->tabpath) : 0;
 		tmp->flag[1] == 1 ? close(tmp->fd) : 0;
 		tmp->flag[2] == 1 ? close(tmp->fdi) : 0;
+	}
+}
+
+
+
+*/
+
+void			gestion_line2()
+{
+
+}
+
+
+static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
+{
+	int			j;
+	t_cmd		*cmd;
+
+	while (tabcmd[++i])
+	{
+	//	printf("tabcmd[%d] = [%s]\n", i, tabcmd[i]);
+		initialize(tmp);
+		j = 0;
+		cmd = NULL;
+		separator_string(&cmd, tabcmd[i], tmp);
+		printflist(cmd);
+		(cmd) ? split3d(cmd, tmp) : 0;
+
+		if (tmp->outpipe)
+		{
+			int fd[2];
+			pid_t pid;
+			int fdd = 0;
+			int k = 0;
+			while (tmp->outpipe[k])
+			{
+				pipe(fd);
+				if ((pid = fork()) == 0)
+				{
+					dup2(fdd, 0);
+					if (tmp->outpipe[k + 1] != NULL)
+					{
+						dup2(fd[1], 1);
+					}
+					close(fd[0]);
+					ft_free_double_tab(tmp->strcmd);
+					tmp->strcmd = tmp->outpipe[k];
+					cmd ? check_redi(tmp->strcmd, tmp) : 0;
+					((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)
+						? skip_redi(tmp->strcmd) : 0;
+					(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
+					tmp->flag[0] = (j > 0) ? 1 : 0;
+					launcher_cmd(tabcmd[i], tmp, j, cmd);
+					if (cmd != NULL)
+						free_cmd(cmd);
+					ft_free(tabcmd[i]);
+					tmp->tabpath ? ft_free_tab(tmp->tabpath) : 0;
+					tmp->flag[1] == 1 ? close(tmp->fd) : 0;
+					tmp->flag[2] == 1 ? close(tmp->fdi) : 0;
+					exit(1);
+				}
+				else
+				{
+					wait(NULL);
+					close(fd[1]);
+					fdd = fd[0];
+					k++;
+				}
+			}
+			ft_free_triple_tab(tmp->inpipe);
+			ft_free_triple_tab(tmp->outpipe);
+		}
+		else
+		{
+			(cmd) ? tmp->strcmd = llist_astring(cmd, tmp->strcmd, 1) : 0;
+			cmd ? check_redi(tmp->strcmd, tmp) : 0;
+			((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)
+				? skip_redi(tmp->strcmd) : 0;
+			(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
+			tmp->flag[0] = (j > 0) ? 1 : 0;
+			launcher_cmd(tabcmd[i], tmp, j, cmd);
+			ft_free_double_tab(tmp->strcmd);
+			if (cmd != NULL)
+				free_cmd(cmd);
+			ft_free(tabcmd[i]);
+			tmp->tabpath ? ft_free_tab(tmp->tabpath) : 0;
+			tmp->flag[1] == 1 ? close(tmp->fd) : 0;
+			tmp->flag[2] == 1 ? close(tmp->fdi) : 0;
+		}
 	}
 }
 
