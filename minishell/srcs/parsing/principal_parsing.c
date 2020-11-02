@@ -106,7 +106,8 @@ void			initialize(t_temp *tmp)
 	tmp->flag[1] = 0;
 	tmp->flag[2] = 0;
 	tmp->tabpath = NULL;
-	tmp->tpipe = NULL;
+	tmp->outpipe = NULL;
+	tmp->inpipe = NULL;
 }
 
 void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, t_cmd *cmd)
@@ -147,7 +148,7 @@ void			launcher_cmd(char *tabcmd, t_temp *tmp, int j, t_cmd *cmd)
 		launcher_cmd2(tabcmd, tmp, j, cmd);
 }
 
-
+/*
 int			len_split3d(t_cmd *cmd)
 {
 	int		pipe;
@@ -171,6 +172,36 @@ int			len_split3d(t_cmd *cmd)
 		return (0);
 	return (pipe + 1);
 }
+*/
+
+int			len_split3d(t_cmd *cmd)
+{
+	int		pipe;
+	t_cmd	*tmp;
+
+	tmp = cmd;
+	pipe = 0;
+	if (tmp && !ft_strcmp(tmp->input, "|")) //si le premier est | erreur
+		return (-1);
+	while (tmp)
+	{
+		if (!ft_strcmp(tmp->input, "|") && !tmp->next) // si le derniere est un | erreur
+			return (-1);
+		else if (!ft_strcmp(tmp->input, "|") && !ft_strcmp(tmp->next->input, " ") && !tmp->next->next)
+			return (-1);
+		else if (!ft_strcmp(tmp->input, "|") && !ft_strcmp(tmp->next->input, " ") && !ft_strcmp(tmp->next->next->input, "|"))
+			return (-2);		
+		else if (!ft_strcmp(tmp->input, "|") && ft_strcmp(tmp->next->input, " ") && !ft_strcmp(tmp->next->input, "|")) // si il y a un | et que celui d'apres et un | erreur
+			return (-2);
+		else if (!ft_strcmp(tmp->input, "|"))
+			pipe++;
+		tmp = tmp->next;
+	}
+	if (pipe == 0)
+		return (0);
+	return (pipe + 1);
+}
+
 
 int				len_tabsplit3d(t_cmd *cmd)
 {
@@ -189,12 +220,14 @@ int				len_tabsplit3d(t_cmd *cmd)
 	return (ret);
 }
 
+/*
 int				no_redi(char *input)
 {
 	return (!ft_strcmp(input, "\">\"") || !ft_strcmp(input, "\"<\"")
 	|| !ft_strcmp(input, "\">>\"") || !ft_strcmp(input, "'>'")
 	|| !ft_strcmp(input, "'<'") || !ft_strcmp(input, "'>>'"));
 }
+ */
 
 void			tab2_3d(t_cmd *cmd, t_temp *tmp)
 {
@@ -209,58 +242,64 @@ void			tab2_3d(t_cmd *cmd, t_temp *tmp)
 	while (tmpo)
 	{
 		k = 0;
-		len = len_tabsplit3d(tmpo); // len = 2
-		printf("estoy aqui\n");
-		tmp->tpipe[i] = (char**)malloc(sizeof(char *) * len + 1);
+		len = len_tabsplit3d(tmpo);
+		printf("estoy aqui\n len ---[%d] \n", len);
+		tmp->outpipe[i] = (char**)malloc(sizeof(char *) * len + 1);
+		tmp->inpipe[i] = (char**)malloc(sizeof(char *) * len + 1);
 		while (k < len)
 		{
-			if (no_redi(tmpo->input))
-				tmp->tpipe[i][k] = ft_strdup(tmpo->input);
-			else
-				tmp->tpipe[i][k] = ft_strdup(tmpo->output);
+			tmp->inpipe[i][k] = ft_strdup(tmpo->input);
+			tmp->outpipe[i][k] = ft_strdup(tmpo->output);
 			k++;
 			if (tmpo->next)
 				tmpo = tmpo->next;
 		}
-		tmp->tpipe[i][k] = NULL;		
+		tmp->outpipe[i][k] = NULL;		
+		tmp->inpipe[i][k] = NULL;	
 		i++;
 		tmpo = tmpo->next;
 	}
-	tmp->tpipe[i] = NULL;
+	tmp->outpipe[i] = NULL;
+	tmp->inpipe[i] = NULL;
 }
 
 int				split3d(t_cmd *cmd, t_temp *tmp)
 {
 	int			ret;
-	int			o;
-	
-	o = 0;
-	if ((ret = len_split3d(cmd)) == 0)
+
+	if ((ret = len_split3d(cmd)) == 0)//
 		return (0);
 	if (ret < 0)
-		return (-1);
-	tmp->tpipe = (char***)malloc(sizeof(char**) * ret + 1);
-	
-	tab2_3d(cmd, tmp);
-
-	while (tmp->tpipe[o])
 	{
-		printf("tab[%d]\n",o);
-		printftab(tmp->tpipe[o]);
-		o++;
+		printf("saliendo\n");
+		return (-1);
 	}
+	tmp->outpipe = (char***)malloc(sizeof(char**) * ret + 1);
+	tmp->inpipe = (char***)malloc(sizeof(char**) * ret + 1);
+	tab2_3d(cmd, tmp);
 	//podriamos hacer los tableros, despues de los tableros, reformar la lista, y de esa lista volver a sacar el nuevo tablero
 	// a partir de la lista ya hecha con la funcion que tenemos de pasar de lista a tablero.
-
+	int		o = 0;
+	while (tmp->outpipe[o])
+	{
+		printf("tab outpipe[%d]\n",o);
+		printftab(tmp->outpipe[o]);
+		o++;
+	}
+	o = 0;
+	while (tmp->outpipe[o])
+	{
+		printf("tab inpipe[%d]\n",o);
+		printftab(tmp->inpipe[o]);
+		o++;
+	}
 	return (1);
 }
-
 
 /*
 **	printf("----------cmd = [%d], redi de= [%d], redi iz=[%d], fd = [%d], fdi[%d]\n", tmp->flag[0], tmp->flag[1], tmp->flag[2], tmp->fd, tmp->fdi);
 **	printf("--------------j= %d \n", j);
 */
-
 
 static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 {
@@ -274,10 +313,9 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 		j = 0;
 		cmd = NULL;
 		separator_string(&cmd, tabcmd[i], tmp);
-
 		printflist(cmd);
-
 		(cmd) ? split3d(cmd, tmp) : 0;
+
 
 
 		(cmd) ? tmp->strcmd = llist_astring(cmd, tmp->strcmd, 1) : 0;

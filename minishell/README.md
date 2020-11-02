@@ -1,3 +1,7 @@
+|||||
+si esta seguido a la vez
+pwd|pwd -> lyst
+
 # bin
 ^\ -> como hago para ocultar el ^\
 
