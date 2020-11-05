@@ -50,6 +50,7 @@ typedef struct		s_temp
 	char			*env;
 	char			**tabcmd;
 	char			**strcmd;
+	char			**strcmdin;
 	t_lists			*varenv;
 	t_lists			*exportenv;
 	char			*tab[2];

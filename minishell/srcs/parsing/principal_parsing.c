@@ -38,7 +38,7 @@ void	printflist(t_cmd *cmd)
 ** fonction qui compte la liste sans les espaces de echo -n
 */
 
-int				mlist_size(t_cmd *head, int key)
+int				mlist_size(t_cmd *head, int key)// mirar bien la key, me parece raro
 {
 	int			i;
 
@@ -47,12 +47,13 @@ int				mlist_size(t_cmd *head, int key)
 		return (i);
 	while (head)
 	{
-		if (key)
-		{
-			if (ft_strcmp(head->input, " "))
-				i++;
-		}
-		else
+//		if (key)
+//		{
+//			if (ft_strcmp(head->input, " "))
+//				i++;
+//		}
+		(void)key;
+//		else
 			i++;
 		head = head->next;
 	}
@@ -63,30 +64,30 @@ int				mlist_size(t_cmd *head, int key)
 ** Fonction qui modifie strcmd avec la liste, maj + supp des espaces
 */
 
-char			**llist_astring(t_cmd *head, char **tabstr, int key)
+void			llist_astring(t_cmd *head, t_temp *tmp, int key)
 {
 	int			i;
 
 	i = 0;
 	if (head)
 	{
-		ft_free_double_tab(tabstr);
-		if (!(tabstr = (char**)malloc(sizeof(char*) * (mlist_size(head, key) + 1))))
-			return (NULL);
+		ft_free_double_tab(tmp->strcmd);
+//		if (!(tabstr = (char**)malloc(sizeof(char*) * (mlist_size(head, key) + 1))))
+//			return (NULL);
+		tmp->strcmd = (char**)malloc(sizeof(char*) * (mlist_size(head, key) + 1));
+		tmp->strcmdin = (char**)malloc(sizeof(char*) * (mlist_size(head, key) + 1));
 		while (head)
 		{
-			if (key)
-			{
-				if (ft_strcmp(head->input, " "))
-				tabstr[i++] = ft_strdup(head->output);
-			}
-			else
-				tabstr[i++] = ft_strdup(head->output);
+			(void)key;
+			tmp->strcmd[i] = ft_strdup(head->output);
+			tmp->strcmdin[i++] = ft_strdup(head->input);
 			head = head->next;
 		}
-		tabstr[i] = 0;
+		tmp->strcmd[i] = 0;
+		tmp->strcmdin[i] = 0;
 	}
-	return (tabstr);
+	printftab(tmp->strcmd);
+	printftab(tmp->strcmdin);
 }
 /////////////////////////////////////////////////////////////////////////
 
@@ -495,7 +496,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 		j = 0;
 		cmd = NULL;
 		separator_string(&cmd, tabcmd[i], tmp);
-		printflist(cmd);
+//		printflist(cmd);
 		(cmd) ? split3d(cmd, tmp) : 0;
 
 		if (tmp->outpipe)
@@ -544,7 +545,8 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 		}
 		else
 		{
-			(cmd) ? tmp->strcmd = llist_astring(cmd, tmp->strcmd, 1) : 0;
+			(cmd) ? llist_astring(cmd, tmp, 1) : 0;
+	//		printftab(tmp->strcmd);
 			cmd ? check_redi(tmp->strcmd, tmp) : 0;
 			((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)
 				? skip_redi(tmp->strcmd) : 0;
