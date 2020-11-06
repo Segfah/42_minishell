@@ -60,6 +60,33 @@ int				mlist_size(t_cmd *head, int key)// mirar bien la key, me parece raro
 	return (i);
 }
 
+void			asdasdclean_tab2d(char **tabin, char **tabout)
+{
+	int			i;
+	int			k;
+
+	k = 0;
+	i = 0;
+	while (tabin[i])
+	{
+		if (!ft_strcmp(tabin[i], " "))
+		{
+			ft_free(tabin[i]);
+			ft_free(tabout[i]);
+			i++;
+		}
+		else
+		{
+			tabin[k] = tabin[i];
+			tabout[k] = tabout[i];
+			i++;
+			k++;
+		}
+	}
+	tabin[k] = 0;
+	tabout[k] = 0;
+}
+
 /*
 ** Fonction qui modifie strcmd avec la liste, maj + supp des espaces
 */
@@ -86,6 +113,10 @@ void			llist_astring(t_cmd *head, t_temp *tmp, int key)
 		tmp->strcmd[i] = 0;
 		tmp->strcmdin[i] = 0;
 	}
+	printftab(tmp->strcmd);
+	printftab(tmp->strcmdin);
+	if (!cherche_echo(tmp->strcmd))
+		asdasdclean_tab2d(tmp->strcmd, tmp->strcmdin);
 	printftab(tmp->strcmd);
 	printftab(tmp->strcmdin);
 }
@@ -323,57 +354,6 @@ void			clean_tab2d_echo(char **tabin, char **tabout)
 		tabin[k] = 0;
 		tabout[k] = 0;
 	}
-}
-
-int				scheck_echo_2(int *check, int *i, char c, char *s)
-{
-	if (s && s[*i] && (s[*i] == c || s[*i] == c - 40))
-	{
-		*check += 1;
-		(*i)++;
-		return (*check);
-	}
-	*check = 0;
-	return (0);
-}
-
-int				scheck_echo(char *cmd) // poner una key para activarlo si necesitamos en la cadena
-{
-	int i;
-	int check;
-
-	i = 0;
-	check = 0;
-	if (!cmd)
-		return (-1);
-	if (ft_strlen(cmd) < 4)
-		return (0);
-	if (scheck_echo_2(&check, &i, 'e', cmd) == 1)
-	{
-		if (scheck_echo_2(&check, &i, 'c', cmd) == 2)
-		{
-			if (scheck_echo_2(&check, &i, 'h', cmd) == 3)
-			{
-				if (scheck_echo_2(&check, &i, 'o', cmd) == 4)
-					return (1);
-			}
-		}
-	}
-	return (0);
-}
-
-int				cherche_echo(char **tab)
-{
-	int			i;
-
-	i = 0;
-	while (tab[i])
-	{
-		if (scheck_echo(tab[i]))
-			return (1);
-		i++;
-	}
-	return (0);
 }
 
 void			clean_split3d(t_temp *tmp)

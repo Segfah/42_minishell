@@ -321,7 +321,7 @@ char				*copy_slash_p(char *s, int *i, char *tab, int save);
 char				*copy_adeline2(char *s, int *i, char *tab);
 char				*copy_adeline(char *s, int *i, char *tab);
 
-void				check_echo(t_cmd **cmd);
+int					cherche_echo(char **tab);
 void				remove_all_space_node(t_cmd **cmd);
 int					strcat_cmd(t_cmd **cmd);
 

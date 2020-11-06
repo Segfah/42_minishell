@@ -67,7 +67,7 @@ int			strcat_cmd(t_cmd **cmd)
 	return (i);
 }
 
-int				check_echo_2(int *check, int *i, char c, char *s)
+static int			check_echo_2(int *check, int *i, char c, char *s)
 {
 	if (s && s[*i] && (s[*i] == c || s[*i] == c - 40))
 	{
@@ -79,31 +79,46 @@ int				check_echo_2(int *check, int *i, char c, char *s)
 	return (0);
 }
 
-void			check_echo(t_cmd **cmd) // poner una key para activarlo si necesitamos en la cadena
+static int			check_echo(char *cmd) // poner una key para activarlo si necesitamos en la cadena
 {
-	t_cmd *tmp;
-	int i;
-	int check;
+	int				i;
+	int				check;
 
-	tmp = *cmd;
 	i = 0;
 	check = 0;
-	if (!tmp)
-		return ;
-	if (check_echo_2(&check, &i, 'e', tmp->output) == 1)
+	if (!cmd)
+		return (-1);
+	if (ft_strlen(cmd) < 4)
+		return (0);
+	if (check_echo_2(&check, &i, 'e', cmd) == 1)
 	{
-		if (check_echo_2(&check, &i, 'c', tmp->output) == 2)
+		if (check_echo_2(&check, &i, 'c', cmd) == 2)
 		{
-			if (check_echo_2(&check, &i, 'h', tmp->output) == 3)
+			if (check_echo_2(&check, &i, 'h', cmd) == 3)
 			{
-				if (check_echo_2(&check, &i, 'o', tmp->output) == 4)
-					check = 99;
+				if (check_echo_2(&check, &i, 'o', cmd) == 4)
+					return (1);
 			}
 		}
 	}
-	if (check != 99)
-		remove_all_space_node(cmd);
+	return (0);
 }
+
+int				cherche_echo(char **tab)
+{
+	int			i;
+
+	i = 0;
+	while (tab[i])
+	{
+		if (check_echo(tab[i]))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+
 
 void			separator_string(t_cmd **cmd, char *str, t_temp *tmp)
 {
@@ -124,5 +139,4 @@ void			separator_string(t_cmd **cmd, char *str, t_temp *tmp)
 		strcat_cmd(cmd);
 	remove_null_node(cmd);
 	remove_space_node(cmd);
-//	check_echo(cmd);
 }
