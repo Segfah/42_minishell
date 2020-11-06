@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/02 13:19:56 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/06 19:56:32 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,12 +110,12 @@ void			initialize(t_temp *tmp)
 	tmp->inpipe = NULL;
 }
 
-void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, t_cmd *cmd)
+void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j)
 {
 	if (j == 7)
 		gestion_unset(tmp);
 	else if (j == 8)
-		gestion_echo(cmd, tmp);
+		gestion_echo(tmp);
 	else if (j == 9 && command_bin(tmp->strcmd, tmp) == 0)
 		return ;
 	else
@@ -125,7 +125,7 @@ void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, t_cmd *cmd)
 	}	
 }
 
-void			launcher_cmd(char *tabcmd, t_temp *tmp, int j, t_cmd *cmd)
+void			launcher_cmd(char *tabcmd, t_temp *tmp, int j)
 {
 	if (tabcmd[0] == 0 ||  j == -2 || tmp->flag[1] == -1 || tmp->flag[2] == -1)
 		return ;
@@ -145,7 +145,7 @@ void			launcher_cmd(char *tabcmd, t_temp *tmp, int j, t_cmd *cmd)
 	else if (j == 6)
 		gestion_export(tmp, 0);
 	else
-		launcher_cmd2(tabcmd, tmp, j, cmd);
+		launcher_cmd2(tabcmd, tmp, j);
 }
 
 /*
@@ -522,7 +522,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 						? skip_redi(tmp->strcmd) : 0;
 					(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
 					tmp->flag[0] = (j > 0) ? 1 : 0;
-					launcher_cmd(tabcmd[i], tmp, j, cmd);
+					launcher_cmd(tabcmd[i], tmp, j);
 					if (cmd != NULL)
 						free_cmd(cmd);
 					ft_free(tabcmd[i]);
@@ -550,7 +550,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 				? skip_redi(tmp->strcmd) : 0;
 			(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
 			tmp->flag[0] = (j > 0) ? 1 : 0;
-			launcher_cmd(tabcmd[i], tmp, j, cmd);
+			launcher_cmd(tabcmd[i], tmp, j);
 			ft_free_double_tab(tmp->strcmd);
 			if (cmd != NULL)
 				free_cmd(cmd);

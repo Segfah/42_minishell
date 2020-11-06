@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/25 16:59:48 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/06 19:56:49 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ char				**ft_split_strcmd(char *s, int echo);
 ** gestion/echo/echo
 */
 char				*gestion_echo_option(char *str, char *arg);
-void				gestion_echo(t_cmd *cmd, t_temp *tmp);
+void				gestion_echo(t_temp *tmp);
 
 /*
 ** gestion/echo/ft_split_echo/count_word
