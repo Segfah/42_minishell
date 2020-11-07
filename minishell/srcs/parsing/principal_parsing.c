@@ -140,6 +140,8 @@ void			initialize(t_temp *tmp)
 	tmp->tabpath = NULL;
 	tmp->outpipe = NULL;
 	tmp->inpipe = NULL;
+	tmp->strcmd = NULL;
+	tmp->strcmdin = NULL;
 }
 
 void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, t_cmd *cmd)
@@ -534,6 +536,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 			tmp->flag[0] = (j > 0) ? 1 : 0;
 			launcher_cmd(tabcmd[i], tmp, j, cmd);
 			ft_free_double_tab(tmp->strcmd);
+			ft_free_double_tab(tmp->strcmdin);
 			if (cmd != NULL)
 				free_cmd(cmd);
 			ft_free(tabcmd[i]);

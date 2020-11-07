@@ -22,6 +22,8 @@ void			initialize_tmp(t_temp *tmp)
 	tmp->tab[0] = NULL;
 	tmp->tab[1] = NULL;
 	tmp->hnull = NULL;
+	tmp->strcmd = NULL;
+	tmp->strcmdin = NULL;
 }
 
 /*
