@@ -51,7 +51,7 @@ void			sighandler(int signum)
 void			sighandler2(int signum)
 {
 	(void)signum;
-	write(1, " \b\b \b", 5);
+	write(1, " \b\b \b\b \b", 8);
 }
 
 void			launcher(t_temp tmp)
