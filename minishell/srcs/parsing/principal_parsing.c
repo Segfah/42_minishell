@@ -413,58 +413,8 @@ int				split3d(t_cmd *cmd, t_temp *tmp)
 /*
 **	printf("----------cmd = [%d], redi de= [%d], redi iz=[%d], fd = [%d], fdi[%d]\n", tmp->flag[0], tmp->flag[1], tmp->flag[2], tmp->fd, tmp->fdi);
 **	printf("--------------j= %d \n", j);
-
-static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
-{
-	int			j;
-	t_cmd		*cmd;
-
-	while (tabcmd[++i])
-	{
-	//	printf("tabcmd[%d] = [%s]\n", i, tabcmd[i]);
-		initialize(tmp);
-		j = 0;
-		cmd = NULL;
-		separator_string(&cmd, tabcmd[i], tmp);
-		printflist(cmd);
-		(cmd) ? split3d(cmd, tmp) : 0;
-
-	system("leaks minishell");
-	exit(1);
-
-		(cmd) ? tmp->strcmd = llist_astring(cmd, tmp->strcmd, 1) : 0;
-
-
-//notre tab 3d
-// echo tmp->strcmd[0] = echo key 0 sinon key 1
-//		printftab(tmp->strcmd);
-	//	exit(1);
-		//aqui viene el pipe
-		cmd ? check_redi(tmp->strcmd, tmp) : 0;
-		((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)
-			? skip_redi(tmp->strcmd) : 0;
-		(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
-		tmp->flag[0] = (j > 0) ? 1 : 0;
-		launcher_cmd(tabcmd[i], tmp, j, cmd);
-		ft_free_double_tab(tmp->strcmd);
-		if (cmd != NULL)
-			free_cmd(cmd);
-		ft_free(tabcmd[i]);
-		tmp->tabpath ? ft_free_tab(tmp->tabpath) : 0;
-		tmp->flag[1] == 1 ? close(tmp->fd) : 0;
-		tmp->flag[2] == 1 ? close(tmp->fdi) : 0;
-	}
-}
-
-
-
 */
 
-void			gestion_line2()
-{
-
-}
-
 
 static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 {
@@ -477,9 +427,9 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 		initialize(tmp);
 		j = 0;
 		cmd = NULL;
-		separator_string(&cmd, tabcmd[i], tmp);
+		separator_string(&cmd, tabcmd[i], tmp); // liste chaine - tmp->strcmd
 //		printflist(cmd);
-		(cmd) ? split3d(cmd, tmp) : 0;
+		(cmd) ? split3d(cmd, tmp) : 0;			//tmp->outpipe - tmp->inpipe
 
 		if (tmp->outpipe)
 		{
@@ -489,6 +439,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 			int k = 0;
 			while (tmp->outpipe[k])
 			{
+				tmp->strcmd ? printf("----------------alolololololololo\n") : 0;
 				pipe(fd);
 				if ((pid = fork()) == 0)
 				{
@@ -498,7 +449,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 						dup2(fd[1], 1);
 					}
 					close(fd[0]);
-					ft_free_double_tab(tmp->strcmd);
+			//		tmp->strcmd ? ft_free_double_tab(tmp->strcmd): 0;
 					tmp->strcmd = tmp->outpipe[k];
 					cmd ? check_redi(tmp->strcmd, tmp) : 0;
 					((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)
@@ -508,7 +459,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 					launcher_cmd(tabcmd[i], tmp, j, cmd);
 					if (cmd != NULL)
 						free_cmd(cmd);
-					ft_free(tabcmd[i]);
+		//			ft_free(tabcmd[i]);
 					tmp->tabpath ? ft_free_tab(tmp->tabpath) : 0;
 					tmp->flag[1] == 1 ? close(tmp->fd) : 0;
 					tmp->flag[2] == 1 ? close(tmp->fdi) : 0;
@@ -520,10 +471,12 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 					close(fd[1]);
 					fdd = fd[0];
 					k++;
+
+				//	tabcmd[i] ? ft_free(tabcmd[i]) : 0;
 				}
 			}
-			ft_free_triple_tab(tmp->inpipe);
-			ft_free_triple_tab(tmp->outpipe);
+	//		ft_free_triple_tab(tmp->inpipe);
+	//		ft_free_triple_tab(tmp->outpipe);
 		}
 		else
 		{

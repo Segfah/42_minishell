@@ -22,8 +22,8 @@ void				ft_free_double_tab(char **tab)
 		while (tab[i])
 			ft_free(tab[i++]);
 		free(tab);
-		tab = NULL;
 	}
+	tab = NULL;
 }
 
 void				ft_free_triple_tab(char ***tab3d)
@@ -36,8 +36,8 @@ void				ft_free_triple_tab(char ***tab3d)
 		while(tab3d[i])
 			ft_free_double_tab(tab3d[i++]);
 		free(tab3d);
-		tab3d = NULL;
 	}
+	tab3d = NULL;
 }
 
 void				free_node_cmd(t_cmd *node)
