@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/06 19:56:32 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/08 16:11:12 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,6 +239,7 @@ void			tab2_3d(t_cmd *cmd, t_temp *tmp)
 
 	i = 0;
 	tmpo = cmd;
+	//while (1)
 	while (tmpo)
 	{
 		k = 0;
@@ -261,6 +262,7 @@ void			tab2_3d(t_cmd *cmd, t_temp *tmp)
 	}
 	tmp->outpipe[i] = NULL;
 	tmp->inpipe[i] = NULL;
+	//while (1)
 }
 
 void			clean_tab2d(char **tabin, char **tabout)

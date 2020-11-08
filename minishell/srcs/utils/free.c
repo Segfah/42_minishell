@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 17:58:38 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/15 14:46:22 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/06 20:29:52 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ void				ft_free_triple_tab(char ***tab3d)
 
 	i = 0;
 	while(tab3d[i])
-		ft_free_double_tab(tab3d[i++]);
+	{
+		ft_free_double_tab(tab3d[i]);
+		i++;
+	}
 	free(tab3d);
 	tab3d = NULL;
 }
