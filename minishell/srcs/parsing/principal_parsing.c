@@ -113,12 +113,12 @@ void			llist_astring(t_cmd *head, t_temp *tmp, int key)
 		tmp->strcmd[i] = 0;
 		tmp->strcmdin[i] = 0;
 	}
-	printftab(tmp->strcmd);
-	printftab(tmp->strcmdin);
+//	printftab(tmp->strcmd);
+//	printftab(tmp->strcmdin);
 	if (!cherche_echo(tmp->strcmd))
 		asdasdclean_tab2d(tmp->strcmd, tmp->strcmdin);
-	printftab(tmp->strcmd);
-	printftab(tmp->strcmdin);
+//	printftab(tmp->strcmd);
+//	printftab(tmp->strcmdin);
 }
 /////////////////////////////////////////////////////////////////////////
 
@@ -208,7 +208,7 @@ int			len_split3d(t_cmd *cmd)
 }
 */
 
-int			len_split3d(t_cmd *cmd)
+int			len_split3d(t_cmd *cmd) ///// muchos errores a nivel de los errores pipes
 {
 	int		pipe;
 	t_cmd	*tmp;
@@ -392,8 +392,8 @@ int				split3d(t_cmd *cmd, t_temp *tmp)
 	tab2_3d(cmd, tmp);
 	//podriamos hacer los tableros, despues de los tableros, reformar la lista, y de esa lista volver a sacar el nuevo tablero
 	// a partir de la lista ya hecha con la funcion que tenemos de pasar de lista a tablero.
-	int		o = 0;
 	clean_split3d(tmp);
+/*	int		o = 0;
 	while (tmp->inpipe[o])
 	{
 		printf("tab inpipe[%d]\n",o);
@@ -406,7 +406,7 @@ int				split3d(t_cmd *cmd, t_temp *tmp)
 		printf("tab outpipe[%d]\n",o);
 		printftab(tmp->outpipe[o]);
 		o++;
-	}
+	}*/
 	return (1);
 }
 
@@ -428,9 +428,10 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 		j = 0;
 		cmd = NULL;
 		separator_string(&cmd, tabcmd[i], tmp); // liste chaine - tmp->strcmd
-//		printflist(cmd);
+		printftab(tmp->strcmd);
+		ft_free_double_tab(tmp->strcmd);
+		tmp->strcmd = NULL;
 		(cmd) ? split3d(cmd, tmp) : 0;			//tmp->outpipe - tmp->inpipe
-
 		if (tmp->outpipe)
 		{
 			int fd[2];
@@ -445,11 +446,8 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 				{
 					dup2(fdd, 0);
 					if (tmp->outpipe[k + 1] != NULL)
-					{
 						dup2(fd[1], 1);
-					}
 					close(fd[0]);
-			//		tmp->strcmd ? ft_free_double_tab(tmp->strcmd): 0;
 					tmp->strcmd = tmp->outpipe[k];
 					cmd ? check_redi(tmp->strcmd, tmp) : 0;
 					((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)
@@ -459,7 +457,6 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 					launcher_cmd(tabcmd[i], tmp, j, cmd);
 					if (cmd != NULL)
 						free_cmd(cmd);
-		//			ft_free(tabcmd[i]);
 					tmp->tabpath ? ft_free_tab(tmp->tabpath) : 0;
 					tmp->flag[1] == 1 ? close(tmp->fd) : 0;
 					tmp->flag[2] == 1 ? close(tmp->fdi) : 0;
@@ -471,12 +468,10 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 					close(fd[1]);
 					fdd = fd[0];
 					k++;
-
-				//	tabcmd[i] ? ft_free(tabcmd[i]) : 0;
 				}
 			}
-	//		ft_free_triple_tab(tmp->inpipe);
-	//		ft_free_triple_tab(tmp->outpipe);
+			ft_free_triple_tab(tmp->inpipe);
+			ft_free_triple_tab(tmp->outpipe);
 		}
 		else
 		{
@@ -490,13 +485,13 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 			launcher_cmd(tabcmd[i], tmp, j, cmd);
 			ft_free_double_tab(tmp->strcmd);
 			ft_free_double_tab(tmp->strcmdin);
-			if (cmd != NULL)
-				free_cmd(cmd);
-			ft_free(tabcmd[i]);
-			tmp->tabpath ? ft_free_tab(tmp->tabpath) : 0;
 			tmp->flag[1] == 1 ? close(tmp->fd) : 0;
 			tmp->flag[2] == 1 ? close(tmp->fdi) : 0;
 		}
+		(cmd != NULL) ? free_cmd(cmd) : 0;
+		ft_free(tabcmd[i]);
+		tmp->tabpath ? ft_free_tab(tmp->tabpath) : 0;
+
 	}
 }
 
