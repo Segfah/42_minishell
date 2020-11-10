@@ -111,6 +111,12 @@ int					double_redi(char *path, t_temp *tmp);
 int					contre_redi(char *path, t_temp *tmp);
 
 /*
+** parsing/tools/tab3d
+*/
+int					split3d(t_cmd *cmd, t_temp *tmp);
+void				clean_tab2d(char **tabin, char **tabout);
+
+/*
 ** ************************************************************************
 ** **************************gestion***************************************
 ** ************************************************************************

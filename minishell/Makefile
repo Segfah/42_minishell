@@ -55,6 +55,7 @@ SRC := \
 	srcs/parsing/tools_parsing/cmd_exist.c \
 	srcs/parsing/tools_parsing/redirection.c \
 	srcs/parsing/tools_parsing/open_redirection.c \
+	srcs/parsing/tools_parsing/tab3d.c \
 	srcs/utils/adelines.c 
 
 OBJS = $(addprefix objs/, $(SRC:.c=.o))
