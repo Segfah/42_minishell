@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/11/06 19:56:49 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/13 16:20:46 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,5 +330,6 @@ char				*copy_adeline(char *s, int *i, char *tab);
 int					cherche_echo(char **tab);
 void				remove_all_space_node(t_cmd **cmd);
 int					strcat_cmd(t_cmd **cmd);
+void				printflist(t_cmd *cmd);
 
 #endif

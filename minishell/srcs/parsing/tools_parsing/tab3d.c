@@ -26,6 +26,24 @@ int			len_split3d(t_cmd *cmd)
 }
 */
 
+int			search_error_pipe(t_cmd *tmp)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (tmp->input[i])
+	{
+		if (tmp->input[i] == '|')
+			j++;
+		i++;
+	}
+	if (j > 1)
+		return (-1);
+	return (i);
+}
+
 int			len_split3d(t_cmd *cmd) ///// muchos errores a nivel de los errores pipes
 {
 	int		pipe;
@@ -36,9 +54,11 @@ int			len_split3d(t_cmd *cmd) ///// muchos errores a nivel de los errores pipes
 	if (tmp && !ft_strcmp(tmp->input, "|")) //si le premier est | erreur
 		return (-1);
 	while (tmp)
-	{
-		if (!ft_strcmp(tmp->input, "|") && !tmp->next) // si le derniere est un | erreur
+	{	
+		if (search_error_pipe(tmp) == -1)
 			return (-1);
+		if (!ft_strcmp(tmp->input, "|") && !tmp->next) // si le derniere est un | erreur
+			return (-3);
 		else if (!ft_strcmp(tmp->input, "|") && !ft_strcmp(tmp->next->input, " ") && !tmp->next->next)
 			return (-1);
 		else if (!ft_strcmp(tmp->input, "|") && !ft_strcmp(tmp->next->input, " ") && !ft_strcmp(tmp->next->next->input, "|"))
@@ -180,16 +200,28 @@ void			clean_split3d(t_temp *tmp)
 	}
 }
 
+int				print_error(int ret)
+{
+	if (ret == -1)
+		write(1, "minishell: syntax error near unexpected token `||'\n",51);
+	if (ret == -2)
+		write(1, "minishell: syntax error near unexpected token `|'\n", 50);
+	if (ret == -3)
+		write(1, "error multi ligne\n", 18);
+	exit(1);
+	return (ret);
+}
+
 int				split3d(t_cmd *cmd, t_temp *tmp)
 {
 	int			ret;
 
+	printflist(cmd);
 	if ((ret = len_split3d(cmd)) == 0)//
 		return (0);
 	if (ret < 0)
 	{
-		printf("saliendo\n");
-		return (-1);
+		return (print_error(ret));
 	}
 	tmp->outpipe = (char***)malloc(sizeof(char**) * ret + 1);
 	tmp->inpipe = (char***)malloc(sizeof(char**) * ret + 1);

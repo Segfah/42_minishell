@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 14:00:14 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/20 14:37:16 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/13 16:31:27 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char				*ft_strcatdup(char *s1, char *s2)
 	int		i;
 	int		j;
 
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
 	i = ft_strlen(s1);
 	j = ft_strlen(s2);
 	if (!(ret = (char*)malloc(sizeof(char) * (i + j) + 1)))

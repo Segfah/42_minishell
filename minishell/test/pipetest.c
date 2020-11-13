@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#include <errno.h>
 
 /*
  * loop over commands by sharing
@@ -16,6 +17,7 @@ pipeline(char ***cmd)
 {
 	int fd[2];
 	pid_t pid;
+	pid_t w;
 	int fdd = 0;				/* Backup */
 
 	while (*cmd != NULL) {
@@ -30,11 +32,27 @@ pipeline(char ***cmd)
 				dup2(fd[1], 1);
 			}
 			close(fd[0]);
-			execvp((*cmd)[0], *cmd);
+			//execvp((*cmd)[0], *cmd);
+			if (execvp((*cmd)[0], *cmd) == -1)
+			{
+				//printf("strerrno = [%s]\n", strerror(errno));
+				exit(15);
+			}
 			exit(1);
 		}
 		else {
-			wait(NULL); 		/* Collect childs */
+			int status;
+			
+			if ((w = waitpid(pid, &status, WUNTRACED | WCONTINUED)) == -1)
+				exit(1);
+			if (WIFEXITED(status))
+				if (WEXITSTATUS(status) == 15)
+					
+					
+					
+					
+					
+					printf("zsh: command not found: %s\n", (*cmd)[0]);
 			close(fd[1]);
 			fdd = fd[0];
 			cmd++;
@@ -51,9 +69,10 @@ int
 main(int argc, char *argv[])
 {
 	char *ls[] = {"ls", "-al", NULL};
-	char *rev[] = {"grep", "nano", NULL};
-	char *nl[] = {"rev", NULL};
-	char **cmd[] = {ls, rev, nl, NULL};
+	char *rev[] = {"nono", "e", NULL};
+	char *nl[] = {"pwd", "e", NULL};
+	char *nl1[] = {"hjhbjk", NULL};
+	char **cmd[] = {ls, rev, nl, nl1 NULL};
 
 	pipeline(cmd);
 	return (0);

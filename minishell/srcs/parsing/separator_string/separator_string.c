@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 13:58:31 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/02 14:36:52 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/13 16:40:54 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int			isalpha1(char *s)
 
 	ret = 0;
 	i = 0;
+	if (!s)
+		return (0);
 	while (s[i])
 	{
 		if (!(((int)s[i] >= 65 && (int)s[i] <= 90) || ((int)s[i] >= 97 &&
@@ -39,7 +41,7 @@ int			strcat_cmd(t_cmd **cmd)
 	i = 0;
 	while (tmp)
 	{
-		if (tmp->next && (isalpha1(tmp->output) > 0) &&
+		if (tmp->next && tmp->next->output && (isalpha1(tmp->output) > 0) &&
 		(isalpha1(tmp->next->output) > 0))
 		{
 			//printf("\n\n---------------\n");
@@ -57,11 +59,9 @@ int			strcat_cmd(t_cmd **cmd)
 			if ((tmp->output = ft_strcatdup(tmp->output, tmp->next->output)))
 				tmp->next->output = NULL;
 			i = 1;
-			//while (1);
 			break ;
 		}
 		tmp = tmp->next;
-		
 	}
 	remove_null_node(cmd);
 	return (i);
@@ -136,7 +136,7 @@ void			separator_string(t_cmd **cmd, char *str, t_temp *tmp)
 		i++;
 	}
 	while (strcat_cmd(cmd) == 1)
-		strcat_cmd(cmd);
+		;
 	remove_null_node(cmd);
 	remove_space_node(cmd);
 }
