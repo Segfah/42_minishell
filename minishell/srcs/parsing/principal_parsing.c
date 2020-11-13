@@ -38,7 +38,7 @@ void	printflist(t_cmd *cmd)
 ** fonction qui compte la liste sans les espaces de echo -n
 */
 
-int				mlist_size(t_cmd *head, int key)// mirar bien la key, me parece raro
+int				mlist_size(t_cmd *head)
 {
 	int			i;
 
@@ -47,14 +47,7 @@ int				mlist_size(t_cmd *head, int key)// mirar bien la key, me parece raro
 		return (i);
 	while (head)
 	{
-//		if (key)
-//		{
-//			if (ft_strcmp(head->input, " "))
-//				i++;
-//		}
-		(void)key;
-//		else
-			i++;
+		i++;
 		head = head->next;
 	}
 	return (i);
@@ -64,7 +57,7 @@ int				mlist_size(t_cmd *head, int key)// mirar bien la key, me parece raro
 ** Fonction qui modifie strcmd avec la liste, maj + supp des espaces
 */
 
-void			llist_astring(t_cmd *head, t_temp *tmp, int key)
+void			llist_astring(t_cmd *head, t_temp *tmp)
 {
 	int			i;
 
@@ -72,11 +65,10 @@ void			llist_astring(t_cmd *head, t_temp *tmp, int key)
 	if (head)
 	{
 		ft_free_double_tab(tmp->strcmd);
-		tmp->strcmd = (char**)malloc(sizeof(char*) * (mlist_size(head, key) + 1));
-		tmp->strcmdin = (char**)malloc(sizeof(char*) * (mlist_size(head, key) + 1));
+		tmp->strcmd = (char**)malloc(sizeof(char*) * (mlist_size(head) + 1));
+		tmp->strcmdin = (char**)malloc(sizeof(char*) * (mlist_size(head) + 1));
 		while (head)
 		{
-			(void)key;
 			tmp->strcmd[i] = ft_strdup(head->output);
 			tmp->strcmdin[i++] = ft_strdup(head->input);
 			head = head->next;
@@ -179,7 +171,6 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 			int k = 0;
 			while (tmp->outpipe[k])
 			{
-				tmp->strcmd ? printf("----------------alolololololololo\n") : 0;
 				pipe(fd);
 				if ((pid = fork()) == 0)
 				{
@@ -214,7 +205,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 		}
 		else
 		{
-			(cmd) ? llist_astring(cmd, tmp, 1) : 0;
+			(cmd) ? llist_astring(cmd, tmp) : 0;
 	//		printftab(tmp->strcmd);
 			cmd ? check_redi(tmp->strcmd, tmp) : 0;
 			((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)

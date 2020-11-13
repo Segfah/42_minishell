@@ -19,7 +19,7 @@ int				check_redi(char **cmd, t_temp *tmp)
 	tmp->fd = 0;
 	tmp->fdi = 0;
 	i = -1;
-	while (cmd[++i]) //Posiblemente cambie este por uno que haga el check de la lista encadenada, y que mire el input y no el otro
+	while (cmd[++i])
 	{
 		if (is_redi(cmd[i]))
 		{
