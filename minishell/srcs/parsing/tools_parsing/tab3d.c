@@ -208,8 +208,7 @@ int				print_error(int ret)
 		write(1, "minishell: syntax error near unexpected token `|'\n", 50);
 	if (ret == -3)
 		write(1, "error multi ligne\n", 18);
-	exit(1);
-	return (ret);
+	return (-1);
 }
 
 int				split3d(t_cmd *cmd, t_temp *tmp)

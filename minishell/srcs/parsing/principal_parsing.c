@@ -162,7 +162,14 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 		printftab(tmp->strcmd);
 		ft_free_double_tab(tmp->strcmd);
 		tmp->strcmd = NULL;
-		(cmd) ? split3d(cmd, tmp) : 0;			//tmp->outpipe - tmp->inpipe
+		(cmd) ? j = split3d(cmd, tmp) : 0;
+		if (j < 0)
+		{
+			(cmd != NULL) ? free_cmd(cmd) : 0;
+			tmp->tabpath ? ft_free_tab(tmp->tabpath) : 0;
+//			ft_free_double_tab(tabcmd);
+			break ;
+		}
 		if (tmp->outpipe)
 		{
 			int fd[2];
@@ -219,9 +226,9 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 			tmp->flag[2] == 1 ? close(tmp->fdi) : 0;
 		}
 		(cmd != NULL) ? free_cmd(cmd) : 0;
-		ft_free(tabcmd[i]);
+//		ft_free(tabcmd[i]);
 		tmp->tabpath ? ft_free_tab(tmp->tabpath) : 0;
-
+	
 	}
 }
 
@@ -243,7 +250,8 @@ int				ft_getline(t_temp *tmp)
 		return (0);
 	if (tmp->tabcmd != NULL && tmp->tabcmd[0])
 		gestion_line(tmp->tabcmd, tmp, -1);
-	free(tmp->tabcmd);
+//	free(tmp->tabcmd);
+	ft_free_double_tab(tmp->tabcmd);
 	ft_free(line);
 	return (1);
 }
