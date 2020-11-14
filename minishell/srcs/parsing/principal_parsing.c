@@ -103,7 +103,7 @@ void			initialize(t_temp *tmp)
 	tmp->strcmdin = NULL;
 }
 
-void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j)
+void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, int key)
 {
 	if (j == 7)
 		gestion_unset(tmp);
@@ -115,10 +115,12 @@ void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j)
 	{
 		g_ret = 127;
 		ft_printf("minishell: command not found: %s\n", tabcmd);
+		if (key)
+			exit(15);
 	}	
 }
 
-void			launcher_cmd(char *tabcmd, t_temp *tmp, int j)
+void			launcher_cmd(char *tabcmd, t_temp *tmp, int j, int key)
 {
 	if (tabcmd[0] == 0 ||  j == -2 || tmp->flag[1] == -1 || tmp->flag[2] == -1)
 		return ;
@@ -138,7 +140,7 @@ void			launcher_cmd(char *tabcmd, t_temp *tmp, int j)
 	else if (j == 6)
 		gestion_export(tmp, 0);
 	else
-		launcher_cmd2(tabcmd, tmp, j);
+		launcher_cmd2(tabcmd, tmp, j, key);
 }
 
 /*
@@ -191,7 +193,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 						? skip_redi(tmp->strcmd) : 0;
 					(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
 					tmp->flag[0] = (j > 0) ? 1 : 0;
-					launcher_cmd(tabcmd[i], tmp, j);
+					launcher_cmd(tabcmd[i], tmp, j, 1);
 					if (cmd != NULL)
 						free_cmd(cmd);
 					tmp->tabpath ? ft_free_tab(tmp->tabpath) : 0;
@@ -201,6 +203,12 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 				}
 				else
 				{
+					int status;
+					if ((pid = waitpid(pid, &status, WUNTRACED | WCONTINUED)) == -1)
+						exit(1);
+					if (WIFEXITED(status))
+						if (WEXITSTATUS(status) == 15)
+							printf("zsh: command not found: %s\n", tabcmd[i]);
 					wait(NULL);
 					close(fd[1]);
 					fdd = fd[0];
@@ -219,7 +227,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 				? skip_redi(tmp->strcmd) : 0;
 			(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
 			tmp->flag[0] = (j > 0) ? 1 : 0;
-			launcher_cmd(tabcmd[i], tmp, j);
+			launcher_cmd(tabcmd[i], tmp, j, 0);
 			ft_free_double_tab(tmp->strcmd);
 			ft_free_double_tab(tmp->strcmdin);
 			tmp->flag[1] == 1 ? close(tmp->fd) : 0;

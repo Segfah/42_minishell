@@ -47,11 +47,6 @@ pipeline(char ***cmd)
 				exit(1);
 			if (WIFEXITED(status))
 				if (WEXITSTATUS(status) == 15)
-					
-					
-					
-					
-					
 					printf("zsh: command not found: %s\n", (*cmd)[0]);
 			close(fd[1]);
 			fdd = fd[0];
