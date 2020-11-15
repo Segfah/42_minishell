@@ -114,9 +114,9 @@ void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, int key)
 	else
 	{
 		g_ret = 127;
-		ft_printf("minishell: command not found: %s\n", tabcmd);
-		if (key)
+		if (key == 1)
 			exit(15);
+		ft_printf("minishell: command not found: %s\n", tabcmd);
 	}	
 }
 
@@ -192,10 +192,9 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 					((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)
 						? skip_redi(tmp->strcmd) : 0;
 					(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
-					tmp->flag[0] = (j > 0) ? 1 : 0;
-					launcher_cmd(tabcmd[i], tmp, j, 1);
-					if (cmd != NULL)
-						free_cmd(cmd);
+					tmp->flag[0] = (j > 0) ? 1 : 0;	
+					launcher_cmd(tmp->outpipe[k][0], tmp, j, 1);
+					(cmd != NULL) ? free_cmd(cmd) : 0;
 					tmp->tabpath ? ft_free_tab(tmp->tabpath) : 0;
 					tmp->flag[1] == 1 ? close(tmp->fd) : 0;
 					tmp->flag[2] == 1 ? close(tmp->fdi) : 0;
@@ -208,7 +207,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 						exit(1);
 					if (WIFEXITED(status))
 						if (WEXITSTATUS(status) == 15)
-							printf("zsh: command not found: %s\n", tabcmd[i]);
+							printf("minishell: command not found: %s\n", tmp->outpipe[k][0]);
 					wait(NULL);
 					close(fd[1]);
 					fdd = fd[0];
