@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 22:43:00 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/21 19:25:00 by corozco          ###   ########.fr       */
+/*   Updated: 2020/11/16 23:01:49 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void			gestion_unset(t_temp *tmp, int key)
 	int			ret;
 
 	i = 0;
+	g_ret = 0;
 	while (tmp->strcmd[i])
 		i++;
 	i = 0;
@@ -26,6 +27,7 @@ void			gestion_unset(t_temp *tmp, int key)
 		ret = check_env(tmp->strcmd[i], 1);
 		if (ret == -1 || ret == 1)
 		{
+			g_ret = 1;
 			if (key)
 				exit(22);
 			ft_printf("minishell: unset: `%s': not a valid identifier \n",

@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/01 01:51:46 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/21 19:26:07 by corozco          ###   ########.fr       */
+/*   Updated: 2020/11/16 23:00:25 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void		gestion_pwd(char **strcmd, t_temp *tmp)
 {
+	g_ret = 0;
 	if (tmp->flag[1] == 1)
 	{
 		tmp->oldfd = dup(1);

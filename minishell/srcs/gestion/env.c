@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 23:02:07 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/21 19:24:48 by corozco          ###   ########.fr       */
+/*   Updated: 2020/11/16 22:55:02 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int				save_env(t_lists **head, char **envp)
 
 void			gestion_env(char **strcmd, t_temp *tmp, int key)
 {
+	g_ret = 0;
 	if (!strcmd[1])
 	{
 		if (tmp->flag[1] == 1)
@@ -70,6 +71,7 @@ void			gestion_env(char **strcmd, t_temp *tmp, int key)
 	}
 	else
 	{
+		g_ret = 127;
 		if (key)
 			exit(19);
 		ft_printf("env: %s: No such file or directory\n", strcmd[1]);

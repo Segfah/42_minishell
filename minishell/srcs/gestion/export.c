@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 02:32:22 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/21 18:20:02 by corozco          ###   ########.fr       */
+/*   Updated: 2020/11/16 22:58:55 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int				export_arg(t_temp *tmp, int ret, int i, int key)
 {
 	if ((ret = ft_cortar(tmp->tab, tmp->strcmd[i])) == -2)
 	{
+		g_ret = 1;
 		if (key)
 			exit(20);
 		ft_printf("minishell: export: `%s': not a valid identifier\n",
@@ -94,6 +95,7 @@ void			free_export_tab(t_temp *tmp)
 
 void			gestion_export(t_temp *tmp, int i, int key)
 {
+	g_ret = 0;
 	while (tmp->strcmd[i])
 		i++;
 	if (i == 1 || (i = 0))

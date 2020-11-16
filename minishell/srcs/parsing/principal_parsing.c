@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/08 16:11:12 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/16 22:49:23 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,8 +244,8 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 		else
 		{
 			(cmd) ? llist_astring(cmd, tmp) : 0;
-			printftab(tmp->strcmd);
-			printftab(tmp->strcmdin);
+			//printftab(tmp->strcmd);
+			//printftab(tmp->strcmdin);
 			cmd ? check_redi(tmp->strcmdin, tmp, 0) : 0;
 			((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)
 				? skip_redi(tmp->strcmdin, tmp) : 0;

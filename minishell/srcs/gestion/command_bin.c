@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 15:00:48 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/21 19:09:44 by corozco          ###   ########.fr       */
+/*   Updated: 2020/11/16 23:28:46 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int				command_bin(char **tab, t_temp *tmp, int key)
 	pid_t		f;
 	char		**tab_env;
 
+	g_ret = 1;
 	if (!(tab_env = c_env(tmp->varenv, lists_size(tmp->varenv))))
 		exit(1);
 	if ((f = fork()) == 0)
@@ -85,11 +86,11 @@ int				command_bin(char **tab, t_temp *tmp, int key)
 		(tmp->flag[1] == 1) ? dup2(tmp->fd, 1) : 0;
 		if (!ft_strcmp(tab[0], "/") || !ft_strcmp(tab[0], "./"))
 		{
+			g_ret = 126;
 			if (key == 1)
 				exit(16);
 			ft_printf("minishell: /: is a directory\n");
-			g_ret = 1;
-			exit(1);
+			exit(33);
 		}
 		if (!tmp->tabpath)
 		{
@@ -98,16 +99,12 @@ int				command_bin(char **tab, t_temp *tmp, int key)
 				if (key == 1)
 					exit(errno);
 				ft_printf("minishell: %s: %s\n", tab[0], strerror(errno));
-				g_ret = 1;
 				exit(1);
 			}
 			exit(0);
 		}
 		else if (execve(tmp->tabpath[tmp->status], tab, tab_env) == -1)
-		{
-			g_ret = 1;
 			exit(1);
-		}
 		exit(0);
 	}
 	else
@@ -120,8 +117,16 @@ int				command_bin(char **tab, t_temp *tmp, int key)
 	ft_free_tab(tab_env);
 	if (WIFEXITED(tmp->status))
 	{
+		//if (WEXITSTATUS(tmp->status) == -1)
+		if (WEXITSTATUS(tmp->status) == 0)
+			g_ret = 0;
 		if (WEXITSTATUS(tmp->status) == 16)
+		{
+			g_ret = 126;
 			exit(16);
+		}
+		if (WEXITSTATUS(tmp->status) == 33)
+			g_ret = 126;
 		if (WEXITSTATUS(tmp->status) == 13)
 			exit(13);
 		if (WEXITSTATUS(tmp->status) == 2)
