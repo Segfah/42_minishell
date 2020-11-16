@@ -84,11 +84,11 @@ char				**ft_split_strcmd(char *s, int echo)
 	while (++j < n)
 		tab[j] = ft_fill(s, echo, &i, tab[j]);
 	tab[j] = 0;
-/*	j = 0;
+	j = 0;
 	while(tab[j])
 	{
 		printf("tab[%d] =[%s]\n", j, tab[j]);
 		j++;
-	}*/
+	}
 	return (tab);
 }

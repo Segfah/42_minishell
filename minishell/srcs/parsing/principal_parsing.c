@@ -244,7 +244,8 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 		else
 		{
 			(cmd) ? llist_astring(cmd, tmp) : 0;
-	//		printftab(tmp->strcmd);
+			printftab(tmp->strcmd);
+			printftab(tmp->strcmdin);
 			cmd ? check_redi(tmp->strcmdin, tmp, 0) : 0;
 			((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)
 				? skip_redi(tmp->strcmdin, tmp) : 0;
