@@ -182,7 +182,7 @@ void				free_list(t_lists *test);
 /*
 ** gestion/command_bin
 */
-int					command_bin(char **tab, t_temp *tmp);
+int					command_bin(char **tab, t_temp *tmp, int key);
 
 void				gestion_nani(char **tab);
 

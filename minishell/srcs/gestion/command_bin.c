@@ -72,7 +72,7 @@ void			sighandlerrr2(int signum)
 	(void)signum;
 }
 
-int				command_bin(char **tab, t_temp *tmp)
+int				command_bin(char **tab, t_temp *tmp, int key)
 {
 	pid_t		f;
 	char		**tab_env;
@@ -83,10 +83,20 @@ int				command_bin(char **tab, t_temp *tmp)
 	{
 		(tmp->flag[2] == 1) ? dup2(tmp->fdi, 0) : 0;
 		(tmp->flag[1] == 1) ? dup2(tmp->fd, 1) : 0;
+		if (!ft_strcmp(tab[0], "/") || !ft_strcmp(tab[0], "./"))
+		{
+			if (key == 1)
+				exit(16);
+			ft_printf("minishell: /: is a directory\n");
+			g_ret = 1;
+			exit(1);
+		}
 		if (!tmp->tabpath)
 		{
 			if (execve(tab[0], tab, tab_env) == -1)
 			{
+				if (key == 1)
+					exit(errno);
 				ft_printf("minishell: %s: %s\n", tab[0], strerror(errno));
 				g_ret = 1;
 				exit(1);
@@ -108,5 +118,14 @@ int				command_bin(char **tab, t_temp *tmp)
 	if ((f = waitpid(f, &tmp->status, WUNTRACED | WCONTINUED)) == -1)
 		exit(1);
 	ft_free_tab(tab_env);
+	if (WIFEXITED(tmp->status))
+	{
+		if (WEXITSTATUS(tmp->status) == 16)
+			exit(16);
+		if (WEXITSTATUS(tmp->status) == 13)
+			exit(13);
+		if (WEXITSTATUS(tmp->status) == 2)
+			exit(2);
+	}
 	return (0);
 }

@@ -109,7 +109,7 @@ void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, int key)
 		gestion_unset(tmp);
 	else if (j == 8)
 		gestion_echo(tmp);
-	else if (j == 9 && command_bin(tmp->strcmd, tmp) == 0)
+	else if (j == 9 && command_bin(tmp->strcmd, tmp, key) == 0)
 		return ;
 	else
 	{
@@ -206,8 +206,16 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 					if ((pid = waitpid(pid, &status, WUNTRACED | WCONTINUED)) == -1)
 						exit(1);
 					if (WIFEXITED(status))
+					{
 						if (WEXITSTATUS(status) == 15)
 							printf("minishell: command not found: %s\n", tmp->outpipe[k][0]);
+						if (WEXITSTATUS(status) == 16)
+							printf("minishell: /: is a directory\n");
+						if (WEXITSTATUS(status) == 13)
+							ft_printf("minishell: %s: Permission denied\n", tmp->outpipe[k][0]);
+						if (WEXITSTATUS(status) == 2)
+							ft_printf("minishell: %s: No such file or directory\n", tmp->outpipe[k][0]);
+					}
 					wait(NULL);
 					close(fd[1]);
 					fdd = fd[0];
