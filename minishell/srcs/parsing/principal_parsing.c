@@ -106,7 +106,7 @@ void			initialize(t_temp *tmp)
 void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, int key)
 {
 	if (j == 7)
-		gestion_unset(tmp);
+		gestion_unset(tmp, key);
 	else if (j == 8)
 		gestion_echo(tmp);
 	else if (j == 9 && command_bin(tmp->strcmd, tmp, key) == 0)
@@ -130,15 +130,15 @@ void			launcher_cmd(char *tabcmd, t_temp *tmp, int j, int key)
 		exit(0);
 	}
 	else if (j == 2)
-		gestion_cd(tmp->strcmd, tmp);
+		gestion_cd(tmp->strcmd, tmp, key);
 	else if (j == 3)
-		gestion_env(tmp->strcmd, tmp);
+		gestion_env(tmp->strcmd, tmp, key);
 	else if (j == 4)
 		gestion_pwd(tmp->strcmd, tmp);
 	else if (j == 5)
 		gestion_nani(tmp->strcmd);
 	else if (j == 6)
-		gestion_export(tmp, 0);
+		gestion_export(tmp, 0, key);
 	else
 		launcher_cmd2(tabcmd, tmp, j, key);
 }
@@ -208,9 +208,20 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 					if (WIFEXITED(status))
 					{
 						if (WEXITSTATUS(status) == 15)
-							printf("minishell: command not found: %s\n", tmp->outpipe[k][0]);
+							ft_printf("minishell: command not found: %s\n", tmp->outpipe[k][0]);
 						if (WEXITSTATUS(status) == 16)
-							printf("minishell: /: is a directory\n");
+							ft_printf("minishell: /: is a directory\n");
+						if (WEXITSTATUS(status) == 17)
+							ft_printf("minishell: cd: HOME not set\n");
+						if (WEXITSTATUS(status) == 18)
+							ft_printf("minishell: cd: %s: No such file or directory\n",tmp->outpipe[k][1]);
+						if (WEXITSTATUS(status) == 19)
+							ft_printf("env: %s: No such file or directory\n", tmp->outpipe[k][1]);
+						if (WEXITSTATUS(status) == 20)
+							ft_printf("minishell: export: `%s': not a valid identifier\n", tmp->outpipe[k][1]);
+						if (WEXITSTATUS(status) == 22)
+							ft_printf("minishell: unset: `%s': not a valid identifier \n",
+								tmp->outpipe[k][1]);
 						if (WEXITSTATUS(status) == 13)
 							ft_printf("minishell: %s: Permission denied\n", tmp->outpipe[k][0]);
 						if (WEXITSTATUS(status) == 2)

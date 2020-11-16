@@ -51,10 +51,12 @@ void			general_free(t_temp *tmp)
 	exit(1);
 }
 
-int				export_arg(t_temp *tmp, int ret, int i)
+int				export_arg(t_temp *tmp, int ret, int i, int key)
 {
 	if ((ret = ft_cortar(tmp->tab, tmp->strcmd[i])) == -2)
 	{
+		if (key)
+			exit(20);
 		ft_printf("minishell: export: `%s': not a valid identifier\n",
 				tmp->strcmd[i]);
 		return (0);
@@ -88,7 +90,7 @@ void			free_export_tab(t_temp *tmp)
 //	}
 }
 
-void			gestion_export(t_temp *tmp, int i)
+void			gestion_export(t_temp *tmp, int i, int key)
 {
 	while (tmp->strcmd[i])
 		i++;
@@ -110,7 +112,7 @@ void			gestion_export(t_temp *tmp, int i)
 	{
 		while (tmp->strcmd[++i])
 		{
-			(export_arg(tmp, 0, i) == -1) ? general_free(tmp) : 0;
+			(export_arg(tmp, 0, i, key) == -1) ? general_free(tmp) : 0;
 			free_export_tab(tmp);
 		}
 	}

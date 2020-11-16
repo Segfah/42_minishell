@@ -51,7 +51,7 @@ char			*cp_str(char *str, t_temp *tmp)
 	return (new_str);
 }
 
-void			gestion_cd(char **strcmd, t_temp *tmp)
+void			gestion_cd(char **strcmd, t_temp *tmp, int key)
 {
 	char *home;
 
@@ -65,7 +65,11 @@ void			gestion_cd(char **strcmd, t_temp *tmp)
 		if (!ft_strcmp(strcmd[1], ""))
 			;
 		else if (chdir(strcmd[1]) != 0 && (g_ret = 1))
-			ft_printf("cd: %s: %s\n", strerror(errno), strcmd[1]);
+		{
+			if (key)
+				exit(18);
+			ft_printf("minishell: cd: %s: %s\n", strerror(errno), strcmd[1]);
+		}
 	}
 	else
 	{
@@ -75,10 +79,18 @@ void			gestion_cd(char **strcmd, t_temp *tmp)
 			if (!ft_strcmp(home, ""))
 				;
 			else if (chdir(home) != 0 && (g_ret = 1))
-				ft_printf("cd: %s: %s\n", strerror(errno), home);
+			{
+				if (key)
+					exit(18);
+				ft_printf("minishell: cd: %s: %s\n", strerror(errno), home);
+			}
 		}
 		else
+		{
+			if (key)
+				exit(17);
 			(g_ret = 1) ? write(1, "minishell: cd: HOME not set\n", 28) : 0;
+		}
 		home ? ft_free(home) : 0;
 	}
 	!g_ret ? change_list(tmp->varenv, "OLDPWD", tmp->env) : 0;

@@ -125,17 +125,17 @@ void				clean_tab2d(char **tabin, char **tabout);
 /*
 ** gestion/cd
 */
-void				gestion_cd(char **strcmd, t_temp *tmp);
+void				gestion_cd(char **strcmd, t_temp *tmp, int key);
 
 /*
 ** env.c
 */
 int					save_env(t_lists **head, char **envp);
-void				gestion_env(char **strcmd, t_temp *tmp);
+void				gestion_env(char **strcmd, t_temp *tmp, int key);
 /*
 ** gestion/export
 */
-void				gestion_export(t_temp *tmp, int i);
+void				gestion_export(t_temp *tmp, int i, int key);
 
 /*
 ** gestion/pwd
@@ -145,7 +145,7 @@ void				gestion_pwd(char **strcmd, t_temp *tmp);
 /*
 ** gestion/unset
 */
-void				gestion_unset(t_temp *tmp);
+void				gestion_unset(t_temp *tmp, int key);
 
 /*
 ** **************************gestion/tools*********************************

@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void			gestion_unset(t_temp *tmp)
+void			gestion_unset(t_temp *tmp, int key)
 {
 	int			i;
 	int			ret;
@@ -20,15 +20,17 @@ void			gestion_unset(t_temp *tmp)
 	i = 0;
 	while (tmp->strcmd[i])
 		i++;
-	if (i == 1)
-		ft_printf("unset: not enough arguments\n");
 	i = 0;
 	while (tmp->strcmd[++i])
 	{
-		ret = check_env(tmp->strcmd[i], 0);
+		ret = check_env(tmp->strcmd[i], 1);
 		if (ret == -1 || ret == 1)
+		{
+			if (key)
+				exit(22);
 			ft_printf("minishell: unset: `%s': not a valid identifier \n",
-					tmp->strcmd[i]);
+				tmp->strcmd[i]);
+		}
 		else
 			deletenode(tmp->varenv, tmp->strcmd[i]);
 	}
