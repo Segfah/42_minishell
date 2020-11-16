@@ -14,10 +14,10 @@
 
 void	printftab(char **tab)// a borrar
 {
-	printf("----printtab----\n");
+	ft_printf("----printtab----\n");
 	for (int i = 0; tab[i]; i++)
-		printf("---[%d], --- [%s]\n", i, tab[i]);
-	printf("-----------------\n");
+		ft_printf("---[%d], --- [%s]\n", i, tab[i]);
+	ft_printf("-----------------\n");
 }
 
 void	printflist(t_cmd *cmd)
@@ -25,13 +25,13 @@ void	printflist(t_cmd *cmd)
 	t_cmd *tmp;
 
 	tmp = cmd;
-	printf("----printlist----\n");
+	ft_printf("----printlist----\n");
 	while (tmp)
 	{
-		printf("list in[%s] out[%s]\n",tmp->input, tmp->output);
+		ft_printf("list in[%s] out[%s]\n",tmp->input, tmp->output);
 		tmp = tmp->next;
 	}
-	printf("-----------------\n");
+	ft_printf("-----------------\n");
 }
 
 /*
