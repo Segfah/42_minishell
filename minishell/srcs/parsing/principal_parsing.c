@@ -188,9 +188,9 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 						dup2(fd[1], 1);
 					close(fd[0]);
 					tmp->strcmd = tmp->outpipe[k];
-					cmd ? check_redi(tmp->strcmd, tmp) : 0;
+					cmd ? check_redi(tmp->strcmdin, tmp) : 0;
 					((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)
-						? skip_redi(tmp->strcmd) : 0;
+						? skip_redi(tmp->strcmdin, tmp) : 0;
 					(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
 					tmp->flag[0] = (j > 0) ? 1 : 0;	
 					launcher_cmd(tmp->outpipe[k][0], tmp, j, 1);
@@ -205,7 +205,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 					int status;
 					if ((pid = waitpid(pid, &status, WUNTRACED | WCONTINUED)) == -1)
 						exit(1);
-					if (WIFEXITED(status))
+					if (WIFEXITED(status)) // toca mirar bien a que momento del tmp->outpipe[k][??] hacerlo, mirar bien las comandas que dejen poner varios comandos al mismo tiempo
 					{
 						if (WEXITSTATUS(status) == 15)
 							ft_printf("minishell: command not found: %s\n", tmp->outpipe[k][0]);
@@ -240,9 +240,9 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 		{
 			(cmd) ? llist_astring(cmd, tmp) : 0;
 	//		printftab(tmp->strcmd);
-			cmd ? check_redi(tmp->strcmd, tmp) : 0;
+			cmd ? check_redi(tmp->strcmdin, tmp) : 0;
 			((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)
-				? skip_redi(tmp->strcmd) : 0;
+				? skip_redi(tmp->strcmdin, tmp) : 0;
 			(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
 			tmp->flag[0] = (j > 0) ? 1 : 0;
 			launcher_cmd(tabcmd[i], tmp, j, 0);

@@ -100,7 +100,7 @@ int					cmd_exist(char *cmd, t_temp *tmp);
 **	parsing/tools/redirection
 */
 int					check_redi(char **cmd, t_temp *tmp);
-void				skip_redi(char **cmd);
+void				skip_redi(char **cmd, t_temp *tmp);
 
 /*
 ** parsing/tools/open_rediction
@@ -331,5 +331,7 @@ int					cherche_echo(char **tab);
 void				remove_all_space_node(t_cmd **cmd);
 int					strcat_cmd(t_cmd **cmd);
 void				printflist(t_cmd *cmd);
+void				printftab(char **tab);
+void				clean_tab2d_echo(char **tabin, char **tabout);
 
 #endif

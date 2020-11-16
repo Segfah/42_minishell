@@ -71,6 +71,7 @@ void	gestion_echo(t_temp *tmp)
 	if (n == 1)
 	{
 		write(1, "\n", 1);
+		(tmp->flag[1] == 1) ? dup2(tmp->oldfd, 1) : 0;
 		return ;
 	}
 	gestion_echo_2(tmp, n, i);
