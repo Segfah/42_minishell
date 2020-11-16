@@ -212,7 +212,6 @@ int				split3d(t_cmd *cmd, t_temp *tmp)
 {
 	int			ret;
 
-	printflist(cmd);
 	if ((ret = len_split3d(cmd)) == 0)//
 		return (0);
 	if (ret < 0)

@@ -79,17 +79,16 @@ char				**ft_split_strcmd(char *s, int echo)
 	if (!s)
 		return (NULL);
 	n = ft_word(s, echo);
-	printf("NBR = %d\n", n);
 	if (!(tab = (char **)malloc(sizeof(tab) * (n + 1))))
 		return (NULL);
 	while (++j < n)
 		tab[j] = ft_fill(s, echo, &i, tab[j]);
 	tab[j] = 0;
-	j = 0;
+/*	j = 0;
 	while(tab[j])
 	{
 		printf("tab[%d] =[%s]\n", j, tab[j]);
 		j++;
-	}
+	}*/
 	return (tab);
 }
