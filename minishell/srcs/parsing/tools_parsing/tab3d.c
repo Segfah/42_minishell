@@ -190,10 +190,7 @@ void			clean_split3d(t_temp *tmp)
 	while (tmp->inpipe[i])
 	{
 		if (cherche_echo(tmp->outpipe[i]))
-		{
 			clean_tab2d_echo(tmp->inpipe[i], tmp->outpipe[i]);
-			printf("hay un echo\n");
-		}
 		else
 			clean_tab2d(tmp->inpipe[i], tmp->outpipe[i]);
 		i++;

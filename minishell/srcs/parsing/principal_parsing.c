@@ -161,7 +161,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 		j = 0;
 		cmd = NULL;
 		separator_string(&cmd, tabcmd[i], tmp); // liste chaine - tmp->strcmd
-		printftab(tmp->strcmd);
+//		printftab(tmp->strcmd);
 		ft_free_double_tab(tmp->strcmd);
 		tmp->strcmd = NULL;
 		(cmd) ? j = split3d(cmd, tmp) : 0;
@@ -188,7 +188,8 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 						dup2(fd[1], 1);
 					close(fd[0]);
 					tmp->strcmd = tmp->outpipe[k];
-					cmd ? check_redi(tmp->strcmdin, tmp) : 0;
+					tmp->strcmdin = tmp->inpipe[k];
+					cmd ? check_redi(tmp->strcmdin, tmp, 1) : 0;
 					((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)
 						? skip_redi(tmp->strcmdin, tmp) : 0;
 					(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
@@ -222,6 +223,10 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 						if (WEXITSTATUS(status) == 22)
 							ft_printf("minishell: unset: `%s': not a valid identifier \n",
 								tmp->outpipe[k][1]);
+						if (WEXITSTATUS(status) == 23)
+							ft_printf("minishell: syntax error near unexpected token `%s'\n", tmp->outpipe[k][1]);
+						if (WEXITSTATUS(status) == 24)
+							ft_printf("minishell: syntax error near unexpected token `newline'\n");
 						if (WEXITSTATUS(status) == 13)
 							ft_printf("minishell: %s: Permission denied\n", tmp->outpipe[k][0]);
 						if (WEXITSTATUS(status) == 2)
@@ -240,7 +245,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 		{
 			(cmd) ? llist_astring(cmd, tmp) : 0;
 	//		printftab(tmp->strcmd);
-			cmd ? check_redi(tmp->strcmdin, tmp) : 0;
+			cmd ? check_redi(tmp->strcmdin, tmp, 0) : 0;
 			((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)
 				? skip_redi(tmp->strcmdin, tmp) : 0;
 			(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;

@@ -99,7 +99,7 @@ int					cmd_exist(char *cmd, t_temp *tmp);
 /*
 **	parsing/tools/redirection
 */
-int					check_redi(char **cmd, t_temp *tmp);
+int					check_redi(char **cmd, t_temp *tmp, int key);
 void				skip_redi(char **cmd, t_temp *tmp);
 
 /*

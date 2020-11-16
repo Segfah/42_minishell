@@ -44,7 +44,9 @@ void			sighandler(int signum)
 		exit(1);
 	ft_printf("\x1b[33m%s\x1b[0m🐰: ", prompt);
 	ft_free(env);
+	env = NULL;
 	ft_free(prompt);
+	prompt = NULL;
 	(void)signum;
 }
 
