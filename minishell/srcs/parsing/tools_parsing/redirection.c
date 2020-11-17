@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 16:54:13 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/22 16:54:15 by corozco          ###   ########.fr       */
+/*   Updated: 2020/11/17 14:52:49 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int				check_redi(char **cmd, t_temp *tmp, int key)
 			else
 			{
 				if (key)
-						exit(24);
+					exit(24);
 				ft_printf("minishell: syntax error near unexpected token `newline'\n");
 				return (tmp->flag[1] = -1);
 			}

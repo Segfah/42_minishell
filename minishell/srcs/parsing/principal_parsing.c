@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/16 22:49:23 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/17 15:40:55 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,86 @@ void			launcher_cmd(char *tabcmd, t_temp *tmp, int j, int key)
 **	printf("--------------j= %d \n", j);
 */
 
+int			search_error_redi1234(char *tmp) // | > | >> | < |
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (tmp[i])
+	{
+		if (tmp[i] == '>')
+			j++;
+		i++;
+	}
+	if (j > 2)
+		return (-j);
+	return (i);
+}
+
+int			search_error_redi4321(char *tmp) // | > | >> | < |
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (tmp[i])
+	{
+		if (tmp[i] == '<')
+			j++;
+		i++;
+	}
+	if (j > 1)
+		return (-1);
+	return (i);
+}
+
+int				check_redi_2(char **cmd)
+{
+	int			i;
+
+	i = 0;
+	while (cmd[i]) //(cmd == tmp->strcmdin)  // tmp->strcmd
+	{
+		if (search_error_redi1234(cmd[i]) == -3)
+			return (i);
+		if (search_error_redi1234(cmd[i]) < -3)
+			return (i);
+		if (search_error_redi4321(cmd[i]) == -1)
+			return (i);
+		if (is_redi(cmd[i]))
+		{
+			if (cmd[i + 1])
+			{
+				!ft_strcmp(cmd[i + 1], " ") ? i++ : i;
+				if (cmd[i + 1] && is_redi(cmd[i + 1]))
+					return (i);
+			}
+			else
+				return (i);
+		}
+		(cmd[i] != NULL) ? i++ : i;
+	}
+	return (i);
+}
+
+int 			check_export(char *src, char **str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (check_env(str[i], 1) == -1)
+		{
+			ft_printf("minishell: %s: `%s': not a valid identifier\n", src, str[i]);
+		}
+		i++;	
+	}
+	return (0);
+}
 
 static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 {
@@ -208,9 +288,10 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 						exit(1);
 					if (WIFEXITED(status)) // toca mirar bien a que momento del tmp->outpipe[k][??] hacerlo, mirar bien las comandas que dejen poner varios comandos al mismo tiempo
 					{
+						//check_redi_2(tmp->outpiep[k]);
 						if (WEXITSTATUS(status) == 15)
 							ft_printf("minishell: command not found: %s\n", tmp->outpipe[k][0]);
-						if (WEXITSTATUS(status) == 16)
+						if (WEXITSTATUS(status) == 16) 
 							ft_printf("minishell: /: is a directory\n");
 						if (WEXITSTATUS(status) == 17)
 							ft_printf("minishell: cd: HOME not set\n");
@@ -219,12 +300,11 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 						if (WEXITSTATUS(status) == 19)
 							ft_printf("env: %s: No such file or directory\n", tmp->outpipe[k][1]);
 						if (WEXITSTATUS(status) == 20)
-							ft_printf("minishell: export: `%s': not a valid identifier\n", tmp->outpipe[k][1]);
+							check_export("export", tmp->outpipe[k]);
 						if (WEXITSTATUS(status) == 22)
-							ft_printf("minishell: unset: `%s': not a valid identifier \n",
-								tmp->outpipe[k][1]);
+							check_export("unset", tmp->outpipe[k]);
 						if (WEXITSTATUS(status) == 23)
-							ft_printf("minishell: syntax error near unexpected token `%s'\n", tmp->outpipe[k][1]);
+							ft_printf("minishell: syntax error near unexpected token `%s'\n", tmp->outpipe[k][check_redi_2(tmp->outpipe[k]) + 1]);
 						if (WEXITSTATUS(status) == 24)
 							ft_printf("minishell: syntax error near unexpected token `newline'\n");
 						if (WEXITSTATUS(status) == 13)

@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 22:43:00 by corozco           #+#    #+#             */
-/*   Updated: 2020/11/16 23:01:49 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/17 15:40:02 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void			gestion_unset(t_temp *tmp, int key)
 			g_ret = 1;
 			if (key)
 				exit(22);
-			ft_printf("minishell: unset: `%s': not a valid identifier \n",
+			ft_printf("minishell: unset: `%s': not a valid identifier\n",
 				tmp->strcmd[i]);
 		}
 		else
