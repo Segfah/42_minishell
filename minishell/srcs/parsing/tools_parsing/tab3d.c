@@ -199,9 +199,7 @@ void			clean_split3d(t_temp *tmp)
 
 int				print_error(int ret)
 {
-	if (ret == -1)
-		write(1, "minishell: syntax error near unexpected token `||'\n",51);
-	if (ret == -2)
+	if (ret == -1 || ret == -2)
 		write(1, "minishell: syntax error near unexpected token `|'\n", 50);
 	if (ret == -3)
 		write(1, "error multi ligne\n", 18);
