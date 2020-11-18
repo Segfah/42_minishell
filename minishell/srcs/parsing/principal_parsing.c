@@ -229,11 +229,39 @@ int 			check_export(char *src, char **str)
 	return (0);
 }
 
+int				error_line(char **tabcmd, t_temp *tmp, int i)
+{
+	t_cmd		*cmd;
+	int			ret;
+	
+	while (tabcmd[++i])
+	{
+		ret = 0;
+		initialize(tmp);
+		cmd = NULL;
+		separator_string(&cmd, tabcmd[i], tmp);
+		if ((ret = len_split3d(cmd)) < 0)
+		{
+			ft_free_double_tab(tmp->strcmd);
+			ft_free_double_tab(tmp->strcmdin);
+			(cmd != NULL) ? free_cmd(cmd) : 0;
+			print_error(ret);
+			return (-1);
+		}
+		ft_free_double_tab(tmp->strcmd);
+		ft_free_double_tab(tmp->strcmdin);
+		(cmd != NULL) ? free_cmd(cmd) : 0;
+	}
+	return (0);
+}
+
 static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 {
 	int			j;
 	t_cmd		*cmd;
 
+	if (error_line(tabcmd, tmp, i) == -1)
+		return ;
 	while (tabcmd[++i])
 	{
 	//	printf("tabcmd[%d] = [%s]\n", i, tabcmd[i]);

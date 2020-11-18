@@ -333,5 +333,7 @@ int					strcat_cmd(t_cmd **cmd);
 void				printflist(t_cmd *cmd);
 void				printftab(char **tab);
 void				clean_tab2d_echo(char **tabin, char **tabout);
+int					len_split3d(t_cmd *cmd);
+int					print_error(int ret);
 
 #endif
