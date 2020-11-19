@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 02:32:22 by corozco           #+#    #+#             */
-/*   Updated: 2020/11/19 11:04:52 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/19 11:13:11 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,17 +80,14 @@ int				export_arg(t_temp *tmp, int ret, int i, int key)
 	return (0);
 }
 
-void			free_export_tab(t_temp *tmp)
+void			gestion_export_2(t_temp *tmp)
 {
-	ft_free(tmp->tab[0]);
-	tmp->tab[0] = NULL;
-	ft_free(tmp->tab[1]);
-	tmp->tab[1] = NULL;
-//	if (tmp->tab[1] != NULL)
-//	{
-//		free(tmp->tab[1]);
-//		tmp->tab[1] = NULL;
-//	}
+	(cpy_env(&tmp->exportenv, tmp->varenv) == -1) ? general_free(tmp) : 0;
+	range_export(tmp->exportenv);
+	print_list(tmp->exportenv, 0);
+	free_list(tmp->exportenv);
+	tmp->exportenv = NULL;
+	(tmp->flag[1] == 1) ? dup2(tmp->oldfd, 1) : 0;
 }
 
 void			gestion_export(t_temp *tmp, int i, int key)
@@ -105,12 +102,7 @@ void			gestion_export(t_temp *tmp, int i, int key)
 			tmp->oldfd = dup(1);
 			dup2(tmp->fd, 1);
 		}
-		(cpy_env(&tmp->exportenv, tmp->varenv) == -1) ? general_free(tmp) : 0;
-		range_export(tmp->exportenv);
-		print_list(tmp->exportenv, 0);
-		free_list(tmp->exportenv);
-		tmp->exportenv = NULL;
-		(tmp->flag[1] == 1) ? dup2(tmp->oldfd, 1) : 0;
+		gestion_export_2(tmp);
 	}
 	else
 	{
@@ -120,5 +112,4 @@ void			gestion_export(t_temp *tmp, int i, int key)
 			free_export_tab(tmp);
 		}
 	}
-//	(tmp->flag[1]) ? close(tmp->fd) : 0;
 }

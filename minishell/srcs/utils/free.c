@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 17:58:38 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/06 20:29:52 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/19 11:12:36 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,12 @@ void				free_cmd(t_cmd *cmd)
 		cmd = tmp;
 	}
 	ft_free(cmd);
+}
+
+void				free_export_tab(t_temp *tmp)
+{
+	ft_free(tmp->tab[0]);
+	tmp->tab[0] = NULL;
+	ft_free(tmp->tab[1]);
+	tmp->tab[1] = NULL;
 }
