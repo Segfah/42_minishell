@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 14:02:09 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/19 12:04:58 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/19 15:59:45 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,14 @@ void	remove_null_node(t_cmd **cmd)
 	}
 }
 
+void	tilde(t_cmd *cmd, t_temp *tmp)
+{
+	if (search_env("HOME", tmp, 1, NULL) == 0)
+		cmd->output = ft_strdup(tmp->hnull);
+	else
+		search_env("HOME", tmp, 0, &cmd->output);
+}
+
 void	check_node(t_cmd *cmd, t_temp *temp)
 {
 	if (cmd->input[0] == '$')
@@ -42,6 +50,8 @@ void	check_node(t_cmd *cmd, t_temp *temp)
 		single_cote_cmd(cmd);
 	else if (cmd->input[0] == '"')
 		dcote_cmd(cmd, temp->varenv);
+	else if (!ft_strcmp("~", cmd->input))
+		tilde(cmd, temp);
 	else
 		cmd->output = ft_strdup(cmd->input);
 }

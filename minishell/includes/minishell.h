@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/11/19 12:17:36 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/19 15:59:16 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,5 +341,6 @@ void				free_export_tab(t_temp *tmp);
 char 				*cp_str_2(int size, char *tmp_str, char *str);
 void				gestion_cd_2(char *home, t_temp *tmp, int key);
 int					check_echo_2(int *check, int *i, char c, char *s);
+void				tilde(t_cmd *cmd, t_temp *tmp);
 
 #endif
