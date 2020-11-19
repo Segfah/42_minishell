@@ -16,10 +16,8 @@ int				ft_count_word(char *str)
 {
 	int word;
 	int i;
-	int slash;
 
 	word = 0;
-	slash = 0;
 	i = 0;
 	if (str)
 		word = 1;
@@ -38,10 +36,8 @@ int				ft_count_word(char *str)
 char			*ft_fill_line(char *str, int *i, char *tab)
 {
 	int save;
-	int slash;
 
 	save = *i;
-	slash = 0;
 	while (str[*i])
 	{
 		count_slash(str, i);

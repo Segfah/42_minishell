@@ -23,10 +23,8 @@ void	ft_count_word_slash_2(char *s, int *i, int *n)
 void	ft_count_word_slash(char *s, int *i, int *n)
 {
 	int count;
-	int save;
 
 	count = 0;
-	save = *i;
 	while (s[*i] && s[*i] == '\\')
 	{
 		(*i)++;
