@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/01 22:57:34 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/13 15:47:35 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/19 12:30:51 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	is_slash(t_cmd *cmd, int *j, int *i, char *save)
 				cmd->output[(*i)++] = save[(*j)++];
 		}
 	}
+	ft_free(save);
 	return ;
 }
 

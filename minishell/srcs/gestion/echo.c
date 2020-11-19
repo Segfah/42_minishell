@@ -6,13 +6,13 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 17:27:31 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/19 12:02:08 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/19 12:19:11 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		ft_check_option_echo(char *s)
+int			ft_check_option_echo(char *s)
 {
 	int i;
 	int len;
@@ -31,7 +31,7 @@ int		ft_check_option_echo(char *s)
 	return (0);
 }
 
-void	gestion_echo_2(t_temp *tmp, int n, int i)
+void		gestion_echo_2(t_temp *tmp, int n, int i)
 {
 	while (tmp->strcmd[i])
 	{
@@ -43,7 +43,7 @@ void	gestion_echo_2(t_temp *tmp, int n, int i)
 		ft_printf("\n");
 }
 
-void	dup_or_not(t_temp *tmp)
+void		dup_or_not(t_temp *tmp)
 {
 	if (tmp->flag[1] == 1)
 	{
@@ -52,7 +52,7 @@ void	dup_or_not(t_temp *tmp)
 	}
 }
 
-void	gestion_echo(t_temp *tmp)
+void		gestion_echo(t_temp *tmp)
 {
 	int		i;
 	int		n;
@@ -75,4 +75,16 @@ void	gestion_echo(t_temp *tmp)
 	}
 	gestion_echo_2(tmp, n, i);
 	(tmp->flag[1] == 1) ? dup2(tmp->oldfd, 1) : 0;
+}
+
+int			check_echo_2(int *check, int *i, char c, char *s)
+{
+	if (s && s[*i] && (s[*i] == c || s[*i] == c - 40))
+	{
+		*check += 1;
+		(*i)++;
+		return (*check);
+	}
+	*check = 0;
+	return (0);
 }

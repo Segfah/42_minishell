@@ -6,13 +6,13 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 13:58:31 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/13 16:40:54 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/19 12:31:51 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int			isalpha1(char *s)
+int					isalpha1(char *s)
 {
 	int i;
 	int ret;
@@ -32,10 +32,10 @@ int			isalpha1(char *s)
 	return (ret);
 }
 
-int			strcat_cmd(t_cmd **cmd)
+int					strcat_cmd(t_cmd **cmd)
 {
-	t_cmd *tmp;
-	int i;
+	t_cmd	*tmp;
+	int		i;
 
 	tmp = *cmd;
 	i = 0;
@@ -44,18 +44,8 @@ int			strcat_cmd(t_cmd **cmd)
 		if (tmp->next && tmp->next->output && (isalpha1(tmp->output) > 0) &&
 		(isalpha1(tmp->next->output) > 0))
 		{
-			//printf("\n\n---------------\n");
-			//printf("tmp->input = [%s]\n", tmp->input);
-			//printf("tmp->next->input = [%s]\n", tmp->next->input);
-			//printf("tmp->output = [%s]\n", tmp->output);
-			//printf("tmp->next->output = [%s]\n", tmp->next->output);
-			//printf("---------------\n\n");
-			//printf("input before -> [%s] | ", tmp->input);
 			if ((tmp->input = ft_strcatdup(tmp->input, tmp->next->input)))
 				tmp->next->input = NULL;
-			//while (1);
-			//printf("input after -> [%s]\n", tmp->input);
-			//printf("output before -> [%s] | ", tmp->output);
 			if ((tmp->output = ft_strcatdup(tmp->output, tmp->next->output)))
 				tmp->next->output = NULL;
 			i = 1;
@@ -67,19 +57,7 @@ int			strcat_cmd(t_cmd **cmd)
 	return (i);
 }
 
-static int			check_echo_2(int *check, int *i, char c, char *s)
-{
-	if (s && s[*i] && (s[*i] == c || s[*i] == c - 40))
-	{
-		*check += 1;
-		(*i)++;
-		return (*check);
-	}
-	*check = 0;
-	return (0);
-}
-
-static int			check_echo(char *cmd) // poner una key para activarlo si necesitamos en la cadena
+static int			check_echo(char *cmd)
 {
 	int				i;
 	int				check;
@@ -104,7 +82,7 @@ static int			check_echo(char *cmd) // poner una key para activarlo si necesitamo
 	return (0);
 }
 
-int				cherche_echo(char **tab)
+int					cherche_echo(char **tab)
 {
 	int			i;
 
@@ -118,16 +96,14 @@ int				cherche_echo(char **tab)
 	return (0);
 }
 
-
-
-void			separator_string(t_cmd **cmd, char *str, t_temp *tmp)
+void				separator_string(t_cmd **cmd, char *str, t_temp *tmp)
 {
 	int		i;
 	t_cmd	*new;
 
 	i = 0;
 	if (!tmp)
-	return ;
+		return ;
 	tmp->strcmd = ft_split_strcmd(str, 1);
 	while (tmp->strcmd[i])
 	{
