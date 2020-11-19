@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 16:54:13 by corozco           #+#    #+#             */
-/*   Updated: 2020/11/17 14:52:49 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/19 14:47:49 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int				check_redi(char **cmd, t_temp *tmp, int key)
 			else
 			{
 				if (key)
-					exit(24);
+						exit(24);
 				ft_printf("minishell: syntax error near unexpected token `newline'\n");
 				return (tmp->flag[1] = -1);
 			}
@@ -159,7 +159,7 @@ void			skip_redi(char **cmd, t_temp *tmp)
 		}
 		else
 		{
-			if (cmd[i] != NULL)
+			if (cmd[i + 1] != NULL)
 			{
 				cmd[j] = cmd[i];
 				tmp->strcmd[j++] = tmp->strcmd[i++];

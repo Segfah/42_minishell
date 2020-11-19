@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/17 15:40:55 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/19 15:12:06 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,9 @@ void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, int key)
 		g_ret = 127;
 		if (key == 1)
 			exit(15);
-		ft_printf("minishell: command not found: %s\n", tabcmd);
-	}	
+		ft_printf("minishell: command not found: %s\n", tmp->strcmd[0]);
+	}
+	(void)tabcmd;
 }
 
 void			launcher_cmd(char *tabcmd, t_temp *tmp, int j, int key)
