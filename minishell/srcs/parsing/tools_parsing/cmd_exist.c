@@ -72,6 +72,7 @@ int				cmd_exist(char *cmd, t_temp *tmp)
 	if (!(flag = 0) && !cmd)
 		return (-2);
 	flag = !ft_strcmp(cmd, "exit") ? 1 : flag;
+	flag = !ft_strcmp(cmd, "[") ? 10 : flag;
 	flag = !ft_strcmp(cmd, "cd") ? 2 : flag;
 	flag = !ft_strcmp(cmd, "env") ? 3 : flag;
 	flag = !ft_strcmp(cmd, "pwd") ? 4 : flag;
