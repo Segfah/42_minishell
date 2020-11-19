@@ -102,21 +102,21 @@ int				check_redi(char **cmd, t_temp *tmp, int key)
 		{
 			tmp->flag[1] = 1;
 			!ft_strcmp(cmd[i + 1], " ") ? i++ : i;
-			if (tmp->flag[2] != -1 && simple_redi(tmp->strcmd[i + 1], tmp) == -1)
+			if (tmp->flag[2] != -1 && simple_redi(tmp->strcmd[i + 1], tmp, key) == -1)
 				return (tmp->flag[1] = -1);
 		}
 		else if (tmp->flag[2] != -1 && !(ft_strcmp(">>", cmd[i])))
 		{
 			tmp->flag[1] = 1;
 			!ft_strcmp(cmd[i + 1], " ") ? i++ : i;
-			if (double_redi(tmp->strcmd[i + 1], tmp) == -1)
+			if (double_redi(tmp->strcmd[i + 1], tmp, key) == -1)
 				return (tmp->flag[1] = -1);
 		}
 		else if (!(ft_strcmp("<", cmd[i])))
 		{
 			tmp->flag[2] = 1;
 			!ft_strcmp(cmd[i + 1], " ") ? i++ : i;
-			if (contre_redi(tmp->strcmd[i + 1], tmp) == -1)
+			if (contre_redi(tmp->strcmd[i + 1], tmp, key) == -1)
 				return (tmp->flag[2] = -1);
 		}
 		(cmd[i] != NULL) ? i++ : i;

@@ -361,6 +361,8 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 							ft_printf("minishell: syntax error near unexpected token `%s'\n", tmp->outpipe[k][check_redi_2(tmp->outpipe[k]) + 1]);
 						if (WEXITSTATUS(status) == 24)
 							ft_printf("minishell: syntax error near unexpected token `newline'\n");
+						if (WEXITSTATUS(status) == 25) 
+							ft_printf("minishell: %s: is a directory\n", tmp->outpipe[k][check_redi_2(tmp->outpipe[k]) + 1]);
 						if (WEXITSTATUS(status) == 13)
 							ft_printf("minishell: %s: Permission denied\n", tmp->outpipe[k][0]);
 						if (WEXITSTATUS(status) == 2)
