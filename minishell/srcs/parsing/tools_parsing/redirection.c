@@ -159,7 +159,7 @@ void			skip_redi(char **cmd, t_temp *tmp)
 		}
 		else
 		{
-			if (cmd[i + 1] != NULL)
+			if (cmd[i] != NULL)
 			{
 				cmd[j] = cmd[i];
 				tmp->strcmd[j++] = tmp->strcmd[i++];

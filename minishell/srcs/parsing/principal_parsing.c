@@ -276,13 +276,13 @@ int				error_line(char **tabcmd, t_temp *tmp, int i)
 	t_cmd		*cmd;
 	int			ret;
 	
-	while (tabcmd[++i])
+	while (tabcmd[++i]) 
 	{
 		ret = 0;
 		initialize(tmp);
 		cmd = NULL;
 		separator_string(&cmd, tabcmd[i], tmp);
-		if ((ret = len_split3d(cmd)) < 0)
+		if ((ret = len_split3d(cmd)) < 0) // pipes
 		{
 			ft_free_double_tab(tmp->strcmd);
 			ft_free_double_tab(tmp->strcmdin);
@@ -290,6 +290,7 @@ int				error_line(char **tabcmd, t_temp *tmp, int i)
 			print_error(ret);
 			return (-1);
 		}
+
 		ft_free_double_tab(tmp->strcmd);
 		ft_free_double_tab(tmp->strcmdin);
 		(cmd != NULL) ? free_cmd(cmd) : 0;

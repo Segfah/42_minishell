@@ -1,31 +1,5 @@
 #include "minishell.h"
 
-/*
-int			len_split3d(t_cmd *cmd)
-{
-	int		pipe;
-	t_cmd	*tmp;
-
-	tmp = cmd;
-	pipe = 0;
-	if (tmp && !ft_strcmp(tmp->input, "|")) //si le premier est | erreur
-		return (-1);
-	while (tmp)
-	{
-		if (!ft_strcmp(tmp->input, "|") && (!tmp->next || !tmp->next->next)) // si le derniere est un | erreur
-			return (-1);
-		else if (!ft_strcmp(tmp->input, "|") && !ft_strcmp(tmp->next->next->input, "|")) // si il y a un | et que celui d'apres et un | erreur
-			return (-2);
-		else if (!ft_strcmp(tmp->input, "|"))
-			pipe++;
-		tmp = tmp->next;
-	}
-	if (pipe == 0)
-		return (0);
-	return (pipe + 1);
-}
-*/
-
 int			search_error_pipe(t_cmd *tmp)
 {
 	int i;
@@ -44,20 +18,20 @@ int			search_error_pipe(t_cmd *tmp)
 	return (i);
 }
 
-int			len_split3d(t_cmd *cmd) ///// muchos errores a nivel de los errores pipes
+int			len_split3d(t_cmd *cmd)
 {
 	int		pipe;
 	t_cmd	*tmp;
 
 	tmp = cmd;
 	pipe = 0;
-	if (tmp && !ft_strcmp(tmp->input, "|")) //si le premier est | erreur
+	if (tmp && !ft_strcmp(tmp->input, "|"))
 		return (-1);
 	while (tmp)
 	{	
 		if (search_error_pipe(tmp) == -1)
 			return (-1);
-		if (!ft_strcmp(tmp->input, "|") && !tmp->next) // si le derniere est un | erreur
+		if (!ft_strcmp(tmp->input, "|") && !tmp->next)
 			return (-3);
 		else if (!ft_strcmp(tmp->input, "|") && !ft_strcmp(tmp->next->input, " ") && !tmp->next->next)
 			return (-1);
@@ -155,30 +129,33 @@ void			clean_tab2d_echo(char **tabin, char **tabout)
 
 	k = 0;
 	i = 0;
-	if (!ft_strcmp(tabin[i], " "))
+	if (tabin[i])
 	{
-		ft_free(tabin[i]);
-		ft_free(tabout[i]);
-		i++;
-	}
-	while (tabin[i])
-	{
-		tabin[k] = tabin[i];
-		tabout[k] = tabout[i];
-		i++;
-		k++;
-	}
-	if (!ft_strcmp(tabin[k - 1], " "))
-	{
-		ft_free(tabin[k - 1]);
-		ft_free(tabout[k - 1]);
-		tabin[k - 1] = 0;
-		tabout[k - 1] = 0;
-	}
-	else
-	{
-		tabin[k] = 0;
-		tabout[k] = 0;
+		if (!ft_strcmp(tabin[i], " "))
+		{
+			ft_free(tabin[i]);
+			ft_free(tabout[i]);
+			i++;
+		}
+		while (tabin[i])
+		{
+			tabin[k] = tabin[i];
+			tabout[k] = tabout[i];
+			i++;
+			k++;
+		}
+		if (k > 0 && !ft_strcmp(tabin[k - 1], " "))   
+		{
+			ft_free(tabin[k - 1]);
+			ft_free(tabout[k - 1]);
+			tabin[k - 1] = 0;
+			tabout[k - 1] = 0;
+		}
+		else
+		{
+			tabin[k] = 0;
+			tabout[k] = 0;
+		}
 	}
 }
 
@@ -220,17 +197,5 @@ int				split3d(t_cmd *cmd, t_temp *tmp)
 	tmp->inpipe = (char***)malloc(sizeof(char**) * ret + 1);
 	tab2_3d(cmd, tmp);
 	clean_split3d(tmp);
-/*
-	for (int o = 0; tmp->inpipe[o]; o++)
-	{
-		printf("tab inpipe[%d]\n",o);
-		printftab(tmp->inpipe[o]);
-	}
-	for (int o = 0; tmp->outpipe[o]; o++)
-	{
-		printf("tab outpipe[%d]\n",o);
-		printftab(tmp->outpipe[o]);
-	}
-*/
 	return (1);
 }
