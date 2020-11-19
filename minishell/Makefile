@@ -6,7 +6,7 @@
 #    By: lryst <lryst@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 05:41:03 by corozco           #+#    #+#              #
-#    Updated: 2020/10/20 16:53:27 by lryst            ###   ########.fr        #
+#    Updated: 2020/11/19 11:03:26 by lryst            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRC := \
 	srcs/gestion/tools/tools_env_unset.c \
 	srcs/gestion/tools/tools_export.c \
 	srcs/gestion/tools/tools_list.c \
+	srcs/gestion/tools/tools_command_bin.c \
 	srcs/gestion/export.c \
 	srcs/utils/free.c \
 	srcs/gestion/echo.c \
