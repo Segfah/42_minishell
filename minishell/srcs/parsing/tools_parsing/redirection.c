@@ -12,42 +12,6 @@
 
 #include "minishell.h"
 
-int			search_error_redi123(char *tmp) // | > | >> | < |
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (tmp[i])
-	{
-		if (tmp[i] == '>')
-			j++;
-		i++;
-	}
-	if (j > 2)
-		return (-j);
-	return (i);
-}
-
-int			search_error_redi321(char *tmp) // | > | >> | < |
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (tmp[i])
-	{
-		if (tmp[i] == '<')
-			j++;
-		i++;
-	}
-	if (j > 1)
-		return (-1);
-	return (i);
-}
-
 int				check_redi(char **cmd, t_temp *tmp, int key)
 {
 	int			i;
@@ -57,17 +21,17 @@ int				check_redi(char **cmd, t_temp *tmp, int key)
 	i = 0;
 	while (cmd[i]) //(cmd == tmp->strcmdin)  // tmp->strcmd
 	{
-		if (search_error_redi123(cmd[i]) == -3)
+		if (search_error_redi1(cmd[i]) == -3)
 		{
 			ft_printf("minishell: syntax error near unexpected token `>'\n");
 			return (tmp->flag[1] = -1);
 		}
-		if (search_error_redi123(cmd[i]) < -3)
+		if (search_error_redi1(cmd[i]) < -3)
 		{
 			ft_printf("minishell: syntax error near unexpected token `>>'\n");
 			return (tmp->flag[1] = -1);
 		}
-		if (search_error_redi321(cmd[i]) == -1)
+		if (search_error_redi2(cmd[i]) == -1)
 		{
 			ft_printf("minishell: syntax error near unexpected token `<'\n");
 			return (tmp->flag[1] = -1);

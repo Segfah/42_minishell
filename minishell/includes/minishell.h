@@ -335,12 +335,16 @@ void				printftab(char **tab);
 void				clean_tab2d_echo(char **tabin, char **tabout);
 int					len_split3d(t_cmd *cmd);
 int					print_error(int ret);
-int					command_bin_2(char **tab_env, char **tab, t_temp *tmp, int key);
+int					command_bin_2(char **tab_env, char **tab
+						, t_temp *tmp, int key);
 void				command_bin_3(t_temp *tmp);
 void				free_export_tab(t_temp *tmp);
-char 				*cp_str_2(int size, char *tmp_str, char *str);
+char				*cp_str_2(int size, char *tmp_str, char *str);
 void				gestion_cd_2(char *home, t_temp *tmp, int key);
 int					check_echo_2(int *check, int *i, char c, char *s);
 void				tilde(t_cmd *cmd, t_temp *tmp);
+int					search_error_redi1(char *tmp);
+int					search_error_redi2(char *tmp);
+
 
 #endif

@@ -190,7 +190,7 @@ void			launcher_cmd(char *tabcmd, t_temp *tmp, int j, int key)
 **	printf("--------------j= %d \n", j);
 */
 
-int			search_error_redi1234(char *tmp) // | > | >> | < |
+int			search_error_redi1(char *tmp) // | > | >> | < |
 {
 	int i;
 	int j;
@@ -208,7 +208,7 @@ int			search_error_redi1234(char *tmp) // | > | >> | < |
 	return (i);
 }
 
-int			search_error_redi4321(char *tmp) // | > | >> | < |
+int			search_error_redi2(char *tmp) // | > | >> | < |
 {
 	int i;
 	int j;
@@ -226,29 +226,29 @@ int			search_error_redi4321(char *tmp) // | > | >> | < |
 	return (i);
 }
 
-int				check_redi_2(char **cmd)
+int				check_redi_2(char **cmd, int key)
 {
 	int			i;
 
 	i = 0;
 	while (cmd[i]) //(cmd == tmp->strcmdin)  // tmp->strcmd
 	{
-		if (search_error_redi1234(cmd[i]) == -3)
-			return (i);
-		if (search_error_redi1234(cmd[i]) < -3)
-			return (i);
-		if (search_error_redi4321(cmd[i]) == -1)
-			return (i);
+		if (search_error_redi1(cmd[i]) == -3)
+			return (key ? -1 : i);
+		if (search_error_redi1(cmd[i]) < -3)
+			return (key ? -2 : i);
+		if (search_error_redi2(cmd[i]) == -1)
+			return (key ? -3 : i);
 		if (is_redi(cmd[i]))
 		{
 			if (cmd[i + 1])
 			{
 				!ft_strcmp(cmd[i + 1], " ") ? i++ : i;
 				if (cmd[i + 1] && is_redi(cmd[i + 1]))
-					return (i);
+					return (key ? -4 : i);
 			}
 			else
-				return (i);
+				return (key ? -5 : i);
 		}
 		(cmd[i] != NULL) ? i++ : i;
 	}
@@ -271,6 +271,20 @@ int 			check_export(char *src, char **str)
 	return (0);
 }
 
+void			print_error_redi(char *str, int key)
+{
+	if (key == -1)
+		ft_printf("minishell: syntax error near unexpected token `>'\n");
+	if (key == -2)
+		ft_printf("minishell: syntax error near unexpected token `>>'\n");
+	if (key == -3)
+		ft_printf("minishell: syntax error near unexpected token `<'\n");
+	if (key == -4)
+		ft_printf("minishell: syntax error near unexpected token `%s'\n", str);
+	if (key == -5)
+		ft_printf("minishell: syntax error near unexpected token `newline'\n");
+}
+
 int				error_line(char **tabcmd, t_temp *tmp, int i)
 {
 	t_cmd		*cmd;
@@ -290,7 +304,18 @@ int				error_line(char **tabcmd, t_temp *tmp, int i)
 			print_error(ret);
 			return (-1);
 		}
-
+		ft_free_double_tab(tmp->strcmd);
+		tmp->strcmd = NULL;
+		(cmd) ? llist_astring(cmd, tmp) : 0;
+		if (tmp->strcmdin && (ret = check_redi_2(tmp->strcmdin, 1)) < 0)
+		{
+			printftab(tmp->strcmd);
+			print_error_redi(tmp->strcmd[check_redi_2(tmp->strcmd, 0) + 1], ret);
+			ft_free_double_tab(tmp->strcmd);
+			ft_free_double_tab(tmp->strcmdin);
+			(cmd != NULL) ? free_cmd(cmd) : 0;
+			return (-1);
+		}
 		ft_free_double_tab(tmp->strcmd);
 		ft_free_double_tab(tmp->strcmdin);
 		(cmd != NULL) ? free_cmd(cmd) : 0;
@@ -359,7 +384,6 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 						exit(1);
 					if (WIFEXITED(status)) // toca mirar bien a que momento del tmp->outpipe[k][??] hacerlo, mirar bien las comandas que dejen poner varios comandos al mismo tiempo
 					{
-						//check_redi_2(tmp->outpiep[k]);
 						if (WEXITSTATUS(status) == 15)
 							ft_printf("minishell: command not found: %s\n", tmp->outpipe[k][0]);
 						if (WEXITSTATUS(status) == 16) 
@@ -377,11 +401,11 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 						if (WEXITSTATUS(status) == 22)
 							check_export("unset", tmp->outpipe[k]);
 						if (WEXITSTATUS(status) == 23)
-							ft_printf("minishell: syntax error near unexpected token `%s'\n", tmp->outpipe[k][check_redi_2(tmp->outpipe[k]) + 1]);
+							ft_printf("minishell: syntax error near unexpected token `%s'\n", tmp->outpipe[k][check_redi_2(tmp->outpipe[k], 0) + 1]);
 						if (WEXITSTATUS(status) == 24)
 							ft_printf("minishell: syntax error near unexpected token `newline'\n");
 						if (WEXITSTATUS(status) == 25) 
-							ft_printf("minishell: %s: is a directory\n", tmp->outpipe[k][check_redi_2(tmp->outpipe[k]) + 1]);
+							ft_printf("minishell: %s: is a directory\n", tmp->outpipe[k][check_redi_2(tmp->outpipe[k], 0) + 1]);
 						if (WEXITSTATUS(status) == 26)
 						{
 							write (1, "minishell: .: filename argument required\n", 41);
