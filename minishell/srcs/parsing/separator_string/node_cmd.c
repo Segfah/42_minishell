@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 14:02:09 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/20 14:30:47 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/19 12:04:58 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	remove_null_node(t_cmd **cmd)
 	while (tmp)
 	{
 		save = NULL;
-		if (tmp->next && (tmp->next->output == NULL || tmp->next->input == NULL))
+		if (tmp->next && (tmp->next->output == NULL ||
+		tmp->next->input == NULL))
 		{
 			save = tmp->next->next;
 			ft_lstdelone_cmd(tmp->next);
