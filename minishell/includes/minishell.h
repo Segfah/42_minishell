@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/11/19 11:12:05 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/19 11:53:13 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -338,5 +338,7 @@ int					print_error(int ret);
 int					command_bin_2(char **tab_env, char **tab, t_temp *tmp, int key);
 void				command_bin_3(t_temp *tmp);
 void				free_export_tab(t_temp *tmp);
+char 				*cp_str_2(int size, char *tmp_str, char *str);
+void				gestion_cd_2(char *home, t_temp *tmp, int key);
 
 #endif
