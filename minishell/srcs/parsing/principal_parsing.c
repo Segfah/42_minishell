@@ -118,16 +118,40 @@ void			gestion_missing(t_temp *tmp, int key)
 	ft_printf("minishell: [: missing `]'\n");
 }
 
+void			point_filename(char **tab, int key)
+{
+	int			i;
+
+	i = 0;
+	while (tab[i])
+		i++;
+	if (i > 1)
+	{
+		if (key)
+			exit(13);
+		write (1, "minishell: Permission denied\n", 29);
+	}
+	else
+	{
+		if (key)
+			exit(26);
+		write (1, "minishell: .: filename argument required\n", 41);
+		write (1, ".: usage: . filename [arguments]\n", 33);
+	}
+}
+
 void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, int key)
 {
 	if (j == 10)
-		gestion_missing(tmp, key);	
+		gestion_missing(tmp, key);
 	else if (j == 7)
 		gestion_unset(tmp, key);
 	else if (j == 8)
 		gestion_echo(tmp);
 	else if (j == 9 && command_bin(tmp->strcmd, tmp, key) == 0)
 		return ;
+	else if (j == 11)
+		point_filename(tmp->strcmd, key);
 	else
 	{
 		g_ret = 127;
@@ -357,6 +381,11 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 							ft_printf("minishell: syntax error near unexpected token `newline'\n");
 						if (WEXITSTATUS(status) == 25) 
 							ft_printf("minishell: %s: is a directory\n", tmp->outpipe[k][check_redi_2(tmp->outpipe[k]) + 1]);
+						if (WEXITSTATUS(status) == 26)
+						{
+							write (1, "minishell: .: filename argument required\n", 41);
+							write (1, ".: usage: . filename [arguments]\n", 33);
+						}
 						if (WEXITSTATUS(status) == 13)
 							ft_printf("minishell: %s: Permission denied\n", tmp->outpipe[k][0]);
 						if (WEXITSTATUS(status) == 2)
