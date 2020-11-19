@@ -103,7 +103,7 @@ void			initialize(t_temp *tmp)
 	tmp->strcmdin = NULL;
 }
 
-void			gestion_missing(int *j, t_temp *tmp, int key)
+void			gestion_missing(t_temp *tmp, int key)
 {
 	int			i;
 	
@@ -111,28 +111,22 @@ void			gestion_missing(int *j, t_temp *tmp, int key)
 	while (tmp->strcmd[++i])
 	{
 		if (!ft_strcmp("]", tmp->strcmd[i]))
-		{
-			*j = 11;
 			return ;
-		}
 	}
 	if (key == 1)
 		exit(21);
 	ft_printf("minishell: [: missing `]'\n");
-	*j = 11;
 }
 
 void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, int key)
 {
 	if (j == 10)
-		gestion_missing(&j, tmp, key);	
-	if (j == 7)
+		gestion_missing(tmp, key);	
+	else if (j == 7)
 		gestion_unset(tmp, key);
 	else if (j == 8)
 		gestion_echo(tmp);
 	else if (j == 9 && command_bin(tmp->strcmd, tmp, key) == 0)
-		return ;
-	else if (j == 11)
 		return ;
 	else
 	{
