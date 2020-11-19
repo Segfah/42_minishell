@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 17:27:31 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/06 19:59:14 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/19 12:02:08 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,23 @@ void	gestion_echo_2(t_temp *tmp, int n, int i)
 		ft_printf("\n");
 }
 
+void	dup_or_not(t_temp *tmp)
+{
+	if (tmp->flag[1] == 1)
+	{
+		tmp->oldfd = dup(1);
+		dup2(tmp->fd, 1);
+	}
+}
+
 void	gestion_echo(t_temp *tmp)
 {
 	int		i;
 	int		n;
 
 	i = 0;
-	if (tmp->flag[1] == 1)
-	{
-		tmp->oldfd = dup(1);
-		dup2(tmp->fd, 1);
-	}
 	n = 0;
+	dup_or_not(tmp);
 	if (tmp->strcmd[i + 1] != NULL)
 		i++;
 	else
@@ -67,12 +72,6 @@ void	gestion_echo(t_temp *tmp)
 		if (tmp->strcmd[i + 1] != NULL)
 			i++;
 		n = 2;
-	}
-	if (n == 1)
-	{
-		write(1, "\n", 1);
-		(tmp->flag[1] == 1) ? dup2(tmp->oldfd, 1) : 0;
-		return ;
 	}
 	gestion_echo_2(tmp, n, i);
 	(tmp->flag[1] == 1) ? dup2(tmp->oldfd, 1) : 0;
