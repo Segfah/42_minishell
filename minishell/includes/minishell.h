@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/11/19 15:59:16 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/20 13:27:49 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -350,5 +350,7 @@ int					search_error_redi2(char *tmp);
 void				ft_nb_exit(int exi);
 
 int					check_redi_flag(char **cmd, t_temp *tmp, int key);
+
+int					tab2_3d2(t_cmd *tmpo, t_temp *tmp, int len, int i);
 
 #endif

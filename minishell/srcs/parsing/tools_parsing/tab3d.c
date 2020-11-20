@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tab3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 16:54:13 by corozco           #+#    #+#             */
-/*   Updated: 2020/11/19 14:47:49 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/20 13:33:34 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int			search_error_pipe(t_cmd *tmp)
+int				search_error_pipe(t_cmd *tmp)
 {
 	int i;
 	int j;
@@ -30,7 +30,7 @@ int			search_error_pipe(t_cmd *tmp)
 	return (i);
 }
 
-int			len_error_pipe(t_cmd *tmp, int *pipe)
+int				len_error_pipe(t_cmd *tmp, int *pipe)
 {
 	if (search_error_pipe(tmp) == -1)
 		return (-1);
@@ -50,7 +50,7 @@ int			len_error_pipe(t_cmd *tmp, int *pipe)
 	return (0);
 }
 
-int			len_split3d(t_cmd *cmd)
+int				len_split3d(t_cmd *cmd)
 {
 	int		pipe;
 	t_cmd	*tmp;
@@ -89,33 +89,41 @@ int				len_tabsplit3d(t_cmd *cmd)
 	return (ret);
 }
 
+int				tab2_3d2(t_cmd *tmpo, t_temp *tmp, int len, int i)
+{
+	int k;
+
+	k = 0;
+	while (k < len)
+	{
+		if (!(tmp->inpipe[i][k] = ft_strdup(tmpo->input)))
+			return (-1);
+		if (!(tmp->outpipe[i][k] = ft_strdup(tmpo->output)))
+			return (-1);
+		k++;
+		if (tmpo->next)
+			tmpo = tmpo->next;
+	}
+	return (0);
+}
+
 int				tab2_3d(t_cmd *cmd, t_temp *tmp)
 {
 	t_cmd		*tmpo;
 	int			i;
-	int			k;
 	int			len;
 
 	i = 0;
 	tmpo = cmd;
 	while (tmpo)
 	{
-		k = 0;
 		len = len_tabsplit3d(tmpo);
 		if (!(tmp->outpipe[i] = (char**)malloc(sizeof(char *) * len + 1)))
 			return (-1);
 		if (!(tmp->inpipe[i] = (char**)malloc(sizeof(char *) * len + 1)))
 			return (-1);
-		while (k < len)
-		{
-			if (!(tmp->inpipe[i][k] = ft_strdup(tmpo->input)))
-				return (-1);
-			if (!(tmp->outpipe[i][k] = ft_strdup(tmpo->output)))
-				return (-1);
-			k++;
-			if (tmpo->next)
-				tmpo = tmpo->next;
-		}
+		if ((tab2_3d2(tmpo, tmp, len, i) == -1))
+			return (-1);
 		tmp->outpipe[i][k] = NULL;
 		tmp->inpipe[i++][k] = NULL;
 		tmpo = tmpo->next;
@@ -150,6 +158,22 @@ void			clean_tab2d(char **tabin, char **tabout)
 	tabout[k] = 0;
 }
 
+void			clean_tab2d_echo_2(int k, char **tabin, char **tabout)
+{
+	if (k > 0 && !ft_strcmp(tabin[k - 1], " "))
+	{
+		ft_free(tabin[k - 1]);
+		ft_free(tabout[k - 1]);
+		tabin[k - 1] = 0;
+		tabout[k - 1] = 0;
+	}
+	else
+	{
+		tabin[k] = 0;
+		tabout[k] = 0;
+	}
+}
+
 void			clean_tab2d_echo(char **tabin, char **tabout)
 {
 	int			i;
@@ -170,18 +194,7 @@ void			clean_tab2d_echo(char **tabin, char **tabout)
 			tabin[k] = tabin[i];
 			tabout[k++] = tabout[i++];
 		}
-		if (k > 0 && !ft_strcmp(tabin[k - 1], " "))
-		{
-			ft_free(tabin[k - 1]);
-			ft_free(tabout[k - 1]);
-			tabin[k - 1] = 0;
-			tabout[k - 1] = 0;
-		}
-		else
-		{
-			tabin[k] = 0;
-			tabout[k] = 0;
-		}
+		clean_tab2d_echo_2(k, tabin, tabout);
 	}
 }
 
