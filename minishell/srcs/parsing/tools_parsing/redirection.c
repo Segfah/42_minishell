@@ -11,12 +11,12 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-/*
-void			ft_exit(int key)
+
+void			ft_exit(int exi)
 {
-	exit(key);
+	exit(exi);
 }
-*/
+
 int				check_redi_simple_error(char **cmd, t_temp *tmp, int i)
 {
 	if (search_error_redi1(cmd[i]) == -3)
@@ -55,16 +55,14 @@ int				check_redi_flag(char **cmd, t_temp *tmp, int key)
 				!ft_strcmp(cmd[i + 1], " ") ? i++ : i;
 				if (cmd[i + 1] && is_redi(cmd[i + 1]))
 				{
-					if (key)
-						exit(23);
+					key ? ft_exit(23) : 0;
 					ft_printf("minishell: syntax error near unexpected token `%s'\n", cmd[i + 1]);
 					return (tmp->flag[1] = -1);
 				}
 			}
 			else
 			{
-				if (key)
-					exit(24);
+				key ? ft_exit(24) : 0;
 				ft_printf("minishell: syntax error near unexpected token `newline'\n");
 				return (tmp->flag[1] = -1);
 			}

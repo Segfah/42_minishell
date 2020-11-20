@@ -127,14 +127,12 @@ void			point_filename(char **tab, int key)
 		i++;
 	if (i > 1)
 	{
-		if (key)
-			exit(13);
+		key ? ft_exit(13) : 0;
 		write (1, "minishell: Permission denied\n", 29);
 	}
 	else
 	{
-		if (key)
-			exit(26);
+		key ? ft_exit(26) : 0;
 		write (1, "minishell: .: filename argument required\n", 41);
 		write (1, ".: usage: . filename [arguments]\n", 33);
 	}

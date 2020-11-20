@@ -25,7 +25,7 @@ int		simple_redi(char *path, t_temp *tmp, int key)
 	if ((tmp->fd = open(path, O_RDWR | O_TRUNC |
 			O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) == -1)
 	{
-		if (key)
+		key ? ft_exit(25) : 0;
 			exit(25);
 		ft_printf("minishell: %s: %s\n", strerror(errno), path);
 		return (-1);
@@ -39,8 +39,7 @@ int		double_redi(char *path, t_temp *tmp, int key)
 	tmp->fd = 0;
 	if ((tmp->fd = open(path, O_APPEND | O_WRONLY | O_CREAT, 0644)) == -1)
 	{
-		if (key)
-			exit(25);
+		key ? ft_exit(25) : 0;
 		ft_printf("minishell: %s: %s\n", strerror(errno), path);
 		return (-1);
 	}
@@ -53,8 +52,7 @@ int		contre_redi(char *path, t_temp *tmp, int key)
 	tmp->fdi = 0;
 	if ((tmp->fdi = open(path, O_RDONLY)) == -1)
 	{
-		if (key)
-			exit(25);
+		key ? ft_exit(25) : 0;
 		ft_printf("minishell: %s: %s\n", strerror(errno), path);
 		return (-1);
 	}

@@ -346,5 +346,6 @@ void				tilde(t_cmd *cmd, t_temp *tmp);
 int					search_error_redi1(char *tmp);
 int					search_error_redi2(char *tmp);
 
+void				ft_exit(int exi);
 
 #endif
