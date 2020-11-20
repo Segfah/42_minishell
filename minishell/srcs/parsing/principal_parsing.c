@@ -57,7 +57,7 @@ int				mlist_size(t_cmd *head)
 ** Fonction qui modifie strcmd avec la liste, maj + supp des espaces
 */
 
-void			llist_astring(t_cmd *head, t_temp *tmp)
+int				llist_astring(t_cmd *head, t_temp *tmp)
 {
 	int			i;
 
@@ -65,12 +65,16 @@ void			llist_astring(t_cmd *head, t_temp *tmp)
 	if (head)
 	{
 		ft_free_double_tab(tmp->strcmd);
-		tmp->strcmd = (char**)malloc(sizeof(char*) * (mlist_size(head) + 1));
-		tmp->strcmdin = (char**)malloc(sizeof(char*) * (mlist_size(head) + 1));
+		if (!(tmp->strcmd = (char**)malloc(sizeof(char*) * (mlist_size(head) + 1))))
+			return (-1);
+		if (!(tmp->strcmdin = (char**)malloc(sizeof(char*) * (mlist_size(head) + 1))))
+			return (-1);
 		while (head)
 		{
-			tmp->strcmd[i] = ft_strdup(head->output);
-			tmp->strcmdin[i++] = ft_strdup(head->input);
+			if (!(tmp->strcmd[i] = ft_strdup(head->output)))
+				return (-1);
+			if (!(tmp->strcmdin[i++] = ft_strdup(head->input)))
+				return (-1);
 			head = head->next;
 		}
 		tmp->strcmd[i] = 0;
@@ -78,6 +82,7 @@ void			llist_astring(t_cmd *head, t_temp *tmp)
 	}
 	if (!cherche_echo(tmp->strcmd))
 		clean_tab2d(tmp->strcmd, tmp->strcmdin);
+	return (0);
 }
 /////////////////////////////////////////////////////////////////////////
 
@@ -181,76 +186,6 @@ void			launcher_cmd(char *tabcmd, t_temp *tmp, int j, int key)
 		gestion_export(tmp, 0, key);
 	else
 		launcher_cmd2(tabcmd, tmp, j, key);
-}
-
-/*
-**	printf("----------cmd = [%d], redi de= [%d], redi iz=[%d], fd = [%d], fdi[%d]\n", tmp->flag[0], tmp->flag[1], tmp->flag[2], tmp->fd, tmp->fdi);
-**	printf("--------------j= %d \n", j);
-*/
-
-int			search_error_redi1(char *tmp) // | > | >> | < |
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (tmp[i])
-	{
-		if (tmp[i] == '>')
-			j++;
-		i++;
-	}
-	if (j > 2)
-		return (-j);
-	return (i);
-}
-
-int			search_error_redi2(char *tmp) // | > | >> | < |
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (tmp[i])
-	{
-		if (tmp[i] == '<')
-			j++;
-		i++;
-	}
-	if (j > 1)
-		return (-1);
-	return (i);
-}
-
-int				check_redi_2(char **cmd, int key)
-{
-	int			i;
-
-	i = 0;
-	while (cmd[i]) //(cmd == tmp->strcmdin)  // tmp->strcmd
-	{
-		if (search_error_redi1(cmd[i]) == -3)
-			return (key ? -1 : i);
-		if (search_error_redi1(cmd[i]) < -3)
-			return (key ? -2 : i);
-		if (search_error_redi2(cmd[i]) == -1)
-			return (key ? -3 : i);
-		if (is_redi(cmd[i]))
-		{
-			if (cmd[i + 1])
-			{
-				!ft_strcmp(cmd[i + 1], " ") ? i++ : i;
-				if (cmd[i + 1] && is_redi(cmd[i + 1]))
-					return (key ? -4 : i);
-			}
-			else
-				return (key ? -5 : i);
-		}
-		(cmd[i] != NULL) ? i++ : i;
-	}
-	return (i);
 }
 
 int 			check_export(char *src, char **str)

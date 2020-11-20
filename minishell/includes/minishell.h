@@ -343,6 +343,7 @@ char				*cp_str_2(int size, char *tmp_str, char *str);
 void				gestion_cd_2(char *home, t_temp *tmp, int key);
 int					check_echo_2(int *check, int *i, char c, char *s);
 void				tilde(t_cmd *cmd, t_temp *tmp);
+int					check_redi_2(char **cmd, int key);
 int					search_error_redi1(char *tmp);
 int					search_error_redi2(char *tmp);
 

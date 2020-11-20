@@ -15,7 +15,7 @@
 int		is_redi(char *str)
 {
 	return (!(ft_strcmp(">", str)) || !(ft_strcmp(">>", str))
-			|| !(ft_strcmp("<", str)));
+		|| !(ft_strcmp("<", str)));
 }
 
 int		simple_redi(char *path, t_temp *tmp, int key)
@@ -26,7 +26,6 @@ int		simple_redi(char *path, t_temp *tmp, int key)
 			O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) == -1)
 	{
 		key ? ft_nb_exit(25) : 0;
-			exit(25);
 		ft_printf("minishell: %s: %s\n", strerror(errno), path);
 		return (-1);
 	}
