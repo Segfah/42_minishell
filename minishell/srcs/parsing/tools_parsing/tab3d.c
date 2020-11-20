@@ -137,7 +137,8 @@ void			clean_tab2d(char **tabin, char **tabout)
 		if (!ft_strcmp(tabin[i], " "))
 		{
 			ft_free(tabin[i]);
-			ft_free(tabout[i++]);
+			ft_free(tabout[i]);
+			i++;
 		}
 		else
 		{
@@ -167,9 +168,7 @@ void			clean_tab2d_echo(char **tabin, char **tabout)
 		while (tabin[i])
 		{
 			tabin[k] = tabin[i];
-			tabout[k] = tabout[i];
-			i++;
-			k++;
+			tabout[k++] = tabout[i++];
 		}
 		if (k > 0 && !ft_strcmp(tabin[k - 1], " "))
 		{
