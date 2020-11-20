@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/19 15:12:06 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/20 14:48:24 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,6 +343,8 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 							ft_printf("minishell: syntax error near unexpected token `newline'\n");
 						if (WEXITSTATUS(status) == 25) 
 							ft_printf("minishell: %s: is a directory\n", tmp->outpipe[k][check_redi_2(tmp->outpipe[k], 0) + 1]);
+						if (WEXITSTATUS(status) == 27) 
+							ft_printf("minishell: %s:  No such file or directory\n", tmp->outpipe[k][check_redi_2(tmp->outpipe[k], 0) + 1]);
 						if (WEXITSTATUS(status) == 26)
 						{
 							write (1, "minishell: .: filename argument required\n", 41);

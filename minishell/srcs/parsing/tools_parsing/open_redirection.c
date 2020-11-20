@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_redirection.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 16:58:48 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/22 16:58:49 by corozco          ###   ########.fr       */
+/*   Updated: 2020/11/20 14:47:38 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int		contre_redi(char *path, t_temp *tmp, int key)
 	tmp->fdi = 0;
 	if ((tmp->fdi = open(path, O_RDONLY)) == -1)
 	{
-		key ? ft_nb_exit(25) : 0;
+		key ? ft_nb_exit(27) : 0;
 		ft_printf("minishell: %s: %s\n", strerror(errno), path);
 		return (-1);
 	}
