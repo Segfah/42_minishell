@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tab3d.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/22 16:54:13 by corozco           #+#    #+#             */
+/*   Updated: 2020/11/19 14:47:49 by lryst            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int			search_error_pipe(t_cmd *tmp)
@@ -18,29 +30,41 @@ int			search_error_pipe(t_cmd *tmp)
 	return (i);
 }
 
+int			len_error_pipe(t_cmd *tmp, int *pipe)
+{
+	if (search_error_pipe(tmp) == -1)
+		return (-1);
+	if (!ft_strcmp(tmp->input, "|") && !tmp->next)
+		return (-3);
+	else if (!ft_strcmp(tmp->input, "|") &&
+		!ft_strcmp(tmp->next->input, " ") && !tmp->next->next)
+		return (-1);
+	else if (!ft_strcmp(tmp->input, "|") && !ft_strcmp(tmp->next->input, " ")
+		&& !ft_strcmp(tmp->next->next->input, "|"))
+		return (-2);
+	else if (!ft_strcmp(tmp->input, "|") && ft_strcmp(tmp->next->input, " ")
+		&& !ft_strcmp(tmp->next->input, "|"))
+		return (-2);
+	else if (!ft_strcmp(tmp->input, "|"))
+		(*pipe)++;
+	return (0);
+}
+
 int			len_split3d(t_cmd *cmd)
 {
 	int		pipe;
 	t_cmd	*tmp;
+	int		ret;
 
 	tmp = cmd;
 	pipe = 0;
+	ret = 0;
 	if (tmp && !ft_strcmp(tmp->input, "|"))
 		return (-1);
 	while (tmp)
-	{	
-		if (search_error_pipe(tmp) == -1)
-			return (-1);
-		if (!ft_strcmp(tmp->input, "|") && !tmp->next)
-			return (-3);
-		else if (!ft_strcmp(tmp->input, "|") && !ft_strcmp(tmp->next->input, " ") && !tmp->next->next)
-			return (-1);
-		else if (!ft_strcmp(tmp->input, "|") && !ft_strcmp(tmp->next->input, " ") && !ft_strcmp(tmp->next->next->input, "|"))
-			return (-2);		
-		else if (!ft_strcmp(tmp->input, "|") && ft_strcmp(tmp->next->input, " ") && !ft_strcmp(tmp->next->input, "|")) // si il y a un | et que celui d'apres et un | erreur
-			return (-2);
-		else if (!ft_strcmp(tmp->input, "|"))
-			pipe++;
+	{
+		if ((ret = len_error_pipe(tmp, &pipe)) != 0)
+			return (ret);
 		tmp = tmp->next;
 	}
 	if (pipe == 0)
@@ -65,13 +89,12 @@ int				len_tabsplit3d(t_cmd *cmd)
 	return (ret);
 }
 
-void			tab2_3d(t_cmd *cmd, t_temp *tmp)
+int				tab2_3d(t_cmd *cmd, t_temp *tmp)
 {
 	t_cmd		*tmpo;
 	int			i;
 	int			k;
 	int			len;
-
 
 	i = 0;
 	tmpo = cmd;
@@ -79,23 +102,27 @@ void			tab2_3d(t_cmd *cmd, t_temp *tmp)
 	{
 		k = 0;
 		len = len_tabsplit3d(tmpo);
-		tmp->outpipe[i] = (char**)malloc(sizeof(char *) * len + 1);
-		tmp->inpipe[i] = (char**)malloc(sizeof(char *) * len + 1);
+		if (!(tmp->outpipe[i] = (char**)malloc(sizeof(char *) * len + 1)))
+			return (-1);
+		if (!(tmp->inpipe[i] = (char**)malloc(sizeof(char *) * len + 1)))
+			return (-1);
 		while (k < len)
 		{
-			tmp->inpipe[i][k] = ft_strdup(tmpo->input);
-			tmp->outpipe[i][k] = ft_strdup(tmpo->output);
+			if (!(tmp->inpipe[i][k] = ft_strdup(tmpo->input)))
+				return (-1);
+			if (!(tmp->outpipe[i][k] = ft_strdup(tmpo->output)))
+				return (-1);
 			k++;
 			if (tmpo->next)
 				tmpo = tmpo->next;
 		}
-		tmp->outpipe[i][k] = NULL;		
-		tmp->inpipe[i][k] = NULL;	
-		i++;
+		tmp->outpipe[i][k] = NULL;
+		tmp->inpipe[i++][k] = NULL;
 		tmpo = tmpo->next;
 	}
 	tmp->outpipe[i] = NULL;
 	tmp->inpipe[i] = NULL;
+	return (0);
 }
 
 void			clean_tab2d(char **tabin, char **tabout)
@@ -144,7 +171,7 @@ void			clean_tab2d_echo(char **tabin, char **tabout)
 			i++;
 			k++;
 		}
-		if (k > 0 && !ft_strcmp(tabin[k - 1], " "))   
+		if (k > 0 && !ft_strcmp(tabin[k - 1], " "))
 		{
 			ft_free(tabin[k - 1]);
 			ft_free(tabout[k - 1]);
@@ -187,15 +214,18 @@ int				split3d(t_cmd *cmd, t_temp *tmp)
 {
 	int			ret;
 
-	if ((ret = len_split3d(cmd)) == 0)//
+	if ((ret = len_split3d(cmd)) == 0)
 		return (0);
 	if (ret < 0)
 	{
 		return (print_error(ret));
 	}
-	tmp->outpipe = (char***)malloc(sizeof(char**) * ret + 1);
-	tmp->inpipe = (char***)malloc(sizeof(char**) * ret + 1);
-	tab2_3d(cmd, tmp);
+	if (!(tmp->outpipe = (char***)malloc(sizeof(char**) * ret + 1)))
+		return (-1);
+	if (!(tmp->inpipe = (char***)malloc(sizeof(char**) * ret + 1)))
+		return (-1);
+	if (tab2_3d(cmd, tmp) == -1)
+		return (-1);
 	clean_split3d(tmp);
 	return (1);
 }

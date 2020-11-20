@@ -274,6 +274,8 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 		ft_free_double_tab(tmp->strcmd);
 		tmp->strcmd = NULL;
 		(cmd) ? j = split3d(cmd, tmp) : 0;
+		if (j == -1)
+			exit(1);//(error malloc de split3d)
 		if (j < 0)
 		{
 			(cmd != NULL) ? free_cmd(cmd) : 0;
