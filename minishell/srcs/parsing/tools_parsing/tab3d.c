@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 16:54:13 by corozco           #+#    #+#             */
-/*   Updated: 2020/11/20 13:33:34 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/20 14:16:10 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int				search_error_pipe(t_cmd *tmp)
 {
-	int i;
-	int j;
+	int 		i;
+	int 		j;
 
 	i = 0;
 	j = 0;
@@ -52,9 +52,9 @@ int				len_error_pipe(t_cmd *tmp, int *pipe)
 
 int				len_split3d(t_cmd *cmd)
 {
-	int		pipe;
-	t_cmd	*tmp;
-	int		ret;
+	int			pipe;
+	t_cmd		*tmp;
+	int			ret;
 
 	tmp = cmd;
 	pipe = 0;
@@ -89,47 +89,53 @@ int				len_tabsplit3d(t_cmd *cmd)
 	return (ret);
 }
 
-int				tab2_3d2(t_cmd *tmpo, t_temp *tmp, int len, int i)
+int				tab2_3d2(int key, t_temp *tmp, int *k, int *i)
 {
-	int k;
-
-	k = 0;
-	while (k < len)
+	if (key >= 0)
 	{
-		if (!(tmp->inpipe[i][k] = ft_strdup(tmpo->input)))
+		if (!(tmp->outpipe[*i] = (char**)malloc(sizeof(char *) * key + 1)))
 			return (-1);
-		if (!(tmp->outpipe[i][k] = ft_strdup(tmpo->output)))
+		if (!(tmp->inpipe[*i] = (char**)malloc(sizeof(char *) * key + 1)))
 			return (-1);
-		k++;
-		if (tmpo->next)
-			tmpo = tmpo->next;
+	}
+	if (key == -2)
+	{
+		tmp->outpipe[*i][*k] = NULL;
+		tmp->inpipe[(*i)++][*k] = NULL;
+	}
+	if (key == -1)
+	{
+		tmp->outpipe[*i] = NULL;
+		tmp->inpipe[*i] = NULL;
 	}
 	return (0);
 }
 
-int				tab2_3d(t_cmd *cmd, t_temp *tmp)
+int				tab2_3d(t_cmd *cmd, t_temp *tmp, int i)
 {
 	t_cmd		*tmpo;
-	int			i;
+	int			k;
 	int			len;
 
-	i = 0;
 	tmpo = cmd;
 	while (tmpo)
 	{
+		k = -1;
 		len = len_tabsplit3d(tmpo);
-		if (!(tmp->outpipe[i] = (char**)malloc(sizeof(char *) * len + 1)))
+		if (tab2_3d2(len, tmp, &k, &i) == -1)
 			return (-1);
-		if (!(tmp->inpipe[i] = (char**)malloc(sizeof(char *) * len + 1)))
-			return (-1);
-		if ((tab2_3d2(tmpo, tmp, len, i) == -1))
-			return (-1);
-		tmp->outpipe[i][k] = NULL;
-		tmp->inpipe[i++][k] = NULL;
+		while (++k < len)
+		{
+			if (!(tmp->inpipe[i][k] = ft_strdup(tmpo->input)))
+				return (-1);
+			if (!(tmp->outpipe[i][k] = ft_strdup(tmpo->output)))
+				return (-1);
+			(tmpo->next) ? tmpo = tmpo->next : 0;
+		}
+		tab2_3d2(-2, tmp, &k, &i);
 		tmpo = tmpo->next;
 	}
-	tmp->outpipe[i] = NULL;
-	tmp->inpipe[i] = NULL;
+	tab2_3d2(-1, tmp, &k, &i);
 	return (0);
 }
 
@@ -236,7 +242,7 @@ int				split3d(t_cmd *cmd, t_temp *tmp)
 		return (-1);
 	if (!(tmp->inpipe = (char***)malloc(sizeof(char**) * ret + 1)))
 		return (-1);
-	if (tab2_3d(cmd, tmp) == -1)
+	if (tab2_3d(cmd, tmp, 0) == -1)
 		return (-1);
 	clean_split3d(tmp);
 	return (1);

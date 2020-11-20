@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/11/20 13:27:49 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/20 14:00:38 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -351,6 +351,6 @@ void				ft_nb_exit(int exi);
 
 int					check_redi_flag(char **cmd, t_temp *tmp, int key);
 
-int					tab2_3d2(t_cmd *tmpo, t_temp *tmp, int len, int i);
+int					tab2_3d2(int key, t_temp *tmp, int *k, int *i);
 
 #endif
