@@ -64,13 +64,13 @@ void			gestion_cd_2(char *home, t_temp *tmp, int key)
 			;
 		else if (chdir(home) != 0 && (g_ret = 1))
 		{
-			key ? ft_exit(18) : 0;
+			key ? ft_nb_exit(18) : 0;
 			ft_printf("minishell: cd: %s: %s\n", strerror(errno), home);
 		}
 	}
 	else
 	{
-		key ? ft_exit(17) : 0;
+		key ? ft_nb_exit(17) : 0;
 		(g_ret = 1) ? write(1, "minishell: cd: HOME not set\n", 28) : 0;
 	}
 	home ? ft_free(home) : 0;
@@ -91,7 +91,7 @@ void			gestion_cd(char **strcmd, t_temp *tmp, int key)
 			;
 		else if (chdir(strcmd[1]) != 0 && (g_ret = 1))
 		{
-			key ? ft_exit(18) : 0;
+			key ? ft_nb_exit(18) : 0;
 			ft_printf("minishell: cd: %s: %s\n", strerror(errno), strcmd[1]);
 		}
 	}

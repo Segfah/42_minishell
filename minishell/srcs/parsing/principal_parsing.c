@@ -127,12 +127,12 @@ void			point_filename(char **tab, int key)
 		i++;
 	if (i > 1)
 	{
-		key ? ft_exit(13) : 0;
+		key ? ft_nb_exit(13) : 0;
 		write (1, "minishell: Permission denied\n", 29);
 	}
 	else
 	{
-		key ? ft_exit(26) : 0;
+		key ? ft_nb_exit(26) : 0;
 		write (1, "minishell: .: filename argument required\n", 41);
 		write (1, ".: usage: . filename [arguments]\n", 33);
 	}
@@ -365,7 +365,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 					tmp->strcmdin = tmp->inpipe[k];
 					cmd ? check_redi(tmp->strcmdin, tmp, 1) : 0;
 					((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)
-						? skip_redi(tmp->strcmdin, tmp) : 0;
+						? skip_redi(tmp->strcmdin, tmp, 0) : 0;
 					(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
 					tmp->flag[0] = (j > 0) ? 1 : 0;	
 					launcher_cmd(tmp->outpipe[k][0], tmp, j, 1);
@@ -430,7 +430,7 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 			//printftab(tmp->strcmdin);
 			cmd ? check_redi(tmp->strcmdin, tmp, 0) : 0;
 			((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)
-				? skip_redi(tmp->strcmdin, tmp) : 0;
+				? skip_redi(tmp->strcmdin, tmp, 0) : 0;
 			(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
 			tmp->flag[0] = (j > 0) ? 1 : 0;
 			launcher_cmd(tabcmd[i], tmp, j, 0);

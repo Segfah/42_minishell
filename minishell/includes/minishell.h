@@ -100,7 +100,7 @@ int					cmd_exist(char *cmd, t_temp *tmp);
 **	parsing/tools/redirection
 */
 int					check_redi(char **cmd, t_temp *tmp, int key);
-void				skip_redi(char **cmd, t_temp *tmp);
+void				skip_redi(char **cmd, t_temp *tmp, int i);
 
 /*
 ** parsing/tools/open_rediction
@@ -346,6 +346,8 @@ void				tilde(t_cmd *cmd, t_temp *tmp);
 int					search_error_redi1(char *tmp);
 int					search_error_redi2(char *tmp);
 
-void				ft_exit(int exi);
+void				ft_nb_exit(int exi);
+
+int					check_redi_flag(char **cmd, t_temp *tmp, int key);
 
 #endif

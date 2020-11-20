@@ -12,6 +12,11 @@
 
 #include "minishell.h"
 
+void			ft_nb_exit(int exi)
+{
+	exit(exi);
+}
+
 int				check_env(char *str, int key)
 {
 	int			i;

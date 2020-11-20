@@ -72,7 +72,7 @@ void			gestion_env(char **strcmd, t_temp *tmp, int key)
 	else
 	{
 		g_ret = 127;
-		key ? ft_exit(19) : 0;
+		key ? ft_nb_exit(19) : 0;
 		ft_printf("env: %s: No such file or directory\n", strcmd[1]);
 	}
 }

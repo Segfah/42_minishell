@@ -56,7 +56,7 @@ int				export_arg(t_temp *tmp, int ret, int i, int key)
 	if ((ret = ft_cortar(tmp->tab, tmp->strcmd[i])) == -2)
 	{
 		g_ret = 1;
-		key ? ft_exit(20) : 0;
+		key ? ft_nb_exit(20) : 0;
 		ft_printf("minishell: export: `%s': not a valid identifier\n",
 			tmp->strcmd[i]);
 		return (0);

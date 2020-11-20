@@ -28,7 +28,7 @@ void			gestion_unset(t_temp *tmp, int key)
 		if (ret == -1 || ret == 1)
 		{
 			g_ret = 1;
-			key ? ft_exit(22) : 0;
+			key ? ft_nb_exit(22) : 0;
 			ft_printf("minishell: unset: `%s': not a valid identifier\n",
 				tmp->strcmd[i]);
 		}
