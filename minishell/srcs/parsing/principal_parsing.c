@@ -239,7 +239,9 @@ int				error_line(char **tabcmd, t_temp *tmp, int i)
 		}
 		ft_free_double_tab(tmp->strcmd);
 		tmp->strcmd = NULL;
-		(cmd) ? llist_astring(cmd, tmp) : 0;
+		(cmd) ? ret = llist_astring(cmd, tmp) : 0;
+		if (ret == -1)
+			exit(1); //(error malloc) -> llist_astring
 		if (tmp->strcmdin && (ret = check_redi_2(tmp->strcmdin, 1)) < 0)
 		{
 			printftab(tmp->strcmd);
@@ -362,7 +364,10 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 		}
 		else
 		{
-			(cmd) ? llist_astring(cmd, tmp) : 0;
+			int ret;
+			(cmd) ? ret =llist_astring(cmd, tmp) : 0;
+			if (ret == -1)
+				exit(1); //(error malloc) -> llist_astring
 			//printftab(tmp->strcmd);
 			//printftab(tmp->strcmdin);
 			cmd ? check_redi(tmp->strcmdin, tmp, 0) : 0;
