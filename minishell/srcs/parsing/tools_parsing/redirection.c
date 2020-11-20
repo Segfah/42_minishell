@@ -11,31 +11,43 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+/*
+void			ft_exit(int key)
+{
+	exit(key);
+}
+*/
+int				check_redi_simple_error(char **cmd, t_temp *tmp, int i)
+{
+	if (search_error_redi1(cmd[i]) == -3)
+	{
+		ft_printf("minishell: syntax error near unexpected token `>'\n");
+		return (tmp->flag[1] = -1);
+	}
+	if (search_error_redi1(cmd[i]) < -3)
+	{
+		ft_printf("minishell: syntax error near unexpected token `>>'\n");
+		return (tmp->flag[1] = -1);
+	}
+	if (search_error_redi2(cmd[i]) == -1)
+	{
+		ft_printf("minishell: syntax error near unexpected token `<'\n");
+		return (tmp->flag[1] = -1);
+	}
+	return (0);
+}
 
-int				check_redi(char **cmd, t_temp *tmp, int key)
+int				check_redi_flag(char **cmd, t_temp *tmp, int key)
 {
 	int			i;
 
 	tmp->fd = 0;
 	tmp->fdi = 0;
 	i = 0;
-	while (cmd[i]) //(cmd == tmp->strcmdin)  // tmp->strcmd
+	while (cmd[i])
 	{
-		if (search_error_redi1(cmd[i]) == -3)
-		{
-			ft_printf("minishell: syntax error near unexpected token `>'\n");
-			return (tmp->flag[1] = -1);
-		}
-		if (search_error_redi1(cmd[i]) < -3)
-		{
-			ft_printf("minishell: syntax error near unexpected token `>>'\n");
-			return (tmp->flag[1] = -1);
-		}
-		if (search_error_redi2(cmd[i]) == -1)
-		{
-			ft_printf("minishell: syntax error near unexpected token `<'\n");
-			return (tmp->flag[1] = -1);
-		}
+		if (check_redi_simple_error(cmd, tmp, i) != 0)
+			return (-1);
 		if (is_redi(cmd[i]))
 		{
 			if (cmd[i + 1])
@@ -52,15 +64,24 @@ int				check_redi(char **cmd, t_temp *tmp, int key)
 			else
 			{
 				if (key)
-						exit(24);
+					exit(24);
 				ft_printf("minishell: syntax error near unexpected token `newline'\n");
 				return (tmp->flag[1] = -1);
 			}
 		}
 		(cmd[i] != NULL) ? i++ : i;
 	}
+	return (0);
+}
+
+int				check_redi(char **cmd, t_temp *tmp, int key)
+{
+	int			i;
+
+	if ((i = check_redi_flag(cmd, tmp, key)) != 0)
+		return (i);
 	i = 0;
-	while (cmd[i]) 
+	while (cmd[i])
 	{
 		if (!(ft_strcmp(">", cmd[i])))
 		{
@@ -88,6 +109,13 @@ int				check_redi(char **cmd, t_temp *tmp, int key)
 	return (0);
 }
 
+void			ft_double_free(char *s1, char *s2, int *i)
+{
+	ft_free(s1);
+	ft_free(s2);
+	*i += 1;
+}
+
 void			skip_redi(char **cmd, t_temp *tmp)
 {
 	int			i;
@@ -97,29 +125,18 @@ void			skip_redi(char **cmd, t_temp *tmp)
 	j = 0;
 	while (cmd[i])
 	{
-		if (!(ft_strcmp(">", cmd[i])) || !(ft_strcmp(">>", cmd[i])) || !(ft_strcmp("<", cmd[i])))
+		if (!(ft_strcmp(">", cmd[i])) || !(ft_strcmp(">>", cmd[i]))
+			|| !(ft_strcmp("<", cmd[i])))
 		{
 			if (cmd[i] != NULL && cmd[i + 1] != NULL)
+				ft_double_free(cmd[i], tmp->strcmd[i], &i);
+			if (cmd[i + 1] && !ft_strcmp(cmd[i], " "))
 			{
-				ft_free(cmd[i]);
-				ft_free(tmp->strcmd[i]);
-				i++;
-			}
-			if (cmd[i + 1] && !ft_strcmp(cmd[i], " "))  //
-			{
-				ft_free(cmd[i]);
-				ft_free(tmp->strcmd[i]);
-				i++;
-				ft_free(cmd[i]);
-				ft_free(tmp->strcmd[i]);
-				i++;
+				ft_double_free(cmd[i], tmp->strcmd[i], &i);
+				ft_double_free(cmd[i], tmp->strcmd[i], &i);
 			}
 			else
-			{
-				ft_free(cmd[i]);
-				ft_free(tmp->strcmd[i]);
-				i++;
-			}
+				ft_double_free(cmd[i], tmp->strcmd[i], &i);
 		}
 		else
 		{
@@ -132,10 +149,13 @@ void			skip_redi(char **cmd, t_temp *tmp)
 	}
 	cmd[j] = 0;
 	tmp->strcmd[j] = 0;
-
-//	printftab(cmd);
-//	printftab(tmp->strcmd);
-	clean_tab2d_echo(cmd,tmp->strcmd);
-//	printftab(cmd);
-//	printftab(tmp->strcmd);
+/*
+	printftab(cmd);
+	printftab(tmp->strcmd);
+*/
+	clean_tab2d_echo(cmd, tmp->strcmd);
+/*
+	printftab(cmd);
+	printftab(tmp->strcmd);
+*/
 }
