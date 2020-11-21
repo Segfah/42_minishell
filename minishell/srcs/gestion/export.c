@@ -86,14 +86,13 @@ void			gestion_export_2(t_temp *tmp)
 	if (tmp->varenv)
 	{
 		if ((ret = cpy_env(&tmp->exportenv, tmp->varenv)) == -1)
-			exit (1);
+			exit(1);
 		if (ret == 0)
 		{
 			range_export(tmp->exportenv);
 			print_list(tmp->exportenv, 0);
 			free_list(tmp->exportenv);
 		}
-		
 	}
 	tmp->exportenv = NULL;
 	(tmp->flag[1] == 1) ? dup2(tmp->oldfd, 1) : 0;

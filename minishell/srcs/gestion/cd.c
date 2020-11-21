@@ -60,7 +60,7 @@ void			gestion_cd_2(char *home, t_temp *tmp, int key)
 {
 	if (search_env("HOME", tmp, 1, NULL) == 1)
 		if (search_env("HOME", tmp, 0, &home) == -1)
-			exit (1);
+			exit(1);
 	if (home)
 	{
 		if (!ft_strcmp(home, ""))
@@ -85,8 +85,7 @@ void			gestion_cd(char **strcmd, t_temp *tmp, int key)
 
 	home = NULL;
 	tmp->env = getcwd(NULL, 0);
-	g_ret = 0;
-	if (strcmd[1] != NULL)
+	if (!(g_ret = 0) && strcmd[1] != NULL)
 	{
 		if (!ft_strncmp(strcmd[1], "~", 1))
 			strcmd[1] = cp_str(strcmd[1], tmp);
