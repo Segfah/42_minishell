@@ -20,7 +20,7 @@ void			deletenode(t_lists *list, char *strkey)
 	if (list == NULL)
 		return ;
 	previous = list;
-	if (ft_strcmp(previous->name, strkey) == 0)
+	if (previous->name && ft_strcmp(previous->name, strkey) == 0)
 	{
 		list = previous->next;
 		free_node(previous);
@@ -29,7 +29,7 @@ void			deletenode(t_lists *list, char *strkey)
 	tmp = previous->next;
 	while (tmp != NULL)
 	{
-		if (ft_strcmp(tmp->name, strkey) == 0)
+		if (tmp->name && ft_strcmp(tmp->name, strkey) == 0)
 		{
 			previous->next = tmp->next;
 			free_node(tmp);
