@@ -115,5 +115,4 @@ void				separator_string(t_cmd **cmd, char *str, t_temp *tmp)
 		;
 	remove_null_node(cmd);
 	remove_space_node(cmd);
-	printflist(*cmd);
 }

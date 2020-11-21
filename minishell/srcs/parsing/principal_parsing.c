@@ -14,10 +14,13 @@
 
 void	printftab(char **tab)// a borrar
 {
-	ft_printf("----printtab----\n");
-	for (int i = 0; tab[i]; i++)
-		ft_printf("---[%d], --- [%s]\n", i, tab[i]);
-	ft_printf("-----------------\n");
+	if (tab)
+	{
+		ft_printf("----printtab----\n");
+		for (int i = 0; tab[i]; i++)
+			ft_printf("---[%d], --- [%s]\n", i, tab[i]);
+		ft_printf("-----------------\n");
+	}
 }
 
 void	printflist(t_cmd *cmd)
@@ -71,10 +74,13 @@ int				llist_astring(t_cmd *head, t_temp *tmp)
 			return (-1);
 		while (head)
 		{
-			if (!(tmp->strcmd[i] = ft_strdup(head->output)))
-				return (-1);
-			if (!(tmp->strcmdin[i++] = ft_strdup(head->input)))
-				return (-1);
+			if (head->output)
+			{
+				if (!(tmp->strcmd[i] = ft_strdup(head->output)))
+					return (-1);
+				if (!(tmp->strcmdin[i++] = ft_strdup(head->input)))
+					return (-1);
+			}
 			head = head->next;
 		}
 		tmp->strcmd[i] = 0;
@@ -229,19 +235,23 @@ int				error_line(char **tabcmd, t_temp *tmp, int i)
 		initialize(tmp);
 		cmd = NULL;
 		separator_string(&cmd, tabcmd[i], tmp);
+		printflist(cmd);
+		if (tmp->strcmdin == NULL)
 		if ((ret = len_split3d(cmd)) < 0) // pipes
 		{
 			ft_free_double_tab(tmp->strcmd);
-			ft_free_double_tab(tmp->strcmdin);
+//			ft_free_double_tab(tmp->strcmdin);
 			(cmd != NULL) ? free_cmd(cmd) : 0;
 			print_error(ret);
 			return (-1);
 		}
-		ft_free_double_tab(tmp->strcmd);
-		tmp->strcmd = NULL;
+//		ft_free_double_tab(tmp->strcmd); //este puede ser que se meta de nuevo
+//		tmp->strcmd = NULL;
 		ret = (cmd) ? llist_astring(cmd, tmp) : 0;
 		if (ret == -1)
 			exit(1); //(error malloc) -> llist_astring
+		printftab(tmp->strcmd);
+		printftab(tmp->strcmdin);
 		if (tmp->strcmdin && (ret = check_redi_2(tmp->strcmdin, 1)) < 0)
 		{
 			printftab(tmp->strcmd);
