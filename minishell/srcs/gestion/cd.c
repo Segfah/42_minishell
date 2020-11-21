@@ -43,7 +43,8 @@ char			*cp_str(char *str, t_temp *tmp)
 	tmp_str = NULL;
 	if (search_env("HOME", tmp, 1, NULL))
 	{
-		search_env("HOME", tmp, 0, &tmp_str);
+		if (search_env("HOME", tmp, 0, &tmp_str) == -1)
+			exit(1);
 		size = ft_strlen(str) + ft_strlen(tmp_str);
 	}
 	else
