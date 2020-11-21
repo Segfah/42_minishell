@@ -72,10 +72,10 @@ static int		addfront(t_lists **head, char *str, char *str2)
 {
 	t_lists		*new;
 
-	if (!(new = malloc(sizeof(t_lists))))
-		return (-1);
 	if (!str)
 		return (1);
+	if (!(new = malloc(sizeof(t_lists))))
+		return (-1);
 	if (!(new->name = ft_strdup(str)))
 		return (-1);
 	if (str2)
