@@ -57,7 +57,9 @@ char			*cp_str(char *str, t_temp *tmp)
 
 void			gestion_cd_2(char *home, t_temp *tmp, int key)
 {
-	search_env("HOME", tmp, 0, &home);
+	if (search_env("HOME", tmp, 1, NULL) == 1)
+		if (search_env("HOME", tmp, 0, &home) == -1)
+			exit (1);
 	if (home)
 	{
 		if (!ft_strcmp(home, ""))
@@ -97,9 +99,11 @@ void			gestion_cd(char **strcmd, t_temp *tmp, int key)
 	}
 	else
 		gestion_cd_2(home, tmp, key);
-	!g_ret ? change_list(tmp->varenv, "OLDPWD", tmp->env) : 0;
+	if (search_env("OLDPWD", tmp, 1, NULL) == 1)
+		!g_ret ? change_list(tmp->varenv, "OLDPWD", tmp->env) : 0;
 	ft_free(tmp->env);
 	tmp->env = getcwd(NULL, 0);
-	change_list(tmp->varenv, "PWD", tmp->env);
+	if (search_env("PWD", tmp, 1, NULL) == 1)
+		change_list(tmp->varenv, "PWD", tmp->env);
 	ft_free(tmp->env);
 }

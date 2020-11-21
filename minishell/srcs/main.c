@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void			initialize_tmp(t_temp *tmp)
+void			initialize_tmp(t_temp *tmp, int ac, char **av)
 {
 	tmp->env = NULL;
 	tmp->prompt = NULL;
@@ -24,6 +24,8 @@ void			initialize_tmp(t_temp *tmp)
 	tmp->hnull = NULL;
 	tmp->strcmd = NULL;
 	tmp->strcmdin = NULL;
+	(void)ac;
+	(void)av;
 }
 
 /*
@@ -98,22 +100,27 @@ int				main(int ac, char **av, char **envp)
 	t_temp		tmp;
 
 	g_ret = 0;
-	initialize_tmp(&tmp);
+	initialize_tmp(&tmp, ac, av);
 	welcome();
 	if (save_env(&tmp.varenv, envp) == -1)
 		return (-1);
-	
 	if (tmp.varenv == NULL)
 		new_list_no_env(&tmp.varenv);
 	if (!tmp.hnull)
 	{
 		if (search_env("HOME", &tmp, 1, NULL) == 1)
+		{
 			if (search_env("HOME", &tmp, 0, &tmp.hnull) == -1)
-				return (-1);
+				return (1);
+		}
+		else
+		{
+			if (!(tmp.hnull = ft_strdup("/")))
+				return (1);
+		}
 	}
 	launcher(tmp);
 	free_list(tmp.varenv);
-	(void)ac;
-	(void)av;
+	free(tmp.hnull);
 	return (0);
 }
