@@ -81,10 +81,22 @@ int				export_arg(t_temp *tmp, int ret, int i, int key)
 
 void			gestion_export_2(t_temp *tmp)
 {
-	(cpy_env(&tmp->exportenv, tmp->varenv) == -1) ? general_free(tmp) : 0;
-	range_export(tmp->exportenv);
-	print_list(tmp->exportenv, 0);
-	free_list(tmp->exportenv);
+	int ret;
+
+	if (!tmp->varenv)
+		printf("nano");
+	if (tmp->varenv)
+	{
+		if ((ret = cpy_env(&tmp->exportenv, tmp->varenv)) == -1)
+			exit (1);
+		if (ret == 0)
+		{
+			range_export(tmp->exportenv);
+			print_list(tmp->exportenv, 0);
+			free_list(tmp->exportenv);
+		}
+
+	}
 	tmp->exportenv = NULL;
 	(tmp->flag[1] == 1) ? dup2(tmp->oldfd, 1) : 0;
 }

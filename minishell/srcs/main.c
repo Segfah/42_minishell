@@ -80,6 +80,19 @@ void			launcher(t_temp tmp)
 ** launcher = fonction principal (boucle infini)
 */
 
+static int		new_list_no_env(t_lists **head)
+{
+	t_lists		*new;
+
+	if (!(new = malloc(sizeof(t_lists))))
+		return (-1);
+	new->data = NULL;
+	new->name = NULL;
+	new->next = *head;
+	*head = new;
+	return (0);
+}
+
 int				main(int ac, char **av, char **envp)
 {
 	t_temp		tmp;
@@ -89,7 +102,15 @@ int				main(int ac, char **av, char **envp)
 	welcome();
 	if (save_env(&tmp.varenv, envp) == -1)
 		return (-1);
-	!tmp.hnull ? search_env("HOME", &tmp, 0, &tmp.hnull) : 0;
+	
+	if (tmp.varenv == NULL)
+		new_list_no_env(&tmp.varenv);
+	if (!tmp.hnull)
+	{
+		if (search_env("HOME", &tmp, 1, NULL) == 1)
+			if (search_env("HOME", &tmp, 0, &tmp.hnull) == -1)
+				return (-1);
+	}
 	launcher(tmp);
 	free_list(tmp.varenv);
 	(void)ac;

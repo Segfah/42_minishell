@@ -52,7 +52,7 @@ static int		search_list(t_lists *head, char *ss)
 	tmp = head;
 	while (tmp != NULL)
 	{
-		if (ft_strcmp(tmp->name, ss) == 0)
+		if (tmp->name && ft_strcmp(tmp->name, ss) == 0)
 			return (1);
 		tmp = tmp->next;
 	}
