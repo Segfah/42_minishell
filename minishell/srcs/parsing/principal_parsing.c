@@ -250,8 +250,8 @@ int				error_line(char **tabcmd, t_temp *tmp, int i)
 		ret = (cmd) ? llist_astring(cmd, tmp) : 0;
 		if (ret == -1)
 			exit(1); //(error malloc) -> llist_astring
-		printftab(tmp->strcmd);
-		printftab(tmp->strcmdin);
+//		printftab(tmp->strcmd);
+//		printftab(tmp->strcmdin);
 		if (tmp->strcmdin && (ret = check_redi_2(tmp->strcmdin, 1)) < 0)
 		{
 			printftab(tmp->strcmd);
