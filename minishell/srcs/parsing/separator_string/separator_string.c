@@ -105,7 +105,6 @@ void				separator_string(t_cmd **cmd, char *str, t_temp *tmp)
 	if (!tmp)
 		return ;
 	tmp->strcmd = ft_split_strcmd(str, 1);
-	printftab(tmp->strcmd);
 	while (tmp->strcmd[i])
 	{
 		new = ft_lstnew_cmd(tmp->strcmd[i], tmp);

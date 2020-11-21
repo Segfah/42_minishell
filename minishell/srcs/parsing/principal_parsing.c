@@ -235,8 +235,6 @@ int				error_line(char **tabcmd, t_temp *tmp, int i)
 		initialize(tmp);
 		cmd = NULL;
 		separator_string(&cmd, tabcmd[i], tmp);
-		printflist(cmd);
-		if (tmp->strcmdin == NULL)
 		if ((ret = len_split3d(cmd)) < 0) // pipes
 		{
 			ft_free_double_tab(tmp->strcmd);
@@ -380,8 +378,6 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 			ret = (cmd) ? llist_astring(cmd, tmp) : 0;
 			if (ret == -1)
 				exit(1); //(error malloc) -> llist_astring
-			//printftab(tmp->strcmd);
-			//printftab(tmp->strcmdin);
 			cmd ? check_redi(tmp->strcmdin, tmp, 0) : 0;
 			((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)
 				? skip_redi(tmp->strcmdin, tmp, 0) : 0;
