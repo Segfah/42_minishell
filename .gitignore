@@ -6,4 +6,5 @@ objs/
 .vscode/
 .*
 sss.sh
+diff.txt
 the_big_minishell

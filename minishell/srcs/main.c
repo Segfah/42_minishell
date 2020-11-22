@@ -87,33 +87,38 @@ static int		new_list_no_env(t_lists **head)
 	return (0);
 }
 
+int				launch_main(t_temp *tmp, int ac, char **av, char **envp)
+{
+	g_ret = 0;
+	initialize_tmp(tmp, ac, av);
+	if (save_env(&tmp->varenv, envp) == -1)
+		return (-1);
+	if (tmp->varenv == NULL)
+		new_list_no_env(&tmp->varenv);
+	if (!tmp->hnull)
+	{
+		if (search_env("HOME", tmp, 1, NULL) == 1)
+		{
+			if (search_env("HOME", tmp, 0, &tmp->hnull) == -1)
+				return (1);
+		}
+		else
+		{
+			if (!(tmp->hnull = ft_strdup("/")))
+				return (1);
+		}
+	}
+	return (0);
+}
+
 int				main(int ac, char **av, char **envp)
 {
 	t_temp		tmp;
 
-
 	if (ac < 2)
 	{
-		g_ret = 0;
-		initialize_tmp(&tmp, ac, av);
 		welcome();
-		if (save_env(&tmp.varenv, envp) == -1)
-			return (-1);
-		if (tmp.varenv == NULL)
-			new_list_no_env(&tmp.varenv);
-		if (!tmp.hnull)
-		{
-			if (search_env("HOME", &tmp, 1, NULL) == 1)
-			{
-				if (search_env("HOME", &tmp, 0, &tmp.hnull) == -1)
-					return (1);
-			}
-			else
-			{
-				if (!(tmp.hnull = ft_strdup("/")))
-					return (1);
-			}
-		}
+		launch_main(&tmp, ac, av, envp);
 		launcher(tmp, ac, NULL);
 		free_list(tmp.varenv);
 		free(tmp.hnull);
@@ -123,28 +128,11 @@ int				main(int ac, char **av, char **envp)
 	{
 		if (!ft_strcmp("-c", av[1]))
 		{
-			g_ret = 0;
-			initialize_tmp(&tmp, ac, av);
-			if (save_env(&tmp.varenv, envp) == -1)
-				return (-1);
-			if (tmp.varenv == NULL)
-				new_list_no_env(&tmp.varenv);
-			if (!tmp.hnull)
-			{
-				if (search_env("HOME", &tmp, 1, NULL) == 1)
-				{
-					if (search_env("HOME", &tmp, 0, &tmp.hnull) == -1)
-						return (1);
-				}
-				else
-				{
-					if (!(tmp.hnull = ft_strdup("/")))
-						return (1);
-				}
-			}
+			launch_main(&tmp, ac, av, envp);
 			launcher(tmp, ac, av);
 			free_list(tmp.varenv);
 			free(tmp.hnull);
+			return (g_ret);
 		}
 	}
 	return (0);
