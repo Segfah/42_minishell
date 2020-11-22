@@ -64,7 +64,7 @@ void	browse_list(t_cmd *cmd, char *save, t_lists *var)
 {
 	while (var)
 	{
-		if (ft_strcmp(var->name, save) == 0)
+		if (var->name && ft_strcmp(var->name, save) == 0)
 		{
 			cmd->output = ft_strdup(var->data);
 			ft_free(save);

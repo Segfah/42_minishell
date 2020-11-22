@@ -12,20 +12,6 @@
 
 #include "minishell.h"
 
-void			initialize_tmp(t_temp *tmp)
-{
-	tmp->env = NULL;
-	tmp->prompt = NULL;
-	tmp->varenv = NULL;
-	tmp->exportenv = NULL;
-	tmp->env = NULL;
-	tmp->tab[0] = NULL;
-	tmp->tab[1] = NULL;
-	tmp->hnull = NULL;
-	tmp->strcmd = NULL;
-	tmp->strcmdin = NULL;
-}
-
 /*
 ** On recalcule le prompt à chaque fois car le path(pwd) va changer quand...
 ** ...on fait un cd (cd .., cd, cd ~, etc) de cette maniere on aura...
@@ -80,19 +66,45 @@ void			launcher(t_temp tmp)
 ** launcher = fonction principal (boucle infini)
 */
 
+static int		new_list_no_env(t_lists **head)
+{
+	t_lists		*new;
+
+	if (!(new = malloc(sizeof(t_lists))))
+		return (-1);
+	new->data = NULL;
+	new->name = NULL;
+	new->next = *head;
+	*head = new;
+	return (0);
+}
+
 int				main(int ac, char **av, char **envp)
 {
 	t_temp		tmp;
 
 	g_ret = 0;
-	initialize_tmp(&tmp);
+	initialize_tmp(&tmp, ac, av);
 	welcome();
 	if (save_env(&tmp.varenv, envp) == -1)
 		return (-1);
-	!tmp.hnull ? search_env("HOME", &tmp, 0, &tmp.hnull) : 0;
+	if (tmp.varenv == NULL)
+		new_list_no_env(&tmp.varenv);
+	if (!tmp.hnull)
+	{
+		if (search_env("HOME", &tmp, 1, NULL) == 1)
+		{
+			if (search_env("HOME", &tmp, 0, &tmp.hnull) == -1)
+				return (1);
+		}
+		else
+		{
+			if (!(tmp.hnull = ft_strdup("/")))
+				return (1);
+		}
+	}
 	launcher(tmp);
 	free_list(tmp.varenv);
-	(void)ac;
-	(void)av;
+	free(tmp.hnull);
 	return (0);
 }

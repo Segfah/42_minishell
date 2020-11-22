@@ -43,7 +43,8 @@ char			*cp_str(char *str, t_temp *tmp)
 	tmp_str = NULL;
 	if (search_env("HOME", tmp, 1, NULL))
 	{
-		search_env("HOME", tmp, 0, &tmp_str);
+		if (search_env("HOME", tmp, 0, &tmp_str) == -1)
+			exit(1);
 		size = ft_strlen(str) + ft_strlen(tmp_str);
 	}
 	else
@@ -57,7 +58,9 @@ char			*cp_str(char *str, t_temp *tmp)
 
 void			gestion_cd_2(char *home, t_temp *tmp, int key)
 {
-	search_env("HOME", tmp, 0, &home);
+	if (search_env("HOME", tmp, 1, NULL) == 1)
+		if (search_env("HOME", tmp, 0, &home) == -1)
+			exit(1);
 	if (home)
 	{
 		if (!ft_strcmp(home, ""))
@@ -82,8 +85,7 @@ void			gestion_cd(char **strcmd, t_temp *tmp, int key)
 
 	home = NULL;
 	tmp->env = getcwd(NULL, 0);
-	g_ret = 0;
-	if (strcmd[1] != NULL)
+	if (!(g_ret = 0) && strcmd[1] != NULL)
 	{
 		if (!ft_strncmp(strcmd[1], "~", 1))
 			strcmd[1] = cp_str(strcmd[1], tmp);
@@ -97,9 +99,11 @@ void			gestion_cd(char **strcmd, t_temp *tmp, int key)
 	}
 	else
 		gestion_cd_2(home, tmp, key);
-	!g_ret ? change_list(tmp->varenv, "OLDPWD", tmp->env) : 0;
+	if (search_env("OLDPWD", tmp, 1, NULL) == 1)
+		!g_ret ? change_list(tmp->varenv, "OLDPWD", tmp->env) : 0;
 	ft_free(tmp->env);
 	tmp->env = getcwd(NULL, 0);
-	change_list(tmp->varenv, "PWD", tmp->env);
+	if (search_env("PWD", tmp, 1, NULL) == 1)
+		change_list(tmp->varenv, "PWD", tmp->env);
 	ft_free(tmp->env);
 }
