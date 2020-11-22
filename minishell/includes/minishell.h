@@ -89,7 +89,7 @@ char				*ft_prompt(char *str);
 /*
 ** Parsing
 */
-int					ft_getline(t_temp *tmp);
+int					ft_getline(t_temp *tmp, char **av);
 
 /*
 **	parsing/tools/cmd_exit
@@ -258,7 +258,7 @@ void				controle(char *c);
 /*
 ** main
 */
-void				launcher(t_temp tmp);
+void				launcher(t_temp tmp, int ac, char **av);
 
 int					ft_count_word(char *str);
 char				*copy(char *s, int *end, int start);

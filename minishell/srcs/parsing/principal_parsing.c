@@ -351,20 +351,33 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 	}
 }
 
-int				ft_getline(t_temp *tmp)
+int				ft_getline(t_temp *tmp, char **av)
 {
 	char		*line;
 	int			ret;
 
-	line = NULL;
-	if ((ret = ft_gnl(0, &line)) == -1
-		|| (tmp->tabcmd = ft_split_line(line)) == NULL)
-		general_free(tmp);
-	if (ret == 0)
-		return (0);
-	if (tmp->tabcmd != NULL && tmp->tabcmd[0])
-		gestion_line(tmp->tabcmd, tmp, -1);
-	ft_free_double_tab(tmp->tabcmd);
-	ft_free(line);
+	if (av)
+	{
+		line = av[2];
+		if ((tmp->tabcmd = ft_split_line(line)) == NULL)
+			general_free(tmp);
+		if (tmp->tabcmd != NULL && tmp->tabcmd[0])
+			gestion_line(tmp->tabcmd, tmp, -1);
+		ft_free_double_tab(tmp->tabcmd);
+//		ft_free(line);
+	}
+	else
+	{	
+		line = NULL;
+		if ((ret = ft_gnl(0, &line)) == -1
+			|| (tmp->tabcmd = ft_split_line(line)) == NULL)
+			general_free(tmp);
+		if (ret == 0)
+			return (0);
+		if (tmp->tabcmd != NULL && tmp->tabcmd[0])
+			gestion_line(tmp->tabcmd, tmp, -1);
+		ft_free_double_tab(tmp->tabcmd);
+		ft_free(line);
+	}
 	return (1);
 }

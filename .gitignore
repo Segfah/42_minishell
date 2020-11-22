@@ -5,4 +5,5 @@
 objs/
 .vscode/
 .*
+sss.sh
 the_big_minishell

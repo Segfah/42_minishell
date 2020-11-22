@@ -42,22 +42,30 @@ void			sighandler2(int signum)
 	write(1, " \b\b \b\b \b", 8);
 }
 
-void			launcher(t_temp tmp)
+void			launcher(t_temp tmp, int ac, char **av)
 {
 	int			ret;
 
 	ret = 1;
-	while (ret)
+	if (ac > 1)
 	{
-		tmp.env = getcwd(NULL, 0);
-		if ((tmp.prompt = ft_prompt(tmp.env)) == NULL)
-			general_free(&tmp);
-		ft_printf("\x1b[33m%s\x1b[0m🐰: ", tmp.prompt);
-		signal(SIGINT, sighandler);
-		signal(SIGQUIT, sighandler2);
-		ft_free(tmp.env);
-		ret = ft_getline(&tmp);
-		ft_free(tmp.prompt);
+		ret = ft_getline(&tmp, av);
+	}
+	else
+	{
+		/* code */	
+		while (ret)
+		{
+			tmp.env = getcwd(NULL, 0);
+			if ((tmp.prompt = ft_prompt(tmp.env)) == NULL)
+				general_free(&tmp);
+			ft_printf("\x1b[33m%s\x1b[0m🐰: ", tmp.prompt);
+			signal(SIGINT, sighandler);
+			signal(SIGQUIT, sighandler2);
+			ft_free(tmp.env);
+			ret = ft_getline(&tmp, NULL);
+			ft_free(tmp.prompt);
+		}
 	}
 }
 
@@ -83,29 +91,61 @@ int				main(int ac, char **av, char **envp)
 {
 	t_temp		tmp;
 
-	g_ret = 0;
-	initialize_tmp(&tmp, ac, av);
-	welcome();
-	if (save_env(&tmp.varenv, envp) == -1)
-		return (-1);
-	if (tmp.varenv == NULL)
-		new_list_no_env(&tmp.varenv);
-	if (!tmp.hnull)
+
+	if (ac < 2)
 	{
-		if (search_env("HOME", &tmp, 1, NULL) == 1)
+		g_ret = 0;
+		initialize_tmp(&tmp, ac, av);
+		welcome();
+		if (save_env(&tmp.varenv, envp) == -1)
+			return (-1);
+		if (tmp.varenv == NULL)
+			new_list_no_env(&tmp.varenv);
+		if (!tmp.hnull)
 		{
-			if (search_env("HOME", &tmp, 0, &tmp.hnull) == -1)
-				return (1);
+			if (search_env("HOME", &tmp, 1, NULL) == 1)
+			{
+				if (search_env("HOME", &tmp, 0, &tmp.hnull) == -1)
+					return (1);
+			}
+			else
+			{
+				if (!(tmp.hnull = ft_strdup("/")))
+					return (1);
+			}
 		}
-		else
+		launcher(tmp, ac, NULL);
+		free_list(tmp.varenv);
+		free(tmp.hnull);
+		write(1, "exit\n", 5);
+	}
+	else if (ac == 3)
+	{
+		if (!ft_strcmp("-c", av[1]))
 		{
-			if (!(tmp.hnull = ft_strdup("/")))
-				return (1);
+			g_ret = 0;
+			initialize_tmp(&tmp, ac, av);
+			if (save_env(&tmp.varenv, envp) == -1)
+				return (-1);
+			if (tmp.varenv == NULL)
+				new_list_no_env(&tmp.varenv);
+			if (!tmp.hnull)
+			{
+				if (search_env("HOME", &tmp, 1, NULL) == 1)
+				{
+					if (search_env("HOME", &tmp, 0, &tmp.hnull) == -1)
+						return (1);
+				}
+				else
+				{
+					if (!(tmp.hnull = ft_strdup("/")))
+						return (1);
+				}
+			}
+			launcher(tmp, ac, av);
+			free_list(tmp.varenv);
+			free(tmp.hnull);
 		}
 	}
-	launcher(tmp);
-	free_list(tmp.varenv);
-	free(tmp.hnull);
-	write(1, "exit\n", 5);
 	return (0);
 }
