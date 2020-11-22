@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/22 11:47:06 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/22 15:59:27 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, int key)
 	else if (j == 7)
 		gestion_unset(tmp, key);
 	else if (j == 8)
-		gestion_echo(tmp);
+		gestion_echo(tmp, key);
 	else if (j == 9 && command_bin(tmp->strcmd, tmp, key) == 0)
 		return ;
 	else if (j == 11)
@@ -220,8 +220,9 @@ void			pparent_errors(int status, t_temp *tmp, int *k)
 	if (WEXITSTATUS(status) == 24)
 		ft_printf("minishell: syntax error near unexpected token `newline'\n");
 	if (WEXITSTATUS(status) == 25)
-		ft_printf("minishell: %s: is a directory\n"
-		, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
+		ft_printf("minishell: %s: is a directory\n");
+	if (WEXITSTATUS(status) == 28)
+		echo_join(tmp->inpipe[*k], tmp->outpipe[*k]);
 }
 
 void			pparent(pid_t pid, t_temp *tmp, int *k)

@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/11/22 12:20:55 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/22 15:56:21 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ char				**ft_split_strcmd(char *s, int echo);
 ** gestion/echo/echo
 */
 char				*gestion_echo_option(char *str, char *arg);
-void				gestion_echo(t_temp *tmp);
+void				gestion_echo(t_temp *tmp, int key);
 
 /*
 ** gestion/echo/ft_split_echo/count_word
@@ -352,5 +352,6 @@ int					tab2_3d2(int key, t_temp *tmp, int *k, int *i);
 void				initialize_tmp(t_temp *tmp, int ac, char **av);
 void				initialize(t_temp *tmp, int *j);
 int					llist_astring(t_cmd *head, t_temp *tmp);
+void				echo_join(char **tabin, char **tabout);
 
 #endif

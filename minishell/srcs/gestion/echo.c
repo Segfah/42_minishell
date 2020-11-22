@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 17:27:31 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/22 15:17:45 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/22 16:03:08 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,21 @@ char	*ft_strjoinfree(char *s1, char *s2)
 	return (tab);
 }
 
-int			echo_cote_space(t_temp *tmp)
+void		echo_join(char **tabin, char **tabout)
+{
+	int i;
+	
+	i = 0;
+	write(1, "minishell: ", 11);
+	while (tabin[i] && tabout[i] && ft_strcmp(tabin[i], " "))
+	{
+		write(1, tabout[i], ft_strlen(tabout[i]));
+		i++;
+	}
+	write(1, ": command not found\n", 20);
+}
+
+int			echo_cote_space(t_temp *tmp, int key)
 {
 	int i;
 	int count;
@@ -106,6 +120,7 @@ int			echo_cote_space(t_temp *tmp)
 		str = ft_strjoinfree(str, tmp->strcmd[count]);
 		count++;
 	}
+	key ? ft_nb_exit(28) : 0;
 	ft_printf("minishell: %s: command not found\n", str);
 	ft_free(str);
 	return (0);
@@ -123,7 +138,7 @@ void		gestion_echo_2(t_temp *tmp, int n, int i)
 		ft_printf("\n");
 }
 
-void		gestion_echo(t_temp *tmp)
+void		gestion_echo(t_temp *tmp, int key)
 {
 	int		i;
 	int		n;
@@ -131,7 +146,7 @@ void		gestion_echo(t_temp *tmp)
 	i = 0;
 	n = 0;
 	dup_or_not(tmp);
-	if (echo_cote_space(tmp) == 0)
+	if (echo_cote_space(tmp, key) == 0)
 	{
 		(tmp->flag[1] == 1) ? dup2(tmp->oldfd, 1) : 0;
 		return ;
