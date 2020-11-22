@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exist.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corozco <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 16:22:27 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/22 16:22:28 by corozco          ###   ########.fr       */
+/*   Updated: 2020/11/22 19:06:05 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int				cmd_exist(char *cmd, t_temp *tmp)
 	flag = !ft_strcmp(cmd, "export") ? 6 : flag;
 	flag = !ft_strcmp(cmd, "unset") ? 7 : flag;
 	flag = !ft_strcmp(cmd, "echo") ? 8 : flag;
+	if (!ft_strcmp(cmd, ".."))
+		return (0);
 	if (!ft_strncmp(cmd, "./", 2) || !ft_strncmp(cmd, "/", 1))
 		flag = 9;
 	if (flag || (!flag && !search_env("PATH", tmp, 1, NULL)))

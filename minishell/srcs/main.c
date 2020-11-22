@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:00:46 by corozco           #+#    #+#             */
-/*   Updated: 2020/11/22 18:24:22 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/22 18:48:29 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,15 @@ int				main(int ac, char **av, char **envp)
 	if (!tmp.hnull)
 	{
 		if (search_env("HOME", &tmp, 1, NULL) == 1)
+		{
 			if (search_env("HOME", &tmp, 0, &tmp.hnull) == -1)
 				return (1);
+		}
 		else
+		{
 			if (!(tmp.hnull = ft_strdup("/")))
 				return (1);
+		}
 	}
 	launcher(tmp);
 	free_list(tmp.varenv);

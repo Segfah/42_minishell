@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 17:27:31 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/22 16:03:08 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/22 18:53:25 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int			ft_check_option_echo(char *s)
 	int len;
 
 	i = 0;
-	//printf("%s\n", s);
 	len = ft_strlen(s);
 	if (s[i] == '-')
 	{
@@ -41,7 +40,7 @@ void		dup_or_not(t_temp *tmp)
 	}
 }
 
-char	*ft_newstring(size_t i)
+char		*ft_newstring(size_t i)
 {
 	char	*str;
 	size_t	zero;
@@ -57,7 +56,7 @@ char	*ft_newstring(size_t i)
 	return (str);
 }
 
-char	*ft_strjoinfree(char *s1, char *s2)
+char		*ft_strjoinfree(char *s1, char *s2)
 {
 	char	*tab;
 	int		i;
@@ -87,7 +86,7 @@ char	*ft_strjoinfree(char *s1, char *s2)
 void		echo_join(char **tabin, char **tabout)
 {
 	int i;
-	
+
 	i = 0;
 	write(1, "minishell: ", 11);
 	while (tabin[i] && tabout[i] && ft_strcmp(tabin[i], " "))
@@ -98,24 +97,29 @@ void		echo_join(char **tabin, char **tabout)
 	write(1, ": command not found\n", 20);
 }
 
+int			print_0(char n)
+{
+	write(1, &n, 1);
+	return (0);
+}
+
 int			echo_cote_space(t_temp *tmp, int key)
 {
-	int i;
-	int count;
-	char *str;
+	int		i;
+	int		count;
+	char	*str;
 
 	i = 0;
 	count = 0;
 	if (tmp->strcmdin[1] == NULL)
-	{
-		write(1, "\n", 1);
-		return (0);
-	}
-	if (tmp->strcmdin[1] && tmp->strcmdin[2] && ((ft_check_option_echo(tmp->strcmd[2]) != 0) ||
-	ft_strcmp(tmp->strcmdin[1]," ") == 0))
+		return (print_0('\n'));
+	if (tmp->strcmdin[1] && tmp->strcmdin[2] &&
+	((ft_check_option_echo(tmp->strcmd[2]) != 0) ||
+	ft_strcmp(tmp->strcmdin[1], " ") == 0))
 		return (1);
 	str = ft_newstring(0);
-	while (tmp->strcmdin[count] && (ft_strcmp(tmp->strcmdin[count]," ") != 0))
+	while (tmp->strcmdin[count] &&
+	(ft_strcmp(tmp->strcmdin[count], " ") != 0))
 	{
 		str = ft_strjoinfree(str, tmp->strcmd[count]);
 		count++;
@@ -137,6 +141,8 @@ void		gestion_echo_2(t_temp *tmp, int n, int i)
 	if (n == 0)
 		ft_printf("\n");
 }
+
+//void		check_multi
 
 void		gestion_echo(t_temp *tmp, int key)
 {
