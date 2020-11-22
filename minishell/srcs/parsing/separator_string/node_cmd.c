@@ -24,7 +24,7 @@ int		cat_node_egal(t_cmd **cmd)
 	while (back)
 	{
 		len = ft_strlen(back->input);
-		if (back->input[len - 1] == '=' && back->next->input &&
+		if (back->next && back->input[len - 1] == '=' && back->next->input &&
 		back->next->output && ft_strcmp(back->next->input, " "))
 		{
 			back->output = ft_strcatdup(back->output, back->next->output);
