@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcatdup.c                                     :+:      :+:    :+:   */
+/*   llist_astring.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 14:00:14 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/13 16:31:27 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/22 16:37:31 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ static int		llist_astring2(t_cmd *head, t_temp *tmp, int *i)
 	{
 		if (!(tmp->strcmd[*i] = ft_strdup(head->output)))
 			return (-1);
-		if (!(tmp->strcmdin[(*i)++] = ft_strdup(head->input)))
+		if (!(tmp->strcmdin[*i] = ft_strdup(head->input)))
+			return (-1);
+		if (!(tmp->cpytab[(*i)++] = ft_strdup(head->input)))
 			return (-1);
 	}
 	return (0);
@@ -59,15 +61,19 @@ int				llist_astring(t_cmd *head, t_temp *tmp)
 			return (-1);
 		if (!(tmp->strcmdin = malloc(sizeof(char*) * (mlist_size(head) + 1))))
 			return (-1);
+		if (!(tmp->cpytab = malloc(sizeof(char*) * (mlist_size(head) + 1))))
+			return (-1);
 		while (head)
 		{
 			if (llist_astring2(head, tmp, &i) == -1)
 				return (-1);
 			head = head->next;
 		}
+		tmp->cpytab[i] = 0;
 		tmp->strcmd[i] = 0;
 		tmp->strcmdin[i] = 0;
 	}
+	
 	if (!cherche_echo(tmp->strcmd))
 		clean_tab2d(tmp->strcmd, tmp->strcmdin);
 	return (0);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcatdup.c                                     :+:      :+:    :+:   */
+/*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 14:00:14 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/13 16:31:27 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/22 16:48:20 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void			initialize(t_temp *tmp, int *j)
 	tmp->inpipe = NULL;
 	tmp->strcmd = NULL;
 	tmp->strcmdin = NULL;
+	tmp->cpytab = NULL;
 }
 
 void			initialize_tmp(t_temp *tmp, int ac, char **av)

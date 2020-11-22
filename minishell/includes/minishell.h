@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/11/22 15:56:21 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/22 16:35:03 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct		s_temp
 {
 	char			*prompt;
 	char			*env;
+	char			**cpytab;
 	char			**tabcmd;
 	char			**strcmd;
 	char			**strcmdin;
