@@ -346,11 +346,11 @@ void				tilde(t_cmd *cmd, t_temp *tmp);
 int					check_redi_2(char **cmd, int key);
 int					search_error_redi1(char *tmp);
 int					search_error_redi2(char *tmp);
-
 void				ft_nb_exit(int exi);
-
 int					check_redi_flag(char **cmd, t_temp *tmp, int key);
-
 int					tab2_3d2(int key, t_temp *tmp, int *k, int *i);
+void				initialize_tmp(t_temp *tmp, int ac, char **av);
+void				initialize(t_temp *tmp, int *j);
+int					llist_astring(t_cmd *head, t_temp *tmp);
 
 #endif

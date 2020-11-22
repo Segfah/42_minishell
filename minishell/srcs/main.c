@@ -12,22 +12,6 @@
 
 #include "minishell.h"
 
-void			initialize_tmp(t_temp *tmp, int ac, char **av)
-{
-	tmp->env = NULL;
-	tmp->prompt = NULL;
-	tmp->varenv = NULL;
-	tmp->exportenv = NULL;
-	tmp->env = NULL;
-	tmp->tab[0] = NULL;
-	tmp->tab[1] = NULL;
-	tmp->hnull = NULL;
-	tmp->strcmd = NULL;
-	tmp->strcmdin = NULL;
-	(void)ac;
-	(void)av;
-}
-
 /*
 ** On recalcule le prompt à chaque fois car le path(pwd) va changer quand...
 ** ...on fait un cd (cd .., cd, cd ~, etc) de cette maniere on aura...

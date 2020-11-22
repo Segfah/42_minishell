@@ -34,6 +34,7 @@ SRC := \
 	srcs/utils/ft_split_strcmd/space.c \
 	srcs/utils/ft_split_strcmd/copy.c \
 	srcs/utils/ft_split_strcmd/char.c \
+	srcs/utils/initialize.c \
 	srcs/gestion/tools/tools_env_export.c \
 	srcs/gestion/tools/tools_env_unset.c \
 	srcs/gestion/tools/tools_export.c \
@@ -59,6 +60,7 @@ SRC := \
 	srcs/parsing/tools_parsing/tab3d.c \
 	srcs/parsing/tools_parsing/check_redi_flag.c \
 	srcs/parsing/tools_parsing/check_redi_2.c \
+	srcs/parsing/tools_parsing/llist_astring.c \
 	srcs/utils/adelines.c 
 
 OBJS = $(addprefix objs/, $(SRC:.c=.o))
