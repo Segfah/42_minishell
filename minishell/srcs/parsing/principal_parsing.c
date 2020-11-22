@@ -195,7 +195,36 @@ int				error_line(char **tabcmd, t_temp *tmp, int i)
 	return (0);
 }
 
-void			gpipes2(pid_t pid, t_temp *tmp, int *k)
+void			gpipes_errors(int status, t_temp *tmp, int *k)
+{
+	if (WEXITSTATUS(status) == 15)
+		ft_printf("minishell: command not found: %s\n", tmp->outpipe[*k][0]);
+	if (WEXITSTATUS(status) == 16)
+		ft_printf("minishell: /: is a directory\n");
+	if (WEXITSTATUS(status) == 17)
+		ft_printf("minishell: cd: HOME not set\n");
+	if (WEXITSTATUS(status) == 18)
+		ft_printf("minishell: cd: %s: No such file or directory\n"
+		, tmp->outpipe[*k][1]);
+	if (WEXITSTATUS(status) == 19)
+		ft_printf("env: %s: No such file or directory\n", tmp->outpipe[*k][1]);
+	if (WEXITSTATUS(status) == 20)
+		check_export("export", tmp->outpipe[*k]);
+	if (WEXITSTATUS(status) == 21)
+		ft_printf("minishell: [: missing `]'\n");
+	if (WEXITSTATUS(status) == 22)
+		check_export("unset", tmp->outpipe[*k]);
+	if (WEXITSTATUS(status) == 23)
+		ft_printf("minishell: syntax error near unexpected token `%s'\n"
+		, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
+	if (WEXITSTATUS(status) == 24)
+		ft_printf("minishell: syntax error near unexpected token `newline'\n");
+	if (WEXITSTATUS(status) == 25)
+		ft_printf("minishell: %s: is a directory\n"
+		, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
+}
+
+void			pparent(pid_t pid, t_temp *tmp, int *k)
 {
 	int status;
 
@@ -203,51 +232,40 @@ void			gpipes2(pid_t pid, t_temp *tmp, int *k)
 		exit(1);
 	if (WIFEXITED(status))
 	{
-		if (WEXITSTATUS(status) == 15)
-			ft_printf("minishell: command not found: %s\n", tmp->outpipe[*k][0]);
-		if (WEXITSTATUS(status) == 16)
-			ft_printf("minishell: /: is a directory\n");
-		if (WEXITSTATUS(status) == 17)
-			ft_printf("minishell: cd: HOME not set\n");
-		if (WEXITSTATUS(status) == 18)
-			ft_printf("minishell: cd: %s: No such file or directory\n", tmp->outpipe[*k][1]);
-		if (WEXITSTATUS(status) == 19)
-			ft_printf("env: %s: No such file or directory\n", tmp->outpipe[*k][1]);
-		if (WEXITSTATUS(status) == 20)
-			check_export("export", tmp->outpipe[*k]);
-		if (WEXITSTATUS(status) == 21)
-			ft_printf("minishell: [: missing `]'\n");
-		if (WEXITSTATUS(status) == 22)
-			check_export("unset", tmp->outpipe[*k]);
-		if (WEXITSTATUS(status) == 23)
-			ft_printf("minishell: syntax error near unexpected token `%s'\n", tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
-		if (WEXITSTATUS(status) == 24)
-			ft_printf("minishell: syntax error near unexpected token `newline'\n");
-		if (WEXITSTATUS(status) == 25)
-			ft_printf("minishell: %s: is a directory\n", tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
+		gpipes_errors(status, tmp, k);
 		if (WEXITSTATUS(status) == 27)
-			ft_printf("minishell: %s:  No such file or directory\n", tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
+			ft_printf("minishell: %s:  No such file or directory\n"
+			, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
 		if (WEXITSTATUS(status) == 26)
 		{
 			write(1, "minishell: .: filename argument required\n", 41);
 			write(1, ".: usage: . filename [arguments]\n", 33);
 		}
 		if (WEXITSTATUS(status) == 13)
-			ft_printf("minishell: %s: Permission denied\n", tmp->outpipe[*k][0]);
+			ft_printf("minishell: %s: Permission denied\n"
+			, tmp->outpipe[*k][0]);
 		if (WEXITSTATUS(status) == 2)
-			ft_printf("minishell: %s: No such file or directory\n", tmp->outpipe[*k][0]); 
+			ft_printf("minishell: %s: No such file or directory\n"
+			, tmp->outpipe[*k][0]);
 	}
 	wait(NULL);
 	(*k)++;
 }
+/*
+void			pchild()
+{
 
+}
+*/
 void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 {
-	int fd[2];
-	pid_t pid;
-	int fdd = 0;
-	int k = 0;
+	int			fd[2];
+	pid_t		pid;
+	int			fdd;
+	int			k;
 
+	fdd = 0;
+	k = 0;
 	while (tmp->outpipe[k])
 	{
 		pipe(fd);
@@ -273,7 +291,7 @@ void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 		}
 		else
 		{
-			gpipes2(pid, tmp, &k);
+			pparent(pid, tmp, &k);
 			close(fd[1]);
 			fdd = fd[0];
 		}
