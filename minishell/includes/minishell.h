@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/11/22 16:35:03 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/22 18:06:09 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -354,5 +354,6 @@ void				initialize_tmp(t_temp *tmp, int ac, char **av);
 void				initialize(t_temp *tmp, int *j);
 int					llist_astring(t_cmd *head, t_temp *tmp);
 void				echo_join(char **tabin, char **tabout);
+int					cat_node_egal(t_cmd **cmd);
 
 #endif
