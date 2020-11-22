@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 17:27:31 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/22 18:53:25 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/22 19:19:10 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,31 @@ void		gestion_echo_2(t_temp *tmp, int n, int i)
 		ft_printf("\n");
 }
 
-//void		check_multi
+int			check_multi_options(t_temp *tmp, int *i, int *n)
+{
+	while (tmp->strcmdin[*i])
+	{
+		if (ft_check_option_echo(tmp->strcmd[*i]) != 0)
+		{
+			if (tmp->strcmdin[(*i) + 1] == NULL)
+			{
+				(tmp->flag[1] == 1) ? dup2(tmp->oldfd, 1) : 0;
+				return (0);
+			}
+			if (tmp->strcmdin[(*i) + 1] && ft_strcmp(tmp->strcmdin[(*i) + 1], " ") == 0)
+			{
+				*n = 2;
+				(*i)++;
+			}
+			else
+				break;
+		}
+		else
+			break ;
+		(*i)++;
+	}
+	return (1);
+}
 
 void		gestion_echo(t_temp *tmp, int key)
 {
@@ -158,27 +182,8 @@ void		gestion_echo(t_temp *tmp, int key)
 		return ;
 	}
 	i = 2;
-	while (tmp->strcmdin[i])
-	{
-		if (ft_check_option_echo(tmp->strcmd[i]) != 0)
-		{
-			if (tmp->strcmdin[i + 1] == NULL)
-			{
-				(tmp->flag[1] == 1) ? dup2(tmp->oldfd, 1) : 0;
-				return ;
-			}
-			if (tmp->strcmdin[i + 1] && ft_strcmp(tmp->strcmdin[i + 1], " ") == 0)
-			{
-				n = 2;
-				i++;
-			}
-			else
-				break;
-		}
-		else
-			break ;
-		i++;
-	}
+	if (!check_multi_options(tmp, &i, &n))
+		return ;
 	gestion_echo_2(tmp, n, i);
 	(tmp->flag[1] == 1) ? dup2(tmp->oldfd, 1) : 0;
 }
