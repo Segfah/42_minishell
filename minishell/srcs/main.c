@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:00:46 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/15 18:01:23 by corozco          ###   ########.fr       */
+/*   Updated: 2020/11/22 16:15:39 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,6 @@ int				main(int ac, char **av, char **envp)
 	launcher(tmp);
 	free_list(tmp.varenv);
 	free(tmp.hnull);
+	write(1, "exit\n", 5);
 	return (0);
 }
