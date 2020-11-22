@@ -14,10 +14,13 @@
 
 void			printftab(char **tab)
 {
+	int i;
+
+	i = -1;
 	if (tab)
 	{
 		ft_printf("----printtab----\n");
-		for (int i = 0; tab[i]; i++)
+		while (tab[++i])
 			ft_printf("---[%d], --- [%s]\n", i, tab[i]);
 		ft_printf("-----------------\n");
 	}
@@ -148,6 +151,24 @@ void			print_error_redi(char *str, int key)
 		ft_printf("minishell: syntax error near unexpected token `newline'\n");
 }
 
+int				error_line2(t_cmd *cmd, t_temp *tmp)
+{
+	int			ret;
+
+	ret = (cmd) ? llist_astring(cmd, tmp) : 0;
+	if (ret == -1)
+		exit(1);
+	if (tmp->strcmdin && (ret = check_redi_2(tmp->strcmdin, 1)) < 0)
+	{
+		print_error_redi(tmp->strcmd[check_redi_2(tmp->strcmd, 0) + 1], ret);
+		ft_free_double_tab(tmp->strcmd);
+		ft_free_double_tab(tmp->strcmdin);
+		(cmd != NULL) ? free_cmd(cmd) : 0;
+		return (-1);
+	}
+	return (0);
+}
+
 int				error_line(char **tabcmd, t_temp *tmp, int i)
 {
 	t_cmd		*cmd;
@@ -165,18 +186,8 @@ int				error_line(char **tabcmd, t_temp *tmp, int i)
 			print_error(ret);
 			return (-1);
 		}
-		ret = (cmd) ? llist_astring(cmd, tmp) : 0;
-		if (ret == -1)
-			exit(1); //(error malloc) -> llist_astring
-		if (tmp->strcmdin && (ret = check_redi_2(tmp->strcmdin, 1)) < 0)
-		{
-			printftab(tmp->strcmd);
-			print_error_redi(tmp->strcmd[check_redi_2(tmp->strcmd, 0) + 1], ret);
-			ft_free_double_tab(tmp->strcmd);
-			ft_free_double_tab(tmp->strcmdin);
-			(cmd != NULL) ? free_cmd(cmd) : 0;
+		if (error_line2(cmd, tmp) == -1)
 			return (-1);
-		}
 		ft_free_double_tab(tmp->strcmd);
 		ft_free_double_tab(tmp->strcmdin);
 		(cmd != NULL) ? free_cmd(cmd) : 0;
