@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 17:27:31 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/22 13:24:11 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/22 15:17:45 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int			ft_check_option_echo(char *s)
 	int len;
 
 	i = 0;
+	//printf("%s\n", s);
 	len = ft_strlen(s);
 	if (s[i] == '-')
 	{
@@ -28,7 +29,6 @@ int			ft_check_option_echo(char *s)
 	}
 	if (i == len)
 		return (i);
-	//printf("-N -> i = %d\n", i);
 	return (0);
 }
 
@@ -132,19 +132,31 @@ void		gestion_echo(t_temp *tmp)
 	n = 0;
 	dup_or_not(tmp);
 	if (echo_cote_space(tmp) == 0)
-		return ;
-	if (tmp->strcmd[i + 1] != NULL)
-		i++;
-	if (tmp->strcmd[i + 1] != NULL)
-		i++;
-	if (tmp->strcmd[2] && ft_check_option_echo(tmp->strcmd[2]) != 0)
 	{
-		i = 2;
-		n = 2;
-		if (tmp->strcmd[3] && tmp->strcmd[4] && (ft_strcmp(tmp->strcmd[i + 1], " ") == 0))
-			i = i + 2;
+		(tmp->flag[1] == 1) ? dup2(tmp->oldfd, 1) : 0;
+		return ;
+	}
+	i = 2;
+	while (tmp->strcmdin[i])
+	{
+		if (ft_check_option_echo(tmp->strcmd[i]) != 0)
+		{
+			if (tmp->strcmdin[i + 1] == NULL)
+			{
+				(tmp->flag[1] == 1) ? dup2(tmp->oldfd, 1) : 0;
+				return ;
+			}
+			if (tmp->strcmdin[i + 1] && ft_strcmp(tmp->strcmdin[i + 1], " ") == 0)
+			{
+				n = 2;
+				i++;
+			}
+			else
+				break;
+		}
 		else
-			return ;
+			break ;
+		i++;
 	}
 	gestion_echo_2(tmp, n, i);
 	(tmp->flag[1] == 1) ? dup2(tmp->oldfd, 1) : 0;
