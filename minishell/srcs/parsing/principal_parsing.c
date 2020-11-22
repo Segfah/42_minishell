@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/22 15:59:27 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/22 16:52:30 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, int key)
 	{
 		g_ret = 127;
 		if (key == 1)
-			exit(15);
-		ft_printf("minishell: command not found: %s\n", tmp->strcmd[0]);
+			exit(28);
+		echo_join(tmp->cpytab, tmp->strcmd);
 	}
 	(void)tabcmd;
 }
@@ -163,6 +163,7 @@ int				error_line2(t_cmd *cmd, t_temp *tmp)
 		print_error_redi(tmp->strcmd[check_redi_2(tmp->strcmd, 0) + 1], ret);
 		ft_free_double_tab(tmp->strcmd);
 		ft_free_double_tab(tmp->strcmdin);
+		ft_free_double_tab(tmp->cpytab);
 		(cmd != NULL) ? free_cmd(cmd) : 0;
 		return (-1);
 	}
@@ -190,6 +191,7 @@ int				error_line(char **tabcmd, t_temp *tmp, int i)
 			return (-1);
 		ft_free_double_tab(tmp->strcmd);
 		ft_free_double_tab(tmp->strcmdin);
+		ft_free_double_tab(tmp->cpytab);
 		(cmd != NULL) ? free_cmd(cmd) : 0;
 	}
 	return (0);
@@ -318,6 +320,7 @@ void			npipe(char **tabcmd, t_temp *tmp, t_cmd *cmd, int i)
 	launcher_cmd(tabcmd[i], tmp, j, 0);
 	ft_free_double_tab(tmp->strcmd);
 	ft_free_double_tab(tmp->strcmdin);
+	ft_free_double_tab(tmp->cpytab);
 	tmp->flag[1] == 1 ? close(tmp->fd) : 0;
 	tmp->flag[2] == 1 ? close(tmp->fdi) : 0;
 }

@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 13:58:31 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/19 15:31:55 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/22 18:10:00 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ void				separator_string(t_cmd **cmd, char *str, t_temp *tmp)
 		i++;
 	}
 	while (strcat_cmd(cmd) == 1)
+		;
+	while (cat_node_egal(cmd) == 1)
 		;
 	remove_null_node(cmd);
 	remove_space_node(cmd);
