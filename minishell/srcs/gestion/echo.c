@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 17:27:31 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/22 12:27:27 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/22 13:24:11 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int			ft_check_option_echo(char *s)
 	}
 	if (i == len)
 		return (i);
+	//printf("-N -> i = %d\n", i);
 	return (0);
 }
 
@@ -91,7 +92,12 @@ int			echo_cote_space(t_temp *tmp)
 
 	i = 0;
 	count = 0;
-	if (tmp->strcmdin[1] && ((ft_check_option_echo(tmp->strcmd[1]) != 0) ||
+	if (tmp->strcmdin[1] == NULL)
+	{
+		write(1, "\n", 1);
+		return (0);
+	}
+	if (tmp->strcmdin[1] && tmp->strcmdin[2] && ((ft_check_option_echo(tmp->strcmd[2]) != 0) ||
 	ft_strcmp(tmp->strcmdin[1]," ") == 0))
 		return (1);
 	str = ft_newstring(0);
@@ -129,17 +135,16 @@ void		gestion_echo(t_temp *tmp)
 		return ;
 	if (tmp->strcmd[i + 1] != NULL)
 		i++;
-	else
-		n = 1;
 	if (tmp->strcmd[i + 1] != NULL)
 		i++;
-	
-	if (ft_check_option_echo(tmp->strcmd[i]) != 0)
+	if (tmp->strcmd[2] && ft_check_option_echo(tmp->strcmd[2]) != 0)
 	{
-		i++;
-		if (tmp->strcmd[i + 1] != NULL)
-			i++;
+		i = 2;
 		n = 2;
+		if (tmp->strcmd[3] && tmp->strcmd[4] && (ft_strcmp(tmp->strcmd[i + 1], " ") == 0))
+			i = i + 2;
+		else
+			return ;
 	}
 	gestion_echo_2(tmp, n, i);
 	(tmp->flag[1] == 1) ? dup2(tmp->oldfd, 1) : 0;
