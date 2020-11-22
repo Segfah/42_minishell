@@ -6,7 +6,7 @@
 #    By: lryst <lryst@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 05:41:03 by corozco           #+#    #+#              #
-#    Updated: 2020/11/19 11:03:26 by lryst            ###   ########.fr        #
+#    Updated: 2020/11/22 19:36:08 by lryst            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,10 @@ SRC := \
 	srcs/gestion/tools/tools_export.c \
 	srcs/gestion/tools/tools_list.c \
 	srcs/gestion/tools/tools_command_bin.c \
+	srcs/gestion/tools/echo_option.c \
+	srcs/gestion/tools/ft_strjoinfree.c \
+	srcs/gestion/tools/ft_newstring.c \
+	srcs/gestion/tools/dup_or_not.c \
 	srcs/gestion/export.c \
 	srcs/utils/free.c \
 	srcs/gestion/echo.c \
