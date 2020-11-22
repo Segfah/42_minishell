@@ -195,7 +195,7 @@ int				error_line(char **tabcmd, t_temp *tmp, int i)
 	return (0);
 }
 
-void			gpipes_errors(int status, t_temp *tmp, int *k)
+void			pparent_errors(int status, t_temp *tmp, int *k)
 {
 	if (WEXITSTATUS(status) == 15)
 		ft_printf("minishell: command not found: %s\n", tmp->outpipe[*k][0]);
@@ -232,7 +232,7 @@ void			pparent(pid_t pid, t_temp *tmp, int *k)
 		exit(1);
 	if (WIFEXITED(status))
 	{
-		gpipes_errors(status, tmp, k);
+		pparent_errors(status, tmp, k);
 		if (WEXITSTATUS(status) == 27)
 			ft_printf("minishell: %s:  No such file or directory\n"
 			, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
