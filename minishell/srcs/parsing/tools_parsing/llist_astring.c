@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 14:00:14 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/22 16:37:31 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/22 20:53:35 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int				llist_astring(t_cmd *head, t_temp *tmp)
 		tmp->strcmd[i] = 0;
 		tmp->strcmdin[i] = 0;
 	}
-	
 	if (!cherche_echo(tmp->strcmd))
 		clean_tab2d(tmp->strcmd, tmp->strcmdin);
 	return (0);

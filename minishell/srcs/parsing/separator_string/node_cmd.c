@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 14:02:09 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/22 18:15:22 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/22 20:55:13 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int		cat_node_egal(t_cmd **cmd)
 {
-	t_cmd *back;
-	int len;
-	int i;
+	t_cmd	*back;
+	int		len;
+	int		i;
 
 	back = *cmd;
 	len = 0;
@@ -38,27 +38,6 @@ int		cat_node_egal(t_cmd **cmd)
 	}
 	remove_null_node(cmd);
 	return (i);
-}
-
-
-void	remove_null_node(t_cmd **cmd)
-{
-	t_cmd *save;
-	t_cmd *tmp;
-
-	tmp = *cmd;
-	while (tmp)
-	{
-		save = NULL;
-		if (tmp->next && (tmp->next->output == NULL ||
-		tmp->next->input == NULL))
-		{
-			save = tmp->next->next;
-			ft_lstdelone_cmd(tmp->next);
-			tmp->next = save;
-		}
-		tmp = tmp->next;
-	}
 }
 
 void	tilde(t_cmd *cmd, t_temp *tmp)

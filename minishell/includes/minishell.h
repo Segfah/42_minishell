@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/11/22 18:06:09 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/22 19:41:27 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -355,5 +355,11 @@ void				initialize(t_temp *tmp, int *j);
 int					llist_astring(t_cmd *head, t_temp *tmp);
 void				echo_join(char **tabin, char **tabout);
 int					cat_node_egal(t_cmd **cmd);
+char				*ft_newstring(size_t i);
+char				*ft_strjoinfree(char *s1, char *s2);
+void				dup_or_not(t_temp *tmp);
+int					ft_check_option_echo(char *s);
+int					echo_cote_space(t_temp *tmp, int key);
+int					check_multi_options(t_temp *tmp, int *i, int *n);
 
 #endif
