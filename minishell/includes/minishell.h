@@ -362,4 +362,7 @@ int					ft_check_option_echo(char *s);
 int					echo_cote_space(t_temp *tmp, int key);
 int					check_multi_options(t_temp *tmp, int *i, int *n);
 
+void				sighandler(int signum);
+void				sighandler2(int signum);
+
 #endif

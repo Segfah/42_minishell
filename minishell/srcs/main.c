@@ -12,36 +12,6 @@
 
 #include "minishell.h"
 
-/*
-** On recalcule le prompt à chaque fois car le path(pwd) va changer quand...
-** ...on fait un cd (cd .., cd, cd ~, etc) de cette maniere on aura...
-** ...le prompt maj
-** ps (trouver une autre maniere de le faire sans fais autant d'appel à getcwd)
-*/
-
-void			sighandler(int signum)
-{
-	char		*prompt;
-	char		*env;
-
-	write(1, "\b\b  \n", 5);
-	env = getcwd(NULL, 0);
-	if ((prompt = ft_prompt(env)) == NULL)
-		exit(1);
-	ft_printf("\x1b[33m%s\x1b[0m🐰: ", prompt);
-	ft_free(env);
-	env = NULL;
-	ft_free(prompt);
-	prompt = NULL;
-	(void)signum;
-}
-
-void			sighandler2(int signum)
-{
-	(void)signum;
-	write(1, " \b\b \b\b \b", 8);
-}
-
 void			launcher(t_temp tmp, int ac, char **av)
 {
 	int			ret;
@@ -53,7 +23,6 @@ void			launcher(t_temp tmp, int ac, char **av)
 	}
 	else
 	{
-		/* code */	
 		while (ret)
 		{
 			tmp.env = getcwd(NULL, 0);

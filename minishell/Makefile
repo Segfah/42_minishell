@@ -19,6 +19,7 @@ CFLAGSF = -g3 -fsanitize=address -Wall -Wextra -Werror
 
 SRC := \
 	srcs/main.c \
+	srcs/signal.c \
 	srcs/drawings/welcome.c \
 	srcs/prompt/ft_prompt.c \
 	srcs/parsing/principal_parsing.c \
