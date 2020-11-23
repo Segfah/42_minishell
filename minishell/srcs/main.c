@@ -18,9 +18,7 @@ void			launcher(t_temp tmp, int ac, char **av)
 
 	ret = 1;
 	if (ac > 1)
-	{
-		ret = ft_getline(&tmp, av);
-	}
+		ret = ft_getline(&tmp, av, 0);
 	else
 	{
 		while (ret)
@@ -32,7 +30,7 @@ void			launcher(t_temp tmp, int ac, char **av)
 			signal(SIGINT, sighandler);
 			signal(SIGQUIT, sighandler2);
 			ft_free(tmp.env);
-			ret = ft_getline(&tmp, NULL);
+			ret = ft_getline(&tmp, NULL, 0);
 			ft_free(tmp.prompt);
 		}
 	}

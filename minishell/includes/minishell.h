@@ -90,7 +90,7 @@ char				*ft_prompt(char *str);
 /*
 ** Parsing
 */
-int					ft_getline(t_temp *tmp, char **av);
+int					ft_getline(t_temp *tmp, char **av, int ret);
 
 /*
 **	parsing/tools/cmd_exit

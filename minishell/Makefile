@@ -143,9 +143,8 @@ cs: $(OBJS)
 leaks:
 	leaks minishell
 
-normi:
-	norminette includes
-	norminette srcs
+norme:
+	@~/.norminette/norminette.rb libft/srcs libft/includes includes srcs/
 
 quimera:
 	@echo '	 _**_**	'

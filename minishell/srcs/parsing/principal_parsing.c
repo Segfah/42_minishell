@@ -221,8 +221,6 @@ void			pparent_errors(int status, t_temp *tmp, int *k)
 		, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
 	if (WEXITSTATUS(status) == 24)
 		ft_printf("minishell: syntax error near unexpected token `newline'\n");
-	if (WEXITSTATUS(status) == 25)
-		ft_printf("minishell: %s: is a directory\n");
 	if (WEXITSTATUS(status) == 28)
 		echo_join(tmp->inpipe[*k], tmp->outpipe[*k]);
 }
@@ -236,6 +234,8 @@ void			pparent(pid_t pid, t_temp *tmp, int *k)
 	if (WIFEXITED(status))
 	{
 		pparent_errors(status, tmp, k);
+		if (WEXITSTATUS(status) == 25)
+			ft_printf("minishell: %s: is a directory\n");
 		if (WEXITSTATUS(status) == 27)
 			ft_printf("minishell: %s:  No such file or directory\n"
 			, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
@@ -251,15 +251,9 @@ void			pparent(pid_t pid, t_temp *tmp, int *k)
 			ft_printf("minishell: %s: No such file or directory\n"
 			, tmp->outpipe[*k][0]);
 	}
-	wait(NULL);
 	(*k)++;
 }
-/*
-void			pchild()
-{
 
-}
-*/
 void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 {
 	int			fd[2];
@@ -354,10 +348,9 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 	}
 }
 
-int				ft_getline(t_temp *tmp, char **av)
+int				ft_getline(t_temp *tmp, char **av, int ret)
 {
 	char		*line;
-	int			ret;
 
 	if (av)
 	{
@@ -367,10 +360,9 @@ int				ft_getline(t_temp *tmp, char **av)
 		if (tmp->tabcmd != NULL && tmp->tabcmd[0])
 			gestion_line(tmp->tabcmd, tmp, -1);
 		ft_free_double_tab(tmp->tabcmd);
-//		ft_free(line);
 	}
 	else
-	{	
+	{
 		line = NULL;
 		if ((ret = ft_gnl(0, &line)) == -1
 			|| (tmp->tabcmd = ft_split_line(line)) == NULL)
