@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/11/22 19:41:27 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/23 09:57:16 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -364,5 +364,10 @@ int					check_multi_options(t_temp *tmp, int *i, int *n);
 
 void				sighandler(int signum);
 void				sighandler2(int signum);
+void				clean_split3d(t_temp *tmp);
+void				clean_tab2d_echo_2(int k, char **tabin, char **tabout);
+int					len_tabsplit3d(t_cmd *cmd);
+int					len_error_pipe(t_cmd *tmp, int *pipe);
+int					search_error_pipe(t_cmd *tmp);
 
 #endif

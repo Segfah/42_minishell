@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 16:54:13 by corozco           #+#    #+#             */
-/*   Updated: 2020/11/20 14:24:26 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/23 09:54:05 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,65 +28,6 @@ int				search_error_pipe(t_cmd *tmp)
 	if (j > 1)
 		return (-1);
 	return (i);
-}
-
-int				len_error_pipe(t_cmd *tmp, int *pipe)
-{
-	if (search_error_pipe(tmp) == -1)
-		return (-1);
-	if (!ft_strcmp(tmp->input, "|") && !tmp->next)
-		return (-3);
-	else if (!ft_strcmp(tmp->input, "|") &&
-		!ft_strcmp(tmp->next->input, " ") && !tmp->next->next)
-		return (-1);
-	else if (!ft_strcmp(tmp->input, "|") && !ft_strcmp(tmp->next->input, " ")
-		&& !ft_strcmp(tmp->next->next->input, "|"))
-		return (-2);
-	else if (!ft_strcmp(tmp->input, "|") && ft_strcmp(tmp->next->input, " ")
-		&& !ft_strcmp(tmp->next->input, "|"))
-		return (-2);
-	else if (!ft_strcmp(tmp->input, "|"))
-		(*pipe)++;
-	return (0);
-}
-
-int				len_split3d(t_cmd *cmd)
-{
-	int			pipe;
-	t_cmd		*tmp;
-	int			ret;
-
-	tmp = cmd;
-	pipe = 0;
-	ret = 0;
-	if (tmp && !ft_strcmp(tmp->input, "|"))
-		return (-1);
-	while (tmp)
-	{
-		if ((ret = len_error_pipe(tmp, &pipe)) != 0)
-			return (ret);
-		tmp = tmp->next;
-	}
-	if (pipe == 0)
-		return (0);
-	return (pipe + 1);
-}
-
-int				len_tabsplit3d(t_cmd *cmd)
-{
-	t_cmd		*tmp;
-	int			ret;
-
-	ret = 0;
-	tmp = cmd;
-	while (tmp)
-	{
-		if (!ft_strcmp(tmp->input, "|"))
-			return (ret);
-		ret++;
-		tmp = tmp->next;
-	}
-	return (ret);
 }
 
 int				tab2_3d2(int key, t_temp *tmp, int *k, int *i)
@@ -137,86 +78,6 @@ int				tab2_3d(t_cmd *cmd, t_temp *tmp, int i)
 	}
 	tab2_3d2(-1, tmp, &k, &i);
 	return (0);
-}
-
-void			clean_tab2d(char **tabin, char **tabout)
-{
-	int			i;
-	int			k;
-
-	k = 0;
-	i = 0;
-	while (tabin[i])
-	{
-		if (!ft_strcmp(tabin[i], " "))
-		{
-			ft_free(tabin[i]);
-			ft_free(tabout[i]);
-			i++;
-		}
-		else
-		{
-			tabin[k] = tabin[i];
-			tabout[k++] = tabout[i++];
-		}
-	}
-	tabin[k] = 0;
-	tabout[k] = 0;
-}
-
-void			clean_tab2d_echo_2(int k, char **tabin, char **tabout)
-{
-	if (k > 0 && !ft_strcmp(tabin[k - 1], " "))
-	{
-		ft_free(tabin[k - 1]);
-		ft_free(tabout[k - 1]);
-		tabin[k - 1] = 0;
-		tabout[k - 1] = 0;
-	}
-	else
-	{
-		tabin[k] = 0;
-		tabout[k] = 0;
-	}
-}
-
-void			clean_tab2d_echo(char **tabin, char **tabout)
-{
-	int			i;
-	int			k;
-
-	k = 0;
-	i = 0;
-	if (tabin[i])
-	{
-		if (!ft_strcmp(tabin[i], " "))
-		{
-			ft_free(tabin[i]);
-			ft_free(tabout[i]);
-			i++;
-		}
-		while (tabin[i])
-		{
-			tabin[k] = tabin[i];
-			tabout[k++] = tabout[i++];
-		}
-		clean_tab2d_echo_2(k, tabin, tabout);
-	}
-}
-
-void			clean_split3d(t_temp *tmp)
-{
-	int			i;
-
-	i = 0;
-	while (tmp->inpipe[i])
-	{
-		if (cherche_echo(tmp->outpipe[i]))
-			clean_tab2d_echo(tmp->inpipe[i], tmp->outpipe[i]);
-		else
-			clean_tab2d(tmp->inpipe[i], tmp->outpipe[i]);
-		i++;
-	}
 }
 
 int				print_error(int ret)

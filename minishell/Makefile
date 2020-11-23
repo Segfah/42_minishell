@@ -6,7 +6,7 @@
 #    By: lryst <lryst@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 05:41:03 by corozco           #+#    #+#              #
-#    Updated: 2020/11/22 19:36:08 by lryst            ###   ########.fr        #
+#    Updated: 2020/11/23 09:56:33 by lryst            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,8 @@ SRC := \
 	srcs/parsing/tools_parsing/redirection.c \
 	srcs/parsing/tools_parsing/open_redirection.c \
 	srcs/parsing/tools_parsing/tab3d.c \
+	srcs/parsing/tools_parsing/clean_tab3d.c \
+	srcs/parsing/tools_parsing/len_tab3d.c \
 	srcs/parsing/tools_parsing/check_redi_flag.c \
 	srcs/parsing/tools_parsing/check_redi_2.c \
 	srcs/parsing/tools_parsing/llist_astring.c \
