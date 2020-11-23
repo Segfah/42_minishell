@@ -68,9 +68,13 @@ void	dcote_fill_dollar(t_cmd *cmd, t_lists *revar, int *i, int *j)
 	size = 0;
 	while (revar)
 	{
+		if (!revar->name && !revar->data)
+			break ;
 		if (ft_strcmp(revar->name, tmp) == 0)
+		{
 			while (revar->data[size])
 				cmd->output[(*j)++] = revar->data[size++];
+		}
 		revar = revar->next;
 	}
 	ft_free(tmp);
