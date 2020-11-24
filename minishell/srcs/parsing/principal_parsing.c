@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/24 16:06:41 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/24 16:15:33 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,13 +163,9 @@ void			gestion_exit(char **strcmd, t_temp *tmp, int key)
 	}
 	else
 	{
-		if (ft_intlen(ft_atoi(strcmd[1])) == (int)ft_strlen(strcmd[1]) && (tmp->cpytab[3] == NULL || !ft_strcmp(tmp->cpytab[3], " ")))
-		{
-			printftab(strcmd);
-			printf("int len = %d\n", ft_intlen(ft_atoi(strcmd[1])));
-			printf("len str =%d\n", (int)ft_strlen(strcmd[1]));
+		if (ft_intlen(ft_atoi(strcmd[1])) == (int)ft_strlen(strcmd[1]) &&
+		(tmp->cpytab[3] == NULL || !ft_strcmp(tmp->cpytab[3], " ")))
 			exit_arg(strcmd, key);
-		}
 		else
 		{
 			g_ret = 255;
