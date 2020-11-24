@@ -352,7 +352,7 @@ void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 			tmp->strcmdin = tmp->inpipe[k];
 			cmd ? check_redi(tmp->strcmdin, tmp, 1) : 0;
 			((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)
-				? skip_redi(tmp->strcmdin, tmp, 0) : 0;
+				? skip_redi(tmp, 0) : 0;
 			(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
 			tmp->flag[0] = (j > 0) ? 1 : 0;
 			launcher_cmd(tmp->outpipe[k][0], tmp, j, 1);
@@ -384,7 +384,7 @@ void			npipe(char **tabcmd, t_temp *tmp, t_cmd *cmd, int i)
 		exit(1);
 	cmd ? check_redi(tmp->strcmdin, tmp, 0) : 0;
 	((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)
-		? skip_redi(tmp->strcmdin, tmp, 0) : 0;
+		? skip_redi(tmp, 0) : 0;
 	(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
 	tmp->flag[0] = (j > 0) ? 1 : 0;
 	launcher_cmd(tabcmd[i], tmp, j, 0);

@@ -101,7 +101,7 @@ int					cmd_exist(char *cmd, t_temp *tmp);
 **	parsing/tools/redirection
 */
 int					check_redi(char **cmd, t_temp *tmp, int key);
-void				skip_redi(char **cmd, t_temp *tmp, int i);
+void				skip_redi(t_temp *tmp, int i);
 
 /*
 ** parsing/tools/open_rediction
