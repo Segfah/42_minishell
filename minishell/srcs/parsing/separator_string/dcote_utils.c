@@ -100,6 +100,8 @@ void	dcote_count_dollar(t_cmd *cmd, t_lists *var, int *i, int *size)
 	tmp[j] = '\0';
 	while (var)
 	{
+		if (!var->name && !var->data)
+			break ;
 		if (ft_strcmp(var->name, tmp) == 0)
 			(*size) = (*size) + ft_strlen(var->data);
 		var = var->next;
