@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/24 14:43:49 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/24 16:06:41 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,8 @@ void			exit_join(char **tabin, char **tabout)
 
 	i = 1;
 	j = 2;
-	write(1, "minishell: ", 11);
+	write(1, "exit\n", 5);
+	write(1, "minishell: exit: ", 17);
 	while (tabin[j] && tabout[i] && ft_strcmp(tabin[j], " "))
 	{
 		write(1, tabout[i], ft_strlen(tabout[i]));
@@ -147,7 +148,6 @@ void			exit_arg(char **strcmd, int key)
 	else
 	{
 		g_ret = ft_atoi((const char*)strcmd[1]);
-		printf("g_ret = [%d]\n", g_ret);
 		write(1, "exit\n", 5);
 		exit(g_ret);
 	}
@@ -163,8 +163,13 @@ void			gestion_exit(char **strcmd, t_temp *tmp, int key)
 	}
 	else
 	{
-		if (ft_intlen(ft_atoi(strcmd[1])) == (int)ft_strlen(strcmd[1]))
+		if (ft_intlen(ft_atoi(strcmd[1])) == (int)ft_strlen(strcmd[1]) && (tmp->cpytab[3] == NULL || !ft_strcmp(tmp->cpytab[3], " ")))
+		{
+			printftab(strcmd);
+			printf("int len = %d\n", ft_intlen(ft_atoi(strcmd[1])));
+			printf("len str =%d\n", (int)ft_strlen(strcmd[1]));
 			exit_arg(strcmd, key);
+		}
 		else
 		{
 			g_ret = 255;
