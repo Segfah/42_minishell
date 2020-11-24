@@ -6,11 +6,27 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/15 16:21:39 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/15 17:53:19 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/24 11:37:15 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	dcote_slash_dollar(int save, t_cmd *cmd, int *i, int *j)
+{
+	int start;
+
+	start = 0;
+	if ((save % 2) == 1)
+	{
+		while (start++ < ((save / 2)))
+			cmd->output[(*j)++] = '\\';
+		cmd->output[(*j)++] = cmd->input[(*i)++];
+	}
+	else
+		while (start++ < (save / 2))
+			cmd->output[(*j)++] = '\\';
+}
 
 void	dcote_fill_slash(t_cmd *cmd, int *i, int *j)
 {
@@ -24,7 +40,9 @@ void	dcote_fill_slash(t_cmd *cmd, int *i, int *j)
 		save++;
 		(*i)++;
 	}
-	if (save == 1 && cmd->input[*i] != '"' && cmd->input[*i] != '\'')
+	if (cmd->input[*i] == '$')
+		dcote_slash_dollar(save, cmd, i, j);
+	else if (save == 1 && cmd->input[*i] != '"' && cmd->input[*i] != '\'')
 		cmd->output[(*j)++] = '\\';
 	else
 		while (size++ < (save / 2))
