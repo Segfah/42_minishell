@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/22 16:52:30 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/24 14:43:49 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,15 +97,90 @@ void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, int key)
 	(void)tabcmd;
 }
 
+void			exit_join(char **tabin, char **tabout)
+{
+	int i;
+	int j;
+
+	i = 1;
+	j = 2;
+	write(1, "minishell: ", 11);
+	while (tabin[j] && tabout[i] && ft_strcmp(tabin[j], " "))
+	{
+		write(1, tabout[i], ft_strlen(tabout[i]));
+		j++;
+		i++;
+	}
+	write(1, ": numeric argument required\n", 28);
+	
+}
+
+int	ft_intlen(int n)
+{
+	int		len;
+
+	if (n == 2147482647)
+		return (11);
+	len = 0;
+	if (n == 0)
+		return (1);
+	if (n < 0)
+	{
+		n = -n;
+		len++;
+	}
+	while (n)
+	{
+		n /= 10;
+		len++;
+	}
+	return (len);
+}
+
+void			exit_arg(char **strcmd, int key)
+{
+	if (strcmd[2])
+	{
+		g_ret = 1;
+		write(1, "minishell: exit: too many arguments\n", 36);
+	}
+	else
+	{
+		g_ret = ft_atoi((const char*)strcmd[1]);
+		printf("g_ret = [%d]\n", g_ret);
+		write(1, "exit\n", 5);
+		exit(g_ret);
+	}
+	(void)key;
+}
+
+void			gestion_exit(char **strcmd, t_temp *tmp, int key)
+{
+	if (!strcmd[1])
+	{
+		write(1, "exit\n", 5);
+		exit (0);
+	}
+	else
+	{
+		if (ft_intlen(ft_atoi(strcmd[1])) == (int)ft_strlen(strcmd[1]))
+			exit_arg(strcmd, key);
+		else
+		{
+			g_ret = 255;
+			exit_join(tmp->cpytab, tmp->strcmd);
+			exit(g_ret);
+		}
+	}
+	(void)key;
+}
+
 void			launcher_cmd(char *tabcmd, t_temp *tmp, int j, int key)
 {
 	if (tabcmd[0] == 0 || j == -2 || tmp->flag[1] == -1 || tmp->flag[2] == -1)
 		return ;
 	else if (j == 1)
-	{
-		write(1, "exit\n", 5);
-		exit(0);
-	}
+		gestion_exit(tmp->strcmd, tmp, key);
 	else if (j == 2)
 		gestion_cd(tmp->strcmd, tmp, key);
 	else if (j == 3)
