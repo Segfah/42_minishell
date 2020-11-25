@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 14:06:11 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/24 11:37:01 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/25 11:45:35 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,11 @@ void	dcote_cmd_2(t_cmd *cmd, t_lists *revar, int size)
 		dcote_cmd_3(cmd, revar, &i, &j);
 		if (cmd->input[i] && i < len && cmd->input[i] != '\\' &&
 			cmd->input[i] != '$')
+		{
+			printf("B char input[%d] = [%c --- char output[%d] = [%c]\n", i, cmd->input[i], j, cmd->output[j]);
 			cmd->output[j++] = cmd->input[i++];
+			printf("A char input[%d] = [%c --- char output[%d] = [%c]\n", i, cmd->input[i], j - 1, cmd->output[j - 1]);
+		}
 	}
 	cmd->output[j] = '\0';
 }
@@ -57,6 +61,7 @@ void	dcote_cmd(t_cmd *cmd, t_lists *var)
 	int		len;
 	t_lists	*revar;
 
+	printf("-------------------------\n");
 	i = 1;
 	size = 0;
 	revar = var;
@@ -68,8 +73,14 @@ void	dcote_cmd(t_cmd *cmd, t_lists *var)
 		if (cmd->input[i] == '\\')
 			dcote_count_slash(cmd, &i, &size);
 		if (cmd->input[i] != '\\' && cmd->input[i] != '$')
+		{
+			printf("B char input[%d] = [%c] ----- size = [%d]\n", i, cmd->input[i], size);
 			size++;
-		i++;
+			i++;
+			printf("A char input[%d] = [%c] ----- size = [%d]\n", i, cmd->input[i], size);
+		}
+		printf("\t\tTOUR\n");
 	}
+	printf("size FINAL = [%d]\n", size);
 	dcote_cmd_2(cmd, revar, size);
 }
