@@ -11,6 +11,9 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <sys/types.h>
+       #include <sys/stat.h>
+       #include <unistd.h>
 
 int				command_bin_2(char **tab_env, char **tab, t_temp *tmp, int key)
 {
@@ -26,6 +29,20 @@ int				command_bin_2(char **tab_env, char **tab, t_temp *tmp, int key)
 	}
 	if (!tmp->tabpath)
 	{
+		struct stat sb;
+		stat(tab[0], &sb);
+/* 		if (stat(tab[0], &sb) == -1)
+		{
+			perror("statssss");
+			exit(0);
+		} */
+		if (sb.st_mode & S_IFDIR)
+		{
+			if (key == 1)
+				exit(16);
+			ft_printf("minishell: %s: is a directory\n", tab[0]);
+			exit(33);
+		}
 		if (execve(tab[0], tab, tab_env) == -1)
 		{
 			if (key == 1)
