@@ -6,7 +6,7 @@
 #    By: lryst <lryst@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 05:41:03 by corozco           #+#    #+#              #
-#    Updated: 2020/11/23 09:56:33 by lryst            ###   ########.fr        #
+#    Updated: 2020/11/25 14:42:11 by lryst            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -143,7 +143,7 @@ cs: $(OBJS)
 	@echo 'sanitize' "$(WARN_COLOR)\t $(NAME)\t$(OK_COLOR)[CREATED]$(NO_COLOR)";
 
 leaks:
-	leaks minishell
+	leaks $(NAME)
 
 norme:
 	@~/.norminette/norminette.rb libft/srcs libft/includes includes srcs/
