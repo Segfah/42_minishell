@@ -296,8 +296,8 @@ void			pparent_errors(int status, t_temp *tmp, int *k)
 //		, tmp->outpipe[*k][1]);
 //	if (WEXITSTATUS(status) == 19)
 //		ft_printf("env: %s: No such file or directory\n", tmp->outpipe[*k][1]);
-	if (WEXITSTATUS(status) == 20)
-		check_export("export", tmp->outpipe[*k]);
+//	if (WEXITSTATUS(status) == 20)
+//		check_export("export", tmp->outpipe[*k]);
 	if (WEXITSTATUS(status) == 21)
 		ft_printf("minishell: [: missing `]'\n");
 	if (WEXITSTATUS(status) == 22)

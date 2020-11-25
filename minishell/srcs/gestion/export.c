@@ -61,13 +61,12 @@ void			general_free(t_temp *tmp)
 
 }
 
-int				export_arg(t_temp *tmp, int ret, int i, int key)
+int				export_arg(t_temp *tmp, int ret, int i)
 {
 	if ((ret = ft_cortar(tmp->tab, tmp->strcmd[i])) == -2)
 	{
 		g_ret = 1;
-		key ? ft_nb_exit(20) : 0;
-		ft_printf("minishell: export: `%s': not a valid identifier\n",
+		ft_fprintf(2, "minishell: export: `%s': not a valid identifier\n",
 			tmp->strcmd[i]);
 		return (0);
 	}
@@ -126,7 +125,7 @@ void			gestion_export(t_temp *tmp, int i, int key)
 	{
 		while (tmp->strcmd[++i])
 		{
-			(export_arg(tmp, 0, i, key) == -1) ? general_free(tmp) : 0;
+			(export_arg(tmp, 0, i) == -1) ? general_free(tmp) : 0;
 			free_export_tab(tmp);
 		}
 	}
