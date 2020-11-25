@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/11/23 09:57:16 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/26 00:47:34 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -361,7 +361,7 @@ char				*ft_newstring(size_t i);
 char				*ft_strjoinfree(char *s1, char *s2);
 void				dup_or_not(t_temp *tmp);
 int					ft_check_option_echo(char *s);
-int					echo_cote_space(t_temp *tmp, int key);
+int					echo_cote_space(t_temp *tmp);
 int					check_multi_options(t_temp *tmp, int *i, int *n);
 
 void				sighandler(int signum);
