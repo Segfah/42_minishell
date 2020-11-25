@@ -34,9 +34,7 @@ void			print_list(t_lists *head, int key)
 			if (tmp->data == NULL)
 				write(1, "\n", 1);
 			else
-			{
 				ft_printf("=\"%s\"\n", tmp->data);
-			}
 		}
 		tmp = tmp->next;
 	}
