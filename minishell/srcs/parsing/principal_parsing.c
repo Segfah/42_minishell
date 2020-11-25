@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/25 19:48:47 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/26 00:21:12 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,8 @@ int	ft_intlen(int n)
 
 void			exit_arg(char **strcmd, int key)
 {
+	key = 1;
+	key ? ft_nb_exit(13) : 0;
 	if (strcmd[2])
 	{
 		g_ret = 1;
@@ -158,7 +160,6 @@ void			exit_arg(char **strcmd, int key)
 	}
 }
 
-//&& (tmp->cpytab[3] == NULL || !ft_strcmp(tmp->cpytab[3], " "))
 void			gestion_exit(char **strcmd, t_temp *tmp, int key)
 {
 	if (!strcmd[1] && !key)
@@ -169,10 +170,15 @@ void			gestion_exit(char **strcmd, t_temp *tmp, int key)
 	}
 	else
 	{
-		if (ft_intlen(ft_atoi(strcmd[1])) == (int)ft_strlen(strcmd[1]))
+		if (ft_intlen(ft_atoi(strcmd[1])) == (int)ft_strlen(strcmd[1]) &&
+		(tmp->cpytab[3] == NULL || !ft_strcmp(tmp->cpytab[3], " ")))
+		{ 
+			key ? ft_nb_exit(45) : 0;
 			exit_arg(strcmd, key);
+		}
 		else
 		{
+			key ? ft_nb_exit(13) : 0;
 			g_ret = 255;
 			exit_join(tmp->cpytab, tmp->strcmd);
 			exit(g_ret);
