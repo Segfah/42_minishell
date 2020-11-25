@@ -107,7 +107,7 @@ void			gestion_export_2(t_temp *tmp)
 	(tmp->flag[1] == 1) ? dup2(tmp->oldfd, 1) : 0;
 }
 
-void			gestion_export(t_temp *tmp, int i, int key)
+void			gestion_export(t_temp *tmp, int i)
 {
 	g_ret = 0;
 	while (tmp->strcmd[i])

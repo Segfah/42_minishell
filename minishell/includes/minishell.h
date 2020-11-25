@@ -138,7 +138,7 @@ void				gestion_env(char **strcmd, t_temp *tmp);
 /*
 ** gestion/export
 */
-void				gestion_export(t_temp *tmp, int i, int key);
+void				gestion_export(t_temp *tmp, int i);
 
 /*
 ** gestion/pwd
@@ -148,7 +148,7 @@ void				gestion_pwd(char **strcmd, t_temp *tmp);
 /*
 ** gestion/unset
 */
-void				gestion_unset(t_temp *tmp, int key);
+void				gestion_unset(t_temp *tmp);
 
 /*
 ** **************************gestion/tools*********************************

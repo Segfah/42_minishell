@@ -80,7 +80,7 @@ void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, int key)
 	if (j == 10)
 		gestion_missing(tmp, key);
 	else if (j == 7)
-		gestion_unset(tmp, key);
+		gestion_unset(tmp);
 	else if (j == 8)
 		gestion_echo(tmp, key);
 	else if (j == 9 && command_bin(tmp->strcmd, tmp, key) == 0)
@@ -201,7 +201,7 @@ void			launcher_cmd(char *tabcmd, t_temp *tmp, int j, int key)
 	else if (j == 5)
 		gestion_nani(tmp->strcmd);
 	else if (j == 6)
-		gestion_export(tmp, 0, key);
+		gestion_export(tmp, 0);
 	else
 		launcher_cmd2(tabcmd, tmp, j, key);
 }
@@ -300,8 +300,8 @@ void			pparent_errors(int status, t_temp *tmp, int *k)
 //		check_export("export", tmp->outpipe[*k]);
 	if (WEXITSTATUS(status) == 21)
 		ft_printf("minishell: [: missing `]'\n");
-	if (WEXITSTATUS(status) == 22)
-		check_export("unset", tmp->outpipe[*k]);
+//	if (WEXITSTATUS(status) == 22)
+//		check_export("unset", tmp->outpipe[*k]);
 	if (WEXITSTATUS(status) == 23)
 		ft_printf("minishell: syntax error near unexpected token `%s'\n"
 		, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
