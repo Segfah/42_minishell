@@ -84,11 +84,15 @@ int				command_bin(char **tab, t_temp *tmp, int key)
 		command_bin_2(tab_env, tab, tmp, key);
 	else
 	{
+		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, sighandlerrr2);
-		signal(SIGINT, sighandlerrr);
+//		signal(SIGINT, sighandlerrr);
 	}
 	if ((f = waitpid(f, &tmp->status, WUNTRACED | WCONTINUED)) == -1)
 		exit(1);
+	if (WIFSIGNALED(tmp->status))
+		ft_printf("\n");
+	signal(SIGINT, sighandlerrr);
 	ft_free_tab(tab_env);
 	if (WIFEXITED(tmp->status))
 		command_bin_3(tmp);
