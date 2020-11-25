@@ -37,18 +37,28 @@ int				ft_cortar(char *tab[2], char *str)
 	}
 	return (0);
 }
-
+/*
+** liste -> tmp->varenv
+** char* tmp->hnull
+** char* tmp->prompt
+*/
 void			general_free(t_temp *tmp)
 {
+	(!tmp->varenv) ? free_list(tmp->varenv) : 0;
+	(!tmp->hnull) ? ft_free(tmp->hnull) : 0;
+	(!tmp->prompt) ? ft_free(tmp->prompt) : 0;
+	(!tmp->env) ? ft_free(tmp->env) : 0;
+	(!tmp->tabcmd) ? ft_free(tmp->tabcmd) : 0;
+	write(2, "Error: Malloc\n", 14);
+	exit(1);
 	ft_free(tmp->env);
-	ft_free(tmp->prompt);
 	ft_free(tmp->tab[0]);
 	ft_free(tmp->tab[1]);
-	(tmp->varenv != NULL) ? free_list(tmp->varenv) : 0;
+	
 	(tmp->exportenv != NULL) ? free_list(tmp->exportenv) : 0;
-	ft_free(tmp->hnull);
-	ft_printf("Error: Malloc\n");
-	exit(1);
+	
+
+
 }
 
 int				export_arg(t_temp *tmp, int ret, int i, int key)
