@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/24 16:15:33 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/25 19:24:09 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,13 @@ void			point_filename(char **tab, int key)
 	if (i > 1)
 	{
 		key ? ft_nb_exit(13) : 0;
-		write(1, "minishell: Permission denied\n", 29);
+		write(2, "minishell: Permission denied\n", 29);
 	}
 	else
 	{
 		key ? ft_nb_exit(26) : 0;
-		write(1, "minishell: .: filename argument required\n", 41);
-		write(1, ".: usage: . filename [arguments]\n", 33);
+		write(2, "minishell: .: filename argument required\n", 41);
+		write(2, ".: usage: . filename [arguments]\n", 33);
 	}
 }
 
@@ -104,15 +104,17 @@ void			exit_join(char **tabin, char **tabout)
 
 	i = 1;
 	j = 2;
+	
+	//key ? ft_nb_exit(46) : 0;
 	write(1, "exit\n", 5);
-	write(1, "minishell: exit: ", 17);
+	write(2, "minishell: exit: ", 17);
 	while (tabin[j] && tabout[i] && ft_strcmp(tabin[j], " "))
 	{
-		write(1, tabout[i], ft_strlen(tabout[i]));
+		write(2, tabout[i], ft_strlen(tabout[i]));
 		j++;
 		i++;
 	}
-	write(1, ": numeric argument required\n", 28);
+	write(2, ": numeric argument required\n", 28);
 	
 }
 
@@ -140,10 +142,15 @@ int	ft_intlen(int n)
 
 void			exit_arg(char **strcmd, int key)
 {
+	key = 1;
+	key ? ft_nb_exit(13) : 0;
 	if (strcmd[2])
 	{
 		g_ret = 1;
-		write(1, "minishell: exit: too many arguments\n", 36);
+		if (!key)
+			write(1, "exit\n", 5);
+		key ? ft_nb_exit(45) : 0;
+		write(2, "minishell: exit: too many arguments\n", 36);
 	}
 	else
 	{
@@ -151,29 +158,32 @@ void			exit_arg(char **strcmd, int key)
 		write(1, "exit\n", 5);
 		exit(g_ret);
 	}
-	(void)key;
 }
 
 void			gestion_exit(char **strcmd, t_temp *tmp, int key)
 {
-	if (!strcmd[1])
+	if (!strcmd[1] && !key)
 	{
+		g_ret = 0;
 		write(1, "exit\n", 5);
-		exit (0);
+		exit (g_ret);
 	}
 	else
 	{
 		if (ft_intlen(ft_atoi(strcmd[1])) == (int)ft_strlen(strcmd[1]) &&
 		(tmp->cpytab[3] == NULL || !ft_strcmp(tmp->cpytab[3], " ")))
+		{ 
+			key ? ft_nb_exit(45) : 0;
 			exit_arg(strcmd, key);
+		}
 		else
 		{
+			key ? ft_nb_exit(13) : 0;
 			g_ret = 255;
 			exit_join(tmp->cpytab, tmp->strcmd);
 			exit(g_ret);
 		}
 	}
-	(void)key;
 }
 
 void			launcher_cmd(char *tabcmd, t_temp *tmp, int j, int key)
@@ -311,14 +321,15 @@ void			pparent(pid_t pid, t_temp *tmp, int *k)
 	{
 		pparent_errors(status, tmp, k);
 		if (WEXITSTATUS(status) == 25)
-			ft_printf("minishell: %s: is a directory\n");
+			ft_printf("minishell: %s: Is a directory\n"
+			, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
 		if (WEXITSTATUS(status) == 27)
 			ft_printf("minishell: %s:  No such file or directory\n"
 			, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
 		if (WEXITSTATUS(status) == 26)
 		{
-			write(1, "minishell: .: filename argument required\n", 41);
-			write(1, ".: usage: . filename [arguments]\n", 33);
+			write(2, "minishell: .: filename argument required\n", 41);
+			write(2, ".: usage: . filename [arguments]\n", 33);
 		}
 		if (WEXITSTATUS(status) == 13)
 			ft_printf("minishell: %s: Permission denied\n"
@@ -326,6 +337,10 @@ void			pparent(pid_t pid, t_temp *tmp, int *k)
 		if (WEXITSTATUS(status) == 2)
 			ft_printf("minishell: %s: No such file or directory\n"
 			, tmp->outpipe[*k][0]);
+		if (WEXITSTATUS(status) == 45)
+			write(2, "minishell: exit: too many arguments\n", 36);
+		if (WEXITSTATUS(status) == 46)
+			;
 	}
 	(*k)++;
 }

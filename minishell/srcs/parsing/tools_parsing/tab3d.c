@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 16:54:13 by corozco           #+#    #+#             */
-/*   Updated: 2020/11/23 09:54:05 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/25 18:49:54 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ int				tab2_3d(t_cmd *cmd, t_temp *tmp, int i)
 int				print_error(int ret)
 {
 	if (ret == -1 || ret == -2)
-		write(1, "minishell: syntax error near unexpected token `|'\n", 50);
+		write(2, "minishell: syntax error near unexpected token `|'\n", 50);
 	if (ret == -3)
-		write(1, "error multi ligne\n", 18);
+		write(2, "error multi ligne\n", 18);
 	return (-1);
 }
 

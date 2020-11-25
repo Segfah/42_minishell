@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 22:10:58 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/19 11:55:44 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/25 18:49:08 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void			gestion_cd_2(char *home, t_temp *tmp, int key)
 	else
 	{
 		key ? ft_nb_exit(17) : 0;
-		(g_ret = 1) ? write(1, "minishell: cd: HOME not set\n", 28) : 0;
+		(g_ret = 1) ? write(2, "minishell: cd: HOME not set\n", 28) : 0;
 	}
 	home ? ft_free(home) : 0;
 }

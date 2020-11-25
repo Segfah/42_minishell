@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 16:58:48 by corozco           #+#    #+#             */
-/*   Updated: 2020/11/20 14:47:38 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/25 17:23:29 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		simple_redi(char *path, t_temp *tmp, int key)
 			O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) == -1)
 	{
 		key ? ft_nb_exit(25) : 0;
-		ft_printf("minishell: %s: %s\n", strerror(errno), path);
+		ft_printf("minishell: %s: %s\n", path, strerror(errno));
 		return (-1);
 	}
 	return (0);
@@ -39,7 +39,7 @@ int		double_redi(char *path, t_temp *tmp, int key)
 	if ((tmp->fd = open(path, O_APPEND | O_WRONLY | O_CREAT, 0644)) == -1)
 	{
 		key ? ft_nb_exit(25) : 0;
-		ft_printf("minishell: %s: %s\n", strerror(errno), path);
+		ft_printf("minishell: %s: %s\n", path, strerror(errno));
 		return (-1);
 	}
 	return (0);
@@ -52,7 +52,7 @@ int		contre_redi(char *path, t_temp *tmp, int key)
 	if ((tmp->fdi = open(path, O_RDONLY)) == -1)
 	{
 		key ? ft_nb_exit(27) : 0;
-		ft_printf("minishell: %s: %s\n", strerror(errno), path);
+		ft_printf("minishell: %s: %s\n", path, strerror(errno));
 		return (-1);
 	}
 	return (0);

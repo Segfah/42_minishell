@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/01 20:49:55 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/15 21:08:51 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/25 18:50:07 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 int				message_error_pv(int pv)
 {
 	if (pv == 1)
-		write(1, "minishell: syntax error near unexpected token ';'\n", 50);
+		write(2, "minishell: syntax error near unexpected token ';'\n", 50);
 	if (pv == 2)
-		write(1, "minishell: syntax error near unexpected token ';;'\n", 51);
+		write(2, "minishell: syntax error near unexpected token ';;'\n", 51);
 	return (0);
 }
 

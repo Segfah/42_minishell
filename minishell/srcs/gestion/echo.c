@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 17:27:31 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/22 19:29:34 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/25 18:49:23 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ void		echo_join(char **tabin, char **tabout)
 	int i;
 
 	i = 0;
-	write(1, "minishell: ", 11);
+	write(2, "minishell: ", 11);
 	while (tabin[i] && tabout[i] && ft_strcmp(tabin[i], " "))
 	{
-		write(1, tabout[i], ft_strlen(tabout[i]));
+		write(2, tabout[i], ft_strlen(tabout[i]));
 		i++;
 	}
-	write(1, ": command not found\n", 20);
+	write(2, ": command not found\n", 20);
 }
 
 void		gestion_echo_2(t_temp *tmp, int n, int i)
