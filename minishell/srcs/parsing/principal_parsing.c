@@ -193,9 +193,9 @@ void			launcher_cmd(char *tabcmd, t_temp *tmp, int j, int key)
 	else if (j == 1)
 		gestion_exit(tmp->strcmd, tmp, key);
 	else if (j == 2)
-		gestion_cd(tmp->strcmd, tmp, key);
+		gestion_cd(tmp->strcmd, tmp);
 	else if (j == 3)
-		gestion_env(tmp->strcmd, tmp, key);
+		gestion_env(tmp->strcmd, tmp);
 	else if (j == 4)
 		gestion_pwd(tmp->strcmd, tmp);
 	else if (j == 5)
@@ -289,13 +289,13 @@ void			pparent_errors(int status, t_temp *tmp, int *k)
 		ft_printf("minishell: command not found: %s\n", tmp->outpipe[*k][0]);
 	if (WEXITSTATUS(status) == 16)
 		ft_printf("minishell: /: is a directory\n");
-	if (WEXITSTATUS(status) == 17)
-		ft_printf("minishell: cd: HOME not set\n");
-	if (WEXITSTATUS(status) == 18)
-		ft_printf("minishell: cd: %s: No such file or directory\n"
-		, tmp->outpipe[*k][1]);
-	if (WEXITSTATUS(status) == 19)
-		ft_printf("env: %s: No such file or directory\n", tmp->outpipe[*k][1]);
+//	if (WEXITSTATUS(status) == 17)
+//		ft_printf("minishell: cd: HOME not set\n");
+//	if (WEXITSTATUS(status) == 18)
+//		ft_printf("minishell: cd: %s: No such file or directory\n"
+//		, tmp->outpipe[*k][1]);
+//	if (WEXITSTATUS(status) == 19)
+//		ft_printf("env: %s: No such file or directory\n", tmp->outpipe[*k][1]);
 	if (WEXITSTATUS(status) == 20)
 		check_export("export", tmp->outpipe[*k]);
 	if (WEXITSTATUS(status) == 21)

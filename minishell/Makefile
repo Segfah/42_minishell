@@ -11,7 +11,8 @@
 # **************************************************************************** #
 
 NAME = the_big_minishell
-HEAD := -I./includes/ -I./libft/includes
+#HEAD := -I./includes/ -I./libft/includes
+HEAD := -I./includes/ -I./libft/includes -I./prinf/includes
 
 CFLAGS = -Wall -Wextra -Werror
 CFLAGSF = -g3 -fsanitize=address -Wall -Wextra -Werror
@@ -103,11 +104,11 @@ endef
 
 
 all: $(NAME)
-
+#@gcc $(CFLAGS) $(HEAD) $(OBJS) -o $(NAME) -L./libft -lft
 $(NAME): $(OBJS)
 	@make -sC ./libft
 	@echo ''
-	@gcc $(CFLAGS) $(HEAD) $(OBJS) -o $(NAME) -L./libft -lft
+	@gcc $(CFLAGS) $(HEAD) $(OBJS) -o $(NAME) -L./libft -lft -L./prinf -lpf
 	@echo '	 '
 	@echo '	......( \_/ ) '
 	@echo '	......( o_o ) '

@@ -20,6 +20,7 @@
 # include <string.h>
 # include <errno.h>
 # include "libft.h"
+# include "ft_pf.h" //ici c'est notre ft_fprintf
 # include <fcntl.h>
 # include <sys/stat.h>
 
@@ -127,13 +128,13 @@ void				clean_tab2d(char **tabin, char **tabout);
 /*
 ** gestion/cd
 */
-void				gestion_cd(char **strcmd, t_temp *tmp, int key);
+void				gestion_cd(char **strcmd, t_temp *tmp);
 
 /*
 ** env.c
 */
 int					save_env(t_lists **head, char **envp);
-void				gestion_env(char **strcmd, t_temp *tmp, int key);
+void				gestion_env(char **strcmd, t_temp *tmp);
 /*
 ** gestion/export
 */
@@ -342,7 +343,7 @@ int					command_bin_2(char **tab_env, char **tab
 void				command_bin_3(t_temp *tmp);
 void				free_export_tab(t_temp *tmp);
 char				*cp_str_2(int size, char *tmp_str, char *str);
-void				gestion_cd_2(char *home, t_temp *tmp, int key);
+void				gestion_cd_2(char *home, t_temp *tmp);
 int					check_echo_2(int *check, int *i, char c, char *s);
 void				tilde(t_cmd *cmd, t_temp *tmp);
 int					check_redi_2(char **cmd, int key);

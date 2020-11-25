@@ -55,7 +55,7 @@ int				save_env(t_lists **head, char **envp)
 	return (0);
 }
 
-void			gestion_env(char **strcmd, t_temp *tmp, int key)
+void			gestion_env(char **strcmd, t_temp *tmp)
 {
 	g_ret = 0;
 	if (!strcmd[1])
@@ -72,7 +72,7 @@ void			gestion_env(char **strcmd, t_temp *tmp, int key)
 	else
 	{
 		g_ret = 127;
-		key ? ft_nb_exit(19) : 0;
-		ft_printf("env: %s: No such file or directory\n", strcmd[1]);
+//		key ? ft_nb_exit(19) : 0;
+		ft_fprintf(2, "env: %s: No such file or directory\n", strcmd[1]);
 	}
 }
