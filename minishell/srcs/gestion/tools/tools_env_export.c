@@ -30,13 +30,12 @@ void			print_list(t_lists *head, int key)
 		}
 		else
 		{
-			ft_printf("%s=", tmp->name);
+			ft_printf("declare -x %s", tmp->name);
 			if (tmp->data == NULL)
-				write(1, "''\n", 3);
+				write(1, "\n", 1);
 			else
 			{
-				(tmp->data[0] != 0 && tmp->data != NULL) ?
-					ft_printf("%s\n", tmp->data) : write(1, "''\n", 3);
+				ft_printf("=\"%s\"\n", tmp->data);
 			}
 		}
 		tmp = tmp->next;
