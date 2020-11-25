@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 19:21:16 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/22 19:32:58 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/26 00:47:20 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int			ft_check_option_echo(char *s)
 	return (0);
 }
 
-int			echo_cote_space(t_temp *tmp, int key)
+int			echo_cote_space(t_temp *tmp)
 {
 	int		i;
 	int		count;
@@ -58,8 +58,7 @@ int			echo_cote_space(t_temp *tmp, int key)
 		str = ft_strjoinfree(str, tmp->strcmd[count]);
 		count++;
 	}
-	key ? ft_nb_exit(28) : 0;
-	ft_printf("minishell: %s: command not found\n", str);
+	ft_fprintf(2, "minishell: %s: command not found\n", str);
 	ft_free(str);
 	return (0);
 }
