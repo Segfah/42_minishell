@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/01 22:57:34 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/19 12:30:51 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/25 15:18:53 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,11 @@ void	dollar_cmd(t_cmd *cmd, t_lists *var)
 
 	i = 0;
 	j = 0;
+	if (ft_strcmp(cmd->input, "$\0") == 0)
+	{
+		cmd->output = ft_strdup(cmd->input);
+		return ;
+	}
 	if (ft_strcmp(cmd->input, "$?") == 0)
 	{
 		cmd->output = ft_itoa(g_ret);
@@ -94,11 +99,6 @@ void	dollar_cmd(t_cmd *cmd, t_lists *var)
 	if (save[j] == '\'')
 	{
 		is_slash(cmd, &j, &i, save);
-		return ;
-	}
-	if (ft_strcmp(cmd->input, "$\0") == 0)
-	{
-		cmd->output = ft_strdup(cmd->input);
 		return ;
 	}
 	browse_list(cmd, save, var);
