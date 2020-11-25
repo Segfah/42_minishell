@@ -67,12 +67,12 @@ int				launch_main(t_temp *tmp, int ac, char **av, char **envp)
 		if (search_env("HOME", tmp, 1, NULL) == 1)
 		{
 			if (search_env("HOME", tmp, 0, &tmp->hnull) == -1)
-				return (1);
+				return (-1);
 		}
 		else
 		{
 			if (!(tmp->hnull = ft_strdup("/")))
-				return (1);
+				return (-1);
 		}
 	}
 	return (0);
@@ -85,7 +85,8 @@ int				main(int ac, char **av, char **envp)
 	if (ac < 2)
 	{
 		welcome();
-		launch_main(&tmp, ac, av, envp);
+		if (launch_main(&tmp, ac, av, envp) == -1)
+			return (-1);
 		launcher(tmp, ac, NULL);
 		free_list(tmp.varenv);
 		free(tmp.hnull);

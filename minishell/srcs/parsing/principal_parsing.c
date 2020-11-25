@@ -458,6 +458,11 @@ int				ft_getline(t_temp *tmp, char **av, int ret)
 		if ((ret = ft_gnl(0, &line)) == -1
 			|| (tmp->tabcmd = ft_split_line(line)) == NULL)
 			general_free(tmp);
+//	general_free(tmp);
+/*
+**	1) il faut regarder ft_split_line
+**	2) enlever le int de ft_getline ça ne sert à rien
+*/
 		if (ret == 0)
 			return (0);
 		if (tmp->tabcmd != NULL && tmp->tabcmd[0])

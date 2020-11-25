@@ -75,6 +75,7 @@ typedef struct		s_cmd
 }					t_cmd;
 
 int					g_ret;
+int					g_malloc;
 
 void				general_free(t_temp *tmp);
 /*
