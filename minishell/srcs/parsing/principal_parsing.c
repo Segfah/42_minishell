@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/26 01:03:03 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/26 01:10:49 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,20 +313,20 @@ void			pparent(pid_t pid, t_temp *tmp, int *k)
 	if (WIFEXITED(status))
 	{
 		pparent_errors(status, tmp, k);
-		if (WEXITSTATUS(status) == 25)
-			ft_printf("minishell: %s: Is a directory\n"
-			, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
-		if (WEXITSTATUS(status) == 27)
-			ft_printf("minishell: %s:  No such file or directory\n"
-			, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
 		//if (WEXITSTATUS(status) == 26)
 		//{
 		//	write(2, "minishell: .: filename argument required\n", 41);
 		//	write(2, ".: usage: . filename [arguments]\n", 33);
-		//}
-		//if (WEXITSTATUS(status) == 13)
-		//	ft_printf("minishell: %s: Permission denied\n"
-		//	, tmp->outpipe[*k][0]);
+		//
+//		if (WEXITSTATUS(status) == 25)
+//			ft_printf("minishell: %s: Is a directory\n"
+//			, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
+//		if (WEXITSTATUS(status) == 27)
+//			ft_printf("minishell: %s:  No such file or directory\n"
+//			, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
+		if (WEXITSTATUS(status) == 13)
+			ft_printf("minishell: %s: Permission denied\n"
+			, tmp->outpipe[*k][0]);
 		if (WEXITSTATUS(status) == 2)
 			ft_printf("minishell: %s: No such file or directory\n"
 			, tmp->outpipe[*k][0]);

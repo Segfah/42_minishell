@@ -109,9 +109,9 @@ void				skip_redi(t_temp *tmp, int i);
 ** parsing/tools/open_rediction
 */
 int					is_redi(char *str);
-int					simple_redi(char *path, t_temp *tmp, int key);
-int					double_redi(char *path, t_temp *tmp, int key);
-int					contre_redi(char *path, t_temp *tmp, int key);
+int					simple_redi(char *path, t_temp *tmp);
+int					double_redi(char *path, t_temp *tmp);
+int					contre_redi(char *path, t_temp *tmp);
 
 /*
 ** parsing/tools/tab3d

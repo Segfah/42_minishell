@@ -18,41 +18,38 @@ int		is_redi(char *str)
 		|| !(ft_strcmp("<", str)));
 }
 
-int		simple_redi(char *path, t_temp *tmp, int key)
+int		simple_redi(char *path, t_temp *tmp)
 {
 	(tmp->fd > 0) ? close(tmp->fd) : 0;
 	tmp->fd = 0;
 	if ((tmp->fd = open(path, O_RDWR | O_TRUNC |
 			O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) == -1)
 	{
-		key ? ft_nb_exit(25) : 0;
-		ft_printf("minishell: %s: %s\n", path, strerror(errno));
+		ft_fprintf(2, "minishell: %s: %s\n", path, strerror(errno));
 		return (-1);
 	}
 	return (0);
 }
 
-int		double_redi(char *path, t_temp *tmp, int key)
+int		double_redi(char *path, t_temp *tmp)
 {
 	(tmp->fd > 0) ? close(tmp->fd) : 0;
 	tmp->fd = 0;
 	if ((tmp->fd = open(path, O_APPEND | O_WRONLY | O_CREAT, 0644)) == -1)
 	{
-		key ? ft_nb_exit(25) : 0;
-		ft_printf("minishell: %s: %s\n", path, strerror(errno));
+		ft_fprintf(2, "minishell: %s: %s\n", path, strerror(errno));
 		return (-1);
 	}
 	return (0);
 }
 
-int		contre_redi(char *path, t_temp *tmp, int key)
+int		contre_redi(char *path, t_temp *tmp)
 {
 	(tmp->fdi > 0) ? close(tmp->fdi) : 0;
 	tmp->fdi = 0;
 	if ((tmp->fdi = open(path, O_RDONLY)) == -1)
 	{
-		key ? ft_nb_exit(27) : 0;
-		ft_printf("minishell: %s: %s\n", path, strerror(errno));
+		ft_fprintf(2, "minishell: %s: %s\n", path, strerror(errno));
 		return (-1);
 	}
 	return (0);
