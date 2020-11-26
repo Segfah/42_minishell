@@ -274,10 +274,10 @@ int				error_line(char **tabcmd, t_temp *tmp, int i)
 	return (0);
 }
 
-void			pparent_errors(int status, t_temp *tmp, int *k)
-{
-	if (WEXITSTATUS(status) == 15)
-		ft_printf("minishell: command not found: %s\n", tmp->outpipe[*k][0]);
+//void			pparent_errors(int status, t_temp *tmp, int *k)
+//{
+//	if (WEXITSTATUS(status) == 15)
+//		ft_printf("minishell: command not found: %s\n", tmp->outpipe[*k][0]);
 //	if (WEXITSTATUS(status) == 16)
 //		ft_printf("minishell: /: is a directory\n");
 //	if (WEXITSTATUS(status) == 17)
@@ -298,9 +298,9 @@ void			pparent_errors(int status, t_temp *tmp, int *k)
 //		, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
 //	if (WEXITSTATUS(status) == 24)
 //		ft_printf("minishell: syntax error near unexpected token `newline'\n");
-	//if (WEXITSTATUS(status) == 28)
-		//echo_join(tmp->inpipe[*k], tmp->outpipe[*k]);
-}
+//	if (WEXITSTATUS(status) == 28)
+//		echo_join(tmp->inpipe[*k], tmp->outpipe[*k]);
+//}
 
 void			pparent(pid_t pid, t_temp *tmp, int *k)
 {
@@ -310,7 +310,7 @@ void			pparent(pid_t pid, t_temp *tmp, int *k)
 		exit(1);
 	if (WIFEXITED(status))
 	{
-		pparent_errors(status, tmp, k);
+//		pparent_errors(status, tmp, k);
 		//if (WEXITSTATUS(status) == 26)
 		//{
 		//	write(2, "minishell: .: filename argument required\n", 41);
@@ -334,6 +334,7 @@ void			pparent(pid_t pid, t_temp *tmp, int *k)
 //			;
 	}
 	(*k)++;
+	(void)tmp;
 }
 
 void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
