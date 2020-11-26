@@ -84,8 +84,6 @@ void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, int key)
 	else
 	{
 		g_ret = 127;
-	//	if (key == 1)
-	//		exit(28);
 		echo_join(tmp->cpytab, tmp->strcmd);
 	}
 	(void)key;
@@ -142,7 +140,6 @@ void			exit_arg(char **strcmd, int key)
 		g_ret = 1;
 		if (!key)
 			write(1, "exit\n", 5);
-//		key ? ft_nb_exit(45) : 0;
 		write(2, "minishell: exit: too many arguments\n", 36);
 	}
 	else
@@ -165,10 +162,7 @@ void			gestion_exit(char **strcmd, t_temp *tmp, int key)
 	{
 		if (ft_intlen(ft_atoi(strcmd[1])) == (int)ft_strlen(strcmd[1]) &&
 		(tmp->cpytab[3] == NULL || !ft_strcmp(tmp->cpytab[3], " ")))
-		{ 
-//			key ? ft_nb_exit(45) : 0;
 			exit_arg(strcmd, key);
-		}
 		else
 		{
 			g_ret = 255;
@@ -198,35 +192,18 @@ void			launcher_cmd(char *tabcmd, t_temp *tmp, int j, int key)
 		launcher_cmd2(tabcmd, tmp, j, key);
 }
 
-int				check_export(char *src, char **str) // c'est quoi cette fonction? mdr
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (check_env(str[i], 1) == -1)
-		{
-			ft_printf("minishell: %s: `%s': not a valid identifier\n"
-				, src, str[i]);
-		}
-		i++;
-	}
-	return (0);
-}
-
 void			print_error_redi(char *str, int key)
 {
 	if (key == -1)
-		ft_printf("minishell: syntax error near unexpected token `>'\n");
+		ft_fprintf(2, "minishell: syntax error near unexpected token `>'\n");
 	if (key == -2)
-		ft_printf("minishell: syntax error near unexpected token `>>'\n");
+		ft_fprintf(2, "minishell: syntax error near unexpected token `>>'\n");
 	if (key == -3)
-		ft_printf("minishell: syntax error near unexpected token `<'\n");
+		ft_fprintf(2, "minishell: syntax error near unexpected token `<'\n");
 	if (key == -4)
-		ft_printf("minishell: syntax error near unexpected token `%s'\n", str);
+		ft_fprintf(2, "minishell: syntax error near unexpected token `%s'\n", str);
 	if (key == -5)
-		ft_printf("minishell: syntax error near unexpected token `newline'\n");
+		ft_fprintf(2, "minishell: syntax error near unexpected token `newline'\n");
 }
 
 int				error_line2(t_cmd *cmd, t_temp *tmp)
@@ -299,11 +276,11 @@ void			pparent(pid_t pid, t_temp *tmp, int *k)
 			, tmp->outpipe[*k][0]);
 		if (WEXITSTATUS(status) == 2)
 			ft_printf("minishell: %s: No such file or directory\n"
-			, tmp->outpipe[*k][0]); */
+			, tmp->outpipe[*k][0]); 
 		if (WEXITSTATUS(status) == 45)
 			write(2, "minishell: exit: too many arguments\n", 36);
-//		if (WEXITSTATUS(status) == 46)
-//			;
+		if (WEXITSTATUS(status) == 46)
+			;*/
 	}
 	(*k)++;
 	(void)tmp;
