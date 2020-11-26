@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/11/26 00:47:34 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/26 00:59:28 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -371,5 +371,7 @@ void				clean_tab2d_echo_2(int k, char **tabin, char **tabout);
 int					len_tabsplit3d(t_cmd *cmd);
 int					len_error_pipe(t_cmd *tmp, int *pipe);
 int					search_error_pipe(t_cmd *tmp);
+
+void				point_filename(char **tab);
 
 #endif

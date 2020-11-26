@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/26 00:21:12 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/26 00:59:02 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void			gestion_missing(t_temp *tmp, int key)
 	ft_printf("minishell: [: missing `]'\n");
 }
 
-void			point_filename(char **tab, int key)
+void			point_filename(char **tab)
 {
 	int			i;
 
@@ -63,13 +63,9 @@ void			point_filename(char **tab, int key)
 	while (tab[i])
 		i++;
 	if (i > 1)
-	{
-		key ? ft_nb_exit(13) : 0;
 		write(2, "minishell: Permission denied\n", 29);
-	}
 	else
 	{
-		key ? ft_nb_exit(26) : 0;
 		write(2, "minishell: .: filename argument required\n", 41);
 		write(2, ".: usage: . filename [arguments]\n", 33);
 	}
@@ -142,8 +138,6 @@ int	ft_intlen(int n)
 
 void			exit_arg(char **strcmd, int key)
 {
-	key = 1;
-	key ? ft_nb_exit(13) : 0;
 	if (strcmd[2])
 	{
 		g_ret = 1;
@@ -178,7 +172,6 @@ void			gestion_exit(char **strcmd, t_temp *tmp, int key)
 		}
 		else
 		{
-			key ? ft_nb_exit(13) : 0;
 			g_ret = 255;
 			exit_join(tmp->cpytab, tmp->strcmd);
 			exit(g_ret);
@@ -307,8 +300,8 @@ void			pparent_errors(int status, t_temp *tmp, int *k)
 		, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
 	if (WEXITSTATUS(status) == 24)
 		ft_printf("minishell: syntax error near unexpected token `newline'\n");
-	if (WEXITSTATUS(status) == 28)
-		echo_join(tmp->inpipe[*k], tmp->outpipe[*k]);
+	//if (WEXITSTATUS(status) == 28)
+		//echo_join(tmp->inpipe[*k], tmp->outpipe[*k]);
 }
 
 void			pparent(pid_t pid, t_temp *tmp, int *k)
@@ -326,14 +319,14 @@ void			pparent(pid_t pid, t_temp *tmp, int *k)
 		if (WEXITSTATUS(status) == 27)
 			ft_printf("minishell: %s:  No such file or directory\n"
 			, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
-		if (WEXITSTATUS(status) == 26)
-		{
-			write(2, "minishell: .: filename argument required\n", 41);
-			write(2, ".: usage: . filename [arguments]\n", 33);
-		}
-		if (WEXITSTATUS(status) == 13)
-			ft_printf("minishell: %s: Permission denied\n"
-			, tmp->outpipe[*k][0]);
+		//if (WEXITSTATUS(status) == 26)
+		//{
+		//	write(2, "minishell: .: filename argument required\n", 41);
+		//	write(2, ".: usage: . filename [arguments]\n", 33);
+		//}
+		//if (WEXITSTATUS(status) == 13)
+		//	ft_printf("minishell: %s: Permission denied\n"
+		//	, tmp->outpipe[*k][0]);
 		if (WEXITSTATUS(status) == 2)
 			ft_printf("minishell: %s: No such file or directory\n"
 			, tmp->outpipe[*k][0]);
