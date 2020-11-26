@@ -78,7 +78,7 @@ void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, int key)
 	else if (j == 7)
 		gestion_unset(tmp);
 	else if (j == 8)
-		gestion_echo(tmp, key);
+		gestion_echo(tmp);
 	else if (j == 9 && command_bin(tmp->strcmd, tmp, key) == 0)
 		return ;
 	else if (j == 11)
@@ -295,11 +295,11 @@ void			pparent_errors(int status, t_temp *tmp, int *k)
 		ft_printf("minishell: [: missing `]'\n");
 //	if (WEXITSTATUS(status) == 22)
 //		check_export("unset", tmp->outpipe[*k]);
-	if (WEXITSTATUS(status) == 23)
-		ft_printf("minishell: syntax error near unexpected token `%s'\n"
-		, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
-	if (WEXITSTATUS(status) == 24)
-		ft_printf("minishell: syntax error near unexpected token `newline'\n");
+//	if (WEXITSTATUS(status) == 23)
+//		ft_printf("minishell: syntax error near unexpected token `%s'\n"
+//		, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
+//	if (WEXITSTATUS(status) == 24)
+//		ft_printf("minishell: syntax error near unexpected token `newline'\n");
 	//if (WEXITSTATUS(status) == 28)
 		//echo_join(tmp->inpipe[*k], tmp->outpipe[*k]);
 }
@@ -358,7 +358,7 @@ void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 			close(fd[0]);
 			tmp->strcmd = tmp->outpipe[k];
 			tmp->strcmdin = tmp->inpipe[k];
-			cmd ? check_redi(tmp->strcmdin, tmp, 1) : 0;
+			cmd ? check_redi(tmp->strcmdin, tmp) : 0;
 			((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)
 				? skip_redi(tmp, 0) : 0;
 			(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
@@ -390,7 +390,7 @@ void			npipe(char **tabcmd, t_temp *tmp, t_cmd *cmd, int i)
 	ret = (cmd) ? llist_astring(cmd, tmp) : 0;
 	if (ret == -1)
 		exit(1);
-	cmd ? check_redi(tmp->strcmdin, tmp, 0) : 0;
+	cmd ? check_redi(tmp->strcmdin, tmp) : 0;
 	((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)
 		? skip_redi(tmp, 0) : 0;
 	(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;

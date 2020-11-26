@@ -39,11 +39,11 @@ int				check_redi_flag2(char **cmd, t_temp *tmp, int *i)
 	return (0);
 }
 
-int				check_redi(char **cmd, t_temp *tmp, int key)
+int				check_redi(char **cmd, t_temp *tmp)
 {
 	int			i;
 
-	if ((i = check_redi_flag(cmd, tmp, key)) != 0)
+	if ((i = check_redi_flag(cmd, tmp)) != 0)
 		return (i);
 	i = 0;
 	while (cmd[i])

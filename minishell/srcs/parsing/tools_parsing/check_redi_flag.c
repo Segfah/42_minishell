@@ -16,45 +16,43 @@ static int		check_redi_s_error(char **cmd, t_temp *tmp, int i)
 {
 	if (search_error_redi1(cmd[i]) == -3)
 	{
-		ft_printf("minishell: syntax error near unexpected token `>'\n");
+		ft_fprintf(2, "1minishell: syntax error near unexpected token `>'\n");
 		return (tmp->flag[1] = -1);
 	}
 	if (search_error_redi1(cmd[i]) < -3)
 	{
-		ft_printf("minishell: syntax error near unexpected token `>>'\n");
+		ft_fprintf(2, "2minishell: syntax error near unexpected token `>>'\n");
 		return (tmp->flag[1] = -1);
 	}
 	if (search_error_redi2(cmd[i]) == -1)
 	{
-		ft_printf("minishell: syntax error near unexpected token `<'\n");
+		ft_fprintf(2, "3minishell: syntax error near unexpected token `<'\n");
 		return (tmp->flag[1] = -1);
 	}
 	return (0);
 }
 
-static int		check_redi_d_error(char **cmd, t_temp *tmp, int i, int key)
+static int		check_redi_d_error(char **cmd, t_temp *tmp, int i)
 {
 	if (cmd[i + 1])
 	{
 		!ft_strcmp(cmd[i + 1], " ") ? i++ : i;
 		if (cmd[i + 1] && is_redi(cmd[i + 1]))
 		{
-			key ? ft_nb_exit(23) : 0;
-			ft_printf("minishell: syntax error near unexpected token `%s'\n"
+			ft_fprintf(2, "minishell: syntax error near unexpected token `%s'\n"
 				, cmd[i + 1]);
 			return (tmp->flag[1] = -1);
 		}
 	}
 	else
 	{
-		key ? ft_nb_exit(24) : 0;
-		ft_printf("minishell: syntax error near unexpected token `newline'\n");
+		ft_fprintf(2, "minishell: syntax error near unexpected token `newline'\n");
 		return (tmp->flag[1] = -1);
 	}
 	return (0);
 }
 
-int				check_redi_flag(char **cmd, t_temp *tmp, int key)
+int				check_redi_flag(char **cmd, t_temp *tmp)
 {
 	int			i;
 
@@ -67,7 +65,7 @@ int				check_redi_flag(char **cmd, t_temp *tmp, int key)
 			return (-1);
 		if (is_redi(cmd[i]))
 		{
-			if (check_redi_d_error(cmd, tmp, i, key) != 0)
+			if (check_redi_d_error(cmd, tmp, i) != 0)
 				return (-1);
 		}
 		(cmd[i] != NULL) ? i++ : i;

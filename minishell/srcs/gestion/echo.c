@@ -38,7 +38,7 @@ void		gestion_echo_2(t_temp *tmp, int n, int i)
 		ft_printf("\n");
 }
 
-void		gestion_echo(t_temp *tmp, int key)
+void		gestion_echo(t_temp *tmp)
 {
 	int		i;
 	int		n;
@@ -46,7 +46,7 @@ void		gestion_echo(t_temp *tmp, int key)
 	i = 0;
 	n = 0;
 	dup_or_not(tmp);
-	if (echo_cote_space(tmp, key) == 0)
+	if (echo_cote_space(tmp) == 0)
 	{
 		(tmp->flag[1] == 1) ? dup2(tmp->oldfd, 1) : 0;
 		return ;

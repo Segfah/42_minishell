@@ -102,7 +102,7 @@ int					cmd_exist(char *cmd, t_temp *tmp);
 /*
 **	parsing/tools/redirection
 */
-int					check_redi(char **cmd, t_temp *tmp, int key);
+int					check_redi(char **cmd, t_temp *tmp);
 void				skip_redi(t_temp *tmp, int i);
 
 /*
@@ -198,7 +198,7 @@ char				**ft_split_strcmd(char *s, int echo);
 ** gestion/echo/echo
 */
 char				*gestion_echo_option(char *str, char *arg);
-void				gestion_echo(t_temp *tmp, int key);
+void				gestion_echo(t_temp *tmp);
 
 /*
 ** gestion/echo/ft_split_echo/count_word
@@ -350,7 +350,7 @@ int					check_redi_2(char **cmd, int key);
 int					search_error_redi1(char *tmp);
 int					search_error_redi2(char *tmp);
 void				ft_nb_exit(int exi);
-int					check_redi_flag(char **cmd, t_temp *tmp, int key);
+int					check_redi_flag(char **cmd, t_temp *tmp);
 int					tab2_3d2(int key, t_temp *tmp, int *k, int *i);
 void				initialize_tmp(t_temp *tmp, int ac, char **av);
 void				initialize(t_temp *tmp, int *j);
