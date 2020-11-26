@@ -77,6 +77,29 @@ void			clean_tab2d_echo(char **tabin, char **tabout)
 	}
 }
 
+void			clean_cpy_tab2d(char **cpy)
+{
+	int			i;
+	int			k;
+
+	k = 0;
+	i = 0;
+	if (cpy[i])
+	{
+		if (!ft_strcmp(cpy[i], " "))
+			ft_free(cpy[i++]);
+		while (cpy[i])
+			cpy[k++] = cpy[i++];
+		if (k > 0 && !ft_strcmp(cpy[k - 1], " "))
+		{
+			ft_free(cpy[k - 1]);
+			cpy[k - 1] = 0;
+		}
+		else
+			cpy[k] = 0;
+	}
+}
+
 void			clean_split3d(t_temp *tmp)
 {
 	int			i;
@@ -88,6 +111,7 @@ void			clean_split3d(t_temp *tmp)
 			clean_tab2d_echo(tmp->inpipe[i], tmp->outpipe[i]);
 		else
 			clean_tab2d(tmp->inpipe[i], tmp->outpipe[i]);
+		clean_cpy_tab2d(tmp->cpypipe[i]);
 		i++;
 	}
 }

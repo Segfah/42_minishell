@@ -84,14 +84,15 @@ void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, int key)
 	else
 	{
 		g_ret = 127;
-		if (key == 1)
-			exit(28);
+	//	if (key == 1)
+	//		exit(28);
 		echo_join(tmp->cpytab, tmp->strcmd);
 	}
+	(void)key;
 	(void)tabcmd;
 }
 
-void			exit_join(char **tabin, char **tabout)
+void			exit_join(char **tabin, char **tabout, int key)
 {
 	int i;
 	int j;
@@ -99,8 +100,8 @@ void			exit_join(char **tabin, char **tabout)
 	i = 1;
 	j = 2;
 	
-	//key ? ft_nb_exit(46) : 0;
-	write(1, "exit\n", 5);
+	if (!key)
+		write(1, "exit\n", 5);
 	write(2, "minishell: exit: ", 17);
 	while (tabin[j] && tabout[i] && ft_strcmp(tabin[j], " "))
 	{
@@ -141,7 +142,7 @@ void			exit_arg(char **strcmd, int key)
 		g_ret = 1;
 		if (!key)
 			write(1, "exit\n", 5);
-		key ? ft_nb_exit(45) : 0;
+//		key ? ft_nb_exit(45) : 0;
 		write(2, "minishell: exit: too many arguments\n", 36);
 	}
 	else
@@ -165,13 +166,13 @@ void			gestion_exit(char **strcmd, t_temp *tmp, int key)
 		if (ft_intlen(ft_atoi(strcmd[1])) == (int)ft_strlen(strcmd[1]) &&
 		(tmp->cpytab[3] == NULL || !ft_strcmp(tmp->cpytab[3], " ")))
 		{ 
-			key ? ft_nb_exit(45) : 0;
+//			key ? ft_nb_exit(45) : 0;
 			exit_arg(strcmd, key);
 		}
 		else
 		{
 			g_ret = 255;
-			exit_join(tmp->cpytab, tmp->strcmd);
+			exit_join(tmp->cpytab, tmp->strcmd, key);
 			exit(g_ret);
 		}
 	}
@@ -274,34 +275,6 @@ int				error_line(char **tabcmd, t_temp *tmp, int i)
 	return (0);
 }
 
-//void			pparent_errors(int status, t_temp *tmp, int *k)
-//{
-//	if (WEXITSTATUS(status) == 15)
-//		ft_printf("minishell: command not found: %s\n", tmp->outpipe[*k][0]);
-//	if (WEXITSTATUS(status) == 16)
-//		ft_printf("minishell: /: is a directory\n");
-//	if (WEXITSTATUS(status) == 17)
-//		ft_printf("minishell: cd: HOME not set\n");
-//	if (WEXITSTATUS(status) == 18)
-//		ft_printf("minishell: cd: %s: No such file or directory\n"
-//		, tmp->outpipe[*k][1]);
-//	if (WEXITSTATUS(status) == 19)
-//		ft_printf("env: %s: No such file or directory\n", tmp->outpipe[*k][1]);
-//	if (WEXITSTATUS(status) == 20)
-//		check_export("export", tmp->outpipe[*k]);
-//	if (WEXITSTATUS(status) == 21)
-//		ft_printf("minishell: [: missing `]'\n");
-//	if (WEXITSTATUS(status) == 22)
-//		check_export("unset", tmp->outpipe[*k]);
-//	if (WEXITSTATUS(status) == 23)
-//		ft_printf("minishell: syntax error near unexpected token `%s'\n"
-//		, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
-//	if (WEXITSTATUS(status) == 24)
-//		ft_printf("minishell: syntax error near unexpected token `newline'\n");
-//	if (WEXITSTATUS(status) == 28)
-//		echo_join(tmp->inpipe[*k], tmp->outpipe[*k]);
-//}
-
 void			pparent(pid_t pid, t_temp *tmp, int *k)
 {
 	int status;
@@ -310,24 +283,23 @@ void			pparent(pid_t pid, t_temp *tmp, int *k)
 		exit(1);
 	if (WIFEXITED(status))
 	{
-//		pparent_errors(status, tmp, k);
-		//if (WEXITSTATUS(status) == 26)
-		//{
-		//	write(2, "minishell: .: filename argument required\n", 41);
-		//	write(2, ".: usage: . filename [arguments]\n", 33);
-		//
-//		if (WEXITSTATUS(status) == 25)
-//			ft_printf("minishell: %s: Is a directory\n"
-//			, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
-//		if (WEXITSTATUS(status) == 27)
-//			ft_printf("minishell: %s:  No such file or directory\n"
-//			, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
-//		if (WEXITSTATUS(status) == 13)
-//			ft_printf("minishell: %s: Permission denied\n"
-//			, tmp->outpipe[*k][0]);
-//		if (WEXITSTATUS(status) == 2)
-//			ft_printf("minishell: %s: No such file or directory\n"
-//			, tmp->outpipe[*k][0]);
+		/* if (WEXITSTATUS(status) == 26)
+		{
+			write(2, "minishell: .: filename argument required\n", 41);
+			write(2, ".: usage: . filename [arguments]\n", 33);
+		
+		if (WEXITSTATUS(status) == 25)
+			ft_printf("minishell: %s: Is a directory\n"
+			, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
+		if (WEXITSTATUS(status) == 27)
+			ft_printf("minishell: %s:  No such file or directory\n"
+			, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
+		if (WEXITSTATUS(status) == 13)
+			ft_printf("minishell: %s: Permission denied\n"
+			, tmp->outpipe[*k][0]);
+		if (WEXITSTATUS(status) == 2)
+			ft_printf("minishell: %s: No such file or directory\n"
+			, tmp->outpipe[*k][0]); */
 		if (WEXITSTATUS(status) == 45)
 			write(2, "minishell: exit: too many arguments\n", 36);
 //		if (WEXITSTATUS(status) == 46)
@@ -357,6 +329,7 @@ void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 			close(fd[0]);
 			tmp->strcmd = tmp->outpipe[k];
 			tmp->strcmdin = tmp->inpipe[k];
+			tmp->cpytab = tmp->cpypipe[k];
 			cmd ? check_redi(tmp->strcmdin, tmp) : 0;
 			((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)
 				? skip_redi(tmp, 0) : 0;
@@ -378,6 +351,7 @@ void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 	}
 	ft_free_triple_tab(tmp->inpipe);
 	ft_free_triple_tab(tmp->outpipe);
+	ft_free_triple_tab(tmp->cpypipe);
 }
 
 void			npipe(char **tabcmd, t_temp *tmp, t_cmd *cmd, int i)

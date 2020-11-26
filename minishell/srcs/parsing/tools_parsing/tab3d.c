@@ -38,16 +38,20 @@ int				tab2_3d2(int key, t_temp *tmp, int *k, int *i)
 			return (-1);
 		if (!(tmp->inpipe[*i] = (char**)malloc(sizeof(char *) * key + 1)))
 			return (-1);
+		if (!(tmp->cpypipe[*i] = (char**)malloc(sizeof(char *) * key + 1)))
+			return (-1);
 	}
 	if (key == -2)
 	{
 		tmp->outpipe[*i][*k] = NULL;
-		tmp->inpipe[(*i)++][*k] = NULL;
+		tmp->inpipe[*i][*k] = NULL;
+		tmp->cpypipe[(*i)++][*k] = NULL;
 	}
 	if (key == -1)
 	{
 		tmp->outpipe[*i] = NULL;
 		tmp->inpipe[*i] = NULL;
+		tmp->cpypipe[*i] = NULL;
 	}
 	return (0);
 }
@@ -70,6 +74,8 @@ int				tab2_3d(t_cmd *cmd, t_temp *tmp, int i)
 			if (!(tmp->inpipe[i][k] = ft_strdup(tmpo->input)))
 				return (-1);
 			if (!(tmp->outpipe[i][k] = ft_strdup(tmpo->output)))
+				return (-1);
+			if (!(tmp->cpypipe[i][k] = ft_strdup(tmpo->input)))
 				return (-1);
 			(tmpo->next) ? tmpo = tmpo->next : 0;
 		}
@@ -102,6 +108,8 @@ int				split3d(t_cmd *cmd, t_temp *tmp)
 	if (!(tmp->outpipe = (char***)malloc(sizeof(char**) * ret + 1)))
 		return (-1);
 	if (!(tmp->inpipe = (char***)malloc(sizeof(char**) * ret + 1)))
+		return (-1);
+	if (!(tmp->cpypipe = (char***)malloc(sizeof(char**) * ret + 1)))
 		return (-1);
 	if (tab2_3d(cmd, tmp, 0) == -1)
 		return (-1);

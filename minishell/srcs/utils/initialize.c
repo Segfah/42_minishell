@@ -46,6 +46,7 @@ void			initialize_tmp(t_temp *tmp, int ac, char **av)
 	tmp->hnull = NULL;
 	tmp->inpipe = NULL;
 	tmp->outpipe = NULL;
+	tmp->cpypipe = NULL;
 	(void)ac;
 	(void)av;
 }

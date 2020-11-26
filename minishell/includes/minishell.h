@@ -65,6 +65,7 @@ typedef struct		s_temp
 	char			*hnull;
 	char			***inpipe;
 	char			***outpipe;
+	char			***cpypipe;
 }					t_temp;
 
 typedef struct		s_cmd
