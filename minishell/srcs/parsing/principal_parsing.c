@@ -325,9 +325,9 @@ void			pparent(pid_t pid, t_temp *tmp, int *k)
 //		if (WEXITSTATUS(status) == 13)
 //			ft_printf("minishell: %s: Permission denied\n"
 //			, tmp->outpipe[*k][0]);
-		if (WEXITSTATUS(status) == 2)
-			ft_printf("minishell: %s: No such file or directory\n"
-			, tmp->outpipe[*k][0]);
+//		if (WEXITSTATUS(status) == 2)
+//			ft_printf("minishell: %s: No such file or directory\n"
+//			, tmp->outpipe[*k][0]);
 		if (WEXITSTATUS(status) == 45)
 			write(2, "minishell: exit: too many arguments\n", 36);
 //		if (WEXITSTATUS(status) == 46)
