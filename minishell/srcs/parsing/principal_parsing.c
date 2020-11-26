@@ -111,28 +111,6 @@ void			exit_join(char **tabin, char **tabout, int key)
 	
 }
 
-int	ft_intlen(int n)
-{
-	int		len;
-
-	if (n == 2147482647)
-		return (11);
-	len = 0;
-	if (n == 0)
-		return (1);
-	if (n < 0)
-	{
-		n = -n;
-		len++;
-	}
-	while (n)
-	{
-		n /= 10;
-		len++;
-	}
-	return (len);
-}
-
 void			exit_arg(char **strcmd, int key)
 {
 	if (strcmd[2])

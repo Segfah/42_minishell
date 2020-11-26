@@ -12,7 +12,7 @@
 
 NAME = the_big_minishell
 #HEAD := -I./includes/ -I./libft/includes
-HEAD := -I./includes/ -I./libft/includes -I./prinf/includes
+HEAD := -I./includes/ -I./libft/includes -I./ft_fprintf
 
 CFLAGS = -Wall -Wextra -Werror
 CFLAGSF = -g3 -fsanitize=address -Wall -Wextra -Werror
@@ -107,9 +107,9 @@ all: $(NAME)
 #@gcc $(CFLAGS) $(HEAD) $(OBJS) -o $(NAME) -L./libft -lft
 $(NAME): $(OBJS)
 	@make -sC ./libft
-	@make -sC ./prinf
+	@make -sC ./ft_fprintf
 	@echo ''
-	@gcc $(CFLAGS) $(HEAD) $(OBJS) -o $(NAME) -L./libft -lft -L./prinf -lpf
+	@gcc $(CFLAGS) $(HEAD) $(OBJS) -o $(NAME) -L./libft -lft -L./ft_fprintf -lpf
 	@echo '	 '
 	@echo '	......( \_/ ) '
 	@echo '	......( o_o ) '
@@ -124,13 +124,13 @@ objs/%.o: %.c
 clean:
 	@rm -rf $(OBJS) objs
 	@make clean -sC libft
-	@make clean -sC prinf
+	@make clean -sC ft_fprintf
 	@printf "%b" "$(ERROR_COLOR)\tmake clean\t$(OK_COLOR)[SUCCESS]$(NO_COLOR)\n";
 #	@make 42
 
 fclean:
 	@make fclean -sC libft
-	@make fclean -sC prinf
+	@make fclean -sC ft_fprintf
 	@rm -rf $(NAME) $(OBJS) objs
 	@printf "%b" "$(ERROR_COLOR)\tmake fclean\t$(OK_COLOR)[SUCCESS]$(NO_COLOR)\n";
 
@@ -139,8 +139,8 @@ re: fclean all
 #@gcc $(CFLAGS) $(HEAD) $(OBJS) -o $(NAME) -L./libft -lft
 cn: $(OBJS)
 	@make -sC ./libft
-	@make -sC ./prinf
-	@gcc $(CFLAGS) $(HEAD) $(OBJS) -o $(NAME) -L./libft -lft -L./prinf -lpf
+	@make -sC ./ft_fprintf
+	@gcc $(CFLAGS) $(HEAD) $(OBJS) -o $(NAME) -L./libft -lft -L./ft_fprintf -lpf
 	@echo 'simple ' "$(WARN_COLOR)\t $(NAME)\t$(OK_COLOR)[CREATED]$(NO_COLOR)";
 
 
@@ -148,7 +148,7 @@ cn: $(OBJS)
 cs: $(OBJS)
 	@make -sC ./libft
 	@make -sC ./prinf
-	@gcc $(CFLAGSF) $(HEAD) $(OBJS) -o $(NAME) -L./libft -lft -L./prinf -lpf
+	@gcc $(CFLAGSF) $(HEAD) $(OBJS) -o $(NAME) -L./libft -lft -L./ft_fprintf -lpf
 	@echo 'sanitize' "$(WARN_COLOR)\t $(NAME)\t$(OK_COLOR)[CREATED]$(NO_COLOR)";
 
 leaks:
