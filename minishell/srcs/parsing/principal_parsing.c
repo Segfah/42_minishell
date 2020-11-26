@@ -40,7 +40,7 @@ void			printflist(t_cmd *cmd)
 	ft_printf("-----------------\n");
 }
 
-void			gestion_missing(t_temp *tmp, int key)
+void			gestion_missing(t_temp *tmp)
 {
 	int			i;
 
@@ -50,9 +50,7 @@ void			gestion_missing(t_temp *tmp, int key)
 		if (!ft_strcmp("]", tmp->strcmd[i]))
 			return ;
 	}
-	if (key == 1)
-		exit(21);
-	ft_printf("minishell: [: missing `]'\n");
+	ft_fprintf(2 ,"minishell: [: missing `]'\n");
 }
 
 void			point_filename(char **tab)
@@ -74,7 +72,7 @@ void			point_filename(char **tab)
 void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, int key)
 {
 	if (j == 10)
-		gestion_missing(tmp, key);
+		gestion_missing(tmp);
 	else if (j == 7)
 		gestion_unset(tmp);
 	else if (j == 8)
@@ -291,8 +289,8 @@ void			pparent_errors(int status, t_temp *tmp, int *k)
 //		ft_printf("env: %s: No such file or directory\n", tmp->outpipe[*k][1]);
 //	if (WEXITSTATUS(status) == 20)
 //		check_export("export", tmp->outpipe[*k]);
-	if (WEXITSTATUS(status) == 21)
-		ft_printf("minishell: [: missing `]'\n");
+//	if (WEXITSTATUS(status) == 21)
+//		ft_printf("minishell: [: missing `]'\n");
 //	if (WEXITSTATUS(status) == 22)
 //		check_export("unset", tmp->outpipe[*k]);
 //	if (WEXITSTATUS(status) == 23)
