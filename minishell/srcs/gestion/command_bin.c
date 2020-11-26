@@ -72,7 +72,7 @@ void			sighandlerrr2(int signum)
 	(void)signum;
 }
 
-int				command_bin(char **tab, t_temp *tmp, int key)
+int				command_bin(char **tab, t_temp *tmp)
 {
 	pid_t		f;
 	char		**tab_env;
@@ -81,7 +81,7 @@ int				command_bin(char **tab, t_temp *tmp, int key)
 	if (!(tab_env = c_env(tmp->varenv, lists_size(tmp->varenv))))
 		exit(1);
 	if ((f = fork()) == 0)
-		command_bin_2(tab_env, tab, tmp, key);
+		command_bin_2(tab_env, tab, tmp);
 	else
 	{
 		signal(SIGINT, SIG_IGN);

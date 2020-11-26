@@ -185,7 +185,7 @@ void				free_list(t_lists *test);
 /*
 ** gestion/command_bin
 */
-int					command_bin(char **tab, t_temp *tmp, int key);
+int					command_bin(char **tab, t_temp *tmp);
 
 void				gestion_nani(char **tab);
 
@@ -338,8 +338,7 @@ void				printftab(char **tab);
 void				clean_tab2d_echo(char **tabin, char **tabout);
 int					len_split3d(t_cmd *cmd);
 int					print_error(int ret);
-int					command_bin_2(char **tab_env, char **tab
-						, t_temp *tmp, int key);
+int					command_bin_2(char **tab_env, char **tab, t_temp *tmp);
 void				command_bin_3(t_temp *tmp);
 void				free_export_tab(t_temp *tmp);
 char				*cp_str_2(int size, char *tmp_str, char *str);

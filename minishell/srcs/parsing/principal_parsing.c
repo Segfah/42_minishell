@@ -77,7 +77,7 @@ void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, int key)
 		gestion_unset(tmp);
 	else if (j == 8)
 		gestion_echo(tmp);
-	else if (j == 9 && command_bin(tmp->strcmd, tmp, key) == 0)
+	else if (j == 9 && command_bin(tmp->strcmd, tmp) == 0)
 		return ;
 	else if (j == 11)
 		point_filename(tmp->strcmd);
@@ -197,7 +197,7 @@ void			launcher_cmd(char *tabcmd, t_temp *tmp, int j, int key)
 		launcher_cmd2(tabcmd, tmp, j, key);
 }
 
-int				check_export(char *src, char **str)
+int				check_export(char *src, char **str) // c'est quoi cette fonction? mdr
 {
 	int i;
 
@@ -278,8 +278,8 @@ void			pparent_errors(int status, t_temp *tmp, int *k)
 {
 	if (WEXITSTATUS(status) == 15)
 		ft_printf("minishell: command not found: %s\n", tmp->outpipe[*k][0]);
-	if (WEXITSTATUS(status) == 16)
-		ft_printf("minishell: /: is a directory\n");
+//	if (WEXITSTATUS(status) == 16)
+//		ft_printf("minishell: /: is a directory\n");
 //	if (WEXITSTATUS(status) == 17)
 //		ft_printf("minishell: cd: HOME not set\n");
 //	if (WEXITSTATUS(status) == 18)
@@ -322,16 +322,16 @@ void			pparent(pid_t pid, t_temp *tmp, int *k)
 //		if (WEXITSTATUS(status) == 27)
 //			ft_printf("minishell: %s:  No such file or directory\n"
 //			, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
-		if (WEXITSTATUS(status) == 13)
-			ft_printf("minishell: %s: Permission denied\n"
-			, tmp->outpipe[*k][0]);
+//		if (WEXITSTATUS(status) == 13)
+//			ft_printf("minishell: %s: Permission denied\n"
+//			, tmp->outpipe[*k][0]);
 		if (WEXITSTATUS(status) == 2)
 			ft_printf("minishell: %s: No such file or directory\n"
 			, tmp->outpipe[*k][0]);
 		if (WEXITSTATUS(status) == 45)
 			write(2, "minishell: exit: too many arguments\n", 36);
-		if (WEXITSTATUS(status) == 46)
-			;
+//		if (WEXITSTATUS(status) == 46)
+//			;
 	}
 	(*k)++;
 }
