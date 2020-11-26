@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/26 00:59:02 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/26 01:03:03 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, int key)
 	else if (j == 9 && command_bin(tmp->strcmd, tmp, key) == 0)
 		return ;
 	else if (j == 11)
-		point_filename(tmp->strcmd, key);
+		point_filename(tmp->strcmd);
 	else
 	{
 		g_ret = 127;
