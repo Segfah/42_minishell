@@ -320,12 +320,12 @@ void			pparent(pid_t pid, t_temp *tmp, int *k)
 	if (WIFEXITED(status))
 	{
 		pparent_errors(status, tmp, k);
-		if (WEXITSTATUS(status) == 25)
-			ft_printf("minishell: %s: Is a directory\n"
-			, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
-		if (WEXITSTATUS(status) == 27)
-			ft_printf("minishell: %s:  No such file or directory\n"
-			, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
+//		if (WEXITSTATUS(status) == 25)
+//			ft_printf("minishell: %s: Is a directory\n"
+//			, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
+//		if (WEXITSTATUS(status) == 27)
+//			ft_printf("minishell: %s:  No such file or directory\n"
+//			, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
 		if (WEXITSTATUS(status) == 26)
 		{
 			write(2, "minishell: .: filename argument required\n", 41);
