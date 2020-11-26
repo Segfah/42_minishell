@@ -5,6 +5,7 @@
 objs/
 .vscode/
 .*
+*.o
 sss.sh
 diff.txt
 the_big_minishell
