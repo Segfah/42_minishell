@@ -288,22 +288,57 @@ void			pparent(pid_t pid, t_temp *tmp, int *k)
 
 void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 {
-	int			fd[2];
+	int			fd[tmp->nb_pipes * 2];
 	pid_t		pid;
-	int			fdd;
+//	int			fdd;
 	int			k;
+	int			s;
 
-	fdd = 0;
+	for(int i = 0; i < tmp->nb_pipes; i++)
+	{
+		if( pipe(fd + i * 2) < 0 )
+		{
+			printf("3error\n");
+			exit(0);
+		}
+	}
+//	fdd = 0;
 	k = 0;
+	s = 0;
+//	printf("pupes == [%d]", tmp->nb_pipes);
 	while (tmp->outpipe[k])
 	{
-		pipe(fd);
+//		printftab(tmp->inpipe[k]);
+//		printftab(tmp->outpipe[k]);
+//		printftab(tmp->cpypipe[k]);
+		
+//		pipe(fd);
 		if ((pid = fork()) == 0)
 		{
-			dup2(fdd, 0);
+			if (k != 0)
+			{
+				if ( dup2(fd[s - 2], 0) < 0)
+				{
+					printf("1error\n");
+					exit(0);
+				}
+			}
 			if (tmp->outpipe[k + 1] != NULL)
-				dup2(fd[1], 1);
-			close(fd[0]);
+			{
+				if( dup2(fd[s + 1], 1) < 0 )
+				{
+					printf("2error\n");
+					exit(0);
+				}
+			}
+			for(int i = 0; i < tmp->nb_pipes * 2; i++)
+			{
+				close(fd[i]);
+			}
+//			dup2(fdd, 0);
+//			if (tmp->outpipe[k + 1] != NULL)
+//				dup2(fd[1], 1);
+//			close(fd[0]);
 			tmp->strcmd = tmp->outpipe[k];
 			tmp->strcmdin = tmp->inpipe[k];
 			tmp->cpytab = tmp->cpypipe[k];
@@ -313,18 +348,32 @@ void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 			(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
 			tmp->flag[0] = (j > 0) ? 1 : 0;
 			launcher_cmd(tmp->outpipe[k][0], tmp, j, 1);
-			(cmd != NULL) ? free_cmd(cmd) : 0;
-			tmp->tabpath ? ft_free_tab(tmp->tabpath) : 0;
 			tmp->flag[1] == 1 ? close(tmp->fd) : 0;
 			tmp->flag[2] == 1 ? close(tmp->fdi) : 0;
 			exit(1);
 		}
 		else
 		{
-			pparent(pid, tmp, &k);
-			close(fd[1]);
-			fdd = fd[0];
+//			pparent(pid, tmp, &k);
+//			close(fd[1]);
+//			fdd = fd[0];
+			s += 2;
+			k++;
 		}
+	}
+	for (int i = 0; i < 2 * tmp->nb_pipes; i++ )
+		close( fd[i] );
+	int status;
+	k =0;
+	for(int i = 0; i < tmp->nb_pipes + 1; i++)
+	{
+		status = 0;
+	//	pid = waitpid(pid, &status, WUNTRACED | WCONTINUED);
+		wait(&status);
+		if (WIFEXITED(status))
+			if (WEXITSTATUS(status) == 15)
+				printf("minishell: command not found: %s\n", tmp->outpipe[k][0]);
+		k++;
 	}
 	ft_free_triple_tab(tmp->inpipe);
 	ft_free_triple_tab(tmp->outpipe);

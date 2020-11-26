@@ -42,9 +42,12 @@ void				ft_free_triple_tab(char ***tab3d)
 
 void				free_node_cmd(t_cmd *node)
 {
-	ft_free(node->input);
-	ft_free(node->output);
-	ft_free(node);
+	node->input ? ft_free(node->input): 0;
+	node->input = NULL;
+	node->output ?ft_free(node->output): 0;
+	node->output = NULL;
+	node ? ft_free(node) : 0;
+	node = NULL;
 }
 
 void				free_cmd(t_cmd *cmd)

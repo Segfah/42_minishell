@@ -24,6 +24,7 @@ void			initialize(t_temp *tmp, int *j)
 	tmp->strcmd = NULL;
 	tmp->strcmdin = NULL;
 	tmp->cpytab = NULL;
+	tmp->nb_pipes = 0;
 }
 
 void			initialize_tmp(t_temp *tmp, int ac, char **av)

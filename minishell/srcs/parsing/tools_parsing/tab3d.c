@@ -105,6 +105,7 @@ int				split3d(t_cmd *cmd, t_temp *tmp)
 	{
 		return (print_error(ret));
 	}
+	tmp->nb_pipes = ret - 1;
 	if (!(tmp->outpipe = (char***)malloc(sizeof(char**) * ret + 1)))
 		return (-1);
 	if (!(tmp->inpipe = (char***)malloc(sizeof(char**) * ret + 1)))
