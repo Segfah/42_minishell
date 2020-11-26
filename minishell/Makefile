@@ -107,6 +107,7 @@ all: $(NAME)
 #@gcc $(CFLAGS) $(HEAD) $(OBJS) -o $(NAME) -L./libft -lft
 $(NAME): $(OBJS)
 	@make -sC ./libft
+	@make -sC ./prinf
 	@echo ''
 	@gcc $(CFLAGS) $(HEAD) $(OBJS) -o $(NAME) -L./libft -lft -L./prinf -lpf
 	@echo '	 '
@@ -123,24 +124,31 @@ objs/%.o: %.c
 clean:
 	@rm -rf $(OBJS) objs
 	@make clean -sC libft
+	@make clean -sC prinf
 	@printf "%b" "$(ERROR_COLOR)\tmake clean\t$(OK_COLOR)[SUCCESS]$(NO_COLOR)\n";
 #	@make 42
 
 fclean:
 	@make fclean -sC libft
+	@make fclean -sC prinf
 	@rm -rf $(NAME) $(OBJS) objs
 	@printf "%b" "$(ERROR_COLOR)\tmake fclean\t$(OK_COLOR)[SUCCESS]$(NO_COLOR)\n";
 
 re: fclean all
 
+#@gcc $(CFLAGS) $(HEAD) $(OBJS) -o $(NAME) -L./libft -lft
 cn: $(OBJS)
 	@make -sC ./libft
-	@gcc $(CFLAGS) $(HEAD) $(OBJS) -o $(NAME) -L./libft -lft
+	@make -sC ./prinf
+	@gcc $(CFLAGS) $(HEAD) $(OBJS) -o $(NAME) -L./libft -lft -L./prinf -lpf
 	@echo 'simple ' "$(WARN_COLOR)\t $(NAME)\t$(OK_COLOR)[CREATED]$(NO_COLOR)";
 
+
+#@gcc $(CFLAGSF) $(HEAD) $(OBJS) -o $(NAME) -L./libft -lft
 cs: $(OBJS)
 	@make -sC ./libft
-	@gcc $(CFLAGSF) $(HEAD) $(OBJS) -o $(NAME) -L./libft -lft
+	@make -sC ./prinf
+	@gcc $(CFLAGSF) $(HEAD) $(OBJS) -o $(NAME) -L./libft -lft -L./prinf -lpf
 	@echo 'sanitize' "$(WARN_COLOR)\t $(NAME)\t$(OK_COLOR)[CREATED]$(NO_COLOR)";
 
 leaks:
