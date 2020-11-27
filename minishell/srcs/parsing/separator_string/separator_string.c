@@ -119,8 +119,13 @@ void				separator_string(t_cmd **cmd, char *str, t_temp *tmp)
 		ft_lstadd_back_cmd(cmd, new);
 		i++;
 	}
+	//printflist(*cmd);
+	remove_null_node(cmd);
 	while (strcat_cmd(cmd) == 1)
 		;
+	//printflist(*cmd);
 	remove_null_node(cmd);
+	//printflist(*cmd);
 	remove_space_node(cmd);
+	//printflist(*cmd);
 }

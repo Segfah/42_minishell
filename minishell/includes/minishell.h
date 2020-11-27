@@ -356,7 +356,7 @@ int					tab2_3d2(int key, t_temp *tmp, int *k, int *i);
 void				initialize_tmp(t_temp *tmp, int ac, char **av);
 void				initialize(t_temp *tmp, int *j);
 int					llist_astring(t_cmd *head, t_temp *tmp);
-void				cmd_not_found(char **strcmd);
+void				cmd_not_found(char *tabcmd, t_temp *tmp);
 int					cat_node_egal(t_cmd **cmd);
 char				*ft_newstring(size_t i);
 char				*ft_strjoinfree(char *s1, char *s2);

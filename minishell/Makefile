@@ -147,7 +147,7 @@ cn: $(OBJS)
 #@gcc $(CFLAGSF) $(HEAD) $(OBJS) -o $(NAME) -L./libft -lft
 cs: $(OBJS)
 	@make -sC ./libft
-	@make -sC ./prinf
+	@make -sC ./ft_fprintf
 	@gcc $(CFLAGSF) $(HEAD) $(OBJS) -o $(NAME) -L./libft -lft -L./ft_fprintf -lpf
 	@echo 'sanitize' "$(WARN_COLOR)\t $(NAME)\t$(OK_COLOR)[CREATED]$(NO_COLOR)";
 

@@ -71,6 +71,7 @@ void			point_filename(char **tab)
 
 void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, int key)
 {
+	//printf("char *tabcmd = [%s]\n)", char *tabcmd)
 	if (j == 10)
 		gestion_missing(tmp);
 	else if (j == 7)
@@ -82,7 +83,7 @@ void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, int key)
 	else if (j == 11)
 		point_filename(tmp->strcmd);
 	else
-		cmd_not_found(tmp->strcmd);
+		cmd_not_found(tabcmd, tmp);
 	(void)key;
 	(void)tabcmd;
 }
