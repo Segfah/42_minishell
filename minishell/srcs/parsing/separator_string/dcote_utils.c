@@ -28,9 +28,15 @@ void	dcote_fill_slash(t_cmd *cmd, int *i, int *j)
 		cmd->output[(*j)++] = '\\';
 	if (save % 2 == 1)
     {
-        if (cmd->input[*i] && (cmd->input[*i] == '"' || cmd->input[*i] == '\'' ||
+        if (cmd->input[*i] && (cmd->input[*i] == '"'||
 		cmd->input[*i] == '$'))
             cmd->output[(*j)++] = cmd->input[(*i)++];
+		else if (save == 1 && (cmd->input[*i] != '"'||
+		cmd->input[*i] != '$'))
+		{
+			cmd->output[(*j)++] = '\\';
+			cmd->output[(*j)++] = cmd->input[(*i)++];
+		}
 	}
 	else
 		while (size++ < (save / 2))
@@ -48,7 +54,7 @@ void    dcote_count_slash(t_cmd *cmd, int *i, int *size)
     }
     if (save % 2 == 1)
     {
-        if (cmd->input[*i] && (cmd->input[*i] == '"' || cmd->input[*i] == '\'' || cmd->input[*i] == '$'))
+        if (cmd->input[*i] && (cmd->input[*i] == '"'|| cmd->input[*i] == '$'))
             (*i)++;
 		if (save == 1)
 		{

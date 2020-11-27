@@ -43,6 +43,10 @@ TEST_ARRAY=(
 'exit 512'
 'exit 1407'
 'exit 21 42'
+'exit $HOME"coucou"COMO" "TE" "ENCUENTRAS |rev'
+'exit $HOME"coucou"COMO" "TE" "ENCUENTRAS'
+'pwd | exit $HOME"coucou"COMO" "TE" "ENCUENTRAS'
+'pwdd | exit $HOME"coucou"COMO" "TE" "ENCUENTRAS'
 '################		COMMAND EXECUTION	        #################'
 'ls'
 '/bin/ls'
@@ -69,6 +73,7 @@ TEST_ARRAY=(
 "echo \"\\\$HOME\""
 "echo \"'\$'\""
 "echo \\\\\n"
+"echo \"coucou ca va ? '\$HOME' \coucou\""
 "echo \"< no pipe | or semicolon will ; stop me >\""
 '\"asdasdasd\"$asdasd$HOME'
 '################		    PIPES			#################'

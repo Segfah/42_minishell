@@ -71,6 +71,7 @@ void			point_filename(char **tab)
 
 void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, int key)
 {
+	//printf("char *tabcmd = [%s]\n)", char *tabcmd)
 	if (j == 10)
 		gestion_missing(tmp);
 	else if (j == 7)
@@ -82,73 +83,12 @@ void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, int key)
 	else if (j == 11)
 		point_filename(tmp->strcmd);
 	else
-	{
-		g_ret = 127;
-		echo_join(tmp->cpytab, tmp->strcmd);
-	}
+		cmd_not_found(tabcmd, tmp);
 	(void)key;
 	(void)tabcmd;
 }
 
-void			exit_join(char **tabin, char **tabout, int key)
-{
-	int i;
-	int j;
 
-	i = 1;
-	j = 2;
-	
-	if (!key)
-		write(1, "exit\n", 5);
-	write(2, "minishell: exit: ", 17);
-	while (tabin[j] && tabout[i] && ft_strcmp(tabin[j], " "))
-	{
-		write(2, tabout[i], ft_strlen(tabout[i]));
-		j++;
-		i++;
-	}
-	write(2, ": numeric argument required\n", 28);
-	
-}
-
-void			exit_arg(char **strcmd, int key)
-{
-	if (strcmd[2])
-	{
-		g_ret = 1;
-		if (!key)
-			write(1, "exit\n", 5);
-		write(2, "minishell: exit: too many arguments\n", 36);
-	}
-	else
-	{
-		g_ret = ft_atoi((const char*)strcmd[1]);
-		write(1, "exit\n", 5);
-		exit(g_ret);
-	}
-}
-
-void			gestion_exit(char **strcmd, t_temp *tmp, int key)
-{
-	if (!strcmd[1] && !key)
-	{
-		g_ret = 0;
-		write(1, "exit\n", 5);
-		exit (g_ret);
-	}
-	else
-	{
-		if (ft_intlen(ft_atoi(strcmd[1])) == (int)ft_strlen(strcmd[1]) &&
-		(tmp->cpytab[3] == NULL || !ft_strcmp(tmp->cpytab[3], " ")))
-			exit_arg(strcmd, key);
-		else
-		{
-			g_ret = 255;
-			exit_join(tmp->cpytab, tmp->strcmd, key);
-			exit(g_ret);
-		}
-	}
-}
 
 void			launcher_cmd(char *tabcmd, t_temp *tmp, int j, int key)
 {

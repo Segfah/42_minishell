@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 13:58:31 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/22 18:10:00 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/27 17:55:45 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,15 @@ int					isalpha1(char *s)
 	return (ret);
 }
 
+int					check_before_cat_node(char *s1, char *s2)
+{
+	if (ft_strcmp(s1, " ") && ft_strcmp(s2, " ") && ft_strncmp(s1, "<", 1) &&
+	ft_strncmp(s2, "<", 1) && ft_strncmp(s1, ">", 1) && ft_strncmp(s2, ">", 1) &&
+	ft_strncmp(s1, "|", 1 && ft_strncmp(s2, "|", 1)))
+		return (1);
+	return (0);
+}
+
 int					strcat_cmd(t_cmd **cmd)
 {
 	t_cmd	*tmp;
@@ -41,8 +50,8 @@ int					strcat_cmd(t_cmd **cmd)
 	i = 0;
 	while (tmp)
 	{
-		if (tmp->next && tmp->next->output && (isalpha1(tmp->output) > 0) &&
-		(isalpha1(tmp->next->output) > 0))
+		if (tmp->next && tmp->next->output &&
+		check_before_cat_node(tmp->input, tmp->next->input))
 		{
 			if ((tmp->input = ft_strcatdup(tmp->input, tmp->next->input)))
 				tmp->next->input = NULL;
@@ -111,10 +120,13 @@ void				separator_string(t_cmd **cmd, char *str, t_temp *tmp)
 		ft_lstadd_back_cmd(cmd, new);
 		i++;
 	}
+	//printflist(*cmd);
+	remove_null_node(cmd);
 	while (strcat_cmd(cmd) == 1)
 		;
-	while (cat_node_egal(cmd) == 1)
-		;
+	//printflist(*cmd);
 	remove_null_node(cmd);
+	//printflist(*cmd);
 	remove_space_node(cmd);
+	//printflist(*cmd);
 }

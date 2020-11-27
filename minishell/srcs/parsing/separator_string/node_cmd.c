@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int		cat_node_egal(t_cmd **cmd)
+/* int		cat_node_egal(t_cmd **cmd)
 {
 	t_cmd	*back;
 	int		len;
@@ -38,7 +38,7 @@ int		cat_node_egal(t_cmd **cmd)
 	}
 	remove_null_node(cmd);
 	return (i);
-}
+} */
 
 void	tilde(t_cmd *cmd, t_temp *tmp)
 {
