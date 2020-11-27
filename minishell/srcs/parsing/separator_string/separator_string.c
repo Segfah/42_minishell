@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 13:58:31 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/22 18:10:00 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/27 17:55:45 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int					isalpha1(char *s)
 int					check_before_cat_node(char *s1, char *s2)
 {
 	if (ft_strcmp(s1, " ") && ft_strcmp(s2, " ") && ft_strncmp(s1, "<", 1) &&
-	ft_strncmp(s2, "<", 1) && ft_strncmp(s1, ">", 1 && ft_strncmp(s2, ">", 1)))
+	ft_strncmp(s2, "<", 1) && ft_strncmp(s1, ">", 1) && ft_strncmp(s2, ">", 1) &&
+	ft_strncmp(s1, "|", 1 && ft_strncmp(s2, "|", 1)))
 		return (1);
 	return (0);
 }

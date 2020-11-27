@@ -61,8 +61,6 @@ int			no_file_or_dir(char *tabcmd, t_lists *var)
 
 void		cmd_not_found(char *tabcmd, t_temp *tmp)
 {
-	//printf("tabcmd =[%s]\n", tabcmd);
-	//printftab(tmp->strcmdin);
 	g_ret = 127;
 	write(2, "minishell: ", 11);
 	write(2, tmp->strcmd[0], ft_strlen(tmp->strcmd[0]));
