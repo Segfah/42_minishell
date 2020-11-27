@@ -112,7 +112,7 @@ int				cpy_env(t_lists **cpy, t_lists *list)
 	return (0);
 }
 
-int				change_list(t_lists *head, char *ss, char *newdata)
+int				change_list(t_lists *head, char *ss, char *new, t_temp *t)
 {
 	t_lists		*tmp;
 
@@ -122,10 +122,10 @@ int				change_list(t_lists *head, char *ss, char *newdata)
 		if (tmp->name && ft_strcmp(tmp->name, ss) == 0)
 		{
 			ft_free(tmp->data);
-			if (newdata != NULL)
+			if (new != NULL)
 			{
-				if (!(tmp->data = ft_strdup(newdata)))
-					return (-1);
+				if (!(tmp->data = ft_strdup(new)))
+					general_free(t);
 			}
 			return (1);
 		}

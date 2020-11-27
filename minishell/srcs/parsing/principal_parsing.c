@@ -71,7 +71,6 @@ void			point_filename(char **tab)
 
 void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, int key)
 {
-	//printf("char *tabcmd = [%s]\n)", char *tabcmd)
 	if (j == 10)
 		gestion_missing(tmp);
 	else if (j == 7)
@@ -132,7 +131,10 @@ int				error_line2(t_cmd *cmd, t_temp *tmp)
 
 	ret = (cmd) ? llist_astring(cmd, tmp) : 0;
 	if (ret == -1)
-		exit(1);
+	{
+		free_cmd(cmd);
+		general_free(tmp);
+	}
 	if (tmp->strcmdin && (ret = check_redi_2(tmp->strcmdin, 1)) < 0)
 	{
 		print_error_redi(tmp->strcmd[check_redi_2(tmp->strcmd, 0) + 1], ret);
@@ -195,27 +197,11 @@ void			pparent(pid_t pid, t_temp *tmp, int *k)
 		exit(1);
 	if (WIFEXITED(status))
 	{
-		/* if (WEXITSTATUS(status) == 26)
-		{
-			write(2, "minishell: .: filename argument required\n", 41);
-			write(2, ".: usage: . filename [arguments]\n", 33);
-		
+		/*
 		if (WEXITSTATUS(status) == 25)
 			ft_printf("minishell: %s: Is a directory\n"
 			, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
-		if (WEXITSTATUS(status) == 27)
-			ft_printf("minishell: %s:  No such file or directory\n"
-			, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
-		if (WEXITSTATUS(status) == 13)
-			ft_printf("minishell: %s: Permission denied\n"
-			, tmp->outpipe[*k][0]);
-		if (WEXITSTATUS(status) == 2)
-			ft_printf("minishell: %s: No such file or directory\n"
-			, tmp->outpipe[*k][0]); 
-		if (WEXITSTATUS(status) == 45)
-			write(2, "minishell: exit: too many arguments\n", 36);
-		if (WEXITSTATUS(status) == 46)
-			;*/
+		*/
 	}
 	(*k)++;
 	(void)tmp;
@@ -225,7 +211,6 @@ void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 {
 	int			fd[tmp->nb_pipes * 2];
 	pid_t		pid;
-//	int			fdd;
 	int			k;
 	int			s;
 
@@ -237,10 +222,9 @@ void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 			exit(0);
 		}
 	}
-//	fdd = 0;
 	k = 0;
 	s = 0;
-//	printf("pupes == [%d]", tmp->nb_pipes);
+//	printf("pipes == [%d]", tmp->nb_pipes);
 	while (tmp->outpipe[k])
 	{
 //		printftab(tmp->inpipe[k]);
@@ -270,10 +254,6 @@ void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 			{
 				close(fd[i]);
 			}
-//			dup2(fdd, 0);
-//			if (tmp->outpipe[k + 1] != NULL)
-//				dup2(fd[1], 1);
-//			close(fd[0]);
 			tmp->strcmd = tmp->outpipe[k];
 			tmp->strcmdin = tmp->inpipe[k];
 			tmp->cpytab = tmp->cpypipe[k];
@@ -290,8 +270,6 @@ void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 		else
 		{
 //			pparent(pid, tmp, &k);
-//			close(fd[1]);
-//			fdd = fd[0];
 			s += 2;
 			k++;
 		}
@@ -323,7 +301,10 @@ void			npipe(char **tabcmd, t_temp *tmp, t_cmd *cmd, int i)
 	j = 0;
 	ret = (cmd) ? llist_astring(cmd, tmp) : 0;
 	if (ret == -1)
-		exit(1);
+	{
+		cmd ? check_redi(tmp->strcmdin, tmp) : 0;
+		general_free(tmp);
+	}
 	cmd ? check_redi(tmp->strcmdin, tmp) : 0;
 	((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)
 		? skip_redi(tmp, 0) : 0;
@@ -353,7 +334,10 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 		tmp->strcmd = NULL;
 		(cmd) ? j = split3d(cmd, tmp) : 0;
 		if (j == -1)
-			exit(1);
+		{
+			(cmd != NULL) ? free_cmd(cmd) : 0;
+			general_free(tmp);
+		}
 		if (j < 0)
 		{
 			(cmd != NULL) ? free_cmd(cmd) : 0;
@@ -385,11 +369,6 @@ int				ft_getline(t_temp *tmp, char **av, int ret)
 		if ((ret = ft_gnl(0, &line)) == -1
 			|| (tmp->tabcmd = ft_split_line(line)) == NULL)
 			general_free(tmp);
-//	general_free(tmp);
-/*
-**	1) il faut regarder ft_split_line
-**	2) enlever le int de ft_getline ça ne sert à rien
-*/
 		if (ret == 0)
 			return (0);
 		if (tmp->tabcmd != NULL && tmp->tabcmd[0])

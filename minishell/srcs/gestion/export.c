@@ -49,6 +49,12 @@ void			general_free(t_temp *tmp)
 	(!tmp->prompt) ? ft_free(tmp->prompt) : 0;
 	(!tmp->env) ? ft_free(tmp->env) : 0;
 	(!tmp->tabcmd) ? ft_free(tmp->tabcmd) : 0;
+	(!tmp->strcmd) ? ft_free_double_tab(tmp->strcmd) : 0;
+	(!tmp->strcmdin) ? ft_free_double_tab(tmp->strcmdin) : 0;
+	(!tmp->cpytab) ? ft_free_double_tab(tmp->cpytab) : 0;
+	(!tmp->inpipe) ? ft_free_triple_tab(tmp->inpipe) : 0;
+	(!tmp->outpipe) ? ft_free_triple_tab(tmp->outpipe) : 0;
+	(!tmp->cpypipe) ? ft_free_triple_tab(tmp->cpypipe) : 0;
 	write(2, "Error: Malloc\n", 14);
 	exit(1);
 	ft_free(tmp->env);
@@ -80,10 +86,7 @@ int				export_arg(t_temp *tmp, int ret, int i)
 				return (-1);
 		}
 		else if (ret == 1 && tmp->tab[1] != NULL)
-		{
-			if ((change_list(tmp->varenv, tmp->tab[0], tmp->tab[1])) == -1)
-				return (-1);
-		}
+			change_list(tmp->varenv, tmp->tab[0], tmp->tab[1], tmp);
 	}
 	return (0);
 }
@@ -95,7 +98,7 @@ void			gestion_export_2(t_temp *tmp)
 	if (tmp->varenv)
 	{
 		if ((ret = cpy_env(&tmp->exportenv, tmp->varenv)) == -1)
-			exit(1);
+			general_free(tmp);
 		if (ret == 0)
 		{
 			range_export(tmp->exportenv);

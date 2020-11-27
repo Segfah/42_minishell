@@ -39,9 +39,12 @@ void	ft_lstdelone_cmd(t_cmd *lst)
 	{
 		if (lst->input)
 			ft_free(lst->input);
+		lst->input = NULL;
 		if (lst->output)
 			ft_free(lst->output);
+		lst->output = NULL;
 		ft_free(lst);
+		lst = NULL;
 	}
 }
 

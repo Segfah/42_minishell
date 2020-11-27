@@ -113,20 +113,18 @@ void				separator_string(t_cmd **cmd, char *str, t_temp *tmp)
 	i = 0;
 	if (!tmp)
 		return ;
-	tmp->strcmd = ft_split_strcmd(str, 1);
+	if (!(tmp->strcmd = ft_split_strcmd(str, 1)))
+		general_free(tmp);
 	while (tmp->strcmd[i])
 	{
-		new = ft_lstnew_cmd(tmp->strcmd[i], tmp);
+		if (!(new = ft_lstnew_cmd(tmp->strcmd[i], tmp)))
+			general_free(tmp);
 		ft_lstadd_back_cmd(cmd, new);
 		i++;
 	}
-	//printflist(*cmd);
 	remove_null_node(cmd);
 	while (strcat_cmd(cmd) == 1)
 		;
-	//printflist(*cmd);
 	remove_null_node(cmd);
-	//printflist(*cmd);
 	remove_space_node(cmd);
-	//printflist(*cmd);
 }

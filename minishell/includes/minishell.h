@@ -161,7 +161,7 @@ void				gestion_unset(t_temp *tmp);
 void				print_list(t_lists *head, int key);
 int					lback(t_lists **alst, char *str, char *str2);
 int					cpy_env(t_lists **cpy, t_lists *list);
-int					change_list(t_lists *head, char *ss, char *newdata);
+int					change_list(t_lists *head, char *ss, char *new, t_temp *t);
 
 /*
 ** tools_env_unset
@@ -276,7 +276,7 @@ void				dcote_cmd(t_cmd *cmd, t_lists *var);
 void				dcote_cmd_2(t_cmd *cmd, t_lists *revar, int size);
 void				dcote_cmd_3(t_cmd *cmd, t_lists *revar, int *i, int *j);
 
-void				check_node(t_cmd *cmd, t_temp *temp);
+int					check_node(t_cmd *cmd, t_temp *temp);
 
 void				dcote_fill_slash(t_cmd *cmd, int *i, int *j);
 void				dcote_count_slash(t_cmd *cmd, int *i, int *size);

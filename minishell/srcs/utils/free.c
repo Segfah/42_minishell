@@ -20,7 +20,10 @@ void				ft_free_double_tab(char **tab)
 	if (tab)
 	{
 		while (tab[i])
-			ft_free(tab[i++]);
+		{
+			free(tab[i]);
+			tab[i++] = NULL;
+		}
 		free(tab);
 	}
 	tab = NULL;
@@ -40,16 +43,6 @@ void				ft_free_triple_tab(char ***tab3d)
 	tab3d = NULL;
 }
 
-void				free_node_cmd(t_cmd *node)
-{
-	node->input ? ft_free(node->input) : 0;
-	node->input = NULL;
-	node->output ? ft_free(node->output) : 0;
-	node->output = NULL;
-	node ? ft_free(node) : 0;
-	node = NULL;
-}
-
 void				free_cmd(t_cmd *cmd)
 {
 	t_cmd			*tmp;
@@ -57,10 +50,16 @@ void				free_cmd(t_cmd *cmd)
 	while (cmd != NULL)
 	{
 		tmp = cmd->next;
-		free_node_cmd(cmd);
+		cmd->input ? free(cmd->input) : 0;
+		cmd->input = NULL;
+		cmd->output ? free(cmd->output) : 0;
+		cmd->output = NULL;
+		cmd ? free(cmd) : 0;
+		cmd = NULL;
 		cmd = tmp;
 	}
 	ft_free(cmd);
+	cmd = NULL;
 }
 
 void				free_export_tab(t_temp *tmp)

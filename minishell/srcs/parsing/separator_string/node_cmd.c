@@ -48,7 +48,7 @@ void	tilde(t_cmd *cmd, t_temp *tmp)
 		search_env("HOME", tmp, 0, &cmd->output);
 }
 
-void	check_node(t_cmd *cmd, t_temp *temp)
+int		check_node(t_cmd *cmd, t_temp *temp)
 {
 	if (cmd->input[0] == '$')
 		dollar_cmd(cmd, temp->varenv);
@@ -61,7 +61,11 @@ void	check_node(t_cmd *cmd, t_temp *temp)
 	else if (!ft_strcmp("~", cmd->input))
 		tilde(cmd, temp);
 	else
-		cmd->output = ft_strdup(cmd->input);
+	{
+		if (!(cmd->output = ft_strdup(cmd->input)))
+			return (-1);
+	}
+	return (0);
 }
 
 void	ft_lstadd_back_cmd(t_cmd **alst, t_cmd *new)
@@ -91,8 +95,13 @@ t_cmd	*ft_lstnew_cmd(char *input, t_temp *temp)
 		return (NULL);
 	if (input)
 	{
-		tmp->input = ft_strdup(input);
-		check_node(tmp, temp);
+		if (!(tmp->input = ft_strdup(input)))
+			return (NULL);
+		if (check_node(tmp, temp) == -1)
+		{
+			free_cmd(tmp);
+			general_free(temp);
+		}
 	}
 	else
 		tmp->input = NULL;
