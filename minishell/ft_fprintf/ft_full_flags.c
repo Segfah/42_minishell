@@ -24,7 +24,7 @@ void	ft_full_flags_m(t_flags *prt, va_list args)
 {
 	int				n;
 	unsigned long	u;
-	size_t 			swap;
+	size_t			swap;
 	size_t			tmp;
 
 	n = 0;
@@ -43,23 +43,6 @@ void	ft_full_flags_m(t_flags *prt, va_list args)
 	}
 }
 
-/* void	ft_full_flags_m(t_flags *prt, size_t *count, va_list args)
-{
-	int				n;
-	unsigned long	u;
-	size_t			tmp;
-
-	n = 0;
-	u = 0;
-	tmp = 0;
-	ft_precision(prt, &u, args);
-	*count = *count + u;
-	if (u < ((unsigned int)prt->nbr_f))
-	{
-		while (u++ < (unsigned int)prt->nbr_f)
-			ft_putchar_c(' ', count);
-	}
-} */
 void	ft_full_flags(t_flags *prt, va_list args)
 {
 	if (prt->flags == 2)
