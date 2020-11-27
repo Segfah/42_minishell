@@ -69,6 +69,7 @@ TEST_ARRAY=(
 "echo \"\\\$HOME\""
 "echo \"'\$'\""
 "echo \\\\\n"
+"echo \"coucou ca va ? '\$HOME' \coucou\""
 "echo \"< no pipe | or semicolon will ; stop me >\""
 '\"asdasdasd\"$asdasd$HOME'
 '################		    PIPES			#################'

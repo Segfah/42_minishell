@@ -12,17 +12,14 @@
 
 #include "minishell.h"
 
-void		echo_join(char **tabin, char **tabout)
+void		cmd_not_found(char **strcmd)
 {
 	int i;
 
 	i = 0;
+	g_ret = 127;
 	write(2, "minishell: ", 11);
-	while (tabin[i] && tabout[i] && ft_strcmp(tabin[i], " "))
-	{
-		write(2, tabout[i], ft_strlen(tabout[i]));
-		i++;
-	}
+	write(2, strcmd[i], ft_strlen(strcmd[i]));
 	write(2, ": command not found\n", 20);
 }
 

@@ -82,33 +82,19 @@ void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, int key)
 	else if (j == 11)
 		point_filename(tmp->strcmd);
 	else
-	{
-		g_ret = 127;
-		echo_join(tmp->cpytab, tmp->strcmd);
-	}
+		cmd_not_found(tmp->strcmd);
 	(void)key;
 	(void)tabcmd;
 }
 
-void			exit_join(char **tabin, char **tabout, int key)
+void			exit_join(char **tab)
 {
-	int i;
-	int j;
-
-	i = 1;
-	j = 2;
-	
-	if (!key)
-		write(1, "exit\n", 5);
+	g_ret = 255;
+	write(1, "exit\n", 5);
 	write(2, "minishell: exit: ", 17);
-	while (tabin[j] && tabout[i] && ft_strcmp(tabin[j], " "))
-	{
-		write(2, tabout[i], ft_strlen(tabout[i]));
-		j++;
-		i++;
-	}
+	write(2, tab[1], ft_strlen(tab[1]));
 	write(2, ": numeric argument required\n", 28);
-	
+	exit(g_ret);
 }
 
 void			exit_arg(char **strcmd, int key)
@@ -142,11 +128,7 @@ void			gestion_exit(char **strcmd, t_temp *tmp, int key)
 		(tmp->cpytab[3] == NULL || !ft_strcmp(tmp->cpytab[3], " ")))
 			exit_arg(strcmd, key);
 		else
-		{
-			g_ret = 255;
-			exit_join(tmp->cpytab, tmp->strcmd, key);
-			exit(g_ret);
-		}
+			exit_join(tmp->strcmd);
 	}
 }
 

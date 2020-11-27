@@ -32,6 +32,14 @@ int					isalpha1(char *s)
 	return (ret);
 }
 
+int					check_before_cat_node(char *s1, char *s2)
+{
+	if (ft_strcmp(s1, " ") && ft_strcmp(s2, " ") && ft_strncmp(s1, "<", 1) &&
+	ft_strncmp(s2, "<", 1) && ft_strncmp(s1, ">", 1 && ft_strncmp(s2, ">", 1)))
+		return (1);
+	return (0);
+}
+
 int					strcat_cmd(t_cmd **cmd)
 {
 	t_cmd	*tmp;
@@ -41,8 +49,8 @@ int					strcat_cmd(t_cmd **cmd)
 	i = 0;
 	while (tmp)
 	{
-		if (tmp->next && tmp->next->output && (isalpha1(tmp->output) > 0) &&
-		(isalpha1(tmp->next->output) > 0))
+		if (tmp->next && tmp->next->output &&
+		check_before_cat_node(tmp->input, tmp->next->input))
 		{
 			if ((tmp->input = ft_strcatdup(tmp->input, tmp->next->input)))
 				tmp->next->input = NULL;
@@ -112,8 +120,6 @@ void				separator_string(t_cmd **cmd, char *str, t_temp *tmp)
 		i++;
 	}
 	while (strcat_cmd(cmd) == 1)
-		;
-	while (cat_node_egal(cmd) == 1)
 		;
 	remove_null_node(cmd);
 	remove_space_node(cmd);
