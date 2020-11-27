@@ -375,7 +375,7 @@ int					search_error_pipe(t_cmd *tmp);
 
 void				point_filename(char **tab);
 
-void				exit_join(char **tab);
+void				exit_join(char **tab, int key);
 void				gestion_exit(char **strcmd, t_temp *tmp, int key);
 void				exit_arg(char **strcmd, int key);
 

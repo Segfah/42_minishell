@@ -26,14 +26,15 @@ void			gestion_exit(char **strcmd, t_temp *tmp, int key)
 		(tmp->cpytab[3] == NULL || !ft_strcmp(tmp->cpytab[3], " ")))
 			exit_arg(strcmd, key);
 		else
-			exit_join(tmp->strcmd);
+			exit_join(tmp->strcmd, key);
 	}
 }
 
-void			exit_join(char **tab)
+void			exit_join(char **tab, int key)
 {
 	g_ret = 255;
-	write(1, "exit\n", 5);
+	if (!key)
+		write(1, "exit\n", 5);
 	write(2, "minishell: exit: ", 17);
 	write(2, tab[1], ft_strlen(tab[1]));
 	write(2, ": numeric argument required\n", 28);
