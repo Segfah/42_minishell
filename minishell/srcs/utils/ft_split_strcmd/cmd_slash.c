@@ -49,7 +49,8 @@ void	ft_count_word_slash(char *s, int *i, int *n)
 
 char	*ft_fill_slash_2(char *s, int *i, char *tab, int save)
 {
-	while (s[*i] && s[*i] != ' ' && s[*i] != '"' && s[*i] != '\'' && s[*i] != '\\')
+	while (s[*i] && s[*i] != ' ' && s[*i]
+		!= '"' && s[*i] != '\'' && s[*i] != '\\')
 		(*i)++;
 	return (tab = copy(s, i, save));
 }
