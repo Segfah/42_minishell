@@ -48,6 +48,11 @@ int			search_error_redi2(char *tmp)
 	return (i);
 }
 
+int		is_pipe(char *str)
+{
+	return (!(ft_strcmp("|", str)));
+}
+
 int			check_redi_2(char **cmd, int key)
 {
 	int		i;
@@ -68,6 +73,8 @@ int			check_redi_2(char **cmd, int key)
 				!ft_strcmp(cmd[i + 1], " ") ? i++ : i;
 				if (cmd[i + 1] && is_redi(cmd[i + 1]))
 					return (key ? -4 : i);
+				if (cmd[i + 1] && is_pipe(cmd[i + 1]))
+					return (-35);
 			}
 			else
 				return (key ? -5 : i);

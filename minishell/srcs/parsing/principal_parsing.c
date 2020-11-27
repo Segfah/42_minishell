@@ -182,6 +182,8 @@ void			print_error_redi(char *str, int key)
 		ft_fprintf(2, "minishell: syntax error near unexpected token `%s'\n", str);
 	if (key == -5)
 		ft_fprintf(2, "minishell: syntax error near unexpected token `newline'\n");
+	if (key == -35)
+		ft_fprintf(2, "minishell: syntax error near unexpected token `|'\n");
 }
 
 int				error_line2(t_cmd *cmd, t_temp *tmp)
@@ -203,6 +205,16 @@ int				error_line2(t_cmd *cmd, t_temp *tmp)
 	return (0);
 }
 
+int			error_multi(t_cmd *cmd, t_temp *tmp)
+{
+	ft_fprintf(2, "error multi\n");
+	ft_free_double_tab(tmp->strcmd);
+	ft_free_double_tab(tmp->strcmdin);
+	ft_free_double_tab(tmp->cpytab);
+	(cmd != NULL) ? free_cmd(cmd) : 0;
+	return (-1);
+}
+
 int				error_line(char **tabcmd, t_temp *tmp, int i)
 {
 	t_cmd		*cmd;
@@ -215,13 +227,18 @@ int				error_line(char **tabcmd, t_temp *tmp, int i)
 		separator_string(&cmd, tabcmd[i], tmp);
 		if ((ret = len_split3d(cmd)) < 0)
 		{
-			ft_free_double_tab(tmp->strcmd);
-			(cmd != NULL) ? free_cmd(cmd) : 0;
-			print_error(ret);
-			return (-1);
+			if (ret != -3)
+			{
+				ft_free_double_tab(tmp->strcmd);
+				(cmd != NULL) ? free_cmd(cmd) : 0;
+				print_error(ret);
+				return (-1);
+			}
 		}
 		if (error_line2(cmd, tmp) == -1)
 			return (-1);
+		if (ret == -3)
+			return (error_multi(cmd, tmp));
 		ft_free_double_tab(tmp->strcmd);
 		ft_free_double_tab(tmp->strcmdin);
 		ft_free_double_tab(tmp->cpytab);

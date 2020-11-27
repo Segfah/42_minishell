@@ -91,7 +91,7 @@ int				print_error(int ret)
 	if (ret == -1 || ret == -2)
 		write(2, "minishell: syntax error near unexpected token `|'\n", 50);
 	if (ret == -3)
-		write(2, "error multi ligne\n", 18);
+		return (-3);
 	return (-1);
 }
 
