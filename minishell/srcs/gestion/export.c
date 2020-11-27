@@ -57,14 +57,10 @@ void			general_free(t_temp *tmp)
 	(!tmp->cpypipe) ? ft_free_triple_tab(tmp->cpypipe) : 0;
 	write(2, "Error: Malloc\n", 14);
 	exit(1);
-	ft_free(tmp->env);
 	ft_free(tmp->tab[0]);
 	ft_free(tmp->tab[1]);
 	
 	(tmp->exportenv != NULL) ? free_list(tmp->exportenv) : 0;
-	
-
-
 }
 
 int				export_arg(t_temp *tmp, int ret, int i)
