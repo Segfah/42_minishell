@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/15 17:54:33 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/22 20:54:43 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/27 18:32:46 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	remove_null_node(t_cmd **cmd)
 			ft_lstdelone_cmd(tmp->next);
 			tmp->next = save;
 		}
-		tmp = tmp->next;
+		else
+			tmp = tmp->next;
 	}
 }
 
