@@ -73,5 +73,6 @@ void	dcote_cmd(t_cmd *cmd, t_lists *var)
 			i++;
 		}
 	}
+	//printf("size = %d\n", size);
 	dcote_cmd_2(cmd, revar, size);
 }
