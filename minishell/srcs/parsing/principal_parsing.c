@@ -50,7 +50,7 @@ void			gestion_missing(t_temp *tmp)
 		if (!ft_strcmp("]", tmp->strcmd[i]))
 			return ;
 	}
-	ft_fprintf(2 ,"minishell: [: missing `]'\n");
+	ft_fprintf(2, "minishell: [: missing `]'\n");
 }
 
 void			point_filename(char **tab)
@@ -87,8 +87,6 @@ void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, int key)
 	(void)tabcmd;
 }
 
-
-
 void			launcher_cmd(char *tabcmd, t_temp *tmp, int j, int key)
 {
 	if (tabcmd[0] == 0 || j == -2 || tmp->flag[1] == -1 || tmp->flag[2] == -1)
@@ -107,89 +105,6 @@ void			launcher_cmd(char *tabcmd, t_temp *tmp, int j, int key)
 		gestion_export(tmp, 0);
 	else
 		launcher_cmd2(tabcmd, tmp, j, key);
-}
-
-void			print_error_redi(char *str, int key)
-{
-	if (key == -1)
-		ft_fprintf(2, "minishell: syntax error near unexpected token `>'\n");
-	if (key == -2)
-		ft_fprintf(2, "minishell: syntax error near unexpected token `>>'\n");
-	if (key == -3)
-		ft_fprintf(2, "minishell: syntax error near unexpected token `<'\n");
-	if (key == -4)
-		ft_fprintf(2, "minishell: syntax error near unexpected token `%s'\n", str);
-	if (key == -5)
-		ft_fprintf(2, "minishell: syntax error near unexpected token `newline'\n");
-	if (key == -35)
-		ft_fprintf(2, "minishell: syntax error near unexpected token `|'\n");
-}
-
-int				error_line2(t_cmd *cmd, t_temp *tmp)
-{
-	int			ret;
-
-	ret = (cmd) ? llist_astring(cmd, tmp) : 0;
-	if (ret == -1)
-	{
-		free_cmd(cmd);
-		general_free(tmp);
-	}
-	if (tmp->strcmdin && (ret = check_redi_2(tmp->strcmdin, 1, 0)) < 0)
-	{
-		print_error_redi(tmp->strcmd[check_redi_2(tmp->strcmd, 0, 0) + 1], ret);
-		ft_free_double_tab(tmp->strcmd);
-		ft_free_double_tab(tmp->strcmdin);
-		ft_free_double_tab(tmp->cpytab);
-		(cmd != NULL) ? free_cmd(cmd) : 0;
-		g_ret = 258;
-		return (-1);
-	}
-	return (0);
-}
-
-int			error_multi(t_cmd *cmd, t_temp *tmp)
-{
-	ft_fprintf(2, "error multi\n");
-	ft_free_double_tab(tmp->strcmd);
-	ft_free_double_tab(tmp->strcmdin);
-	ft_free_double_tab(tmp->cpytab);
-	(cmd != NULL) ? free_cmd(cmd) : 0;
-	g_ret = 258;
-	return (-1);
-}
-
-int				error_line(char **tabcmd, t_temp *tmp, int i)
-{
-	t_cmd		*cmd;
-	int			ret;
-
-	while (tabcmd[++i])
-	{
-		initialize(tmp, &ret);
-		cmd = NULL;
-		separator_string(&cmd, tabcmd[i], tmp);
-		if ((ret = len_split3d(cmd)) < 0)
-		{
-			if (ret != -3 && (g_ret = 258))
-			{
-				ft_free_double_tab(tmp->strcmd);
-				(cmd != NULL) ? free_cmd(cmd) : 0;
-				print_error(ret);
-				g_ret = 258;
-				return (-1);
-			}
-		}
-		if (error_line2(cmd, tmp) == -1)
-			return (-1);
-		if (ret == -3)
-			return (error_multi(cmd, tmp));
-		ft_free_double_tab(tmp->strcmd);
-		ft_free_double_tab(tmp->strcmdin);
-		ft_free_double_tab(tmp->cpytab);
-		(cmd != NULL) ? free_cmd(cmd) : 0;
-	}
-	return (0);
 }
 
 void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
@@ -272,9 +187,6 @@ void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 				general_free(tmp);
 		}
 	}
-//	if (WIFSIGNALED(status) == 1)
-//		printf("\n");
-	//pid = waitpid(pid, &status, 0);
 	signal(SIGINT, sighandler);
 	ft_free_triple_tab(tmp->inpipe);
 	ft_free_triple_tab(tmp->outpipe);
