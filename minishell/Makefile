@@ -67,6 +67,7 @@ SRC := \
 	srcs/parsing/tools_parsing/clean_espaces_echo.c \
 	srcs/parsing/tools_parsing/error_line.c \
 	srcs/parsing/tools_parsing/tab3d.c \
+	srcs/parsing/tools_parsing/launcher_cmd.c \
 	srcs/parsing/tools_parsing/clean_tab3d.c \
 	srcs/parsing/tools_parsing/len_tab3d.c \
 	srcs/parsing/tools_parsing/check_redi_flag.c \

@@ -14,7 +14,7 @@
 
 void			printftab(char **tab)
 {
-	int i;
+	int			i;
 
 	i = -1;
 	if (tab)
@@ -28,7 +28,7 @@ void			printftab(char **tab)
 
 void			printflist(t_cmd *cmd)
 {
-	t_cmd *tmp;
+	t_cmd		*tmp;
 
 	tmp = cmd;
 	ft_printf("----printlist----\n");
@@ -38,19 +38,6 @@ void			printflist(t_cmd *cmd)
 		tmp = tmp->next;
 	}
 	ft_printf("-----------------\n");
-}
-
-void			gestion_missing(t_temp *tmp)
-{
-	int			i;
-
-	i = -1;
-	while (tmp->strcmd[++i])
-	{
-		if (!ft_strcmp("]", tmp->strcmd[i]))
-			return ;
-	}
-	ft_fprintf(2, "minishell: [: missing `]'\n");
 }
 
 void			point_filename(char **tab)
@@ -69,59 +56,44 @@ void			point_filename(char **tab)
 	}
 }
 
-void			launcher_cmd2(char *tabcmd, t_temp *tmp, int j, int key)
+void			open_dup(int *fd, t_temp *tmp)
 {
-	if (j == 10)
-		gestion_missing(tmp);
-	else if (j == 7)
-		gestion_unset(tmp);
-	else if (j == 8)
-		gestion_echo(tmp);
-	else if (j == 9 && command_bin(tmp->strcmd, tmp) == 0)
-		return ;
-	else if (j == 11)
-		point_filename(tmp->strcmd);
-	else
-		cmd_not_found(tabcmd, tmp);
-	(void)key;
-	(void)tabcmd;
+	int			i;
+
+	i = 0;
+	while (i < tmp->nb_pipes)
+	{
+		if (pipe(fd + i * 2) < 0)
+		{
+			ft_fprintf(2,"error dup\n");
+			exit(0);
+		}
+		i++;
+	}
 }
 
-void			launcher_cmd(char *tabcmd, t_temp *tmp, int j, int key)
+void			close_dup(int *fd, t_temp *tmp)
 {
-	if (tabcmd[0] == 0 || j == -2 || tmp->flag[1] == -1 || tmp->flag[2] == -1)
-		return ;
-	else if (j == 1)
-		gestion_exit(tmp->strcmd, tmp, key);
-	else if (j == 2)
-		gestion_cd(tmp->strcmd, tmp);
-	else if (j == 3)
-		gestion_env(tmp->strcmd, tmp);
-	else if (j == 4)
-		gestion_pwd(tmp->strcmd, tmp);
-	else if (j == 5)
-		gestion_nani(tmp->strcmd);
-	else if (j == 6)
-		gestion_export(tmp, 0);
-	else
-		launcher_cmd2(tabcmd, tmp, j, key);
+	int			i;
+
+	i = 0;
+	while (i < tmp->nb_pipes * 2)
+	{
+		close(fd[i]);
+		i++;
+	}
 }
 
 void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 {
-	int			fd[tmp->nb_pipes * 2];//changer
+	int			*fd;
 	pid_t		pid;
 	int			k;
 	int			s;
 
-	for(int i = 0; i < tmp->nb_pipes; i++)
-	{
-		if( pipe(fd + i * 2) < 0 )
-		{
-			printf("3error\n");
-			exit(0);
-		}
-	}
+	if (!(fd = malloc(sizeof(int) * tmp->nb_pipes * 2)))
+		general_free(tmp);
+	open_dup(fd, tmp);
 	k = 0;
 	s = 0;
 //	printf("pipes == [%d]", tmp->nb_pipes);
@@ -130,12 +102,11 @@ void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 //		printftab(tmp->inpipe[k]);
 //		printftab(tmp->outpipe[k]);
 //		printftab(tmp->cpypipe[k]);
-		
 		if ((pid = fork()) == 0)
 		{
 			if (k != 0)
 			{
-				if ( dup2(fd[s - 2], 0) < 0)
+				if (dup2(fd[s - 2], 0) < 0)
 				{
 					printf("1error\n");
 					exit(0);
@@ -143,16 +114,13 @@ void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 			}
 			if (tmp->outpipe[k + 1] != NULL)
 			{
-				if( dup2(fd[s + 1], 1) < 0 )
+				if (dup2(fd[s + 1], 1) < 0)
 				{
 					printf("2error\n");
 					exit(0);
 				}
 			}
-			for(int i = 0; i < tmp->nb_pipes * 2; i++)
-			{
-				close(fd[i]);
-			}
+			close_dup(fd, tmp);
 			tmp->strcmd = tmp->outpipe[k];
 			tmp->strcmdin = tmp->inpipe[k];
 			tmp->cpytab = tmp->cpypipe[k];
@@ -174,20 +142,23 @@ void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 			k++;
 		}
 	}
-	for (int i = 0; i < 2 * tmp->nb_pipes; i++ )
-		close( fd[i] );
+	close_dup(fd, tmp);
 	int status;
-	for(int i = 0; i < tmp->nb_pipes + 1; i++)
+	for (int i = 0; i < tmp->nb_pipes + 1; i++)
 	{
 		status = 0;
 		wait(&status);
 		if (WIFEXITED(status))
 		{
 			if (WEXITSTATUS(status) == 1)
+			{
+				free(fd);
 				general_free(tmp);
+			}
 		}
 	}
 	signal(SIGINT, sighandler);
+	free(fd);
 	ft_free_triple_tab(tmp->inpipe);
 	ft_free_triple_tab(tmp->outpipe);
 	ft_free_triple_tab(tmp->cpypipe);
@@ -195,8 +166,8 @@ void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 
 void			npipe(char **tabcmd, t_temp *tmp, t_cmd *cmd, int i)
 {
-	int ret;
-	int j;
+	int			ret;
+	int			j;
 
 	j = 0;
 	ret = (cmd) ? llist_astring(cmd, tmp) : 0;
