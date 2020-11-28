@@ -87,7 +87,8 @@ void			gestion_cd(char **strcmd, t_temp *tmp)
 		if (!ft_strcmp(strcmd[1], ""))
 			;
 		else if (chdir(strcmd[1]) != 0 && (g_ret = 1))
-			ft_fprintf(2, "minishell: cd: %s: %s\n", strcmd[1], strerror(errno));
+			ft_fprintf(2, "minishell: cd: %s: %s\n"
+				, strcmd[1], strerror(errno));
 	}
 	else
 		gestion_cd_2(home, tmp);

@@ -18,7 +18,7 @@ void			gestion_exit(char **strcmd, t_temp *tmp, int key)
 	{
 		g_ret = 0;
 		write(1, "exit\n", 5);
-		exit (g_ret);
+		exit(g_ret);
 	}
 	else
 	{

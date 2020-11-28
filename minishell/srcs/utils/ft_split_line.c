@@ -70,7 +70,7 @@ char			**ft_split_line(char *str)
 	tab = NULL;
 	if (!str)
 		return (NULL);
-	if (!(multi_pv(str)))
+	if (!(multi_pv(str, 0)))
 		return (tab_null(tab));
 	word = ft_count_word(str);
 	if (!(tab = (char **)malloc(sizeof(char*) * (word + 1))))

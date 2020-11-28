@@ -39,11 +39,8 @@ int				truc(char *str, int *i)
 	return (1);
 }
 
-int				multi_pv(char *str)
+int				multi_pv(char *str, int i)
 {
-	int i;
-
-	i = 0;
 	if (ft_strcmp(";", str) == 0)
 		return (message_error_pv(1));
 	while (str[i])

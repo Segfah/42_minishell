@@ -302,7 +302,7 @@ void				dollar_cmd(t_cmd *cmd, t_lists *var);
 void				count_slash(char *str, int *i);
 
 int					message_error_pv(int pv);
-int					multi_pv(char *str);
+int					multi_pv(char *str, int i);
 char				**tab_null(char **tab);
 
 int					adeline2(char *s, char c, int n, int *i);
