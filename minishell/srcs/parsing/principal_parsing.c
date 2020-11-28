@@ -192,27 +192,9 @@ int				error_line(char **tabcmd, t_temp *tmp, int i)
 	return (0);
 }
 
-void			pparent(pid_t pid, t_temp *tmp, int *k)
-{
-	int status;
-
-	if ((pid = waitpid(pid, &status, WUNTRACED | WCONTINUED)) == -1)
-		general_free(tmp);
-	if (WIFEXITED(status))
-	{
-		/*
-		if (WEXITSTATUS(status) == 25)
-			ft_printf("minishell: %s: Is a directory\n"
-			, tmp->outpipe[*k][check_redi_2(tmp->outpipe[*k], 0) + 1]);
-		*/
-	}
-	(*k)++;
-	(void)tmp;
-}
-
 void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 {
-	int			fd[tmp->nb_pipes * 2];
+	int			fd[tmp->nb_pipes * 2];//changer
 	pid_t		pid;
 	int			k;
 	int			s;
@@ -234,7 +216,6 @@ void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 //		printftab(tmp->outpipe[k]);
 //		printftab(tmp->cpypipe[k]);
 		
-//		pipe(fd);
 		if ((pid = fork()) == 0)
 		{
 			if (k != 0)
@@ -272,7 +253,8 @@ void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 		}
 		else
 		{
-//			pparent(pid, tmp, &k);
+			signal(SIGINT, sighandler5);
+			signal(SIGQUIT, sighandler3);
 			s += 2;
 			k++;
 		}
@@ -280,17 +262,20 @@ void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 	for (int i = 0; i < 2 * tmp->nb_pipes; i++ )
 		close( fd[i] );
 	int status;
-	k =0;
 	for(int i = 0; i < tmp->nb_pipes + 1; i++)
 	{
 		status = 0;
-	//	pid = waitpid(pid, &status, WUNTRACED | WCONTINUED);
 		wait(&status);
 		if (WIFEXITED(status))
+		{
 			if (WEXITSTATUS(status) == 1)
 				general_free(tmp);
-		k++;
+		}
 	}
+//	if (WIFSIGNALED(status) == 1)
+//		printf("\n");
+	//pid = waitpid(pid, &status, 0);
+	signal(SIGINT, sighandler);
 	ft_free_triple_tab(tmp->inpipe);
 	ft_free_triple_tab(tmp->outpipe);
 	ft_free_triple_tab(tmp->cpypipe);

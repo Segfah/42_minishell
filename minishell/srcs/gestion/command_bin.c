@@ -60,15 +60,9 @@ char			**c_env(t_lists *list, int size)
 	return (tab);
 }
 
-void			sighandlerrr(int signum)
+void			sighandler6(int signum)
 {
 	write(1, "\b\b  \n", 5);
-	(void)signum;
-}
-
-void			sighandlerrr2(int signum)
-{
-	write(1, "Quit: 3  \n", 10);
 	(void)signum;
 }
 
@@ -85,14 +79,13 @@ int				command_bin(char **tab, t_temp *tmp)
 	else
 	{
 		signal(SIGINT, SIG_IGN);
-		signal(SIGQUIT, sighandlerrr2);
-//		signal(SIGINT, sighandlerrr);
+		signal(SIGQUIT, sighandler4);
 	}
 	if ((f = waitpid(f, &tmp->status, WUNTRACED | WCONTINUED)) == -1)
 		general_free(tmp);
 	if (WIFSIGNALED(tmp->status))
 		ft_printf("\n");
-	signal(SIGINT, sighandlerrr);
+	signal(SIGINT, sighandler6);
 	ft_free_tab(tab_env);
 	if (WIFEXITED(tmp->status))
 		command_bin_3(tmp);

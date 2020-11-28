@@ -34,3 +34,20 @@ void			sighandler2(int signum)
 	(void)signum;
 	write(1, " \b\b \b\b \b", 8);
 }
+
+void			sighandler3(int signum)
+{
+	(void)signum;
+}
+
+void			sighandler4(int signum)
+{
+	write(1, "Quit: 3  ", 9);
+	(void)signum;
+}
+
+void			sighandler5(int signum)
+{
+	write(1, "\n", 1);
+	(void)signum;
+}
