@@ -53,9 +53,4 @@ void			command_bin_3(t_temp *tmp)
 		g_ret = 126;
 	if (WEXITSTATUS(tmp->status) == 34)
 		g_ret = 127;
-/* 	if (WEXITSTATUS(tmp->status) == 16)
-	{
-		g_ret = 126;
-		exit(16);
-	} */
 }

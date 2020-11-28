@@ -142,6 +142,7 @@ int				error_line2(t_cmd *cmd, t_temp *tmp)
 		ft_free_double_tab(tmp->strcmdin);
 		ft_free_double_tab(tmp->cpytab);
 		(cmd != NULL) ? free_cmd(cmd) : 0;
+		g_ret = 258;
 		return (-1);
 	}
 	return (0);
@@ -154,6 +155,7 @@ int			error_multi(t_cmd *cmd, t_temp *tmp)
 	ft_free_double_tab(tmp->strcmdin);
 	ft_free_double_tab(tmp->cpytab);
 	(cmd != NULL) ? free_cmd(cmd) : 0;
+	g_ret = 258;
 	return (-1);
 }
 
@@ -169,11 +171,12 @@ int				error_line(char **tabcmd, t_temp *tmp, int i)
 		separator_string(&cmd, tabcmd[i], tmp);
 		if ((ret = len_split3d(cmd)) < 0)
 		{
-			if (ret != -3)
+			if (ret != -3 && (g_ret = 258))
 			{
 				ft_free_double_tab(tmp->strcmd);
 				(cmd != NULL) ? free_cmd(cmd) : 0;
 				print_error(ret);
+				g_ret = 258;
 				return (-1);
 			}
 		}
@@ -194,7 +197,7 @@ void			pparent(pid_t pid, t_temp *tmp, int *k)
 	int status;
 
 	if ((pid = waitpid(pid, &status, WUNTRACED | WCONTINUED)) == -1)
-		exit(1);
+		general_free(tmp);
 	if (WIFEXITED(status))
 	{
 		/*
@@ -265,7 +268,7 @@ void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 			launcher_cmd(tmp->outpipe[k][0], tmp, j, 1);
 			tmp->flag[1] == 1 ? close(tmp->fd) : 0;
 			tmp->flag[2] == 1 ? close(tmp->fdi) : 0;
-			exit(1);
+			exit(0);
 		}
 		else
 		{
@@ -284,8 +287,8 @@ void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 	//	pid = waitpid(pid, &status, WUNTRACED | WCONTINUED);
 		wait(&status);
 		if (WIFEXITED(status))
-			if (WEXITSTATUS(status) == 15)
-				printf("minishell: command not found: %s\n", tmp->outpipe[k][0]);
+			if (WEXITSTATUS(status) == 1)
+				general_free(tmp);
 		k++;
 	}
 	ft_free_triple_tab(tmp->inpipe);

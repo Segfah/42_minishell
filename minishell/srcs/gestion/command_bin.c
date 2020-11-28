@@ -79,7 +79,7 @@ int				command_bin(char **tab, t_temp *tmp)
 
 	g_ret = 1;
 	if (!(tab_env = c_env(tmp->varenv, lists_size(tmp->varenv))))
-		exit(1);
+		general_free(tmp);
 	if ((f = fork()) == 0)
 		command_bin_2(tab_env, tab, tmp);
 	else
@@ -89,7 +89,7 @@ int				command_bin(char **tab, t_temp *tmp)
 //		signal(SIGINT, sighandlerrr);
 	}
 	if ((f = waitpid(f, &tmp->status, WUNTRACED | WCONTINUED)) == -1)
-		exit(1);
+		general_free(tmp);
 	if (WIFSIGNALED(tmp->status))
 		ft_printf("\n");
 	signal(SIGINT, sighandlerrr);

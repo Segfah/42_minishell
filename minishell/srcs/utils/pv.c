@@ -18,6 +18,7 @@ int				message_error_pv(int pv)
 		write(2, "minishell: syntax error near unexpected token ';'\n", 50);
 	if (pv == 2)
 		write(2, "minishell: syntax error near unexpected token ';;'\n", 51);
+	g_ret = 258;
 	return (0);
 }
 
