@@ -128,6 +128,11 @@ void				clean_tab2d(char **tabin, char **tabout);
 ** parsing/tools/error_line
 */
 int					error_line(char **tabcmd, t_temp *tmp, int i);
+
+/*
+** parsing/tools/launcher_cmd
+*/
+void				launcher_cmd(char *tabcmd, t_temp *tmp, int j, int key);
 /*
 ** ************************************************************************
 ** **************************gestion***************************************

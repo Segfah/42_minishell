@@ -26,6 +26,7 @@ void			sighandler(int signum)
 	env = NULL;
 	ft_free(prompt);
 	prompt = NULL;
+	g_ret = 1;
 	(void)signum;
 }
 
