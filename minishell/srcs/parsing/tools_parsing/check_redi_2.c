@@ -48,16 +48,13 @@ int			search_error_redi2(char *tmp)
 	return (i);
 }
 
-int		is_pipe(char *str)
+int			is_pipe(char *str)
 {
 	return (!(ft_strcmp("|", str)));
 }
 
-int			check_redi_2(char **cmd, int key)
+int			check_redi_2(char **cmd, int key, int i)
 {
-	int		i;
-
-	i = 0;
 	while (cmd[i])
 	{
 		if (search_error_redi1(cmd[i]) == -3)

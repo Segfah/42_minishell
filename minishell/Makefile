@@ -64,6 +64,7 @@ SRC := \
 	srcs/parsing/tools_parsing/cmd_exist.c \
 	srcs/parsing/tools_parsing/redirection.c \
 	srcs/parsing/tools_parsing/open_redirection.c \
+	srcs/parsing/tools_parsing/clean_espaces_echo.c \
 	srcs/parsing/tools_parsing/tab3d.c \
 	srcs/parsing/tools_parsing/clean_tab3d.c \
 	srcs/parsing/tools_parsing/len_tab3d.c \
@@ -73,7 +74,6 @@ SRC := \
 	srcs/utils/adelines.c 
 
 OBJS = $(addprefix objs/, $(SRC:.c=.o))
-
 #color
 COM_COLOR   = \033[0;34m
 OBJ_COLOR   = \033[0;36m

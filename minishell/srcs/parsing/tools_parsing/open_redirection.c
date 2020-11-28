@@ -12,13 +12,13 @@
 
 #include "minishell.h"
 
-int		is_redi(char *str)
+int			is_redi(char *str)
 {
 	return (!(ft_strcmp(">", str)) || !(ft_strcmp(">>", str))
 		|| !(ft_strcmp("<", str)));
 }
 
-int		simple_redi(char *path, t_temp *tmp)
+static int	simple_redi(char *path, t_temp *tmp)
 {
 	(tmp->fd > 0) ? close(tmp->fd) : 0;
 	tmp->fd = 0;
@@ -32,7 +32,7 @@ int		simple_redi(char *path, t_temp *tmp)
 	return (0);
 }
 
-int		double_redi(char *path, t_temp *tmp)
+static int	double_redi(char *path, t_temp *tmp)
 {
 	(tmp->fd > 0) ? close(tmp->fd) : 0;
 	tmp->fd = 0;
@@ -45,7 +45,7 @@ int		double_redi(char *path, t_temp *tmp)
 	return (0);
 }
 
-int		contre_redi(char *path, t_temp *tmp)
+static int	contre_redi(char *path, t_temp *tmp)
 {
 	(tmp->fdi > 0) ? close(tmp->fdi) : 0;
 	tmp->fdi = 0;
@@ -54,6 +54,33 @@ int		contre_redi(char *path, t_temp *tmp)
 		ft_fprintf(2, "minishell: %s: %s\n", path, strerror(errno));
 		g_ret = 1;
 		return (-1);
+	}
+	return (0);
+}
+
+int			check_redi_flag2(char **cmd, t_temp *tmp, int *i)
+{
+	if (!(ft_strcmp(">", cmd[*i])))
+	{
+		tmp->flag[1] = 1;
+		!ft_strcmp(cmd[*i + 1], " ") ? (*i)++ : *i;
+		if (tmp->flag[2] != -1
+			&& simple_redi(tmp->strcmd[*i + 1], tmp) == -1)
+			return (tmp->flag[1] = -1);
+	}
+	else if (tmp->flag[2] != -1 && !(ft_strcmp(">>", cmd[*i])))
+	{
+		tmp->flag[1] = 1;
+		!ft_strcmp(cmd[*i + 1], " ") ? (*i)++ : *i;
+		if (double_redi(tmp->strcmd[*i + 1], tmp) == -1)
+			return (tmp->flag[1] = -1);
+	}
+	else if (!(ft_strcmp("<", cmd[*i])))
+	{
+		tmp->flag[2] = 1;
+		!ft_strcmp(cmd[*i + 1], " ") ? (*i)++ : *i;
+		if (contre_redi(tmp->strcmd[*i + 1], tmp) == -1)
+			return (tmp->flag[2] = -1);
 	}
 	return (0);
 }

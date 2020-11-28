@@ -71,11 +71,9 @@ int				tab2_3d(t_cmd *cmd, t_temp *tmp, int i)
 			return (-1);
 		while (++k < len)
 		{
-			if (!(tmp->inpipe[i][k] = ft_strdup(tmpo->input)))
-				return (-1);
-			if (!(tmp->outpipe[i][k] = ft_strdup(tmpo->output)))
-				return (-1);
-			if (!(tmp->cpypipe[i][k] = ft_strdup(tmpo->input)))
+			if (!(tmp->inpipe[i][k] = ft_strdup(tmpo->input))
+				|| !(tmp->outpipe[i][k] = ft_strdup(tmpo->output))
+				|| !(tmp->cpypipe[i][k] = ft_strdup(tmpo->input)))
 				return (-1);
 			(tmpo->next) ? tmpo = tmpo->next : 0;
 		}

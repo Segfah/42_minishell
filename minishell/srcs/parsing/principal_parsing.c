@@ -135,9 +135,9 @@ int				error_line2(t_cmd *cmd, t_temp *tmp)
 		free_cmd(cmd);
 		general_free(tmp);
 	}
-	if (tmp->strcmdin && (ret = check_redi_2(tmp->strcmdin, 1)) < 0)
+	if (tmp->strcmdin && (ret = check_redi_2(tmp->strcmdin, 1, 0)) < 0)
 	{
-		print_error_redi(tmp->strcmd[check_redi_2(tmp->strcmd, 0) + 1], ret);
+		print_error_redi(tmp->strcmd[check_redi_2(tmp->strcmd, 0, 0) + 1], ret);
 		ft_free_double_tab(tmp->strcmd);
 		ft_free_double_tab(tmp->strcmdin);
 		ft_free_double_tab(tmp->cpytab);
@@ -243,8 +243,8 @@ void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 			tmp->cpytab = tmp->cpypipe[k];
 			cmd ? check_redi(tmp->strcmdin, tmp) : 0;
 			((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)
-				? skip_redi(tmp, 0) : 0;
-			(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
+				? skip_redi(tmp, 0, 0) : 0;
+			(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp, 0) : 0;
 			tmp->flag[0] = (j > 0) ? 1 : 0;
 			launcher_cmd(tmp->outpipe[k][0], tmp, j, 1);
 			tmp->flag[1] == 1 ? close(tmp->fd) : 0;
@@ -295,8 +295,8 @@ void			npipe(char **tabcmd, t_temp *tmp, t_cmd *cmd, int i)
 	}
 	cmd ? check_redi(tmp->strcmdin, tmp) : 0;
 	((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)
-		? skip_redi(tmp, 0) : 0;
-	(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp) : 0;
+		? skip_redi(tmp, 0, 0) : 0;
+	(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp, 0) : 0;
 	tmp->flag[0] = (j > 0) ? 1 : 0;
 	launcher_cmd(tabcmd[i], tmp, j, 0);
 	ft_free_double_tab(tmp->strcmd);

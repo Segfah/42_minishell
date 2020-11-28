@@ -65,11 +65,9 @@ static int		cmd_is_here(char **path)
 ** despues del return (-2);
 */
 
-int				cmd_exist(char *cmd, t_temp *tmp)
+int				cmd_exist(char *cmd, t_temp *tmp, int flag)
 {
-	int			flag;
-
-	if (!(flag = 0) && !cmd)
+	if (!cmd)
 		return (-2);
 	flag = !ft_strcmp(cmd, "exit") ? 1 : flag;
 	flag = !ft_strcmp(cmd, "[") ? 10 : flag;
@@ -83,7 +81,8 @@ int				cmd_exist(char *cmd, t_temp *tmp)
 	flag = !ft_strcmp(cmd, "echo") ? 8 : flag;
 	if (!ft_strcmp(cmd, ".."))
 		return (0);
-	if (!ft_strncmp(cmd, "./", 2) || !ft_strncmp(cmd, "/", 1) || !ft_strncmp(cmd, "..", 1))
+	if (!ft_strncmp(cmd, "./", 2) || !ft_strncmp(cmd, "/", 1)
+		|| !ft_strncmp(cmd, "..", 1))
 		flag = 9;
 	if (flag || (!flag && !search_env("PATH", tmp, 1, NULL)))
 		return (flag);

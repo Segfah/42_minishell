@@ -46,7 +46,8 @@ static int		check_redi_d_error(char **cmd, t_temp *tmp, int i)
 	}
 	else
 	{
-		ft_fprintf(2, "minishell: syntax error near unexpected token `newline'\n");
+		ft_fprintf(2, "%s syntax error near unexpected token `newline'\n"
+			, "minishell:");
 		return (tmp->flag[1] = -1);
 	}
 	return (0);

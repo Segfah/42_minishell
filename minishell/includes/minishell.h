@@ -99,21 +99,24 @@ int					ft_getline(t_temp *tmp, char **av, int ret);
 /*
 **	parsing/tools/cmd_exit
 */
-int					cmd_exist(char *cmd, t_temp *tmp);
+int					cmd_exist(char *cmd, t_temp *tmp, int flag);
 
 /*
 **	parsing/tools/redirection
 */
 int					check_redi(char **cmd, t_temp *tmp);
-void				skip_redi(t_temp *tmp, int i);
+void				skip_redi(t_temp *tmp, int i, int j);
 
 /*
 ** parsing/tools/open_rediction
 */
 int					is_redi(char *str);
-int					simple_redi(char *path, t_temp *tmp);
-int					double_redi(char *path, t_temp *tmp);
-int					contre_redi(char *path, t_temp *tmp);
+int					check_redi_flag2(char **cmd, t_temp *tmp, int *i);
+
+/*
+** parsing/tools/clean_espaces_echo
+*/
+int					clean_espaces_echo(t_temp *tmp);
 
 /*
 ** parsing/tools/tab3d
@@ -347,11 +350,13 @@ char				*cp_str_2(int size, char *tmp_str, char *str);
 void				gestion_cd_2(char *home, t_temp *tmp);
 int					check_echo_2(int *check, int *i, char c, char *s);
 void				tilde(t_cmd *cmd, t_temp *tmp);
-int					check_redi_2(char **cmd, int key);
+int					check_redi_2(char **cmd, int key, int i);
 int					search_error_redi1(char *tmp);
 int					search_error_redi2(char *tmp);
 void				ft_nb_exit(int exi);
+
 int					check_redi_flag(char **cmd, t_temp *tmp);
+
 int					tab2_3d2(int key, t_temp *tmp, int *k, int *i);
 void				initialize_tmp(t_temp *tmp, int ac, char **av);
 void				initialize(t_temp *tmp, int *j);
