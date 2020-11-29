@@ -53,7 +53,23 @@ static int		new_list_no_env(t_lists **head)
 	*head = new;
 	return (0);
 }
-
+int			creating_env(t_temp *tmp)	
+{
+	tmp->env = getcwd(NULL, 0);
+	if (new_list_no_env(&tmp->varenv) == -1)
+		return (-1);
+	if (search_env("PWD", tmp, 1, NULL) == 0)
+	{
+		if ((lback(&tmp->varenv, "PWD", tmp->env)) == -1)
+			return (-1);
+		if ((lback(&tmp->varenv, "OLDPWD", NULL)) == -1)
+			return (-1);
+		if ((lback(&tmp->varenv, "SHLVL", "1")) == -1)
+			return (-1);
+	}
+	ft_free(tmp->env);
+	return (0);
+}
 int				launch_main(t_temp *tmp, int ac, char **av, char **envp)
 {
 	g_ret = 0;
@@ -61,7 +77,8 @@ int				launch_main(t_temp *tmp, int ac, char **av, char **envp)
 	if (save_env(&tmp->varenv, envp) == -1)
 		return (-1);
 	if (tmp->varenv == NULL)
-		new_list_no_env(&tmp->varenv);
+		if (creating_env(tmp) == -1)
+			return (-1);
 	if (!tmp->hnull)
 	{
 		if (search_env("HOME", tmp, 1, NULL) == 1)
