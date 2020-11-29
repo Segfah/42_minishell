@@ -15,6 +15,7 @@
 int			print_0(char n)
 {
 	write(1, &n, 1);
+	g_ret = 0;
 	return (0);
 }
 
