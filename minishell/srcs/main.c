@@ -53,7 +53,8 @@ static int		new_list_no_env(t_lists **head)
 	*head = new;
 	return (0);
 }
-int			creating_env(t_temp *tmp)	
+
+int				creating_env(t_temp *tmp)
 {
 	tmp->env = getcwd(NULL, 0);
 	if (new_list_no_env(&tmp->varenv) == -1)
@@ -70,6 +71,7 @@ int			creating_env(t_temp *tmp)
 	ft_free(tmp->env);
 	return (0);
 }
+
 int				launch_main(t_temp *tmp, int ac, char **av, char **envp)
 {
 	g_ret = 0;
