@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 11:44:28 by corozco           #+#    #+#             */
-/*   Updated: 2020/10/01 20:24:57 by corozco          ###   ########.fr       */
+/*   Updated: 2020/11/29 18:18:52 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int				ft_isascii(int c);
 int				ft_isprint(int c);
 int				ft_tolower(int c);
 int				ft_toupper(int c);
-int				ft_atoi(const char *str);
+long long int	ft_atoi(const char *str);
 int				ft_isspace(const char s);
 int				ft_gnl(int fd, char **line);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);

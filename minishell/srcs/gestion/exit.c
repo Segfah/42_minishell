@@ -6,12 +6,33 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 13:54:38 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/27 13:54:39 by lryst            ###   ########.fr       */
+/*   Updated: 2020/11/29 19:03:32 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	ft_llintlen(int n)
+{
+	long long int		len;
+
+	if (n == 2147482647)
+		return (11);
+	len = 0;
+	if (n == 0)
+		return (1);
+	if (n < 0)
+	{
+		n = -n;
+		len++;
+	}
+	while (n)
+	{
+		n /= 10;
+		len++;
+	}
+	return (len);
+}
 void			gestion_exit(char **strcmd, t_temp *tmp, int key)
 {
 	if (!strcmd[1] && !key)
@@ -22,7 +43,8 @@ void			gestion_exit(char **strcmd, t_temp *tmp, int key)
 	}
 	else
 	{
-		if (ft_intlen(ft_atoi(strcmd[1])) == (int)ft_strlen(strcmd[1]) &&
+		if ((ft_intlen(ft_atoi(strcmd[1])) == (int)ft_strlen(strcmd[1]) ||
+		ft_strcmp(strcmd[1], "-9223372036854775808") == 0) &&
 		(tmp->cpytab[3] == NULL || !ft_strcmp(tmp->cpytab[3], " ")))
 			exit_arg(strcmd, key);
 		else
