@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "signal.h"
 
 void			launcher(t_temp tmp, int ac, char **av)
 {

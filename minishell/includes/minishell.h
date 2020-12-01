@@ -16,7 +16,6 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <sys/types.h>
-# include <signal.h>
 # include <string.h>
 # include <errno.h>
 # include "libft.h"
@@ -392,11 +391,6 @@ int					ft_check_option_echo(char *s);
 int					echo_cote_space(t_temp *tmp);
 int					check_multi_options(t_temp *tmp, int *i, int *n);
 
-void				sighandler(int signum);
-void				sighandler2(int signum);
-void				sighandler3(int signum);
-void				sighandler4(int signum);
-void				sighandler5(int signum);
 void				clean_split3d(t_temp *tmp);
 void				clean_tab2d_echo_2(int k, char **tabin, char **tabout);
 int					len_tabsplit3d(t_cmd *cmd);

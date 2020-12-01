@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "signal.h"
 
 static void		pipes_status(t_temp *tmp, int *fd, int i)
 {

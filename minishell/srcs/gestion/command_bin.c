@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <sys/stat.h>
+#include "signal.h"
 
 int				lists_size(t_lists *lst)
 {

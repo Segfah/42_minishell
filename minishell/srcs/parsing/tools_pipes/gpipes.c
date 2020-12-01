@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "signal.h"
 
 static void		open_dup(int *fd, t_temp *tmp)
 {
