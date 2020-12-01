@@ -27,12 +27,10 @@ void	dcote_fill_slash(t_cmd *cmd, int *i, int *j)
 	while (size++ < (save / 2))
 		cmd->output[(*j)++] = '\\';
 	if (save % 2 == 1)
-    {
-        if (cmd->input[*i] && (cmd->input[*i] == '"'||
-		cmd->input[*i] == '$'))
-            cmd->output[(*j)++] = cmd->input[(*i)++];
-		else if (save == 1 && (cmd->input[*i] != '"'||
-		cmd->input[*i] != '$'))
+	{
+		if (cmd->input[*i] && (cmd->input[*i] == '"' || cmd->input[*i] == '$'))
+			cmd->output[(*j)++] = cmd->input[(*i)++];
+		else if (save == 1 && (cmd->input[*i] != '"' || cmd->input[*i] != '$'))
 		{
 			cmd->output[(*j)++] = '\\';
 			cmd->output[(*j)++] = cmd->input[(*i)++];
@@ -43,26 +41,27 @@ void	dcote_fill_slash(t_cmd *cmd, int *i, int *j)
 			cmd->output[(*j)++] = '\\';
 }
 
-void    dcote_count_slash(t_cmd *cmd, int *i, int *size)
+void	dcote_count_slash(t_cmd *cmd, int *i, int *size)
 {
-    int save;
-    save = 0;
-    while (cmd->input[*i] && cmd->input[*i] == '\\')
-    {
-        save++;
-        (*i)++;
-    }
-    if (save % 2 == 1)
-    {
-        if (cmd->input[*i] && (cmd->input[*i] == '"'|| cmd->input[*i] == '$'))
-            (*i)++;
+	int save;
+
+	save = 0;
+	while (cmd->input[*i] && cmd->input[*i] == '\\')
+	{
+		save++;
+		(*i)++;
+	}
+	if (save % 2 == 1)
+	{
+		if (cmd->input[*i] && (cmd->input[*i] == '"' || cmd->input[*i] == '$'))
+			(*i)++;
 		if (save == 1)
 		{
 			(*size)++;
 			return ;
 		}
-    }
-    (*size) = (*size) + (save / 2);
+	}
+	(*size) = (*size) + (save / 2);
 }
 
 void	dcote_fill_dollar(t_cmd *cmd, t_lists *revar, int *i, int *j)
@@ -73,9 +72,9 @@ void	dcote_fill_dollar(t_cmd *cmd, t_lists *revar, int *i, int *j)
 
 	(*i)++;
 	save = *i;
-	while (cmd->input[*i] && ((cmd->input[*i] > 47 && cmd->input[*i] < 58) ||
-	(cmd->input[*i] > 64 && cmd->input[*i] < 91) || (cmd->input[*i] > 96 &&
-	cmd->input[*i] < 123)))
+	while (cmd->input[*i] && ((cmd->input[*i] > 47 && cmd->input[*i] < 58)
+		|| (cmd->input[*i] > 64 && cmd->input[*i] < 91)
+		|| (cmd->input[*i] > 96 && cmd->input[*i] < 123)))
 		(*i)++;
 	if (!(tmp = (char*)malloc(sizeof(char) * (*i - save) + 1)))
 		return ;
@@ -105,9 +104,9 @@ void	dcote_count_dollar(t_cmd *cmd, t_lists *var, int *i, int *size)
 	j = 0;
 	(*i)++;
 	save = *i;
-	while (cmd->input[*i] && ((cmd->input[*i] > 47 && cmd->input[*i] < 58) ||
-	(cmd->input[*i] > 64 && cmd->input[*i] < 91) || (cmd->input[*i] > 96 &&
-	cmd->input[*i] < 123)))
+	while (cmd->input[*i] && ((cmd->input[*i] > 47 && cmd->input[*i] < 58)
+		|| (cmd->input[*i] > 64 && cmd->input[*i] < 91)
+		|| (cmd->input[*i] > 96 && cmd->input[*i] < 123)))
 		(*i)++;
 	if (!(tmp = (char*)malloc(sizeof(char) * (*i - save) + 1)))
 		return ;
@@ -127,10 +126,9 @@ void	dcote_count_dollar(t_cmd *cmd, t_lists *var, int *i, int *size)
 
 void	before_count_dollar(t_cmd *cmd, t_lists *var, int *i, int *size)
 {
-	if (cmd->input[*i] && ((cmd->input[*i + 1] > 47 &&
-		cmd->input[*i + 1] < 58) || (cmd->input[*i + 1] > 64 &&
-		cmd->input[*i + 1] < 91) || (cmd->input[*i + 1] > 96 &&
-		cmd->input[*i + 1] < 123)))
+	if (cmd->input[*i] && ((cmd->input[*i + 1] > 47 && cmd->input[*i + 1] < 58)
+	|| (cmd->input[*i + 1] > 64 && cmd->input[*i + 1] < 91)
+	|| (cmd->input[*i + 1] > 96 && cmd->input[*i + 1] < 123)))
 	{
 		dcote_count_dollar(cmd, var, i, size);
 	}

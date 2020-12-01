@@ -12,34 +12,6 @@
 
 #include "minishell.h"
 
-void			printftab(char **tab)
-{
-	int			i;
-
-	i = -1;
-	if (tab)
-	{
-		ft_printf("----printtab----\n");
-		while (tab[++i])
-			ft_printf("---[%d], --- [%s]\n", i, tab[i]);
-		ft_printf("-----------------\n");
-	}
-}
-
-void			printflist(t_cmd *cmd)
-{
-	t_cmd		*tmp;
-
-	tmp = cmd;
-	ft_printf("----printlist----\n");
-	while (tmp)
-	{
-		ft_printf("list in[%s] out[%s]\n", tmp->input, tmp->output);
-		tmp = tmp->next;
-	}
-	ft_printf("-----------------\n");
-}
-
 void			point_filename(char **tab)
 {
 	int			i;
@@ -54,123 +26,6 @@ void			point_filename(char **tab)
 		write(2, "minishell: .: filename argument required\n", 41);
 		write(2, ".: usage: . filename [arguments]\n", 33);
 	}
-}
-
-void			close_dup(int *fd, t_temp *tmp)
-{
-	int			i;
-
-	i = 0;
-	while (i < tmp->nb_pipes * 2)
-	{
-		close(fd[i]);
-		i++;
-	}
-}
-
-void			open_dup(int *fd, t_temp *tmp)
-{
-	int			i;
-
-	i = 0;
-	while (i < tmp->nb_pipes)
-	{
-		if (pipe(fd + i * 2) < 0)
-		{
-			ft_fprintf(2, "error dup\n");
-			exit(0);
-		}
-		i++;
-	}
-}
-
-void			pipes_status(t_temp *tmp, int *fd, int i)
-{
-	int			status;
-
-	while (++i < tmp->nb_pipes + 1)
-	{
-		status = 0;
-		wait(&status);
-		if (WIFEXITED(status))
-		{
-			if (WEXITSTATUS(status) == 1)
-			{
-				free(fd);
-				general_free(tmp);
-			}
-			if (i + 1 == tmp->nb_pipes + 1)
-			{
-				(WEXITSTATUS(status) == 0) ? g_ret = 0 : 0;
-				(WEXITSTATUS(status) == 35) ? g_ret = 1 : 0;
-				(WEXITSTATUS(status) == 126) ? g_ret = 126 : 0;
-				(WEXITSTATUS(status) == 127) ? g_ret = 127 : 0;
-				(WEXITSTATUS(status) == 255) ? g_ret = 255 : 0;
-				(WEXITSTATUS(status) == 258) ? g_ret = 258 : 0;
-			}
-		}
-	}
-}
-
-void			close_gpipes(t_temp *tmp, int *fd)
-{
-	close_dup(fd, tmp);
-	pipes_status(tmp, fd, -1);
-	signal(SIGINT, sighandler);
-	free(fd);
-	ft_free_triple_tab(tmp->inpipe);
-	ft_free_triple_tab(tmp->outpipe);
-	ft_free_triple_tab(tmp->cpypipe);
-}
-
-void			cmd_pipes(t_temp *tmp, int j, t_fdpipes *var, t_cmd *cmd)
-{
-	if (var->k != 0)
-		dup2(var->fd[var->s - 2], 0);
-	if (tmp->outpipe[var->k + 1] != NULL)
-		dup2(var->fd[var->s + 1], 1);
-	close_dup(var->fd, tmp);
-	tmp->strcmd = tmp->outpipe[var->k];
-	tmp->strcmdin = tmp->inpipe[var->k];
-	tmp->cpytab = tmp->cpypipe[var->k];
-	cmd ? check_redi(tmp->strcmdin, tmp) : 0;
-	((tmp->flag[2] || tmp->flag[1]) && tmp->flag[2] != -1 && tmp->flag[1] != -1)
-		? skip_redi(tmp, 0, 0) : 0;
-	(tmp->strcmd) ? j = cmd_exist(tmp->strcmd[0], tmp, 0) : 0;
-	tmp->flag[0] = (j > 0) ? 1 : 0;
-	launcher_cmd(tmp->outpipe[var->k][0], tmp, j, 1);
-	tmp->flag[1] == 1 ? close(tmp->fd) : 0;
-	tmp->flag[2] == 1 ? close(tmp->fdi) : 0;
-	if (g_ret == 1)
-		exit(35);
-	exit(g_ret);
-}
-
-void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
-{
-	pid_t		pid;
-	t_fdpipes	var;
-
-	if (!(var.fd = malloc(sizeof(int) * tmp->nb_pipes * 2)))
-		general_free(tmp);
-	open_dup(var.fd, tmp);
-	var.k = 0;
-	var.s = 0;
-	while (tmp->outpipe[var.k])
-	{
-		if ((pid = fork()) == 0)
-		{
-			cmd_pipes(tmp, j, &var, cmd);
-		}
-		else
-		{
-			signal(SIGINT, sighandler5);
-			signal(SIGQUIT, sighandler3);
-			var.s += 2;
-			var.k++;
-		}
-	}
-	close_gpipes(tmp, var.fd);
 }
 
 void			npipe(char **tabcmd, t_temp *tmp, t_cmd *cmd, int i)
@@ -198,6 +53,22 @@ void			npipe(char **tabcmd, t_temp *tmp, t_cmd *cmd, int i)
 	tmp->flag[2] == 1 ? close(tmp->fdi) : 0;
 }
 
+int				no_cmd(int j, t_cmd *cmd, t_temp *tmp)
+{
+	if (j == -1)
+	{
+		(cmd != NULL) ? free_cmd(cmd) : 0;
+		general_free(tmp);
+	}
+	if (j < 0)
+	{
+		(cmd != NULL) ? free_cmd(cmd) : 0;
+		tmp->tabpath ? ft_free_tab(tmp->tabpath) : 0;
+		return (1);
+	}
+	return (0);
+}
+
 static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 {
 	int			j;
@@ -213,17 +84,8 @@ static void		gestion_line(char **tabcmd, t_temp *tmp, int i)
 		ft_free_double_tab(tmp->strcmd);
 		tmp->strcmd = NULL;
 		(cmd) ? j = split3d(cmd, tmp) : 0;
-		if (j == -1)
-		{
-			(cmd != NULL) ? free_cmd(cmd) : 0;
-			general_free(tmp);
-		}
-		if (j < 0)
-		{
-			(cmd != NULL) ? free_cmd(cmd) : 0;
-			tmp->tabpath ? ft_free_tab(tmp->tabpath) : 0;
+		if (no_cmd(j, cmd, tmp) == 1)
 			break ;
-		}
 		(tmp->outpipe) ? gpipes(tmp, cmd, j) : npipe(tabcmd, tmp, cmd, i);
 		(cmd != NULL) ? free_cmd(cmd) : 0;
 		tmp->tabpath ? ft_free_tab(tmp->tabpath) : 0;

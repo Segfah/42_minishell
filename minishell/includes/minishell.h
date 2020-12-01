@@ -87,6 +87,12 @@ typedef struct		s_cmd
 int					g_ret;
 int					g_malloc;
 
+/*
+** parsing/tools pipes
+*/
+void				gpipes(t_temp *tmp, t_cmd *cmd, int j);
+void				close_gpipes(t_temp *tmp, int *fd);
+
 void				general_free(t_temp *tmp);
 /*
 ** drawings

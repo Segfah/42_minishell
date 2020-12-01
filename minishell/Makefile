@@ -61,6 +61,7 @@ SRC := \
 	srcs/parsing/separator_string/dollar.c \
 	srcs/utils/ft_strcatdup.c \
 	srcs/utils/pv.c \
+	srcs/utils/prints.c \
 	srcs/parsing/tools_parsing/cmd_exist.c \
 	srcs/parsing/tools_parsing/redirection.c \
 	srcs/parsing/tools_parsing/open_redirection.c \
@@ -73,6 +74,8 @@ SRC := \
 	srcs/parsing/tools_parsing/check_redi_flag.c \
 	srcs/parsing/tools_parsing/check_redi_2.c \
 	srcs/parsing/tools_parsing/llist_astring.c \
+	srcs/parsing/tools_pipes/gpipes.c \
+	srcs/parsing/tools_pipes/close_pipes.c \
 	srcs/utils/adelines.c 
 
 OBJS = $(addprefix objs/, $(SRC:.c=.o))
@@ -158,7 +161,7 @@ leaks:
 	leaks $(NAME)
 
 norme:
-	@~/.norminette/norminette.rb libft/srcs libft/includes includes srcs/
+	@~/.norminette/norminette.rb libft/srcs libft/includes includes srcs/ ft_fprintf/*.c ft_fprintf/*.h
 
 quimera:
 	@echo '	 _**_**	'
