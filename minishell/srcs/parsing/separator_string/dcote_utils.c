@@ -64,6 +64,22 @@ void	dcote_count_slash(t_cmd *cmd, int *i, int *size)
 	(*size) = (*size) + (save / 2);
 }
 
+void	dcote_fill_dollar2(t_lists *revar, char *tmp, t_cmd *cmd, int *j)
+{
+	int		size;
+
+	size = 0;
+	while (revar)
+	{
+		if (!revar->name && !revar->data)
+			break ;
+		if (ft_strcmp(revar->name, tmp) == 0)
+			while (revar->data[size])
+				cmd->output[(*j)++] = revar->data[size++];
+		revar = revar->next;
+	}
+}
+
 void	dcote_fill_dollar(t_cmd *cmd, t_lists *revar, int *i, int *j)
 {
 	int		size;
@@ -82,16 +98,7 @@ void	dcote_fill_dollar(t_cmd *cmd, t_lists *revar, int *i, int *j)
 	while (save < *i)
 		tmp[size++] = cmd->input[save++];
 	tmp[size] = '\0';
-	size = 0;
-	while (revar)
-	{
-		if (!revar->name && !revar->data)
-			break ;
-		if (ft_strcmp(revar->name, tmp) == 0)
-			while (revar->data[size])
-				cmd->output[(*j)++] = revar->data[size++];
-		revar = revar->next;
-	}
+	dcote_fill_dollar2(revar, tmp, cmd, j);
 	ft_free(tmp);
 }
 
