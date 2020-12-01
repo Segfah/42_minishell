@@ -131,7 +131,7 @@ NC=$(tput sgr0)
 
 
 make
-cp ./the_big_minishell ./minishell
+cp ./minishell ./minishell
 printf "copying your minishell to the current directory...\n"
 
 rm -rf diff.txt

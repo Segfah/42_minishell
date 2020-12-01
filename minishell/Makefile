@@ -6,11 +6,11 @@
 #    By: lryst <lryst@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 05:41:03 by corozco           #+#    #+#              #
-#    Updated: 2020/12/01 10:17:06 by lryst            ###   ########.fr        #
+#    Updated: 2020/12/01 10:25:36 by lryst            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = the_big_minishell
+NAME = minishell
 #HEAD := -I./includes/ -I./libft/includes
 HEAD := -I./includes/ -I./libft/includes -I./ft_fprintf
 
