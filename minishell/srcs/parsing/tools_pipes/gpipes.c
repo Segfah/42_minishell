@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   gpipes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/26 01:10:49 by lryst            ###   ########.fr       */
+/*   Updated: 2020/12/01 12:25:16 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "signal.h"
+#include "msignal.h"
 #include "pipes.h"
 
 static void		open_dup(int *fd, t_temp *tmp)

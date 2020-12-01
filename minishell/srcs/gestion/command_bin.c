@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   command_bin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 15:00:48 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/19 16:11:22 by lryst            ###   ########.fr       */
+/*   Updated: 2020/12/01 12:25:16 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "signal.h"
+#include "msignal.h"
 
 int				lists_size(t_lists *lst)
 {

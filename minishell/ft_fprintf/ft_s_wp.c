@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_s_wp.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 15:06:18 by lryst             #+#    #+#             */
-/*   Updated: 2020/01/20 15:06:21 by lryst            ###   ########.fr       */
+/*   Updated: 2020/12/01 12:30:56 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,8 @@ void	ft_s_wp(t_flags *prt, va_list args)
 {
 	char	*str;
 	int		len;
-	int		i;
 	char	*null;
 
-	i = -1;
 	len = 0;
 	str = va_arg(args, char *);
 	null = "(null)";

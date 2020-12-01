@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_len.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 13:40:52 by lryst             #+#    #+#             */
-/*   Updated: 2020/01/20 13:57:22 by lryst            ###   ########.fr       */
+/*   Updated: 2020/12/01 12:29:54 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ int	ft_unsigned_len(unsigned int nb)
 	size_t		size;
 
 	size = 1;
-	if (nb < 0)
-		size++;
 	while ((nb /= 10))
 		size++;
 	return (size);
@@ -76,11 +74,6 @@ int	ft_hexa_len(unsigned int nb)
 	len = 0;
 	if (nb == 0)
 		len = 1;
-	if (nb < 0)
-	{
-		nb = nb * -1;
-		len++;
-	}
 	while (nb > 0)
 	{
 		nb = nb / 16;

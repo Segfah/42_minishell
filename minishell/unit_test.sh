@@ -45,8 +45,6 @@ TEST_ARRAY=(
 'exit 21 42'
 'exit $HOME"coucou"COMO" "TE" "ENCUENTRAS |rev'
 'exit $HOME"coucou"COMO" "TE" "ENCUENTRAS'
-'pwd | exit $HOME"coucou"COMO" "TE" "ENCUENTRAS'
-'pwdd | exit $HOME"coucou"COMO" "TE" "ENCUENTRAS'
 'exit -9223372036854775808'
 '################		COMMAND EXECUTION	        #################'
 'ls'

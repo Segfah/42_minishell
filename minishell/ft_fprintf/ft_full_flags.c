@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_full_flags.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 13:40:43 by lryst             #+#    #+#             */
-/*   Updated: 2020/01/20 14:28:52 by lryst            ###   ########.fr       */
+/*   Updated: 2020/12/01 12:29:29 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,11 @@ void	ft_just_flag(t_flags *prt, va_list args)
 
 void	ft_full_flags_m(t_flags *prt, va_list args)
 {
-	int				n;
 	unsigned long	u;
 	size_t			swap;
-	size_t			tmp;
 
-	n = 0;
 	u = prt->c;
 	prt->c = 0;
-	tmp = 0;
 	ft_precision(prt, args);
 	swap = prt->c;
 	prt->c = u;
