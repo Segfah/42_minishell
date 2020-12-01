@@ -24,6 +24,13 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 
+typedef struct		s_fdpipes
+{
+	int				*fd;
+	int				k;
+	int				s;
+}					t_fdpipes;
+
 typedef struct		s_lists
 {
 	char			*name;
