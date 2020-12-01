@@ -77,7 +77,6 @@ int					g_ret;
 */
 void				welcome(void);
 
-
 void				general_free(t_temp *tmp);
 
 /*
