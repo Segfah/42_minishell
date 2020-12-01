@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 13:58:31 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/27 17:55:45 by lryst            ###   ########.fr       */
+/*   Updated: 2020/12/01 10:08:30 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,35 +35,10 @@ int					isalpha1(char *s)
 int					check_before_cat_node(char *s1, char *s2)
 {
 	if (ft_strcmp(s1, " ") && ft_strcmp(s2, " ") && ft_strncmp(s1, "<", 1) &&
-	ft_strncmp(s2, "<", 1) && ft_strncmp(s1, ">", 1) && ft_strncmp(s2, ">", 1) &&
-	ft_strncmp(s1, "|", 1 && ft_strncmp(s2, "|", 1)))
+	ft_strncmp(s2, "<", 1) && ft_strncmp(s1, ">", 1) && ft_strncmp(s2, ">", 1)
+	&& ft_strncmp(s1, "|", 1 && ft_strncmp(s2, "|", 1)))
 		return (1);
 	return (0);
-}
-
-int					strcat_cmd(t_cmd **cmd)
-{
-	t_cmd	*tmp;
-	int		i;
-
-	tmp = *cmd;
-	i = 0;
-	while (tmp)
-	{
-		if (tmp->next && tmp->next->output &&
-		check_before_cat_node(tmp->input, tmp->next->input))
-		{
-			if ((tmp->input = ft_strcatdup(tmp->input, tmp->next->input)))
-				tmp->next->input = NULL;
-			if ((tmp->output = ft_strcatdup(tmp->output, tmp->next->output)))
-				tmp->next->output = NULL;
-			i = 1;
-			break ;
-		}
-		tmp = tmp->next;
-	}
-	remove_null_node(cmd);
-	return (i);
 }
 
 static int			check_echo(char *cmd)

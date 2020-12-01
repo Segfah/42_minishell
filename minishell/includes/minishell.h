@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/30 18:01:15 by corozco           #+#    #+#             */
-/*   Updated: 2020/11/26 00:59:28 by lryst            ###   ########.fr       */
+/*   Updated: 2020/12/01 10:15:53 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,7 +221,6 @@ char				**ft_split_echo(char *s, int *i, t_temp *temp);
 char				*put_dollar_variable(char *str, char *tab);
 char				*check_dollar(char *str, int *i, t_lists *var);
 int					count_dollar_varriable(char *str, int *j, t_lists *var);
-int					is_it_var(char *str, t_lists *var);
 
 /*
 ** gestion/echo/slash
@@ -283,9 +282,12 @@ void				dcote_cmd_3(t_cmd *cmd, t_lists *revar, int *i, int *j);
 int					check_node(t_cmd *cmd, t_temp *temp);
 
 void				dcote_fill_slash(t_cmd *cmd, int *i, int *j);
-void				dcote_count_slash(t_cmd *cmd, int *i, int *size);
 void				dcote_fill_dollar(t_cmd *cmd, t_lists *revar,
 						int *i, int *j);
+void				dcote_fill_dollar2(t_lists *revar, char *tmp,
+						t_cmd *cmd, int *j);
+
+void				dcote_count_slash(t_cmd *cmd, int *i, int *size);
 void				dcote_count_dollar(t_cmd *cmd, t_lists *var,
 						int *i, int *size);
 void				before_count_dollar(t_cmd *cmd, t_lists *var,
@@ -383,4 +385,7 @@ void				exit_join(char **tab, int key);
 void				gestion_exit(char **strcmd, t_temp *tmp, int key);
 void				exit_arg(char **strcmd, int key);
 
+int					is_var(t_lists *revar, char *tabcmd, int *i, int save);
+
+int					check_before_cat_node(char *s1, char *s2);
 #endif

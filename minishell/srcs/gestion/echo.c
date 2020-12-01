@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 17:27:31 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/25 18:49:23 by lryst            ###   ########.fr       */
+/*   Updated: 2020/12/01 10:02:52 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,9 @@ int			no_file_or_dir(char *tabcmd, t_lists *var)
 	int		i;
 	int		save;
 	int		size;
-	char	*tmp;
 	t_lists	*revar;
 
 	i = 0;
-	revar = var;
 	while (tabcmd[i])
 	{
 		if (tabcmd[i] == '$')
@@ -32,26 +30,9 @@ int			no_file_or_dir(char *tabcmd, t_lists *var)
 			(tabcmd[i] > 64 && tabcmd[i] < 91) || (tabcmd[i] > 96 &&
 			tabcmd[i] < 123)))
 				i++;
-			if (!(tmp = (char*)malloc(sizeof(char) * (i - save) + 1)))
-				return (-1);
-			size = 0;
-			while (save < i)
-				tmp[size++] = tabcmd[save++];
-			tmp[size] = '\0';
 			revar = var;
-			while (revar)
-			{
-				if (!revar->name && !revar->data)
-					break ;
-				if (ft_strcmp(revar->name, tmp) == 0)
-				{
-					ft_free(tmp);
-					return (1);
-				}
-				revar = revar->next;
-			}
-			i--;
-			ft_free(tmp);
+			if ((size = is_var(revar, tabcmd, &i, save)) != 0)
+				return (size);
 		}
 		if (tabcmd[i])
 			i++;

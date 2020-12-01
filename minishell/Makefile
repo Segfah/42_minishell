@@ -6,7 +6,7 @@
 #    By: lryst <lryst@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/24 05:41:03 by corozco           #+#    #+#              #
-#    Updated: 2020/11/25 14:42:11 by lryst            ###   ########.fr        #
+#    Updated: 2020/12/01 10:17:06 by lryst            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ SRC := \
 	srcs/gestion/tools/ft_strjoinfree.c \
 	srcs/gestion/tools/ft_newstring.c \
 	srcs/gestion/tools/dup_or_not.c \
+	srcs/gestion/tools/is_var.c \
 	srcs/gestion/export.c \
 	srcs/utils/free.c \
 	srcs/gestion/echo.c \
@@ -55,7 +56,8 @@ SRC := \
 	srcs/parsing/separator_string/delete_node.c \
 	srcs/parsing/separator_string/separator_string.c \
 	srcs/parsing/separator_string/dcote.c \
-	srcs/parsing/separator_string/dcote_utils.c \
+	srcs/parsing/separator_string/dcote_count.c \
+	srcs/parsing/separator_string/dcote_fill.c \
 	srcs/parsing/separator_string/single_cote.c \
 	srcs/parsing/separator_string/slash.c \
 	srcs/parsing/separator_string/dollar.c \

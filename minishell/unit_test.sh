@@ -76,7 +76,6 @@ TEST_ARRAY=(
 "echo \\\\\n"
 "echo \"coucou ca va ? '\$HOME' \coucou\""
 "echo \"< no pipe | or semicolon will ; stop me >\""
-"echo \"bonjour\\toi\" ; echo \"bonjour\\\\toi\" ; echo \"bonjour\\\"toi\" ; echo \"bonjour\\\'toi\"	; echo \"bonjour\'toi\"; echo bonjour\toi	 ; echo bonjour\\\\toi	; echo bonjour\\\"toi	; echo   bonjour\\\'toi	; echo  bonjour\\ toi	; echo \'bonjour\toi\';echo $\'bonjour\\\'toi\';echo \'bonjour\\\\toi\'	;echo \'bonjour\\\"toi\'; echo \'bonjour\"toi\'; echo \'\\bonjourtoi\'"
 '\"asdasdasd\"$asdasd$HOME'
 '################		    PIPES			#################'
 'echo 5 + 3 | bc'

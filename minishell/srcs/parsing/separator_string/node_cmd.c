@@ -6,39 +6,11 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 14:02:09 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/22 20:55:13 by lryst            ###   ########.fr       */
+/*   Updated: 2020/12/01 10:09:52 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* int		cat_node_egal(t_cmd **cmd)
-{
-	t_cmd	*back;
-	int		len;
-	int		i;
-
-	back = *cmd;
-	len = 0;
-	i = 0;
-	while (back)
-	{
-		len = ft_strlen(back->input);
-		if (back->next && back->input[len - 1] == '=' && back->next->input &&
-		back->next->output && ft_strcmp(back->next->input, " "))
-		{
-			back->output = ft_strcatdup(back->output, back->next->output);
-			back->next->output = NULL;
-			back->input = ft_strcatdup(back->input, back->next->input);
-			back->next->input = NULL;
-			i = 1;
-			break ;
-		}
-		back = back->next;
-	}
-	remove_null_node(cmd);
-	return (i);
-} */
 
 void	tilde(t_cmd *cmd, t_temp *tmp)
 {
