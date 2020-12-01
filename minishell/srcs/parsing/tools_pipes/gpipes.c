@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 #include "signal.h"
+#include "pipes.h"
 
 static void		open_dup(int *fd, t_temp *tmp)
 {

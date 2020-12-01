@@ -23,25 +23,12 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 
-typedef struct		s_fdpipes
-{
-	int				*fd;
-	int				k;
-	int				s;
-}					t_fdpipes;
-
 typedef struct		s_lists
 {
 	char			*name;
 	char			*data;
 	struct s_lists	*next;
 }					t_lists;
-
-typedef struct		s_fd
-{
-	int				fd;
-	struct s_fd		*next;
-}					t_fd;
 
 /*
 ** flag[0] = cmd existe
@@ -84,19 +71,14 @@ typedef struct		s_cmd
 }					t_cmd;
 
 int					g_ret;
-int					g_malloc;
 
-/*
-** parsing/tools pipes
-*/
-void				gpipes(t_temp *tmp, t_cmd *cmd, int j);
-void				close_gpipes(t_temp *tmp, int *fd);
-
-void				general_free(t_temp *tmp);
 /*
 ** drawings
 */
 void				welcome(void);
+
+
+void				general_free(t_temp *tmp);
 
 /*
 ** prompt
@@ -287,7 +269,6 @@ void				controle(char *c);
 /*
 ** main
 */
-void				launcher(t_temp tmp, int ac, char **av);
 
 int					ft_count_word(char *str);
 char				*copy(char *s, int *end, int start);

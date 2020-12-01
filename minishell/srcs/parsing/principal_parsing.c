@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "pipes.h"
 
 void			point_filename(char **tab)
 {

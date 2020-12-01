@@ -56,7 +56,7 @@ char			**c_env(t_lists *list, int size)
 		}
 		tmp = tmp->next;
 	}
-	tab[size] = 0;
+	tab[i] = 0;
 	return (tab);
 }
 
