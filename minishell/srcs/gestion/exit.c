@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	ft_llintlen(int n)
+int			ft_llintlen(int n)
 {
 	long long int		len;
 
@@ -33,7 +33,8 @@ int	ft_llintlen(int n)
 	}
 	return (len);
 }
-void			gestion_exit(char **strcmd, t_temp *tmp, int key)
+
+void		gestion_exit(char **strcmd, t_temp *tmp, int key)
 {
 	if (!strcmd[1] && !key)
 	{
@@ -52,7 +53,7 @@ void			gestion_exit(char **strcmd, t_temp *tmp, int key)
 	}
 }
 
-void			exit_join(char **tab, int key)
+void		exit_join(char **tab, int key)
 {
 	g_ret = 255;
 	if (!key)
@@ -63,7 +64,7 @@ void			exit_join(char **tab, int key)
 	exit(g_ret);
 }
 
-void			exit_arg(char **strcmd, int key)
+void		exit_arg(char **strcmd, int key)
 {
 	if (strcmd[2])
 	{

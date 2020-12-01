@@ -65,7 +65,7 @@ void			open_dup(int *fd, t_temp *tmp)
 	{
 		if (pipe(fd + i * 2) < 0)
 		{
-			ft_fprintf(2,"error dup\n");
+			ft_fprintf(2, "error dup\n");
 			exit(0);
 		}
 		i++;
@@ -84,6 +84,38 @@ void			close_dup(int *fd, t_temp *tmp)
 	}
 }
 
+void			pipes_status(t_temp *tmp, int *fd)
+{
+	int			status;
+	int			i;
+	int			k;
+
+	i = 0;
+	while (i < tmp->nb_pipes + 1)
+	{
+		status = 0;
+		k = wait(&status);
+		if (WIFEXITED(status))
+		{
+			if (WEXITSTATUS(status) == 1)
+			{
+				free(fd);
+				general_free(tmp);
+			}
+			if (i + 1 == tmp->nb_pipes + 1)
+			{
+				(WEXITSTATUS(status) == 0) ? g_ret = 0 : 0;
+				(WEXITSTATUS(status) == 35) ? g_ret = 1 : 0;
+				(WEXITSTATUS(status) == 126) ? g_ret = 126 : 0;
+				(WEXITSTATUS(status) == 127) ? g_ret = 127 : 0;
+				(WEXITSTATUS(status) == 255) ? g_ret = 255 : 0;
+				(WEXITSTATUS(status) == 258) ? g_ret = 258 : 0;
+			}
+		}
+		i++;
+	}
+}
+
 void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 {
 	int			*fd;
@@ -96,30 +128,14 @@ void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 	open_dup(fd, tmp);
 	k = 0;
 	s = 0;
-//	printf("pipes == [%d]", tmp->nb_pipes);
 	while (tmp->outpipe[k])
 	{
-//		printftab(tmp->inpipe[k]);
-//		printftab(tmp->outpipe[k]);
-//		printftab(tmp->cpypipe[k]);
 		if ((pid = fork()) == 0)
 		{
 			if (k != 0)
-			{
-				if (dup2(fd[s - 2], 0) < 0)
-				{
-					printf("1error\n");
-					exit(0);
-				}
-			}
+				dup2(fd[s - 2], 0);
 			if (tmp->outpipe[k + 1] != NULL)
-			{
-				if (dup2(fd[s + 1], 1) < 0)
-				{
-					printf("2error\n");
-					exit(0);
-				}
-			}
+				dup2(fd[s + 1], 1);
 			close_dup(fd, tmp);
 			tmp->strcmd = tmp->outpipe[k];
 			tmp->strcmdin = tmp->inpipe[k];
@@ -132,7 +148,9 @@ void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 			launcher_cmd(tmp->outpipe[k][0], tmp, j, 1);
 			tmp->flag[1] == 1 ? close(tmp->fd) : 0;
 			tmp->flag[2] == 1 ? close(tmp->fdi) : 0;
-			exit(0);
+			if (g_ret == 1)
+				exit(35);
+			exit(g_ret);
 		}
 		else
 		{
@@ -143,20 +161,7 @@ void			gpipes(t_temp *tmp, t_cmd *cmd, int j)
 		}
 	}
 	close_dup(fd, tmp);
-	int status;
-	for (int i = 0; i < tmp->nb_pipes + 1; i++)
-	{
-		status = 0;
-		wait(&status);
-		if (WIFEXITED(status))
-		{
-			if (WEXITSTATUS(status) == 1)
-			{
-				free(fd);
-				general_free(tmp);
-			}
-		}
-	}
+	pipes_status(tmp, fd);
 	signal(SIGINT, sighandler);
 	free(fd);
 	ft_free_triple_tab(tmp->inpipe);
