@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 13:58:31 by lryst             #+#    #+#             */
-/*   Updated: 2020/12/01 10:08:30 by lryst            ###   ########.fr       */
+/*   Updated: 2020/12/01 21:24:54 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int			check_echo(char *cmd)
 	return (0);
 }
 
-int					cherche_echo(char **tab)
+int					search_echo(char **tab)
 {
 	int			i;
 

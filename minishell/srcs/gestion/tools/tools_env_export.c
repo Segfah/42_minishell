@@ -13,7 +13,7 @@
 #include "minishell.h"
 
 /*
-** int key est pour choisir si je dois afficher le env(1) ou l'export(X!=1)
+** int key is to choose if I should display the env (1) or the export (X! = 1)
 */
 
 void			print_list(t_lists *head, int key)
@@ -88,7 +88,7 @@ static int		addfront(t_lists **head, char *str, char *str2)
 }
 
 /*
-**	Fait une copie d'une liste ch....
+**	Make a copy of a list ch ....
 */
 
 int				cpy_env(t_lists **cpy, t_lists *list)

@@ -38,12 +38,6 @@ int				ft_cortar(char *tab[2], char *str)
 	return (0);
 }
 
-/*
-** liste -> tmp->varenv
-** char* tmp->hnull
-** char* tmp->prompt
-*/
-
 void			general_free(t_temp *tmp)
 {
 	(!tmp->varenv) ? free_list(tmp->varenv) : 0;

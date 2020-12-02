@@ -32,10 +32,6 @@ static int		add_list_front(t_lists **head, char *str)
 	return (0);
 }
 
-/*
-** fonction qui garde le env dans une liste c
-*/
-
 int				save_env(t_lists **head, char **envp)
 {
 	int			i;

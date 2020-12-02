@@ -29,7 +29,6 @@ SRC := \
 	srcs/gestion/env.c \
 	srcs/gestion/unset.c \
 	srcs/gestion/command_bin.c \
-	srcs/gestion/nani.c \
 	srcs/gestion/exit.c \
 	srcs/utils/ft_split_strcmd/ft_split_strcmd.c \
 	srcs/utils/ft_split_strcmd/cmd_dollar.c \

@@ -12,16 +12,6 @@
 
 #include "minishell.h"
 
-/*
-** elle sert à prendre le path à partir du dernier '/'
-** Example 1:
-** char *str = "/Users/&(USER)/Documents/42/42_minishell/minishell" , c = '/'
-** le return ->     "/minishell"         (chaine malloc)
-** Example 2: imaginant qu'on est dans la racine 'cd /'
-** char *str = "/" c = '/'
-** le return ->     "/"                  (chaine malloc)
-*/
-
 char			*ft_prompt(char *str)
 {
 	int			i;

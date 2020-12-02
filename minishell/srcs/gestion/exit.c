@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 13:54:38 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/29 19:03:32 by lryst            ###   ########.fr       */
+/*   Updated: 2020/12/01 17:12:40 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void		gestion_exit(char **strcmd, t_temp *tmp, int key)
 
 void		exit_join(char **tab, int key)
 {
-	g_ret = 255;
+	g_ret = 2;
 	if (!key)
 		write(1, "exit\n", 5);
 	write(2, "minishell: exit: ", 17);

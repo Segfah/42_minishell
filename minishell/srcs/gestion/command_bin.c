@@ -71,7 +71,7 @@ int				command_bin(char **tab, t_temp *tmp)
 	pid_t		f;
 	char		**tab_env;
 
-	g_ret = 1;
+	g_ret = 2;
 	if (!(tab_env = c_env(tmp->varenv, lists_size(tmp->varenv))))
 		general_free(tmp);
 	if ((f = fork()) == 0)

@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/01 20:49:55 by lryst             #+#    #+#             */
-/*   Updated: 2020/11/27 18:23:07 by lryst            ###   ########.fr       */
+/*   Updated: 2020/12/01 21:31:58 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int				message_error_pv(int pv)
 		write(2, "minishell: syntax error near unexpected token ';'\n", 50);
 	if (pv == 2)
 		write(2, "minishell: syntax error near unexpected token ';;'\n", 51);
-	g_ret = 258;
+	g_ret = 2;
 	return (0);
 }
 
@@ -47,7 +47,7 @@ int				multi_pv(char *str, int i)
 	{
 		count_slash(str, &i);
 		if (str[i] == '\'' || str[i] == '"')
-			adeline_la_best(str, str[i], &i);
+			adeline_the_best(str, str[i], &i);
 		if (str[i] == ';' && str[i + 1] == ';')
 			return (message_error_pv(2));
 		if (str[i] == '>' || str[i] == '<' || str[i] == '|')

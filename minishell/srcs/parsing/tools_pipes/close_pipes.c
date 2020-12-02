@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 12:11:19 by lryst             #+#    #+#             */
-/*   Updated: 2020/12/01 12:33:49 by user42           ###   ########.fr       */
+/*   Updated: 2020/12/01 21:31:58 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void		pipes_status(t_temp *tmp, int *fd, int i)
 				(macro == 126) ? g_ret = 126 : 0;
 				(macro == 127) ? g_ret = 127 : 0;
 				(macro == 255) ? g_ret = 255 : 0;
-				(macro == 258) ? g_ret = 258 : 0;
+				(macro == 2) ? g_ret = 2 : 0;
 			}
 		}
 	}

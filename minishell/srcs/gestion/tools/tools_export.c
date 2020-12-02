@@ -13,7 +13,7 @@
 #include "minishell.h"
 
 /*
-** Elle tri la liste export
+** sort the export list
 */
 
 void			range_export(t_lists *la)
@@ -96,15 +96,15 @@ static char		*str_key(char *str)
 }
 
 /*
-** key (1) == la commande que j'utilise pour modifier mes env
-** key != (1) pour chercher un node et returner une string malloquee
+** key (1) == the command I use to modify my env
+** key != (1) for search a node and return a string malloced
 ** example
 **			test
 **			char *data;
 **			data = NULL;
 **			search_env("HOME", tmp, 0, &data);
 **			ft_printf("data = [%s]\n", data);
-**			free(data); //tu free apres l'utilisation de la data.
+**			free(data); //you free after use data.
 */
 
 int				search_env(char *str, t_temp *tmp, int key, char **data)

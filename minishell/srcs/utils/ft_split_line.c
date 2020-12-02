@@ -25,7 +25,7 @@ int				ft_count_word(char *str)
 	{
 		count_slash(str, &i);
 		if (str[i] == '"' || str[i] == '\'')
-			adeline_la_best(str, str[i], &i);
+			adeline_the_best(str, str[i], &i);
 		else if (str[i] == ';')
 			word++;
 		i++;
@@ -42,7 +42,7 @@ char			*ft_fill_line(char *str, int *i, char *tab)
 	{
 		count_slash(str, i);
 		if (str[*i] == '"' || str[*i] == '\'')
-			adeline_la_best(str, str[*i], i);
+			adeline_the_best(str, str[*i], i);
 		if (str[*i] == ';' || str[*i] == '\0')
 		{
 			tab = copy(str, i, save);

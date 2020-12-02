@@ -37,11 +37,6 @@ void			launcher(t_temp tmp, int ac, char **av)
 	}
 }
 
-/*
-** tmp.env = variable qui prend le getcwd (get working directory pathname)(pwd);
-** launcher = fonction principal (boucle infini)
-*/
-
 static int		new_list_no_env(t_lists **head)
 {
 	t_lists		*new;

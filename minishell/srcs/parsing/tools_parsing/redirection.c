@@ -35,13 +35,6 @@ void			ft_double_free(char *s1, char *s2, int *i)
 	*i += 1;
 }
 
-/*
-** si hay problemas con las redi poner esto antes
-**     ydespues de clean_tab2d_echo(cmd, tmp->strcmd);
-**	printftab(cmd);
-**	printftab(tmp->strcmd);
-*/
-
 static void		copy_mov_pointer(char **cmd, t_temp *tmp, int *i, int *j)
 {
 	if (cmd[*i] != NULL)

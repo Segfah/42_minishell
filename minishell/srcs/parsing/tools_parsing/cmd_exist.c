@@ -53,18 +53,6 @@ static int		cmd_is_here(char **path)
 	return (-1);
 }
 
-/*
-** si algo falla, era
-**	if (flag)
-**		return (flag);
-**	if (!flag && !search_env("PATH", tmp, 1, NULL))
-**		return (flag);
-** y
-**	if ((tmp->status = cmd_is_here(tmp->tabpath)) == -1)
-** si el flag deja de servir cambiar el !(flag = 0) por un flag = 0
-** despues del return (-2);
-*/
-
 int				cmd_exist(char *cmd, t_temp *tmp, int flag)
 {
 	if (!cmd)
@@ -75,7 +63,6 @@ int				cmd_exist(char *cmd, t_temp *tmp, int flag)
 	flag = !ft_strcmp(cmd, "cd") ? 2 : flag;
 	flag = !ft_strcmp(cmd, "env") ? 3 : flag;
 	flag = !ft_strcmp(cmd, "pwd") ? 4 : flag;
-	flag = !ft_strcmp(cmd, "nani") ? 5 : flag;
 	flag = !ft_strcmp(cmd, "export") ? 6 : flag;
 	flag = !ft_strcmp(cmd, "unset") ? 7 : flag;
 	flag = !ft_strcmp(cmd, "echo") ? 8 : flag;

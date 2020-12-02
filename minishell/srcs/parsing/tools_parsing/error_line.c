@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 16:54:13 by corozco           #+#    #+#             */
-/*   Updated: 2020/11/19 14:47:49 by lryst            ###   ########.fr       */
+/*   Updated: 2020/12/01 21:31:58 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int		redi_error(t_cmd *cmd, t_temp *tmp)
 		ft_free_double_tab(tmp->strcmdin);
 		ft_free_double_tab(tmp->cpytab);
 		(cmd != NULL) ? free_cmd(cmd) : 0;
-		g_ret = 258;
+		g_ret = 2;
 		return (-1);
 	}
 	return (0);
@@ -60,7 +60,7 @@ static int		error_multi(t_cmd *cmd, t_temp *tmp)
 	ft_free_double_tab(tmp->strcmdin);
 	ft_free_double_tab(tmp->cpytab);
 	(cmd != NULL) ? free_cmd(cmd) : 0;
-	g_ret = 258;
+	g_ret = 2;
 	return (-1);
 }
 
@@ -71,12 +71,12 @@ static int		pipe_error(t_cmd *cmd, t_temp *tmp)
 	ret = 0;
 	if ((ret = len_split3d(cmd)) < 0)
 	{
-		if (ret != -3 && (g_ret = 258))
+		if (ret != -3 && (g_ret = 2))
 		{
 			ft_free_double_tab(tmp->strcmd);
 			(cmd != NULL) ? free_cmd(cmd) : 0;
 			print_error(ret);
-			g_ret = 258;
+			g_ret = 2;
 			return (-1);
 		}
 	}

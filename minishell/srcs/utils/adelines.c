@@ -34,7 +34,7 @@ int			adeline(char *s, char cote, int n, int *i)
 	return (n + 1);
 }
 
-void		adeline_la_best(char *s, char cote, int *i)
+void		adeline_the_best(char *s, char cote, int *i)
 {
 	(*i)++;
 	while (s[*i] && s[*i] != cote)

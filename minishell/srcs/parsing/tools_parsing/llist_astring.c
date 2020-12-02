@@ -12,10 +12,6 @@
 
 #include "minishell.h"
 
-/*
-** fonction qui compte la liste sans les espaces de echo -n
-*/
-
 static int		mlist_size(t_cmd *head)
 {
 	int			i;
@@ -45,10 +41,6 @@ static int		llist_astring2(t_cmd *head, t_temp *tmp, int *i)
 	return (0);
 }
 
-/*
-** Fonction qui modifie strcmd avec la liste, maj + supp des espaces
-*/
-
 int				llist_astring(t_cmd *head, t_temp *tmp)
 {
 	int			i;
@@ -73,7 +65,7 @@ int				llist_astring(t_cmd *head, t_temp *tmp)
 		tmp->strcmd[i] = 0;
 		tmp->strcmdin[i] = 0;
 	}
-	if (!cherche_echo(tmp->strcmd))
+	if (!search_echo(tmp->strcmd))
 		clean_tab2d(tmp->strcmd, tmp->strcmdin);
 	return (0);
 }

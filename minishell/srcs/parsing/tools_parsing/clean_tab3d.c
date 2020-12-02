@@ -107,7 +107,7 @@ void			clean_split3d(t_temp *tmp)
 	i = 0;
 	while (tmp->inpipe[i])
 	{
-		if (cherche_echo(tmp->outpipe[i]))
+		if (search_echo(tmp->outpipe[i]))
 			clean_tab2d_echo(tmp->inpipe[i], tmp->outpipe[i]);
 		else
 			clean_tab2d(tmp->inpipe[i], tmp->outpipe[i]);

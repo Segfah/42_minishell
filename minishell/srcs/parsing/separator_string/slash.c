@@ -6,7 +6,7 @@
 /*   By: lryst <lryst@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 14:08:13 by lryst             #+#    #+#             */
-/*   Updated: 2020/10/15 20:21:37 by lryst            ###   ########.fr       */
+/*   Updated: 2020/12/01 17:27:34 by lryst            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	count_slash(char *str, int *i)
 			slash++;
 		}
 		if ((slash % 2) == 1 && (str[*i] == ';' || str[*i] == '"' ||
-			str[*i] == '\''))
+			str[*i] == '\'' || str[*i] == '$'))
 			(*i)++;
 	}
 }
@@ -66,6 +66,7 @@ void	slash_cmd(t_cmd *cmd)
 			return ;
 		while (cmd->input[i])
 			cmd->output[count++] = cmd->input[i++];
+		cmd->output[count] = '\0';
 	}
 	else
 		slash_cmd_2(cmd, &i);

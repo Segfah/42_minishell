@@ -53,8 +53,6 @@ void			launcher_cmd(char *tabcmd, t_temp *tmp, int j, int key)
 		gestion_env(tmp->strcmd, tmp);
 	else if (j == 4)
 		gestion_pwd(tmp->strcmd, tmp);
-	else if (j == 5)
-		gestion_nani(tmp->strcmd);
 	else if (j == 6)
 		gestion_export(tmp, 0);
 	else
