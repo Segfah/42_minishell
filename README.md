@@ -3,12 +3,12 @@
 
 ```sh
 $ Status =
-	#??
+	#finished
 $ Note =
-	#??
+	#101
 $ Development =
-	#??
-	
+	#make
+	#./minishell
 ```
 
 ## Doc =
