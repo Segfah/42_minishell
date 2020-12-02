@@ -12,4 +12,8 @@ $ Development =
 ```
 
 ## Doc =
-* [??](??)
+* [pipes](https://stackoverflow.com/questions/8389033/implementation-of-multiple-pipes-in-c)
+* [c'est un dossier? ./dossier](http://manpagesfr.free.fr/man/man2/stat.2.html)
+* [Redirect](http://www.cs.loyola.edu/~jglenn/702/S2005/Examples/dup2.html)
+* [Les variables d'environemment -> main(int ac, char **av, char **envp)](https://stackoverflow.com/questions/2085302/printing-all-environment-variables-in-c-c)
+* [Ctrl-C in C](https://stackoverflow.com/questions/35823864/detecting-ctrl-d-in-c)
