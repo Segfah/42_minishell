@@ -1,4 +1,4 @@
-# ![N|Solid](https://i.ibb.co/ygPQszr/Capture-d-e-cran-2020-07-30-a-18-opt.png)  [Lryst](https://github.com/Lryst) (Corozco)
+# ![N|Solid](https://i.ibb.co/ygPQszr/Capture-d-e-cran-2020-07-30-a-18-opt.png)  [Lryst](https://github.com/Lryst) & Corozco
 ## -Minishell(42cursus-2020//Paris)
 
 ```sh
