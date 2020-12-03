@@ -10,7 +10,7 @@ $ Development =
 	version mac
 	#cd minishell ; make
 	#./minishell
-	version linux ou [.](https://github.com/42corozco/42_minishell/tree/vli)
+	version linux ou [...](https://github.com/42corozco/42_minishell/tree/vli)
 	#git checkout vli
 	#cd minishell ; make
 	#./minishell
