@@ -12,6 +12,8 @@
 
 #include <unistd.h>
 
+int g_ret;
+
 static void		welcome2(void)
 {
 	write(1, "        .__       .__       .__           .__  .__   \n", 54);

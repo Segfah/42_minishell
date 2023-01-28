@@ -71,7 +71,7 @@ typedef struct		s_cmd
 	struct s_cmd	*next;
 }					t_cmd;
 
-int					g_ret;
+extern int g_ret;
 
 /*
 ** drawings
